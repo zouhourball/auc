@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="msapplication-tap-highlight" content="no" />
+  <link rel="icon" type="image/png" href="/static/favicon.png" />
+  <link rel="stylesheet" crossorigin="anonymous" href="//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+  <link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700%7CMaterial+Icons" />
+  <link rel="stylesheet" crossorigin="anonymous" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+  <link rel="stylesheet" crossorigin="anonymous" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+  <script type=text/javascript>
+  // in production, all variables starts with MEERA_APP_ will be replaced with dynamicenvironment variables
+  ;(function(global) {
+      try {
+        var globalEnv = '${env:// .GLOBAL_FE_ENV_VARS }';
+        var obj = JSON.parse(globalEnv);
+        var config = Object.assign(
+          {
+            OAUTH_CLIENT_SECRET: '${env:// .WORKSPACE_FE_OAUTH_CLIENT_SECRET }',
+            OAUTH_CLIENT_ID: '${env:// .WORKSPACE_FE_OAUTH_CLIENT_ID }',
+            OAUTH_CALLBACK_HOST: '${env:// .WORKSPACE_FE_OAUTH_CALLBACK_HOST }',
+            // DASHBOARD_ID_DSO: '${env:// .DASHBOARD_ID_DSO }',
+          },
+          obj,
+        );
+
+        if (global) {
+          for (var k in config) {
+            if (k) {
+              global[k] = config[k];
+            }
+          }
+        }
+      } catch (e) {
+        // console.log(e)
+      }
+    })(window);
+    </script> <title>Auctions</title>
+</head>
+
+<body>
+  <div id="root" class="addressBook-root"></div>
+</body>
+
+</html>

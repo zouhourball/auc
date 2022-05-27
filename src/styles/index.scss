@@ -1,0 +1,190 @@
+@import '~reset-css/reset';
+@import '~styles/globals';
+
+@include react-md-everything;
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 700;
+  src:
+    url('../fonts/ProximaNova/ProximaNova-Bold.woff2') format('woff2'),
+    url('../fonts/ProximaNova/ProximaNova-Bold.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 900;
+  src:
+    url('../fonts/ProximaNova/ProximaNova-Extrabld.woff2') format('woff2'),
+    url('../fonts/ProximaNova/ProximaNova-Extrabld.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('../fonts/ProximaNova/ProximaNova-Regular.woff2') format('woff2'),
+    url('../fonts/ProximaNova/ProximaNova-Regular.woff') format('woff');
+  font-display: swap;
+}
+
+body {
+  background-color: #f7f7f7 !important;
+  color: #2f3842;
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 14px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: inherit;
+    font-weight: 700;
+  }
+
+  p,
+  button,
+  input,
+  textarea,
+  // html,
+  div {
+    font-family: inherit;
+  }
+
+  .target-app-shell--left-side--app-item {
+    svg.md-icon {
+      width: 31px;
+    }
+  }
+
+  .app-shellwrapper-content .target-app-shell-appshell-bottom {
+    // will-change will break dragging of `react-beautiful-dnd`.
+    // It's either browsers or react-beautiful-dnd's bug
+    will-change: unset;
+  }
+
+  .target-app-shell--left-side--logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .target-app-shell-appshell-content-right {
+    max-width: 100vw;
+  }
+
+  .target-app-shell-topbar-right {
+    .target-app-shell-topbar-actions {
+      > button.target-app-shell-topbar-icon {
+        display: none;
+      }
+    }
+  }
+
+  .md-dialog--centered {
+    max-height: calc(100% - 120px);
+  }
+}
+
+.app-shellwrapper {
+  &-container {
+    display: flex;
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #f1f3f4;
+
+    .app-shellwrapper-content {
+      position: relative;
+      flex: 1;
+      overflow: auto;
+
+      > div {
+        height: 100%;
+      }
+    }
+  }
+
+  &-expand-messenger {
+    position: absolute;
+    z-index: 11;
+    width: 100%;
+    height: 100%;
+    margin-left: -2px;
+  }
+}
+
+html,
+body,
+.addressBook-root {
+  height: 100%;
+
+  div[tabindex='-1'][style='outline: none;'] {
+    height: 100%;
+  }
+}
+
+.data-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+}
+
+.md-snackbar {
+  top: 50px;
+  bottom: auto;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+
+  &--toast {
+    padding: 0;
+    color: rgba(0, 0, 0, 0.75);
+  }
+}
+
+.md-snackbar-enter,
+.md-snackbar-leave.md-snackbar-leave-active {
+  transform: translate3d(-50%, -100%, 0);
+}
+
+.md-snackbar-enter.md-snackbar-enter-active,
+.md-snackbar-leave {
+  transform: translate3d(-50%, 0, 0);
+}
+
+.md-dialog-footer--inline {
+  padding: 16px;
+  border-top: 1px solid #eee;
+
+  .md-btn--text {
+    height: 30px;
+    margin-left: 8px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 700;
+
+    &.md-text {
+      background: rgba(0, 0, 0, 0.1);
+
+      &--disabled {
+        background: rgba($color: #1979ff, $alpha: 0.1);
+        color: #7583a0;
+      }
+
+      &--theme-primary {
+        background: rgba($color: #1979ff, $alpha: 0.1);
+        color: #1979ff;
+      }
+    }
+  }
+}

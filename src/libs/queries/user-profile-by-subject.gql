@@ -1,0 +1,42 @@
+query seeUserProfileBySubject($subject: String!) {
+  seeUserProfileBySubject(subject: $subject) {
+    user {
+      subject
+      userID
+      fullName
+      isSearchable
+      title
+      aboutMe
+      nationality
+      dateOfBirth
+      gender
+      residentCardNo
+      phoneMobile
+      phoneHome
+      email
+      createdDate
+      deletedDate
+      lastLoginDate
+      isActive
+      isLocked
+      bkgImg #{
+      #id
+      #aPIID
+      # aPIURL
+      # aPISize
+      # aPIBucket
+      # aPIObject
+      # aPIFilename
+      #}
+      photo {
+        id
+        aPIID
+        aPIURL
+        aPISize
+        aPIBucket
+        aPIObject
+        aPIFilename
+      }
+    }
+  }
+}

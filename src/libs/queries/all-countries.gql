@@ -1,0 +1,20 @@
+query allCountryStateCities {
+  allCountries(limit: 10000) {
+    countries {
+      countryName
+      countryNameArabic
+      nationality
+      nationalityArabic
+      countryCode
+      id
+      states {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}

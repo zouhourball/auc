@@ -1,0 +1,17 @@
+.module-container {
+  display: flex;
+  width: calc(100vw - 56px);
+  height: 100%;
+  // overflow-y: auto;
+  background: #f0f2f5;
+
+  &-right {
+    width: calc(100vw - 380px + 56px);
+    height: 100%;
+    overflow-y: auto;
+
+    &.leftPanelHidden {
+      width: 100vw;
+    }
+  }
+}

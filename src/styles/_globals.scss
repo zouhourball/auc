@@ -1,0 +1,20 @@
+@import '~react-md/src/scss/react-md';
+
+$primary-color: #1979ff;
+$primary-color-dark: #30336b;
+$disable-color: #a5a5a5;
+$primary-color-light: rgba(21, 101, 192, 0.38);
+$accent-color: #39a9f4;
+$task-manager-pink-color: #e76580;
+$task-manager-gray-color: #878787;
+$orgchart-shallow-gray: #eaeaea;
+
+$md-primary-color: $primary-color;
+$md-secondary-color: $accent-color;
+$md-avatar-size: 30px;
+$md-grid-desktop-margin: 10px;
+$md-grid-desktop-gutter: 10px;
+
+$app-shell-height: 42px;
+$task-manager-header: 50px;
+$task-manager-board-gap: 10px;

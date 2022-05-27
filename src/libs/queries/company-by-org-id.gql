@@ -1,0 +1,9 @@
+query companiesByOrgID($organisationID: String!) {
+  companyByOrganisationID(organisationID: $organisationID) {
+    name
+    id
+    companyLogo {
+      aPIID
+    }
+  }
+}

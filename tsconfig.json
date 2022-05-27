@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "jsx": "react",
+    "strictFunctionTypes": true,
+    "baseUrl": "./src",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
+}
