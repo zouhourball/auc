@@ -1,0 +1,110 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "globals": {
+    "DEBUG": false,
+    "APP_VERSION": false,
+    "GIT_COMMIT_HASH": false,
+    "OAUTH_HOST": false,
+    "OAUTH_CLIENT_ID": false,
+    "OAUTH_CLIENT_SECRET": false,
+    "GRPC_API": false,
+    "GRAPHQL_API": false,
+    "API_KEYWORDS": false,
+    "PRODUCT_APP_URL_PROFILE": false,
+    "PRODUCT_APP_URL_PROFILE_JOBS": false,
+    "OAUTH_CALLBACK_HOST": false,
+    "PRODUCT_APP_URL_API": false,
+    "PRODUCT_WORKSPACE_URL": false,
+    "PRODUCT_APP_URL_BI": false,
+    "PRODUCT_APP_URL_PLANNER": false,
+    "PRODUCT_APP_URL_EDGE": false,
+    "PRODUCT_APP_URL_HCM": false,
+    "PRODUCT_APP_URL_CONFIGURATOR": false,
+    "PRODUCT_APP_URL_OKR": false,
+    "ENV_VAR_ME_TO": false,
+    "PRODUCT_APP_URL_PULSE": false,
+    "PRODUCT_APP_URL_CADRE": false,
+    "PRODUCT_APP_URL_FOLIO": false,
+    "PRODUCT_APP_URL_REACH": false,
+    "PRODUCT_APP_URL_TROVE": false,
+    "PRODUCT_APP_URL_PDO": false,
+    "PRODUCT_APP_URL_ROW": false,
+    "PRODUCT_APP_URL_MAP": false,
+    "PRODUCT_APP_URL_TATWEER": false,
+    "PRODUCT_APP_URL_CSR": false,
+    "MEETING_URL": false,
+    "PRODUCT_APP_URL_ORGANIZATION": false,
+    "PRODUCT_APP_URL_CRM": false,
+    "PRODUCT_APP_URL_LANG": false,
+    "BASE_ENV_URL": false,
+    "PRODUCT_APP_URL_AMC": false,
+    "PRODUCT_APP_URL_PSA": false,
+    "PRODUCT_APP_URL_REGULATION": false,
+    "PRODUCT_APP_URL_CADRE_FOR_MESSENGER": false,
+    "PRODUCT_APP_URL_FM": false,
+    "IS_GQ": false,
+    "PRODUCT_APP_URL_POSITIONS": false,
+    "PRODUCT_APP_URL_RECRUITMENT": false,
+    "PRODUCT_APP_URL_WORKFORCE": false,
+    "PRODUCT_APP_URL_PEOPLEANALYTICS": false,
+    "PRODUCT_APP_URL_PERMITS": false,
+    "PRODUCT_APP_URL_TIMESHEET": false,
+    "PRODUCT_APP_URL_WORKSPACE": false,
+    "PRODUCT_APP_URL_FLUXBLE_MEETING": false,
+    "PRODUCT_APP_URL_TALENT": false,
+    "PRODUCT_APP_TALENT_CHAT": false,
+    "PRODUCT_APP_URL_JOB_SEEKER": false,
+    "PRODUCT_APP_URL_MARKETPLACE_JOBS": false,
+    "PRODUCT_APP_ELEVATE_CHAT_BOT": false,
+    "ELEVATE_GOOGLE_ANALYTICS_ID": false,
+    "OKR_EAM": false,
+    "DASHBOARD_ID": false,
+    "TOKEN_DOMAIN": false,
+    "PRODUCT_APP_URL_DSO": false,
+    "DASHBOARD_ID_DSO": false,
+    "OVERWRITE_TRANSLATION": false
+  },
+  "extends": ["standard", "plugin:react/recommended", "plugin:jest/all"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true,
+      "legacyDecorators": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react", "jest"],
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "none",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "import/no-webpack-loader-syntax": "off",
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "standard/computed-property-even-spacing": "off",
+    "no-console": "error",
+    "declaration-colon-newline-after": "always-multi-line",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "eol-last": 0,
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }]
+  },
+  "settings": {
+    "react": {
+      "version": "17.0.2"
+    }
+  }
+}

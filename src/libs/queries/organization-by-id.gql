@@ -1,0 +1,7 @@
+query organisationByID($orgId: String) {
+  companyByOrganisationID(organisationID: $orgId) {
+    name
+    id
+    organisationID
+  }
+}

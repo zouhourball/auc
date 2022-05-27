@@ -1,0 +1,96 @@
+.app-shellwrapper {
+  &-container {
+    display: flex;
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #f5f5f5;
+  }
+
+  &-content {
+    position: relative;
+    flex: 1;
+    overflow: scroll;
+  }
+
+  &-expand-messenger {
+    position: absolute;
+    z-index: 11;
+    width: 100%;
+    height: 100%;
+    margin-left: -2px;
+  }
+}
+
+.main_side {
+  margin-top: 20px;
+
+  .item {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 8px 0;
+    color: rgba(255, 255, 255, 0.54);
+    font-size: 13px;
+
+    &_active {
+      color: #fff;
+    }
+
+    .md-icon-separator {
+      flex-direction: column;
+
+      .md-icon-text {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+.workspace-upgrade {
+  width: 60px;
+  min-width: 60px;
+  height: 20px;
+  min-height: 20px;
+  margin-left: 3px;
+  padding: 0;
+  background: green;
+  color: white;
+  font-size: 10px;
+}
+
+.workspace-shell-wrapper-avatar {
+  width: auto;
+  padding: 0 10px;
+  border-radius: 10px;
+  background: #666;
+}
+/* stylelint-disable */
+#root {
+  .target-app-shell-avatarname-name {
+    right: unset;
+    left: 50%;
+    max-width: unset;
+    transform: translateX(-50%);
+  }
+}
+
+.general-loader {
+  display: flex;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(#000, 0.6);
+}
+
+.target-app-shell-notificationpage-topbar {
+  left: 0;
+}

@@ -1,0 +1,40 @@
+query meWorkspacesByOrganization($orgId: String!) {
+  meWorkspacesByOrganization(organizationID: $orgId) {
+    workspaces {
+      id
+      organizationID
+      name
+      createdBy {
+        id
+        subject
+      }
+      streams {
+        streams {
+          id
+          name
+          tasks {
+            tasks {
+              id
+              name
+            }
+          }
+        }
+      }
+      wsUsers {
+        wsUsers {
+          user {
+            id
+            subject
+            profile {
+              subject
+              title
+              fullName
+              email
+              photo
+            }
+          }
+        }
+      }
+    }
+  }
+}

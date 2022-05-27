@@ -1,0 +1,113 @@
+name: build_and_push_to_manifest
+on:
+  push:
+    branches:
+      - '*'
+    # tags:
+    #   - '*.*.*'
+  pull_request:
+  workflow_dispatch:
+env:
+  GITLAB_REGISTRY: registry.gitlab.com/target-digital-transformation/devops
+  DEFAULT_MOULE: true ## true, ingore, default is true
+  SECOND_MODULE: null ## null, ignore, ${MODULE_NAME}, default is null
+  SECOND_MODULE_FOR_COMMON: 'common2 common3'
+  THIRD_MODULE: null
+  THIRD_MODULE_FOR_COMMON: 'common4 common5'
+
+jobs:
+  # unit_test:
+  #   name: unit test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Cache Gradle packages
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           ~/.gradle/caches
+  #           ~/.gradle/wrapper
+
+  build_and_push_image:
+    name: build and push docker image
+    if: contains(github.ref, 'refs/heads/')
+    # if: contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker image name env
+        run: |
+          echo "GITLAB_IMAGE_NAME=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}:${GITHUB_SHA::8}"
+          echo "GITLAB_IMAGE_NAME=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}:${GITHUB_SHA::8}" >> $GITHUB_ENV
+          echo "GITLAB_IMAGE_NAME_SECOND_MODULE=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}-${SECOND_MODULE}:${GITHUB_SHA::8}"
+          echo "GITLAB_IMAGE_NAME_SECOND_MODULE=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}-${SECOND_MODULE}:${GITHUB_SHA::8}" >> $GITHUB_ENV
+          echo "GITLAB_IMAGE_NAME_THIRD_MODULE=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}-${THIRD_MODULE}:${GITHUB_SHA::8}"
+          echo "GITLAB_IMAGE_NAME_THIRD_MODULE=${GITLAB_REGISTRY}/${GITHUB_REPOSITORY}-${THIRD_MODULE}:${GITHUB_SHA::8}" >> $GITHUB_ENV
+      - name: Build docker image
+        # permission change due to: actions/upload-artifact#38
+        # https://github.com/gliderlabs/docker-alpine/issues/307#issuecomment-357247928
+        run: |
+          if [ "$DEFAULT_MOULE" != "ignore" ] ;then
+          docker build -t $GITLAB_IMAGE_NAME --build-arg NPM_AUTH_TOKEN=${{ secrets.NPM_AUTH_TOKEN }} .
+          fi
+
+          if [ "$SECOND_MODULE" != "ignore" ] && [ "$SECOND_MODULE" != "null" ] && [ "$SECOND_MODULE" != "" ];then
+          echo "-----build the SECOND_MODULE docker image----"
+          docker build -f- -t $GITLAB_IMAGE_NAME_SECOND_MODULE . <<EOF
+          FROM alpine:3.14
+          EOF
+          fi
+
+          if [ "$THIRD_MODULE" != "ignore" ] && [ "$THIRD_MODULE" != "null" ] && [ "$THIRD_MODULE" != "" ];then
+          echo "-----build the THIRD_MODULE docker image----"
+          docker build -f- -t $GITLAB_IMAGE_NAME_THIRD_MODULE . <<EOF
+          FROM alpine:3.14
+          EOF
+          fi
+
+      - name: Push image to gitlab registry
+        run: |
+          echo ${{ secrets.GITLAB_CR_PAT }} | docker login registry.gitlab.com -u ${{ secrets.GITLAB_CR_USER }} --password-stdin
+          if [ "$DEFAULT_MOULE" != "ignore" ] ;then
+          docker push $GITLAB_IMAGE_NAME
+          fi
+          if [ "$SECOND_MODULE" != "ignore" ] && [ "$SECOND_MODULE" != "null" ] && [ "$SECOND_MODULE" != "" ];then
+          docker push $GITLAB_IMAGE_NAME_SECOND_MODULE
+          fi          
+          if [ "$THIRD_MODULE" != "ignore" ] && [ "$THIRD_MODULE" != "null" ] && [ "$THIRD_MODULE" != "" ];then
+          docker push $GITLAB_IMAGE_NAME_THIRD_MODULE
+          fi
+
+  push_to_manifest:
+    runs-on: ubuntu-latest
+    name: push to manifest
+    if: ${{ github.ref != 'tag' }}
+    needs:
+      - build_and_push_image
+    steps:
+      - name: Checkout manifest repo
+        uses: actions/checkout@v2
+        with:
+          repository: tespkg/tes_manifests
+          token: ${{ secrets.TES_MANIFEST_TOKEN }}
+
+      # - name: Set up tools
+      #   uses: tespkg/action@set_up_tools
+
+      - name: Push to dev
+        ## your main branch
+        ## push the image name to env-dev/${{ github.repository }}
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: tespkg/action@deploy_to_dev
+        with:
+          ALIAS_GITHUB_REPOSITORY: ${{ github.repository }}
+          TES_ENV: dev
+
+      - name: Push to mixed
+        ## push the image name to env-mixed/${{ github.repository }}-${branch}
+        ## fill your spec branch
+        if: ${{ github.ref == 'REPLACEME' }}
+        uses: tespkg/action@deploy_to_dev
+        with:
+          ALIAS_GITHUB_REPOSITORY: ${{ github.repository }}
+          TES_ENV: mixed

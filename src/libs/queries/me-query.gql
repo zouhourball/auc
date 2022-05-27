@@ -1,0 +1,19 @@
+query meQuery {
+  mev2 {
+    user {
+      id
+      subject
+      profile {
+        userID
+        fullName
+        title
+        pictureURL
+        email
+      }
+    }
+    primaryRole
+    isPremium
+    isEnterpriseUser
+    roles
+  }
+}

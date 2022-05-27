@@ -1,0 +1,6 @@
+query meOrganizations {
+  meOrganizations {
+    ID
+    Name
+  }
+}

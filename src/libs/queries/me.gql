@@ -1,0 +1,10 @@
+query meQuery {
+  me {
+    roles
+    userProfile {
+      userID
+      fullName
+      subject
+    }
+  }
+}

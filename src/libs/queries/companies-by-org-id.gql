@@ -1,0 +1,19 @@
+query companiesByOrgID($organisationIDs: [ID!]!) {
+  companiesByOrganisationIDs(organisationIDs: $organisationIDs) {
+    name
+    city {
+      cityName
+    }
+    state {
+      name
+    }
+    country {
+      countryName
+    }
+
+    companyLogo {
+      aPIID
+      aPIURL
+    }
+  }
+}
