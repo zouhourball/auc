@@ -41,12 +41,14 @@ dependencies:
   moment-timezone: 0.5.34
   node-sass: 4.14.1
   normalize.css: 8.0.1
+  pdfjs-dist: 2.6.347
   postcss-rtl: 1.7.3
   prop-types: 15.8.1
   react: 18.0.0
   react-apollo: 3.1.5_b8998423c18be6e8f5ee9bd12873f6fc
   react-apollo-hooks: 0.5.0_graphql@15.8.0+react@18.0.0
   react-color: 2.19.3_react@18.0.0
+  react-day-picker: 7.4.10_react@18.0.0
   react-dom: 18.0.0_react@18.0.0
   react-dropzone: 11.7.1_react@18.0.0
   react-hoc-query: 1.2.4_a7e6d6d4ff258d09c847c5d55e3c3433
@@ -54,6 +56,7 @@ dependencies:
   react-image-crop: 7.0.1_react@18.0.0
   react-md: 1.18.1_react-dom@18.0.0+react@18.0.0
   react-onclickoutside: 6.12.1_react-dom@18.0.0+react@18.0.0
+  react-pdf: 5.7.2_75f279ef6cf212aa2d915693ede263f0
   react-query: 3.39.0_react-dom@18.0.0+react@18.0.0
   react-redux: 7.2.8_react-dom@18.0.0+react@18.0.0
   react-slider: 1.3.1_prop-types@15.8.1+react@18.0.0
@@ -192,7 +195,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jCH+k2Vjlno4YWl6g535nHR09PwCEmTBKAG6VqF+rhkrSPRLfgpU2maagwbZPLjaHuU5Jd1DFQ2KJpQuI6uG8w==
-  /@apollo/client/3.6.5_graphql@15.8.0+react@18.0.0:
+  /@apollo/client/3.6.6_graphql@15.8.0+react@18.0.0:
     dependencies:
       '@graphql-typed-document-node/core': 3.1.1_graphql@15.8.0
       '@wry/context': 0.6.1
@@ -221,7 +224,7 @@ packages:
       subscriptions-transport-ws:
         optional: true
     resolution:
-      integrity: sha512-xGAZzv1f5abyH45MSU5eOLyGQuP4Ps0OhP36pSCtt6pCICI3n4yDkdftFCPvqDVqVTuciX1kkyeJPfGodz5kwg==
+      integrity: sha512-AzNLN043wy0bDTTR9wzKYSu+I1IT2Ox3+vWckxgIt88Jfw5jHBvumf3lXE1JlgvbFCTiKS/Sa66AadQXWMVBRQ==
   /@apollo/react-common/3.1.4_21f9b84080d8551cef85b673cfa8ec20:
     dependencies:
       '@types/react': 18.0.9
@@ -302,7 +305,7 @@ packages:
       integrity: sha512-y0CJ393DLxIIkksRup4nt+vSjxalbZBXnnXxYbviq/woj+zKa431zy0yT4LqyRKpFy9ahMIwxBnBwfwIoupqLQ==
   /@apollo/react-hooks/4.0.0_graphql@15.8.0+react@18.0.0:
     dependencies:
-      '@apollo/client': 3.6.5_graphql@15.8.0+react@18.0.0
+      '@apollo/client': 3.6.6_graphql@15.8.0+react@18.0.0
     dev: false
     peerDependencies:
       graphql: '*'
@@ -326,7 +329,7 @@ packages:
       integrity: sha512-wuLPkKlctNn3u8EU8rlECyktpOUCeekFfb0KhIKknpGY6Lza2Qu0bThx7D9MIbVEzhKadNNrzLcpk0Y8/5UuWg==
   /@apollo/react-testing/4.0.0_graphql@15.8.0+react@18.0.0:
     dependencies:
-      '@apollo/client': 3.6.5_graphql@15.8.0+react@18.0.0
+      '@apollo/client': 3.6.6_graphql@15.8.0+react@18.0.0
     dev: true
     peerDependencies:
       graphql: '*'
@@ -9945,7 +9948,7 @@ packages:
     dev: false
     optional: true
     resolution:
-      integrity: sha1-p96IkUGgWpSwhUQDstCg+/qY87c=
+      integrity: sha512-zw4SRzoUkd+cl+ZoE15A9o1oQd920Bb0iOJMQkQhl3jNc03YqVjAhG7scf9C5KWRU/R13Orf588uCC6525o02g==
   /es6-symbol/3.1.3:
     dependencies:
       d: 1.0.1
@@ -10688,6 +10691,18 @@ packages:
       webpack: ^4.0.0
     resolution:
       integrity: sha512-4sNIOXgtH/9WZq4NvlfU3Opn5ynUsqBwSLyM+I7UOwdGigTBYfVVQEwe/msZNX/j4pCJTIM14Fsw66Svo1oVrw==
+  /file-loader/6.2.0_webpack@4.46.0:
+    dependencies:
+      loader-utils: 2.0.2
+      schema-utils: 3.1.1
+      webpack: 4.46.0_webpack-cli@3.3.12
+    dev: false
+    engines:
+      node: '>= 10.13.0'
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    resolution:
+      integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==
   /file-saver/2.0.5:
     dev: false
     resolution:
@@ -15873,10 +15888,23 @@ packages:
       node: '>=0.12'
     resolution:
       integrity: sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==
+  /pdfjs-dist/2.12.313:
+    dev: false
+    peerDependencies:
+      worker-loader: ^3.0.8
+    peerDependenciesMeta:
+      worker-loader:
+        optional: true
+    resolution:
+      integrity: sha512-1x6iXO4Qnv6Eb+YFdN5JdUzt4pAkxSp3aLAYPX93eQCyg/m7QFzXVWJHJVtoW48CI8HCXju4dSkhQZwoheL5mA==
   /pdfjs-dist/2.5.207:
     dev: false
     resolution:
       integrity: sha512-xGDUhnCYPfHy+unMXCLCJtlpZaaZ17Ew3WIL0tnSgKFUZXHAPD49GO9xScyszSsQMoutNDgRb+rfBXIaX/lJbw==
+  /pdfjs-dist/2.6.347:
+    dev: false
+    resolution:
+      integrity: sha512-QC+h7hG2su9v/nU1wEI3SnpPIrqJODL7GTDFvR74ANKGq1AFJW16PH8VWnhpiTi9YcLSFV9xLeWSgq+ckHLdVQ==
   /pdfjs-dist/2.9.359:
     dev: false
     peerDependencies:
@@ -18105,6 +18133,27 @@ packages:
       webpack: '*'
     resolution:
       integrity: sha512-/vl+fzurHzz1o1knGSnLzFu1lL/1yb67JSE3WSX3bC/ioL/j34q5WiJbxK2D61Og0RZe6CNy9rve6JyB+sfHCw==
+  /react-pdf/5.7.2_75f279ef6cf212aa2d915693ede263f0:
+    dependencies:
+      '@babel/runtime': 7.18.3
+      file-loader: 6.2.0_webpack@4.46.0
+      make-cancellable-promise: 1.1.0
+      make-event-props: 1.3.0
+      merge-class-names: 1.4.2
+      merge-refs: 1.0.0
+      pdfjs-dist: 2.12.313
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      tiny-invariant: 1.2.0
+      tiny-warning: 1.0.3
+    dev: false
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+      webpack: '*'
+    resolution:
+      integrity: sha512-hdDwvf007V0i2rPCqQVS1fa70CXut17SN3laJYlRHzuqcu8sLLjEoeXihty6c0Ev5g1mw31b8OT8EwRw1s8C4g==
   /react-popper/2.3.0_7662a49e75c97dd8b89d05a0d2a629e7:
     dependencies:
       '@popperjs/core': 2.11.5
@@ -22412,6 +22461,7 @@ specifiers:
   normalize.css: ^8.0.1
   npm-run-all: ^4.1.5
   optimize-css-assets-webpack-plugin: ^5.0.1
+  pdfjs-dist: 2.6.347
   postcss-flexbugs-fixes: ^4.1.0
   postcss-loader: ^3.0.0
   postcss-rtl: ^1.7.3
@@ -22423,6 +22473,7 @@ specifiers:
   react-apollo: ^3.1.5
   react-apollo-hooks: ^0.5.0
   react-color: ^2.19.3
+  react-day-picker: ^7.4.10
   react-dom: 18.0.0
   react-dropzone: ^11.3.2
   react-hoc-query: ^1.2.4
@@ -22431,6 +22482,7 @@ specifiers:
   react-image-crop: 7.0.1
   react-md: ^1.9.3
   react-onclickoutside: ^6.10.0
+  react-pdf: ^5.3.0
   react-query: ^3.16.0
   react-redux: ^7.2.4
   react-slider: ^1.3.1
