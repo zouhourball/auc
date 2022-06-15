@@ -1,0 +1,153 @@
+.auction-form-stepper {
+  &-header {
+    padding: 20px;
+    background-color: #fff;
+
+    &-title {
+      color: #6d7893;
+      font-weight: 600;
+      size: 18px;
+    }
+
+    &-details {
+      display: flex;
+      align-items: center;
+
+      span {
+        display: flex;
+        align-items: center;
+        color: #7f8aa4;
+        size: 12px;
+
+        b {
+          color: #7583a0;
+        }
+
+        i {
+          padding-bottom: 5px;
+          padding-left: 8px;
+          color: #0a6068;
+        }
+      }
+
+      .sep {
+        width: 1px;
+        height: 14px;
+        margin: 0 10px;
+        background-color: #e2e7ec;
+      }
+    }
+  }
+
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-content {
+    width: 1000px;
+    margin: 50px;
+    border-radius: 8px;
+    background-color: #fff;
+
+    &-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 50px;
+      border-bottom: 2px dashed #e2e6e9;
+
+      .step {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin: 0 10px;
+        border-radius: 100%;
+        background-color: #f6f8fa;
+        color: #6d7893;
+        font-size: 16px;
+
+        &.green {
+          background-color: #12c015;
+          color: #fff;
+          font-weight: 500;
+
+          i {
+            color: #fff;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .horizontal-sep {
+        width: 130px;
+        height: 1px;
+        margin: 0 10px;
+        background-color: #dde1e4;
+
+        &.active {
+          background-color: #12c015;
+        }
+      }
+    }
+
+    &-body {
+      padding: 30px 50px;
+    }
+
+    &-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px 50px;
+
+      button {
+        width: 120px;
+        height: auto;
+        padding: 8px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+
+        &.back-btn {
+          background-color: #f4f6f8;
+          color: #7583a0;
+        }
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+
+        button {
+          width: 120px;
+          height: auto;
+          margin: 0 10px;
+          padding: 8px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: bold;
+
+          &.back-btn {
+            background-color: #f4f6f8;
+            color: #7583a0;
+          }
+
+          &.save-btn {
+            background-color: rgba(#0a6068, 0.11);
+            color: #0a6068;
+          }
+
+          &.publish-btn {
+            background-color: #0a6068;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
