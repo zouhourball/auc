@@ -3,8 +3,8 @@ import DocumentsForm from 'components/documents-form'
 import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
 import PropertyDetailsForm from 'components/property-details-form'
 import { useState } from 'react'
-import { Button } from 'react-md'
-
+import { Button, FontIcon } from 'react-md'
+import './style.scss'
 const CreateAuctionStepper = ({ auctionUuid }) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [auctionDetails, setAuctionDetails] = useState({
@@ -76,7 +76,47 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
 
   return (
     <div className="create-auction-stepper">
-      <div className="create-auction-stepper-header">header</div>
+      <div className="create-auction-stepper-header">
+        <div className="auction-form-stepper-content-head">
+          <span className={currentStep !== 1 ? 'step green' : 'step'}>
+            {currentStep === 1 ? 1 : <FontIcon>done</FontIcon>}
+          </span>
+          <span>{'auction_details'}</span>
+          <div
+            className={
+              currentStep === 1 ? 'horizontal-sep' : 'horizontal-sep active'
+            }
+          />
+          <span className={currentStep > 2 ? 'step green' : 'step'}>
+            {currentStep < 3 ? 2 : <FontIcon>done</FontIcon>}
+          </span>
+
+          <span>{'property_details'}</span>
+          <div
+            className={
+              currentStep < 3 ? 'horizontal-sep' : 'horizontal-sep active'
+            }
+          />
+          {
+            <span className={currentStep < 4 ? 'step ' : 'step green'}>
+              {currentStep < 4 ? 3 : <FontIcon>done</FontIcon>}
+            </span>
+          }
+          <span>{'documents'}</span>
+
+          <div
+            className={
+              currentStep < 4 ? 'horizontal-sep' : 'horizontal-sep active'
+            }
+          />
+          {
+            <span className={currentStep !== 5 ? 'step ' : 'step green'}>
+              {currentStep < 5 ? 4 : <FontIcon>done</FontIcon>}
+            </span>
+          }
+          <span>{'eligibility_criteria'}</span>
+        </div>
+      </div>
       <div className="create-auction-body">{renderCurrentTabContent()}</div>
       <div className="create-auction-stepper-footer">
         <Button primary className="back-btn" onClick={() => {}}>
