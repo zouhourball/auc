@@ -100,6 +100,7 @@
     "react-apollo": "^3.1.5",
     "react-apollo-hooks": "^0.5.0",
     "react-color": "^2.19.3",
+    "react-day-picker": "^7.4.10",
     "react-dom": "18.0.0",
     "react-dropzone": "^11.3.2",
     "react-hoc-query": "^1.2.4",
@@ -118,7 +119,9 @@
     "tiny-cookie": "^2.3.2",
     "tus-js-client": "^2.3.0",
     "url-polyfill": "^1.1.8",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "pdfjs-dist": "2.6.347",
+    "react-pdf": "^5.3.0"
   },
   "devDependencies": {
     "@apollo/react-testing": "^4.0.0",

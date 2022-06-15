@@ -1,0 +1,102 @@
+$secondary-text: #808080;
+$primary-color: #1979ff;
+$gray-border-color: rgba(0, 0, 0, 0.37);
+$disable-text-color: rgba(0, 0, 0, 0.38);
+
+.due-date-togglebtn.mdc-button {
+  text-transform: none;
+
+  &:not(:disabled) {
+    padding-left: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 12px;
+  }
+
+  .mdc-button__label {
+    letter-spacing: 0;
+  }
+
+  &.mdc-ripple-upgraded::before,
+  &.mdc-ripple-upgraded::after {
+    background-color: none;
+  }
+
+  .mdc-button__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #eff9fe;
+    color: $primary-color;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  .mdc-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.due-date-container {
+  .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #f0f8ff !important;
+    color: $primary-color;
+  }
+
+  .DayPicker-Day {
+    border-radius: 0;
+    outline: none;
+  }
+
+  .DayPicker-Day--start {
+    // background-color: $primary-color;
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+    // position: relative;
+    // color: #f0f8ff;
+  }
+
+  .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+  }
+
+  .DayPicker-Day--today {
+    color: $primary-color;
+  }
+
+  .DayPicker-wrapper,
+  .DayPicker-NavButton {
+    outline: none;
+  }
+}
+
+.due-date-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.date-picker-today.mdc-button:not(:disabled) {
+  height: 24px;
+  background-color: #1979ff1a;
+  color: $primary-color;
+  letter-spacing: 0;
+  text-transform: capitalize;
+}
+
+.date-picker-reset.mdc-button:not(:disabled) {
+  height: 24px;
+  border-color: #eaeaea;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0;
+  text-transform: capitalize;
+}

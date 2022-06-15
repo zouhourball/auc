@@ -1,4 +1,5 @@
 import TopBar from 'components/top-bar'
+import CreateAuctionStepper from 'components/create-auction-stepper'
 
 const Auctions = () => {
   return (
@@ -33,6 +34,7 @@ const Auctions = () => {
         onClickRegisterUrl={'/public/register'}
         // logged={token}
       />
+      <CreateAuctionStepper />
     </div>
   )
 }
