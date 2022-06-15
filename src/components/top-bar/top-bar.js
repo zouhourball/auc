@@ -47,7 +47,7 @@ const TopBar = ({
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
   const orgId = useSelector(({ shell }) => shell?.organizationId)
-  // const [sideBarVisible, setSideBarVisible] = useState(false)
+  const [auctionsMenu, setAuctionsMenu] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user ? user.match(/\b(\w)/g)?.join('') : null
@@ -82,7 +82,7 @@ const TopBar = ({
               />
             ) : (
               <ListItem
-                primaryText={label}
+                primaryText={`${label} list item`}
                 onClick={() => {
                   onClickModule && onClickModule(key)
                   link && link()
@@ -112,17 +112,28 @@ const TopBar = ({
           </picture>
         </h1>
         <div className="modules">
-          <span
-            className={cls(
-              'modules-item',
-              // currentModule === key ? 'active' : '',
+          <div>
+            <span
+              className={cls(
+                'modules-item',
+                // currentModule === key ? 'active' : '',
+              )}
+              onClick={() => {
+                setAuctionsMenu(true)
+              }}
+            >
+              Auctions
+            </span>
+            {auctionsMenu && (
+              <ul>
+                <li onClick={() => navigate('live-auctions')}>Live Auctions</li>
+                <li onClick={() => navigate('upcoming-auctions')}>
+                  Upcoming Auctions
+                </li>
+              </ul>
             )}
-            // onClick={() => {
-            //   setSideBarVisible(true)
-            // }}
-          >
-            Auctions
-          </span>
+          </div>
+
           {modulesList &&
             modulesList.length > 0 &&
             modulesList.map(({ label, link, key, linkToNewTab }, i) => {

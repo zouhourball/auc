@@ -5,7 +5,7 @@ import { ApolloProvider } from 'react-apollo'
 import { Router } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import { ShellProvider } from '@target-energysolutions/app-shell'
+// import { ShellProvider } from '@target-energysolutions/app-shell'
 
 import { LangProvider, useSupportedLangs } from 'libs/langs'
 
@@ -21,12 +21,12 @@ const Root = ({ store, apolloClient, ssoCallback }) => {
         <LangProvider>
           <ApolloProvider client={apolloClient}>
             <ApolloHooksProvider client={apolloClient}>
-              <ShellProvider>
-                <Router>
-                  <SSO path="/sso/callback" ssoCallback={ssoCallback} />
-                  <App path="/*" langs={langs} />
-                </Router>
-              </ShellProvider>
+              {/* <ShellProvider> */}
+              <Router>
+                <SSO path="/sso/callback" ssoCallback={ssoCallback} />
+                <App path="/*" langs={langs} />
+              </Router>
+              {/* </ShellProvider> */}
             </ApolloHooksProvider>
           </ApolloProvider>
         </LangProvider>

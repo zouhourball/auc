@@ -1,27 +1,34 @@
 import { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 import { get as getLodash } from 'lodash-es'
-import { AppShellSide } from '@target-energysolutions/app-shell'
-import { cleanUp } from '@target-energysolutions/hoc-oauth'
-import * as cookies from 'tiny-cookie'
-import { navigate, Router, Redirect } from '@reach/router'
+// import { AppShellSide } from '@target-energysolutions/app-shell'
+// import { cleanUp } from '@target-energysolutions/hoc-oauth'
+// import * as cookies from 'tiny-cookie'
+import {
+  //  navigate,
+  Router,
+  Redirect,
+} from '@reach/router'
 import { useSelector, useDispatch } from 'react-redux'
-import { Snackbar, SVGIcon } from 'react-md'
+import {
+  Snackbar,
+  //  SVGIcon
+} from 'react-md'
 
 import Home from 'components/home'
 import { IntlContext, ContentContext } from 'components/app/context'
 
-import { useSupportedLangs } from 'libs/langs'
+// import { useSupportedLangs } from 'libs/langs'
 import { getAuthToken } from 'libs/utils/oauth-token'
 import meQuery from 'libs/queries/me-query.gql'
-import { validURL } from 'libs/utils/custom-function'
+// import { validURL } from 'libs/utils/custom-function'
 
 import * as act from 'modules/app/actions'
 
 import './styles.scss'
 
 const Shell = ({ lang }) => {
-  const langs = useSupportedLangs()
+  // const langs = useSupportedLangs()
 
   const { data } = useQuery(meQuery, {
     notifyOnNetworkStatusChange: true,
@@ -44,21 +51,21 @@ const Shell = ({ lang }) => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
   }, [lang])
 
-  const signOut = () => {
-    cleanUp()
-    window.location.href = '/'
-    if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem('organizationId', '')
-    } else {
-      cookies.set('organizationId', '')
-    }
-  }
+  // const signOut = () => {
+  //   cleanUp()
+  //   window.location.href = '/'
+  //   if (process.env.NODE_ENV === 'development') {
+  //     localStorage.setItem('organizationId', '')
+  //   } else {
+  //     cookies.set('organizationId', '')
+  //   }
+  // }
 
   const me = getLodash(data, 'mev2')
 
   const token = getAuthToken()
 
-  const actionMenus = []
+  // const actionMenus = []
 
   return (
     <IntlContext.Provider value={lang}>
@@ -69,7 +76,15 @@ const Shell = ({ lang }) => {
           locale: lang,
         }}
       >
-        <AppShellSide
+        <div className="app-shellwrapper-container">
+          <div className="app-shellwrapper-content">
+            <Router>
+              <Redirect from="/" to="/auctions" />
+              <Home path={'/auctions/*'} />
+            </Router>
+          </div>
+        </div>
+        {/* <AppShellSide
           languages={langs}
           actionMenus={actionMenus}
           notificationAPI={PRODUCT_APP_URL_API}
@@ -193,7 +208,7 @@ const Shell = ({ lang }) => {
               </div>
             </div>
           }
-        />
+        /> */}
       </ContentContext.Provider>
       <Snackbar
         autohide

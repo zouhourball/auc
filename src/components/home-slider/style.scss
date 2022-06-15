@@ -1,0 +1,33 @@
+.slick-slider {
+  position: relative;
+  width: 99vw;
+
+  .slick-prev {
+    right: 25px;
+  }
+
+  .slick-next {
+    left: 25px;
+  }
+
+  .slick-list {
+    width: 100%;
+  }
+
+  .slick-arrow {
+    position: absolute;
+    z-index: 99;
+    background-color: red;
+  }
+
+  .slick-track {
+    img {
+      height: 100vh;
+    }
+  }
+
+  .data-section {
+    position: absolute;
+    bottom: 50px;
+  }
+}
