@@ -1,12 +1,16 @@
-import { SelectionControlGroup } from 'react-md'
+import { useEffect } from 'react'
+import { SelectionControlGroup, TextField } from 'react-md'
 
 const EligibilityCriteriaForm = ({
   eligibilityCriteria,
   setEligibilityCriteria,
 }) => {
+  useEffect(() => {
+    setEligibilityCriteria({ type: 'organization' })
+  }, [])
   return (
     <div className="bidder-type">
-      <span>{'Eligibility Criteria'}</span>
+      <h1>{'Eligibility Criteria'}</h1>
       <SelectionControlGroup
         id="selection-control-group-radios"
         className="bidder-type-selection"
@@ -29,18 +33,35 @@ const EligibilityCriteriaForm = ({
         controls={[
           {
             label: 'Organization',
-            value: 'Organization',
+            value: 'organization',
           },
           {
             label: 'Individual',
-            value: 'Individual',
+            value: 'individual',
           },
           {
             label: 'Both',
-            value: 'Both',
+            value: 'both',
           },
         ]}
       />
+      {eligibilityCriteria?.type === 'individual' && (
+        <div>
+          <span>Minimum Age Requirement</span>
+          <TextField
+            id="age-requirement"
+            placeholder={'Enter number of bedrooms'}
+            value={eligibilityCriteria?.ageRequirement}
+            onChange={(value) =>
+              setEligibilityCriteria({
+                ...eligibilityCriteria,
+                ageRequirement: value,
+              })
+            }
+            className=" auction-property-details-content_textField filled"
+          />
+        </div>
+      )}
       {/* eligibilityCriteria?.type !== 'Organization' && (
         <>
           <span>{t('age_range')}</span>

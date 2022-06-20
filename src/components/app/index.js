@@ -76,8 +76,8 @@ const Shell = ({ lang }) => {
           locale: lang,
         }}
       >
-        <div className="app-shellwrapper-container">
-          <div className="app-shellwrapper-content">
+        <div className="app-wrapper-container">
+          <div className="app-wrapper-content">
             <Router>
               <Redirect from="/" to="/auctions" />
               <Home path={'/auctions/*'} />

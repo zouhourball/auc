@@ -11,6 +11,8 @@ const UpcomingAuctions = ({ cards }) => {
         With mazed, you can now browse through thousands of auctions to find
         your next big purchase
       </span>
+      <h1>Upcoming Auctions</h1>
+      <span>Explore more</span>
       <div>{renderCards()}</div>
     </div>
   )

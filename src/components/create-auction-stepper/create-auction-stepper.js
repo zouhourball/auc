@@ -4,6 +4,7 @@ import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
 import PropertyDetailsForm from 'components/property-details-form'
 import { useState } from 'react'
 import { Button, FontIcon } from 'react-md'
+import { navigate } from '@reach/router'
 import './style.scss'
 const CreateAuctionStepper = ({ auctionUuid }) => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -72,7 +73,9 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
   }
 
   const onUpdateAuction = () => {}
-  const onSaveAuction = () => {}
+  const onSaveAuction = () => {
+    navigate('/auctions/home')
+  }
 
   return (
     <div className="create-auction-stepper">
@@ -126,7 +129,7 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
           className="save-btn"
           primary
           onClick={() =>
-            currentStep > 4
+            currentStep > 3
               ? auctionUuid
                 ? onUpdateAuction()
                 : onSaveAuction()

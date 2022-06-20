@@ -1,13 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TextField, FontIcon, Checkbox, Button } from 'react-md'
 
 import UploadImages from 'components/upload-images'
 
 const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
-  const { description, keyFeatures, suggestedKeyFeatures, images } =
-    propertyDetails
+  const {
+    description,
+    keyFeatures,
+    suggestedKeyFeatures,
+    images,
+    bedrooms,
+    bathrooms,
+    area,
+  } = propertyDetails
 
   const [keyFeature, setKeyFeature] = useState()
+  const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
 
   const onSetFormDetails = (property, value) => {
     setPropertyDetails({ ...propertyDetails, [property]: value })
@@ -41,12 +49,17 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       </div>
     ))
   }
+  useEffect(() => {
+    setSuggestedKeysPanel(false)
+  }, [propertyDetails])
   const renderSuggestedKeys = () => {
     return suggestedKeyFeatures?.map((key, i) => (
       <Checkbox
         key={i}
         id={key?.label}
-        // checked={updatedKeys?.indexOf(key) !== -1}
+        checked={
+          !!propertyDetails?.keyFeatures?.find((el) => el.label === key.label)
+        }
         onChange={(v) =>
           v
             ? onSetFormDetails('keyFeatures', [
@@ -89,14 +102,41 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           required
           rows={5}
         />
-        <span>{'key_features_auctions_optional'}</span>
+        <span>Bedrooms *</span>
+        <TextField
+          id="bedrooms"
+          placeholder={'Enter number of bedrooms'}
+          value={bedrooms}
+          onChange={(value) => onSetFormDetails('bedrooms', value)}
+          className=" auction-property-details-content_textField filled"
+        />
+        <span>Bathrooms *</span>
+        <TextField
+          id="bathrooms"
+          placeholder={'Enter number of bathrooms'}
+          value={bathrooms}
+          onChange={(value) => onSetFormDetails('bathrooms', value)}
+          className=" auction-property-details-content_textField filled"
+        />
+        <span>Area (sq.m) *</span>
+        <TextField
+          id="area"
+          placeholder={'Enter area'}
+          value={area}
+          onChange={(value) => onSetFormDetails('area', value)}
+          className=" auction-property-details-content_textField filled"
+        />
+        <span>{'key features'}</span>
         <div className="feature-field">
           <TextField
             id="feature"
-            placeholder={'add_key_feature'}
+            placeholder={'Enter key feature'}
             value={keyFeature}
             onChange={(value) => setKeyFeature(value)}
             className=" auction-property-details-content_textField filled"
+            onClick={() => {
+              setSuggestedKeysPanel(true)
+            }}
           />
           <Button
             flat
@@ -105,27 +145,27 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
             onClick={addKeyFeature}
             disabled={!keyFeature}
           >
-            <FontIcon className="add">add</FontIcon> {'add_optional'}
+            <FontIcon className="add">add</FontIcon> {'Add'}
           </Button>
         </div>
         <div className="auction-property-details-content-features">
           {renderNewKeys()}
         </div>
-        <div className="md-grid auction-property-details-content-features-suggested">
-          {renderSuggestedKeys()}
-        </div>
+        {suggestedKeyPanel && (
+          <div className="md-grid auction-property-details-content-features-suggested">
+            {renderSuggestedKeys()}
+          </div>
+        )}
         <div className="auction-property-details-images">
-          <span className="images-title">
-            {'property_images_or_virtual_tour_files'}
-          </span>
+          <span className="images-title">{'Property Images'}</span>
           <UploadImages
             cover
             multiple={true}
             title={
               <>
                 <span className="drop-zone-placeholder">
-                  {'drag_and_drop_files_here_or'}
-                  <b>{'select_file_image'}</b>
+                  {'Drag & Drop Files here or'}
+                  <b>{'Select File / Image'}</b>
                 </span>
               </>
             }

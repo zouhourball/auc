@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Button } from 'react-md'
 import moment from 'moment'
-import villa from './villa.jpg'
+
+import { navigate } from '@reach/router'
+
 import './style.scss'
 
 const BiddingCard = ({ buttonTitle, auctionData }) => {
@@ -74,8 +76,11 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
   }, [auctionData])
 
   return (
-    <div className="bidding-card">
-      <img src={villa} className="bidding-card-background" />
+    <div
+      className="bidding-card"
+      onClick={() => navigate(`detail/${auctionData?.id}`)}
+    >
+      <img src={auctionData?.url} className="bidding-card-background" />
       <div className="bidding-card-header">
         {auctionData.isHighestBid && (
           <div className="highest-bidder">Highest Bidder</div>
