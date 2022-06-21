@@ -15,6 +15,8 @@ import SSO from 'components/sso'
 import GeneralErrorBoundary from 'components/general-error-boundary'
 
 import Public from 'components/public'
+import Admin from 'components/admin-page'
+
 const queryClient = new QueryClient()
 
 const Root = ({ store, apolloClient }) => {
@@ -26,9 +28,7 @@ const Root = ({ store, apolloClient }) => {
             <ApolloProvider client={apolloClient}>
               <ApolloHooksProvider client={apolloClient}>
                 {/* <ShellProvider> */}
-                <Router>
-                  <Main path="/*" />
-                </Router>
+                <Main />
                 {/* </ShellProvider> */}
               </ApolloHooksProvider>
             </ApolloProvider>
@@ -44,12 +44,13 @@ Root.propTypes = {
   ssoCallback: PropTypes.func.isRequired,
 }
 
-export default hot(withOAuth()(Root))
+export default hot(Root)
 const Main = () => {
   return (
     <Router>
-      <Public path={'/home/*'} />
-      <Private path={'/*'} />
+      <Public path={'/*'} />
+      <Private path={'/auctions/*'} />
+      <Admin path={'/admin'} />
     </Router>
   )
 }

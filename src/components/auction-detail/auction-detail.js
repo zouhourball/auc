@@ -2,22 +2,33 @@ import { Avatar, Button, FontIcon } from 'react-md'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
+import DocumentsContainer from 'components/docs-dialog'
 
 import { dummyData } from 'components/auctions-public/helper'
+import { useState } from 'react'
+import { dummyDocs } from 'components/admin-page/helper'
 
 const AuctionDetail = ({ auctionId }) => {
   const data = dummyData[0]
+  const [docAction, setDocAction] = useState(false)
+  const [currentImg, setCurrentImg] = useState(data?.url)
   return (
     <div>
       <div className="gallery">
         <h1>Auction Detail</h1>
         <span>View Map</span>
-        <img src={data?.url} />
+        {docAction && (
+          <>
+            <Button onClick={() => setDocAction(false)}>Approve</Button>
+            <Button onClick={() => setDocAction(false)}>Reject</Button>
+          </>
+        )}
+        <img src={currentImg} />
         <div className="gallery">
-          <img src={data?.url} />
-          <img src={data?.url} />
-          <img src={data?.url} />
-          <img src={data?.url} />
+          <img onClick={() => setCurrentImg(data?.url)} src={data?.url} />
+          <img onClick={() => setCurrentImg(data?.url)} src={data?.url} />
+          <img onClick={() => setCurrentImg(data?.url)} src={data?.url} />
+          <img onClick={() => setCurrentImg(data?.url)} src={data?.url} />
         </div>
       </div>
       <div className="detail">
@@ -45,6 +56,7 @@ const AuctionDetail = ({ auctionId }) => {
           <Button icon iconClassName="mdi mdi-phone" />
         </div>
         <Button>Bid Now</Button>
+        <Button onClick={() => setDocAction(true)}>Documents</Button>
       </div>
       <TermsCondition
         description={'description'}
@@ -59,6 +71,13 @@ const AuctionDetail = ({ auctionId }) => {
       <div className="fees-commission">
         Buyer s Premium 11% Co-Broke Commission 3%
       </div>
+      {docAction && (
+        <DocumentsContainer
+          visible={docAction}
+          onHide={() => setDocAction(false)}
+          data={dummyDocs}
+        />
+      )}
     </div>
   )
 }

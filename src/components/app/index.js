@@ -7,7 +7,7 @@ import { get as getLodash } from 'lodash-es'
 import {
   //  navigate,
   Router,
-  Redirect,
+  // Redirect,
 } from '@reach/router'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -79,8 +79,8 @@ const Shell = ({ lang }) => {
         <div className="app-wrapper-container">
           <div className="app-wrapper-content">
             <Router>
-              <Redirect from="/" to="/auctions" />
-              <Home path={'/auctions/*'} />
+              {/* <Redirect from="/auctions" to="/auctions" /> */}
+              <Home path={'/*'} />
             </Router>
           </div>
         </div>
