@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from 'react-md'
 import moment from 'moment'
 
 import { navigate } from '@reach/router'
 
 import './style.scss'
-
-const BiddingCard = ({ buttonTitle, auctionData }) => {
+/* eslint-disable */
+const BiddingCard = ({ buttonTitle, auctionData, className, status }) => {
   const [countdown, setCountdown] = useState({
     d: 0,
     h: 0,
@@ -16,13 +16,13 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
 
   //   const startingBid = auctionData?.['starting_price']
 
-  const status =
+  /* const status =
     +moment.utc(auctionData?.['auction_end_date']) < +moment() ||
     auctionData?.['awarded_to']?.uuid
       ? 'Ended'
       : +moment.utc(auctionData?.['auction_start_date']) > +moment()
         ? 'Upcoming'
-        : 'Active'
+        : 'Active' */
 
   //   const renderStatusClassName = () => {
   //     switch (status) {
@@ -39,7 +39,7 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
     if (status === 'Upcoming') return 'View Details'
     else return 'Bid Now'
   }
-  useEffect(() => {
+  /*   useEffect(() => {
     let interval = setInterval(() => {
       let status =
         +moment.utc(auctionData?.['auction_end_date']).add(2, 'seconds') <
@@ -73,11 +73,11 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
     return () => {
       clearInterval(interval)
     }
-  }, [auctionData])
+  }, [auctionData]) */
 
   return (
     <div
-      className="bidding-card"
+      className={`bidding-card ${className || ''}`}
       onClick={() => navigate(`detail/${auctionData?.id}`)}
     >
       <img src={auctionData?.url} className="bidding-card-background" />
@@ -85,17 +85,17 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
         {auctionData.isHighestBid && (
           <div className="highest-bidder">Highest Bidder</div>
         )}
-        <Button icon className="save-btn">
+        <Button icon primary className="save-btn">
           bookmark_outlined
         </Button>
       </div>
       <div className="bidding-card-footer">
         {status === 'Upcoming' && (
           <div className="bidding-card-info">
-            <div>
+            <div className="title">
               {auctionData.name} in {auctionData.location}
             </div>
-            <div>
+            <div className="description">
               Start Date:{' '}
               {moment(auctionData?.['auction_start_date']).format(
                 'DD MMM, YYYY',
@@ -105,13 +105,16 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
         )}
         {status === 'Active' && (
           <div className="bidding-card-info">
-            <div>{auctionData.name}</div>
-            <div>{auctionData.location}</div>
-            <div>Current Ask: {auctionData?.['starting_price']}</div>
+            <div className="title">{auctionData.name}</div>
+            <div className="description">{auctionData.location}</div>
+            <div className="sep" />
+            <div className="description">
+              Current Ask: {auctionData?.['starting_price']}
+            </div>
             <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
           </div>
         )}
-        <Button primary raised>
+        <Button flat primary swapTheming className="bidding-card-btn">
           {renderBtnTitle()}
         </Button>
       </div>
@@ -120,7 +123,7 @@ const BiddingCard = ({ buttonTitle, auctionData }) => {
 }
 
 export default BiddingCard
-
+/*
 const secondsToTime = (secs) => {
   let days = Math.floor(secs / (60 * 60 * 24))
 
@@ -140,7 +143,7 @@ const secondsToTime = (secs) => {
     s: seconds,
   }
   return obj
-}
+} */
 
 BiddingCard.defaultProps = {
   auctionData: {

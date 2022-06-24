@@ -1,33 +1,86 @@
 .slick-slider {
   position: relative;
-  width: 99vw;
 
   .slick-prev {
-    right: 25px;
+    left: 4.02vw;
   }
 
   .slick-next {
-    left: 25px;
+    right: 4.02vw;
   }
 
   .slick-list {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .slick-arrow {
-    position: absolute;
     z-index: 99;
-    background-color: red;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #fff;
+    font-size: 34px;
+    line-height: 50px;
+
+    &::before {
+      display: none;
+    }
+
+    &.slick-disabled {
+      opacity: 0.5;
+    }
+
+    &:hover,
+    &:focus {
+      color: #fff;
+    }
   }
 
-  .slick-track {
+  .slide-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+
     img {
-      height: 100vh;
+      width: 100%;
+      opacity: 0.7;
     }
   }
 
   .data-section {
     position: absolute;
     bottom: 50px;
+    left: 4.02vw;
+    color: #fff;
+    font-size: 30px;
+
+    &-title {
+      font-weight: 700;
+    }
+
+    &-separateur {
+      width: 100px;
+      height: 1px;
+      margin: 8px 0;
+      background: #fff;
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      margin-top: 10px;
+      padding: 12px 20px;
+      border: 2px solid #0000;
+      border-radius: 14px;
+      font-size: 18px;
+      text-transform: capitalize;
+    }
   }
 }

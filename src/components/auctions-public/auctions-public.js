@@ -11,10 +11,10 @@ const AuctionsPublic = () => {
   //
 
   return (
-    <div>
+    <>
       <HomeSlider />
       <UpcomingAuctions cards={dummyData} />
-    </div>
+    </>
   )
 }
 export default AuctionsPublic

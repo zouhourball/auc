@@ -8,7 +8,11 @@ import AuctionDetail from 'components/auction-detail'
 import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
 
+import './style.scss'
+
 const Public = () => {
+  const modules = location.pathname.split('/').filter((v) => v !== '')
+
   const modulesList = [
     { label: 'Services', link: '', key: 'services', linkToNewTab: '' },
     {
@@ -22,7 +26,10 @@ const Public = () => {
   ]
   return (
     <div className="public-view">
-      <TopBar modulesList={modulesList} />
+      <TopBar
+        modulesList={modulesList}
+        clear={modules && [modules[0], modules[1]].includes('home')}
+      />
 
       <Suspense fallback={<div>Loading...</div>}>
         <Router>

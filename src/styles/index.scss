@@ -36,8 +36,9 @@
 body {
   background-color: #f7f7f7 !important;
   color: #2f3842;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
+  font-weight: 300;
 
   h1,
   h2,
@@ -125,10 +126,6 @@ html,
 body,
 .addressBook-root {
   height: 100%;
-
-  div[tabindex='-1'][style='outline: none;'] {
-    height: 100%;
-  }
 }
 
 .data-loading {

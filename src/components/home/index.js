@@ -15,6 +15,8 @@ import './style.scss'
 const queryClient = new QueryClient()
 
 const Home = () => {
+  const modules = location.pathname.split('/').filter((v) => v !== '')
+
   const modulesList = [
     { label: 'Services', link: '', key: 'services', linkToNewTab: '' },
     {
@@ -34,9 +36,12 @@ const Home = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
-        <TopBar modulesList={modulesList} logged />
-
+      <div className="auction-wrapper">
+        <TopBar
+          modulesList={modulesList}
+          logged={false}
+          clear={modules && [modules[0], modules[1]].includes('home')}
+        />
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />
           {/* <Auctions path={'/add-auction'} /> */}
@@ -48,8 +53,8 @@ const Home = () => {
           <AuctionAsset path={'/auction-asset'} />
         </Router>
         <Footer />
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </div>
-      <ReactQueryDevtools initialIsOpen={false} position="top-left" />
     </QueryClientProvider>
   )
 }

@@ -47,7 +47,7 @@ const TopBar = ({
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
   const orgId = useSelector(({ shell }) => shell?.organizationId)
-  const [auctionsMenu, setAuctionsMenu] = useState(false)
+  // const [auctionsMenu, setAuctionsMenu] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user ? user.match(/\b(\w)/g)?.join('') : null
@@ -107,12 +107,41 @@ const TopBar = ({
           onClick={onClickLogo}
         >
           <picture>
-            <h2>Logo</h2>
+            <span>Logo</span>
             {/* <img src={ logoWebp} alt="icon" height="40px" /> */}
           </picture>
         </h1>
         <div className="modules">
-          <div>
+          <MenuButton
+            id="smart-menu-button-1"
+            className={cls(
+              'modules-item',
+              // currentModule === key ? 'active' : '',
+            )}
+            flat
+            menuItems={[
+              <ListItem
+                key={1}
+                primaryText="Live Auctions"
+                onClick={() => navigate('live-auctions')}
+              />,
+              <ListItem
+                key={2}
+                primaryText="upcoming-auctions"
+                onClick={() => navigate('upcoming-auctions')}
+              />,
+            ]}
+            simplifiedMenu={false}
+            repositionOnScroll={false}
+            anchor={{
+              x: MenuButton.HorizontalAnchors.INNER_RIGHT,
+              y: MenuButton.VerticalAnchors.BOTTOM,
+            }}
+            position={MenuButton.Positions.BELOW}
+          >
+            Auctions
+          </MenuButton>
+          {/* <div>
             <span
               className={cls(
                 'modules-item',
@@ -132,7 +161,7 @@ const TopBar = ({
                 </li>
               </ul>
             )}
-          </div>
+          </div> */}
 
           {modulesList &&
             modulesList.length > 0 &&
@@ -155,7 +184,7 @@ const TopBar = ({
                       </span>
                     </Link>
                   ) : (
-                    <span
+                    <Button
                       className={cls(
                         'modules-item',
                         currentModule === key ? 'active' : '',
@@ -164,9 +193,10 @@ const TopBar = ({
                         onClickModule && onClickModule(key)
                         link && link()
                       }}
+                      flat
                     >
                       {label}
-                    </span>
+                    </Button>
                   )}
                 </>
               )
@@ -180,14 +210,16 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => navigate(onClickRegisterUrl)}
               >
-                {t('new_user')}
+                {t('register')}
               </Button>
               <Button
                 flat
                 className="login-btn"
+                primary
+                swapTheming
                 onClick={() => navigate(onClickLoginUrl)}
               >
-                {t('sign-in')}
+                {t('login')}
               </Button>
             </>
           )}
