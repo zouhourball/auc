@@ -8,6 +8,9 @@ import { dummyData } from 'components/auctions-public/helper'
 import { useState } from 'react'
 import { dummyDocs } from 'components/admin-page/helper'
 
+import mailIcon from 'images/mail_gray.svg'
+import phoneIcon from 'images/phone_white.svg'
+
 import icon1 from './icons/bedroom.svg'
 import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
@@ -18,14 +21,14 @@ const AuctionDetail = ({
   auctionId,
   isAdmin = true,
   status,
-  isActive = true,
+  isActive = false,
 }) => {
   const data = dummyData[0]
   const [docAction, setDocAction] = useState(false)
   const [currentImg, setCurrentImg] = useState(data?.url)
   return (
-    <div className="auction-details md-grid">
-      <div className="auction-details-gallery md-cell md-cell--6 md-grid">
+    <div className="auction-details md-grid md-grid--no-spacing">
+      <div className="auction-details-gallery md-cell md-cell--5 md-grid">
         <div className="auction-details-header md-cell md-cell--12">
           <div className="title">Auction Detail</div>
           <Button
@@ -60,17 +63,29 @@ const AuctionDetail = ({
           src={data?.url}
         />
       </div>
-      <div className="auction-details-info md-cell md-cell--6 md-grid">
+      <div className="auction-details-info md-cell md-cell--7 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {isAdmin &&
             (status ? (
               <div>{status}</div>
             ) : (
               <>
-                <Button flat onClick={() => setDocAction(false)}>
+                <Button
+                  flat
+                  primary
+                  swapTheming
+                  onClick={() => setDocAction(false)}
+                  className="auction-details-action"
+                >
                   Approve
                 </Button>
-                <Button flat onClick={() => setDocAction(false)}>
+                <Button
+                  flat
+                  secondary
+                  swapTheming
+                  onClick={() => setDocAction(false)}
+                  className="auction-details-action"
+                >
                   Reject
                 </Button>
               </>
@@ -92,7 +107,40 @@ const AuctionDetail = ({
             </div>
           </div>
         </div>
-        {isActive && (
+        {!isActive || isAdmin ? (
+          <div className="auction-details-card md-cell md-cell--12">
+            <div className="auction-timer-details">
+              <div className="auction-timer-info">
+                <div>
+                  <strong>27th April, 2022</strong>
+                </div>
+                <div>Starting Date</div>
+              </div>
+              <div className="sep" />
+              <div className="auction-timer-info">
+                <div>
+                  <strong>1623</strong>
+                </div>
+                <div>Lot Number</div>
+              </div>
+            </div>
+            <div className="auction-timer-details">
+              <div className="auction-timer-info">
+                <div>
+                  <strong>22,000 AED</strong>
+                </div>
+                <div>Current Price</div>
+              </div>
+              <div className="sep" />
+              <div className="auction-timer-info">
+                <div>
+                  <strong>1,000 AED</strong>
+                </div>
+                <div>Minimum Increment</div>
+              </div>
+            </div>
+          </div>
+        ) : (
           <>
             <div className="md-cell md-cell--12">
               <AuctionTimer
@@ -102,13 +150,13 @@ const AuctionDetail = ({
                 minIncrement={0}
               />
             </div>
-            <div className="auction-details-card md-cell md-cell--6">
+            <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
                 <strong>14</strong>
               </div>
               <div>Number of Bids</div>
             </div>
-            <div className="auction-details-card md-cell md-cell--6">
+            <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
                 <strong>0</strong>
               </div>
@@ -116,20 +164,59 @@ const AuctionDetail = ({
             </div>
           </>
         )}
+
         <div className="owner-card md-cell md-cell--12">
-          <Avatar /> Owned By Ali Salim{' '}
-          <Button icon iconClassName="mdi mdi-email" />
-          <Button icon iconClassName="mdi mdi-phone" />
+          <Avatar className="owner-card-avatar" />
+          <div className="owner-card-info">
+            <div>Owned By</div>
+            <div className="name">Ali Salim</div>
+          </div>
+          <Button
+            floating
+            iconEl={<img src={mailIcon} />}
+            className="owner-card-btn"
+          />
+          <Button
+            floating
+            primary
+            iconEl={<img src={phoneIcon} />}
+            className="owner-card-btn"
+          />
         </div>
-        <div>
+        <div className="md-cell md-cell--12">
           {isAdmin ? (
-            <Button primary flat swapTheming onClick={() => setDocAction(true)}>
+            <Button
+              primary
+              flat
+              swapTheming
+              onClick={() => setDocAction(true)}
+              className="auction-details-btn"
+            >
               Documents
             </Button>
-          ) : (
-            <Button flat primary swapTheming>
+          ) : isActive ? (
+            <Button flat primary swapTheming className="auction-details-btn">
               Bid Now
             </Button>
+          ) : (
+            <div className="auction-details-card md-cell md-cell--12">
+              <div className="fees-commission-title">Fees & Commission</div>
+              <div className="auction-timer-details">
+                <div className="auction-timer-info">
+                  <div>
+                    <strong>12%</strong>
+                  </div>
+                  <div>Buyer s Premium</div>
+                </div>
+                <div className="sep" />
+                <div className="auction-timer-info">
+                  <div>
+                    <strong>3%</strong>
+                  </div>
+                  <div>Co-Broke Commission</div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
@@ -140,13 +227,35 @@ const AuctionDetail = ({
         className="md-cell md-cell--12"
       />
       <div className="key-features  md-cell md-cell--12">
-        <FontIcon className="mdi mdi-check-circle-outline" /> wifi
-        <FontIcon className="mdi mdi-check-circle-outline" /> pool
-        <FontIcon className="mdi mdi-check-circle-outline" /> heat
+        <div className="key-features-title">Key Features</div>
+        <div className="key-features-content">
+          <div className="key-features-item">
+            <FontIcon primary>task_alt</FontIcon> wifi
+          </div>
+          <div className="key-features-item">
+            <FontIcon primary>task_alt</FontIcon> pool
+          </div>
+          <div className="key-features-item">
+            <FontIcon primary>task_alt</FontIcon> heat
+          </div>
+        </div>
       </div>
-      <div className="fees-commission">
-        Buyer s Premium 11% Co-Broke Commission 3%
-      </div>
+      {(isAdmin || isActive) && (
+        <div className="fees-commission md-cell md-cell--12">
+          <div className="fees-commission-title">Fees & Commission</div>
+          <div className="fees-commission-content">
+            <div className="fees-commission-item">
+              <div>Buyer s Premium</div>
+              <div className="value">11%</div>
+            </div>
+            <div className="fees-commission-item">
+              <div>Co-Broke Commission</div>
+              <div className="value">3%</div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {docAction && (
         <DocumentsContainer
           visible={docAction}

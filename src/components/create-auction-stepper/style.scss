@@ -1,153 +1,162 @@
-.auction-form-stepper {
+.create-auction {
+  margin-top: 20px;
+  border-radius: 35px;
+  background: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
   &-header {
-    padding: 20px;
-    background-color: #fff;
-
-    &-title {
-      color: #6d7893;
-      font-weight: 600;
-      size: 18px;
-    }
-
-    &-details {
-      display: flex;
-      align-items: center;
-
-      span {
-        display: flex;
-        align-items: center;
-        color: #7f8aa4;
-        size: 12px;
-
-        b {
-          color: #7583a0;
-        }
-
-        i {
-          padding-bottom: 5px;
-          padding-left: 8px;
-          color: #0a6068;
-        }
-      }
-
-      .sep {
-        width: 1px;
-        height: 14px;
-        margin: 0 10px;
-        background-color: #e2e7ec;
-      }
-    }
+    padding: 40px;
+    border-bottom: 1px solid #dbdbdb;
   }
 
-  &-container {
+  &-body {
+    padding: 20px 40px;
+  }
+
+  &-footer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    padding: 20px 40px;
+
+    .action-btn {
+      height: auto;
+      margin: 0 8px;
+      padding: 20px 40px;
+      border-radius: 18px;
+      font-size: 22px;
+
+      &.md-text--theme-primary {
+        border: 2px solid #5078e1;
+      }
+    }
+  }
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 40px;
+
+  &-separateur {
+    flex-grow: 1;
+    border-bottom: 2px dashed #dbdbdb;
   }
 
-  &-content {
-    width: 1000px;
-    margin: 50px;
-    border-radius: 8px;
+  .step {
+    position: relative;
+
+    &-index {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #dbdbdb;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+      color: #7c7c7c;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 40px;
+      text-align: center;
+    }
+
+    &-label {
+      position: absolute;
+      bottom: -35px;
+      left: 50%;
+      width: max-content;
+      transform: translateX(-50%);
+      color: #7c7c7c;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    &.active {
+      .step-index {
+        background: #e7ebf5;
+        color: #5078e1;
+      }
+    }
+
+    &.done {
+      .step-index {
+        background: #5078e1;
+        color: #fff;
+      }
+
+      .step-label {
+        color: #5078e1;
+      }
+
+      + .stepper-separateur {
+        border-color: #5078e1;
+      }
+    }
+  }
+}
+
+.auction-details-form {
+  &-title {
+    color: #3d3d3e;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  &-label {
+    display: block;
+    margin: 8px 0;
+    color: #7c7c7c;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+.feature-field {
+  position: relative;
+
+  &-list {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    transform: translateY(100%);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  }
+}
+
+.chipWrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    gap: 8px;
+  }
+}
+
+.bidder-type-selection {
+  display: flex;
+  margin-top: 16px;
+  padding: 0;
+  gap: 16px;
+
+  .md-selection-control-container {
+    flex: 1;
+    height: auto;
+    padding: 8px;
+    border-radius: 12px;
     background-color: #fff;
-
-    &-head {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 50px;
-      border-bottom: 2px dashed #e2e6e9;
-
-      .step {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        margin: 0 10px;
-        border-radius: 100%;
-        background-color: #f6f8fa;
-        color: #6d7893;
-        font-size: 16px;
-
-        &.green {
-          background-color: #12c015;
-          color: #fff;
-          font-weight: 500;
-
-          i {
-            color: #fff;
-            font-weight: bold;
-          }
-        }
-      }
-
-      .horizontal-sep {
-        width: 130px;
-        height: 1px;
-        margin: 0 10px;
-        background-color: #dde1e4;
-
-        &.active {
-          background-color: #12c015;
-        }
-      }
-    }
-
-    &-body {
-      padding: 30px 50px;
-    }
-
-    &-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 30px 50px;
-
-      button {
-        width: 120px;
-        height: auto;
-        padding: 8px;
-        border-radius: 8px;
-        font-size: 14px;
-        font-weight: bold;
-
-        &.back-btn {
-          background-color: #f4f6f8;
-          color: #7583a0;
-        }
-      }
-
-      .actions {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-
-        button {
-          width: 120px;
-          height: auto;
-          margin: 0 10px;
-          padding: 8px;
-          border-radius: 8px;
-          font-size: 14px;
-          font-weight: bold;
-
-          &.back-btn {
-            background-color: #f4f6f8;
-            color: #7583a0;
-          }
-
-          &.save-btn {
-            background-color: rgba(#0a6068, 0.11);
-            color: #0a6068;
-          }
-
-          &.publish-btn {
-            background-color: #0a6068;
-            color: #fff;
-          }
-        }
-      }
-    }
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
   }
 }

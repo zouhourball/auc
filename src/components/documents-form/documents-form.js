@@ -1,14 +1,12 @@
-import { useState } from 'react'
+import { FontIcon } from 'react-md'
+import UploadImages from 'components/upload-images'
 
-import { getPublicUrl } from 'libs/utils/custom-function'
-import { fileManagerUpload } from 'libs/api'
+const DocumentsForm = ({ propertyDetails, setPropertyDetails }) => {
+  //  const [images, setImages] = useState({})
 
-import { FileInput, FontIcon } from 'react-md'
+  const images = []
 
-const DocumentsForm = () => {
-  const [documents, setDocuments] = useState({})
-
-  const onFileSelected = (file, key) => {
+  /* const onFileSelected = (file, key) => {
     const myFileItemReader = new FileReader()
 
     myFileItemReader.readAsDataURL(file)
@@ -17,38 +15,85 @@ const DocumentsForm = () => {
         setDocuments({ ...documents, [key]: res?.files?.[0] })
       }
     })
+  } */
+
+  const onSetFormDetails = (property, value) => {
+    setPropertyDetails({ ...propertyDetails, [property]: value })
+  }
+
+  const setListImages = (newImages, keyAction, fileId) => {
+    if (keyAction === 'delete') {
+      onSetFormDetails(
+        'images',
+        images?.filter((el) => el.url !== fileId),
+      )
+    } else if (keyAction === 'add') {
+      onSetFormDetails('images', [...images, ...newImages])
+    } else {
+      onSetFormDetails('images', newImages)
+    }
   }
   const fileInputCustom = (key) => {
     return (
-      <FileInput
-        id={key}
-        className="org-signup-image"
-        // accept="image/jpeg, image/png"
-        icon={
-          documents[key] ? (
-            <img src={getPublicUrl(documents[key]?.id)} width="120px" />
-          ) : (
-            <FontIcon>add</FontIcon>
-          )
+      <UploadImages
+        cover
+        multiple={true}
+        title={
+          <>
+            <span className="drop-zone-placeholder">
+              {'Drag & Drop Files here or'}
+              <b>{' Select File / Image'}</b>
+            </span>
+          </>
         }
-        onChange={(file) => onFileSelected(file, key)}
+        setListFiles={(files, keyAction, fileId) =>
+          setListImages(files, keyAction, fileId)
+        }
+        listFiles={images}
+        iconDelete={true}
+        titleContent={' '}
+        addTitle={
+          <div className="">
+            <FontIcon className="">add</FontIcon>
+            {'add_images'}
+          </div>
+        }
+        titleUpload={images?.length > 0 ? 'add_images' : ''}
+        icon={<FontIcon>add_photo_alternate</FontIcon>}
+        accept="image/jpeg, image/png, image/jpg"
+        className="custom"
       />
     )
   }
   return (
-    <div>
-      <h1>Documents</h1>
-      <span>National ID/Passport of Owner *</span>
-      {fileInputCustom('ownerId')}
-
-      <span>Property Ownership Document *</span>
-      {fileInputCustom('propertyOwnership')}
-
-      <span>Universal Bidder Agreement *</span>
-      {fileInputCustom('bidderAgreement')}
-
-      <span>Letter of Authorization *</span>
-      {fileInputCustom('authLetter')}
+    <div div className="auction-details-form md-grid">
+      <div className="auction-details-form-title md-cell md-cell--12">
+        Documents
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          National ID/Passport of Owner *
+        </label>
+        {fileInputCustom('ownerId')}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Property Ownership Document *
+        </label>
+        {fileInputCustom('propertyOwnership')}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Universal Bidder Agreement *
+        </label>
+        {fileInputCustom('bidderAgreement')}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Letter of Authorization *
+        </label>
+        {fileInputCustom('authLetter')}
+      </div>
     </div>
   )
 }

@@ -1,12 +1,14 @@
 import Auctions from 'components/auctions'
 
+import './styles.scss'
+
 const AuctionAsset = () => {
   return (
-    <div>
-      <h1>Auction Asset</h1>
-      <span>
+    <div className="auction-asset">
+      <div className="auction-asset-title">Auction Asset</div>
+      <div className="auction-asset-subTitle">
         Please fill in the information to be able to auction your asset
-      </span>
+      </div>
       <Auctions />
     </div>
   )

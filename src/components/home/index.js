@@ -39,7 +39,7 @@ const Home = () => {
       <div className="auction-wrapper">
         <TopBar
           modulesList={modulesList}
-          logged={false}
+          // logged={false}
           clear={modules && [modules[0], modules[1]].includes('home')}
         />
         <Router>

@@ -170,18 +170,19 @@ const TopBar = ({
                 <>
                   {linkToNewTab ? (
                     <Link key={i} to={linkToNewTab}>
-                      <span
+                      <Button
                         className={cls(
                           'modules-item',
                           currentModule === key ? 'active' : '',
                         )}
+                        flat
                         onClick={() => {
                           onClickModule && onClickModule(key)
                           link && link()
                         }}
                       >
                         {label}
-                      </span>
+                      </Button>
                     </Link>
                   ) : (
                     <Button

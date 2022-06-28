@@ -28,6 +28,7 @@ const Public = () => {
     <div className="public-view">
       <TopBar
         modulesList={modulesList}
+        logged={false}
         clear={modules && [modules[0], modules[1]].includes('home')}
       />
 

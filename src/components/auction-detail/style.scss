@@ -1,11 +1,37 @@
 /* stylelint-disable */
 .auction-details {
-  padding: 0 4.02vw 0 calc(4.02vw - 24px);
+  padding: 0 4.02vw !important;
 
   &-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  &-action {
+    height: auto;
+    margin-left: 8px;
+    padding: 8px 24px;
+    border-radius: 15px;
+
+    &.md-background--primary {
+      background-color: #78deb3;
+    }
+
+    &.md-background--secondary {
+      background-color: #f00;
+    }
+  }
+
+  &-info {
+    align-self: flex-start;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 50px;
+    }
   }
 
   .title {
@@ -38,6 +64,14 @@
         align-items: center;
       }
     }
+
+    strong {
+      color: #3d3d3e;
+    }
+  }
+
+  .center-text {
+    text-align: center;
   }
 
   .gallery-image {
@@ -52,12 +86,103 @@
     }
   }
 
-  &-info {
-    align-self: flex-start;
+  &-btn {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 25px;
+    font-weight: 700;
+  }
+}
 
-    &-header {
-      display: flex;
-      justify-content: flex-end;
+.owner-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+  }
+
+  &-btn {
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  &-info {
+    flex-grow: 1;
+    color: #7c7c7c;
+    font-size: 28px;
+    font-weight: 500;
+
+    .name {
+      color: #3d3d3e;
+    }
+  }
+}
+
+.key-features {
+  margin: 8px 0 !important;
+  padding: 30px;
+  border-radius: 35px;
+  background-color: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+  &-title {
+    margin-bottom: 16px;
+    color: #3d3d3e;
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    color: #7c7c7c;
+    font-size: 20px;
+    font-weight: 500;
+    gap: 8px;
+  }
+}
+
+.fees-commission {
+  margin: 8px 0 !important;
+  padding: 30px;
+  border-radius: 35px;
+  background-color: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+  &-title {
+    margin-bottom: 16px;
+    color: #3d3d3e;
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &-item {
+    color: #7c7c7c;
+    font-size: 20px;
+    font-weight: 400;
+
+    .value {
+      font-size: 30px;
+      font-weight: 500;
     }
   }
 }

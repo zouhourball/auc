@@ -1,0 +1,10 @@
+query allCountryStateCities {
+  allCountries(limit: 500) {
+    countries {
+      countryName
+      countryCode
+      id
+      phoneCode
+    }
+  }
+}

@@ -5,6 +5,11 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
   font-weight: 500;
 
+  &.active {
+    background: #e7ebf5;
+    box-shadow: 0 0 0 3px #527bde inset, 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  }
+
   .timer {
     display: flex;
     justify-content: space-evenly;
@@ -28,6 +33,7 @@
   }
 
   &-info {
+    flex: 1;
     color: #7c7c7c;
     font-size: 25px;
     text-align: center;

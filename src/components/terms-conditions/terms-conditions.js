@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import './style.scss'
+
 const TermsCondition = ({ description, termOfSale, disclosure, className }) => {
   const [currentTab, setCurrentTab] = useState(0)
   const renderContent = () => {
@@ -13,13 +15,28 @@ const TermsCondition = ({ description, termOfSale, disclosure, className }) => {
     }
   }
   return (
-    <div className={className}>
-      <div className="nav-bar">
-        <span onClick={() => setCurrentTab(0)}>Description</span>
-        <span onClick={() => setCurrentTab(1)}>Terms of Sale</span>
-        <span onClick={() => setCurrentTab(2)}>Disclosure</span>
+    <div className={`terms-condition ${className}`}>
+      <div className="terms-condition-nav-bar">
+        <div
+          className={currentTab === 0 ? 'active' : ''}
+          onClick={() => setCurrentTab(0)}
+        >
+          Description
+        </div>
+        <div
+          className={currentTab === 1 ? 'active' : ''}
+          onClick={() => setCurrentTab(1)}
+        >
+          Terms of Sale
+        </div>
+        <div
+          className={currentTab === 2 ? 'active' : ''}
+          onClick={() => setCurrentTab(2)}
+        >
+          Disclosure
+        </div>
       </div>
-      <div>{renderContent()}</div>
+      <div className="terms-condition-content">{renderContent()}</div>
     </div>
   )
 }
