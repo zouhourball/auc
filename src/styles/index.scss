@@ -36,8 +36,9 @@
 body {
   background-color: #f7f7f7 !important;
   color: #2f3842;
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
+  font-weight: 300;
 
   h1,
   h2,
@@ -56,6 +57,30 @@ body {
   // html,
   div {
     font-family: inherit;
+  }
+
+  .textField-withShadow {
+    padding: 20px 16px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+    .md-text-field {
+      font-size: 18px;
+    }
+  }
+
+  .selectField-withShadow {
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+    .md-select-field--btn.md-select-field--btn {
+      height: auto;
+      padding: 15px 16px;
+      font-size: 18px;
+      font-weight: 400;
+    }
   }
 
   .target-app-shell--left-side--app-item {
@@ -125,10 +150,6 @@ html,
 body,
 .addressBook-root {
   height: 100%;
-
-  div[tabindex='-1'][style='outline: none;'] {
-    height: 100%;
-  }
 }
 
 .data-loading {

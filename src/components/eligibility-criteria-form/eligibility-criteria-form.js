@@ -9,45 +9,51 @@ const EligibilityCriteriaForm = ({
     setEligibilityCriteria({ type: 'organization' })
   }, [])
   return (
-    <div className="bidder-type">
-      <h1>{'Eligibility Criteria'}</h1>
-      <SelectionControlGroup
-        id="selection-control-group-radios"
-        className="bidder-type-selection"
-        name="radio-example"
-        type="radio"
-        inline
-        value={eligibilityCriteria?.type}
-        onChange={(checked) => {
-          setEligibilityCriteria({
-            type: checked,
-            /*  criteria: {
+    <div className="auction-details-form md-grid">
+      <div className="auction-details-form-title md-cell md-cell--12">
+        {'Eligibility Criteria'}
+      </div>
+      <div className="md-cell md-cell--12">
+        <SelectionControlGroup
+          id="selection-control-group-radios"
+          className="bidder-type-selection"
+          name="radio-example"
+          type="radio"
+          inline
+          value={eligibilityCriteria?.type}
+          onChange={(checked) => {
+            setEligibilityCriteria({
+              type: checked,
+              /*  criteria: {
               orgCriteria: checked !== 'Individual' ? 'Above' : '',
               individualCriteria: checked !== 'Organization' ? 'Above' : '',
             },
             age: 0,
             gcc_percentage: 0, */
-          })
-        }}
-        defaultValue={eligibilityCriteria?.type}
-        controls={[
-          {
-            label: 'Organization',
-            value: 'organization',
-          },
-          {
-            label: 'Individual',
-            value: 'individual',
-          },
-          {
-            label: 'Both',
-            value: 'both',
-          },
-        ]}
-      />
+            })
+          }}
+          defaultValue={eligibilityCriteria?.type}
+          controls={[
+            {
+              label: 'Organization',
+              value: 'organization',
+            },
+            {
+              label: 'Individual',
+              value: 'individual',
+            },
+            {
+              label: 'Both',
+              value: 'both',
+            },
+          ]}
+        />
+      </div>
       {eligibilityCriteria?.type === 'individual' && (
-        <div>
-          <span>Minimum Age Requirement</span>
+        <div className="md-cell md-cell--12">
+          <label className="auction-details-form-label">
+            Minimum Age Requirement*
+          </label>
           <TextField
             id="age-requirement"
             placeholder={'Enter number of bedrooms'}
@@ -58,7 +64,8 @@ const EligibilityCriteriaForm = ({
                 ageRequirement: value,
               })
             }
-            className=" auction-property-details-content_textField filled"
+            className="textField-withShadow"
+            block
           />
         </div>
       )}

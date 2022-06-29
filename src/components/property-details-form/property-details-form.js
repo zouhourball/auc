@@ -38,12 +38,9 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
 
   const renderNewKeys = () => {
     return keyFeatures?.map((updatedKey, index) => (
-      <div key={index} className="key">
-        <span className="feature-label">{updatedKey?.label}</span>
-        <FontIcon
-          className="feature-icon"
-          onClick={() => handleRemoveKey(updatedKey)}
-        >
+      <div key={index} className="chipWrapper-item">
+        <span className="label">{updatedKey?.label}</span>
+        <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
           close
         </FontIcon>
       </div>
@@ -88,105 +85,125 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
   }
 
   return (
-    <div className="auction-details-form">
-      <h2>{'Property Details'}</h2>
-      <div className="md-grid">
-        <span>{'property description *'}</span>
+    <div className="auction-details-form md-grid">
+      <div className="auction-details-form-title md-cell md-cell--12">
+        {'Property Details'}
+      </div>
+      <div className="md-cell md-cell--12">
+        <label className="auction-details-form-label">
+          {'property description *'}
+        </label>
         <TextField
           id="auctionDescription"
           value={description}
           onChange={(description) =>
             onSetFormDetails('description', description)
           }
-          className="auction-property-details-content_textField md-cell md-cell--12"
+          className="textField-withShadow"
           required
           rows={5}
+          placeholder={'Enter property description…'}
+          block
         />
-        <span>Bedrooms *</span>
+      </div>
+      <div className="md-cell md-cell--4">
+        <label className="auction-details-form-label">Bedrooms *</label>
         <TextField
           id="bedrooms"
           placeholder={'Enter number of bedrooms'}
           value={bedrooms}
           onChange={(value) => onSetFormDetails('bedrooms', value)}
-          className=" auction-property-details-content_textField filled"
+          className="textField-withShadow"
+          block
         />
-        <span>Bathrooms *</span>
+      </div>
+      <div className="md-cell md-cell--4">
+        <label className="auction-details-form-label">Bathrooms *</label>
         <TextField
           id="bathrooms"
           placeholder={'Enter number of bathrooms'}
           value={bathrooms}
           onChange={(value) => onSetFormDetails('bathrooms', value)}
-          className=" auction-property-details-content_textField filled"
+          className="textField-withShadow"
+          block
         />
-        <span>Area (sq.m) *</span>
+      </div>
+      <div className="md-cell md-cell--4">
+        <label className="auction-details-form-label">Area (sq.m) *</label>
         <TextField
           id="area"
           placeholder={'Enter area'}
           value={area}
           onChange={(value) => onSetFormDetails('area', value)}
-          className=" auction-property-details-content_textField filled"
+          className="textField-withShadow"
+          block
         />
-        <span>{'key features'}</span>
+      </div>
+      <div className="md-cell md-cell--12">
+        <label className="auction-details-form-label">{'key features'}</label>
         <div className="feature-field">
           <TextField
             id="feature"
             placeholder={'Enter key feature'}
             value={keyFeature}
             onChange={(value) => setKeyFeature(value)}
-            className=" auction-property-details-content_textField filled"
+            className="textField-withShadow"
             onClick={() => {
               setSuggestedKeysPanel(true)
             }}
+            block
+            rightIcon={
+              <Button
+                flat
+                primary
+                className="add-btn"
+                onClick={addKeyFeature}
+                disabled={!keyFeature}
+                iconChildren="add"
+              >
+                {'Add'}
+              </Button>
+            }
           />
-          <Button
-            flat
-            primary
-            className="add-btn"
-            onClick={addKeyFeature}
-            disabled={!keyFeature}
-          >
-            <FontIcon className="add">add</FontIcon> {'Add'}
-          </Button>
+          {suggestedKeyPanel && (
+            <div className="feature-field-list">{renderSuggestedKeys()}</div>
+          )}
         </div>
-        <div className="auction-property-details-content-features">
-          {renderNewKeys()}
-        </div>
-        {suggestedKeyPanel && (
-          <div className="md-grid auction-property-details-content-features-suggested">
-            {renderSuggestedKeys()}
-          </div>
-        )}
-        <div className="auction-property-details-images">
-          <span className="images-title">{'Property Images'}</span>
-          <UploadImages
-            cover
-            multiple={true}
-            title={
-              <>
-                <span className="drop-zone-placeholder">
-                  {'Drag & Drop Files here or'}
-                  <b>{'Select File / Image'}</b>
-                </span>
-              </>
-            }
-            setListFiles={(files, keyAction, fileId) =>
-              setListImages(files, keyAction, fileId)
-            }
-            listFiles={images}
-            iconDelete={true}
-            titleContent={' '}
-            addTitle={
-              <div className="">
-                <FontIcon className="">add</FontIcon>
-                {'add_images'}
-              </div>
-            }
-            titleUpload={images?.length > 0 ? 'add_images' : ''}
-            icon={<FontIcon>upload</FontIcon>}
-            accept="image/jpeg, image/png, image/jpg"
-            className="custom"
-          />
-        </div>
+
+        <div className="chipWrapper">{renderNewKeys()}</div>
+      </div>
+      <div className="md-cell md-cell--12">
+        <label className="auction-details-form-label">
+          {'Property Images'}
+        </label>
+        <UploadImages
+          cover
+          multiple={true}
+          title={
+            <>
+              <span className="drop-zone-placeholder">
+                {'Drag & Drop Files here or'}
+                <b>{' Select File / Image'}</b>
+              </span>
+            </>
+          }
+          setListFiles={(files, keyAction, fileId) =>
+            setListImages(files, keyAction, fileId)
+          }
+          listFiles={images}
+          iconDelete={true}
+          titleContent={' '}
+          addTitle={
+            <div className="">
+              <FontIcon className="">add</FontIcon>
+              {'add_images'}
+            </div>
+          }
+          titleUpload={images?.length > 0 ? 'add_images' : ''}
+          icon={<FontIcon>add_photo_alternate</FontIcon>}
+          accept="image/jpeg, image/png, image/jpg"
+          className="custom"
+        />
       </div>
     </div>
   )

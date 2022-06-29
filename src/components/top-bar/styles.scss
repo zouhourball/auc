@@ -4,7 +4,6 @@
   justify-content: center;
   width: 100%;
   padding: 0 4.02vw;
-  background: #fff;
 
   @media (max-width: 540px) {
     padding: 0;
@@ -67,7 +66,7 @@
     flex: 1;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     padding: 0 0.5vw;
 
     @media (max-width: 805px) {
@@ -92,16 +91,20 @@
 
     &-item {
       display: inline-block;
-      padding: 0 2.4vw;
+      padding: 0 1vw;
       border-radius: 8px;
       color: #848484;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       line-height: 1;
       cursor: pointer;
 
       &.active {
         color: #919a9f;
+      }
+
+      .md-ink-container {
+        display: none;
       }
     }
   }
@@ -174,10 +177,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: auto;
     margin: 0 8px;
-    border-radius: 5px;
-    background-color: #2c3617;
-    color: #fff;
+    padding: 12px 20px;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    font-size: 18px;
+    // background-color: #2c3617;
+    // color: #fff;
+    font-weight: bold;
     text-transform: capitalize;
 
     @media (max-width: 540px) {
@@ -185,7 +193,8 @@
     }
 
     &.new-user {
-      background-color: #596875;
+      border-color: #5078e1;
+      color: #5078e1;
     }
   }
 
@@ -264,8 +273,13 @@
       color: #fff;
     }
 
+    .login-btn.new-user {
+      border-color: #fff;
+      color: #fff;
+    }
+
     .logo {
-      color: black;
+      color: #fff;
     }
 
     .link-btn {
@@ -280,12 +294,9 @@
 
     .modules-item {
       color: #fff;
-      font-size: 16px;
-      font-weight: bold;
 
       &.active {
         color: #b0d39a;
-        font-weight: 500;
       }
     }
 

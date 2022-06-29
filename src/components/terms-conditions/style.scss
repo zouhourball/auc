@@ -1,0 +1,30 @@
+.terms-condition {
+  margin: 8px 0 !important;
+  padding: 30px;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+  &-nav-bar {
+    display: flex;
+    margin-bottom: 20px;
+    color: #3d3d3e;
+    font-size: 30px;
+    font-weight: 500;
+    gap: 20px;
+
+    > div {
+      cursor: pointer;
+    }
+
+    .active {
+      border-bottom: 1px solid #5078e1;
+      color: #5078e1;
+    }
+  }
+
+  &-content {
+    color: #7c7c7c;
+    font-size: 20px;
+  }
+}

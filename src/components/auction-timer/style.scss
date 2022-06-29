@@ -1,18 +1,47 @@
 .auction-timer {
-  width: 500px;
-  padding: 10px;
-  border: 5px solid #537bdb;
-  border-radius: 15px;
+  padding: 30px;
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  font-weight: 500;
+
+  &.active {
+    background: #e7ebf5;
+    box-shadow: 0 0 0 3px #527bde inset, 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  }
 
   .timer {
     display: flex;
-    justify-content: center;
-    border: 3px solid #555;
-    border-radius: 15px;
+    justify-content: space-evenly;
+    border: 2px solid #3d3d3e;
+    border-radius: 13px;
+    color: #3d3d3e;
+    font-size: 48px;
   }
 
-  .footer {
+  &-details {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    margin-top: 20px;
+
+    .sep {
+      width: 1px;
+      height: 35px;
+      background: #d6d1d1;
+    }
+  }
+
+  &-info {
+    flex: 1;
+    color: #7c7c7c;
+    font-size: 25px;
+    text-align: center;
+
+    strong {
+      color: #3d3d3e;
+      font-size: 30px;
+      font-weight: 700;
+    }
   }
 }

@@ -1,7 +1,28 @@
 .footer {
   display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px 4.02vw;
+  background: #7c7c7c;
+  color: #fff;
 
-  &-left {
+  &-logo {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 30px;
+    cursor: default;
+  }
+
+  &-right {
     display: flex;
+    align-items: center;
+    margin-left: auto;
+    font-size: 18px;
+    font-weight: 500;
+
+    > div {
+      margin: 0 16px;
+    }
   }
 }

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { TextField, FontIcon } from 'react-md'
+import { useQuery as useQueryHook } from 'react-apollo-hooks'
+import { TextField, FontIcon, SelectField } from 'react-md'
 import moment from 'moment'
-
+import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
 
 import { DueDate } from 'components/due-date'
@@ -12,6 +13,15 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [startTime, setStartTime] = useState(moment())
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [endTime, setEndTime] = useState(moment())
+
+  const { data: allCountryStateCities } = useQueryHook(
+    allCountryStateCitiesGql,
+    {
+      context: {
+        uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+      },
+    },
+  )
 
   const onSetFormDetails = (property, value) => {
     setAuctionDetails({ ...auctionDetails, [property]: value })
@@ -24,11 +34,29 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       endDate: end,
     })
   }
+
+  const renderCountry = () => {
+    let arrayName = []
+    if (
+      allCountryStateCities &&
+      allCountryStateCities.allCountries &&
+      allCountryStateCities.allCountries.countries
+    ) {
+      arrayName = allCountryStateCities?.allCountries?.countries?.map((ac) => {
+        return {
+          label: ac.countryName,
+          value: `${ac.id}`,
+        }
+      })
+      return arrayName
+    }
+  }
   const {
     title,
     address,
     city,
     country,
+    propertyType,
     startDate,
     endDate,
     startingPrice,
@@ -36,182 +64,249 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   } = auctionDetails
 
   return (
-    <div className="auction-details-form">
-      <h2>{'Add Auction Details'}</h2>
-      <div className="md-grid">
+    <div className="auction-details-form md-grid">
+      <div className="auction-details-form-title md-cell md-cell--12">
+        {'Add Auction Details'}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">Title*</label>
         <TextField
           id="auctionTitle"
-          label={'Enter title'}
+          placeholder={'Enter title'}
           value={title}
           onChange={(title) => onSetFormDetails('title', title)}
-          className="auction-details-form_textField md-cell md-cell--12"
+          className="textField-withShadow"
           required
+          block
         />
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">Address*</label>
         <TextField
           id="auctionAddress"
-          label={'Address'}
+          placeholder={'Address'}
           value={address}
           onChange={(address) => onSetFormDetails('address', address)}
-          className="auction-details-form_textField md-cell md-cell--12"
+          className="textField-withShadow"
           required
+          block
         />
-        <TextField
-          id="auctionCity"
-          label={'City'}
-          value={city}
-          onChange={(city) => onSetFormDetails('city', city)}
-          className="auction-details-form_textField md-cell md-cell--12"
-          required
-        />
-        <TextField
-          id="auctionCountry"
-          label={'Country'}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">Country*</label>
+        <SelectField
+          id="select-field-with-elements-country-spinner"
+          placeholder={'Select country'}
+          menuItems={renderCountry()}
           value={country}
           onChange={(country) => onSetFormDetails('country', country)}
-          className="auction-details-form_textField md-cell md-cell--12"
-          required
+          fullWidth
+          position={SelectField.Positions.BELOW}
+          repositionOnResize
+          repositionOnScroll
+          dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          simplifiedMenu={false}
+          className="selectField-withShadow"
         />
-        <div className="md-cell md-cell--6 auction-details-form-date-section">
-          <TextField
-            id="range"
-            lineDirection="center"
-            label={'Start Date' + '-' + 'End Date'}
-            block
-            required
-            rightIcon={<FontIcon>date_range</FontIcon>}
-            value={
-              startDate
-                ? `${moment(startDate)?.format('DD/MM/YYYY')} - ${moment(
-                  endDate,
-                )?.format('DD/MM/YYYY')}`
-                : ''
-            }
-            onClick={() => setVisibleDatePicker(true)}
-            className="auction-details-form_textField filled"
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">City*</label>
+        <TextField
+          id="auctionCity"
+          placeholder={'City'}
+          value={city}
+          onChange={(city) => onSetFormDetails('city', city)}
+          className="textField-withShadow"
+          required
+          block
+        />
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">Property Type*</label>
+        <SelectField
+          id="select-field-with-elements-country-spinner"
+          // label={t('country')}
+          placeholder={'Select country'}
+          menuItems={[
+            {
+              label: 'menu item1',
+              value: 'A',
+            },
+            {
+              label: 'menu item2',
+              value: 'B',
+            },
+          ]}
+          value={propertyType}
+          onChange={(propertyType) =>
+            onSetFormDetails('propertyType', propertyType)
+          }
+          fullWidth
+          position={SelectField.Positions.BELOW}
+          repositionOnResize
+          repositionOnScroll
+          dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          simplifiedMenu={false}
+          className="selectField-withShadow"
+        />
+      </div>
+
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Start Date - End Date*
+        </label>
+        <TextField
+          id="range"
+          placeholder={'Select start date - end date'}
+          block
+          required
+          rightIcon={<FontIcon>date_range</FontIcon>}
+          value={
+            startDate
+              ? `${moment(startDate)?.format('DD/MM/YYYY')} - ${moment(
+                endDate,
+              )?.format('DD/MM/YYYY')}`
+              : ''
+          }
+          onClick={() => setVisibleDatePicker(true)}
+          className="textField-withShadow"
+        />
+        {visibleDatePicker && (
+          <DueDate
+            duedate={endDate}
+            startDate={startDate}
+            applicationStartDate={startDate}
+            onDateChange={(start, end) => {
+              let startD = new Date(
+                moment(start)
+                  .hour(moment(startTime).hour())
+                  .minute(moment(startTime).minute())
+                  .valueOf(),
+              )
+              let endD = new Date(
+                moment(end)
+                  .hour(moment(endTime).hour())
+                  .minute(moment(endTime).minute())
+                  .valueOf(),
+              )
+              onSetDate(startD, endD)
+              setVisibleDatePicker(!visibleDatePicker)
+            }}
           />
-          {visibleDatePicker && (
-            <DueDate
-              duedate={endDate}
-              startDate={startDate}
-              applicationStartDate={startDate}
-              onDateChange={(start, end) => {
-                let startD = new Date(
-                  moment(start)
-                    .hour(moment(startTime).hour())
-                    .minute(moment(startTime).minute())
+        )}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Auction Start Time*
+        </label>
+        <TextField
+          id="time-start"
+          placeholder={'Select auction start time'}
+          block
+          required
+          // type="number"
+          rightIcon={<FontIcon>date_range</FontIcon>}
+          value={startDate && `${moment(startDate).format('HH:mm')}`}
+          onClick={() => setVisibleStartTimePicker(true)}
+          className="textField-withShadow"
+        />
+        {visibleStartTimePicker && (
+          <DatePicker
+            startView="time"
+            endView="time"
+            singlePick={true}
+            minuteInterval={5}
+            timeFormat={null}
+            onUpdate={({ timestamp }) => {
+              setAuctionDetails({
+                ...auctionDetails,
+                startDate: new Date(
+                  moment(startDate)
+                    .hour(moment(timestamp).hour())
+                    .minute(moment(timestamp).minute())
                     .valueOf(),
-                )
-                let endD = new Date(
-                  moment(end)
-                    .hour(moment(endTime).hour())
-                    .minute(moment(endTime).minute())
+                ),
+              })
+              setStartTime(timestamp)
+              setVisibleStartTimePicker(false)
+            }}
+            onCancel={() => setVisibleStartTimePicker(false)}
+            translation={{ date: 'Time' }}
+          />
+        )}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">Auction End Time*</label>
+        <TextField
+          id="time-end"
+          placeholder={'Select auction end time'}
+          block
+          required
+          // type="number"
+          rightIcon={<FontIcon>date_range</FontIcon>}
+          value={endDate && `${moment(endDate).format('HH:mm')}`}
+          onClick={() => setVisibleEndTimePicker(true)}
+          className="textField-withShadow"
+        />
+        {visibleEndTimePicker && (
+          <DatePicker
+            startView="time"
+            endView="time"
+            singlePick={true}
+            minuteInterval={5}
+            timeFormat={null}
+            onUpdate={({ timestamp }) => {
+              setAuctionDetails({
+                ...auctionDetails,
+                endDate: new Date(
+                  moment(endDate)
+                    .hour(moment(timestamp).hour())
+                    .minute(moment(timestamp).minute())
                     .valueOf(),
-                )
-                onSetDate(startD, endD)
-                setVisibleDatePicker(!visibleDatePicker)
-              }}
-            />
-          )}
-        </div>
-        <div className="md-cell md-cell--6">
-          <TextField
-            id="time-start"
-            lineDirection="center"
-            label={'Start time'}
-            block
-            required
-            // type="number"
-            rightIcon={<FontIcon>date_range</FontIcon>}
-            value={startDate && `${moment(startDate).format('HH:mm')}`}
-            onClick={() => setVisibleStartTimePicker(true)}
-            className="auction-details-form_textField filled"
+                ),
+              })
+              setEndTime(timestamp)
+              setVisibleEndTimePicker(false)
+            }}
+            onCancel={() => setVisibleEndTimePicker(false)}
+            translation={{ date: 'Time' }}
           />
-          {visibleStartTimePicker && (
-            <DatePicker
-              startView="time"
-              endView="time"
-              singlePick={true}
-              minuteInterval={5}
-              timeFormat={null}
-              onUpdate={({ timestamp }) => {
-                setAuctionDetails({
-                  ...auctionDetails,
-                  startDate: new Date(
-                    moment(startDate)
-                      .hour(moment(timestamp).hour())
-                      .minute(moment(timestamp).minute())
-                      .valueOf(),
-                  ),
-                })
-                setStartTime(timestamp)
-                setVisibleStartTimePicker(false)
-              }}
-              onCancel={() => setVisibleStartTimePicker(false)}
-              translation={{ date: 'Time' }}
-            />
-          )}
-        </div>
-        <div className="md-cell md-cell--6">
-          <TextField
-            id="time-end"
-            lineDirection="center"
-            label={'End Time'}
-            block
-            required
-            // type="number"
-            rightIcon={<FontIcon>date_range</FontIcon>}
-            value={endDate && `${moment(endDate).format('HH:mm')}`}
-            onClick={() => setVisibleEndTimePicker(true)}
-            className="auction-details-form_textField filled"
-          />
-          {visibleEndTimePicker && (
-            <DatePicker
-              startView="time"
-              endView="time"
-              singlePick={true}
-              minuteInterval={5}
-              timeFormat={null}
-              onUpdate={({ timestamp }) => {
-                setAuctionDetails({
-                  ...auctionDetails,
-                  endDate: new Date(
-                    moment(endDate)
-                      .hour(moment(timestamp).hour())
-                      .minute(moment(timestamp).minute())
-                      .valueOf(),
-                  ),
-                })
-                setEndTime(timestamp)
-                setVisibleEndTimePicker(false)
-              }}
-              onCancel={() => setVisibleEndTimePicker(false)}
-              translation={{ date: 'Time' }}
-            />
-          )}
-        </div>
+        )}
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Starting Price (OMR/sq.m)*
+        </label>
         <TextField
           id="startingPrice"
-          label={'Starting Price'}
+          placeholder={'Enter starting price '}
           value={startingPrice < 0 ? 0 : startingPrice}
           onChange={(startingPrice) =>
             onSetFormDetails('startingPrice', startingPrice)
           }
-          className="auction-details-form_textField md-cell md-cell--6"
+          className="textField-withShadow"
           required
           type="number"
           min={0}
+          block
         />
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          Incremental Price (OMR/sq.m)*
+        </label>
         <TextField
           id="incrementalPrice"
-          label={'Incremental Price'}
+          placeholder={'Enter incremental price'}
           value={incrementalPrice < 0 ? 0 : incrementalPrice}
           onChange={(incrementalPrice) =>
             onSetFormDetails('incrementalPrice', incrementalPrice)
           }
-          className="auction-details-form_textField md-cell md-cell--6"
+          className="textField-withShadow"
           required
           type="number"
           min={0}
+          block
         />
       </div>
     </div>

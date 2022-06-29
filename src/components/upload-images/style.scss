@@ -6,19 +6,27 @@
   }
 
   &-drop-zone {
-    margin: 10px;
-    padding: 25px 10px;
-    border: 1px dashed #ccccccd6;
-    border-radius: 4px;
-    background: #eeeeeebd;
+    padding: 40px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     text-align: center;
     cursor: pointer;
+
+    .material-icons.md-icon {
+      color: #5078e1;
+      font-size: 40px;
+    }
   }
 
   &-uploaded-title {
-    color: rgba(0, 0, 0, 0.54);
-    font-size: 16px;
-    font-weight: bold;
+    color: #7c7c7c;
+    font-size: 18px;
+    font-weight: 500;
+
+    > b {
+      color: #5078e1;
+    }
   }
 
   &-title {

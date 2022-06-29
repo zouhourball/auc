@@ -6,15 +6,16 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
   return (
     <div className="md-grid auctions-filter">
       <TextField
-        label="What are looking for?"
-        className="md-cell md-cell--4 search-text-field"
+        placeholder="What are looking for?"
+        className="md-cell md-cell--3 auctions-filter-textField"
         value={search}
         onChange={(v) => setFilterData({ ...filterData, search: v })}
         rightIcon={<FontIcon>search</FontIcon>}
+        block
       />
       <SelectField
-        label="Price"
-        className=" md-cell md-cell--1 auction-filter-select-field"
+        placeholder="Price"
+        className=" md-cell md-cell--1 auctions-filter-selectField"
         value={price}
         onChange={(v) => setFilterData({ ...filterData, price: v })}
         menuItems={[
@@ -24,8 +25,8 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        label="Type"
-        className="md-cell md-cell--1 auctions-filter-select-field"
+        placeholder="Type"
+        className="md-cell md-cell--1 auctions-filter-selectField"
         value={type}
         onChange={(v) => setFilterData({ ...filterData, type: v })}
         menuItems={[
@@ -35,8 +36,8 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        label="Beds & Baths"
-        className="md-cell md-cell--1 auctions-filter-select-field"
+        placeholder="Beds & Baths"
+        className="md-cell md-cell--2 auctions-filter-selectField"
         value={bedsBaths}
         onChange={(v) => setFilterData({ ...filterData, bedsBaths: v })}
         menuItems={[
@@ -46,8 +47,8 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        label="More"
-        className="md-cell md-cell--1 auctions-filter-more-select-field"
+        placeholder="More"
+        className="md-cell md-cell--1 auctions-filter-selectField"
         value={more}
         onChange={(v) => setFilterData({ ...filterData, more: v })}
         menuItems={[
@@ -56,10 +57,10 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         ]}
         position={SelectField.Positions.BELOW}
       />
-      <h3>Sort By</h3>
+      <div className="md-cell md-cell--1">Sort By</div>
       <SelectField
-        label="Auction ending soon"
-        className="md-cell md-cell--3 auctions-filter-select-field"
+        placeholder="Auction ending soon"
+        className="md-cell md-cell--3 auctions-filter-selectField"
         value={auctionEndingSoon}
         onChange={(v) => setFilterData({ ...filterData, auctionEndingSoon: v })}
         menuItems={[
@@ -67,7 +68,6 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
           { label: 'auctionEndingSoon12', value: 'aes2' },
         ]}
         position={SelectField.Positions.BELOW}
-        block
       />
     </div>
   )
