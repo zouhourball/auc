@@ -123,12 +123,12 @@ const TopBar = ({
               <ListItem
                 key={1}
                 primaryText="Live Auctions"
-                onClick={() => navigate('live-auctions')}
+                onClick={() => navigate('/live-auctions')}
               />,
               <ListItem
                 key={2}
                 primaryText="upcoming-auctions"
-                onClick={() => navigate('upcoming-auctions')}
+                onClick={() => navigate('/upcoming-auctions')}
               />,
             ]}
             simplifiedMenu={false}
@@ -218,7 +218,7 @@ const TopBar = ({
                 className="login-btn"
                 primary
                 swapTheming
-                onClick={() => navigate(onClickLoginUrl)}
+                onClick={() => onClickLoginUrl && onClickLoginUrl()}
               >
                 {t('login')}
               </Button>

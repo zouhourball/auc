@@ -1,7 +1,7 @@
 import { cls } from 'reactutils'
 import AuctionDetailsForm from 'components/auction-details-form'
 import DocumentsForm from 'components/documents-form'
-import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
+// import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
 import PropertyDetailsForm from 'components/property-details-form'
 import { useState } from 'react'
 import { Button } from 'react-md'
@@ -41,15 +41,15 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
     images: [],
   })
   const [documents, setDocuments] = useState({})
-  const [eligibilityCriteria, setEligibilityCriteria] = useState({
-    type: 'Organization',
-    /* criteria: {
-      orgCriteria: 'Above',
-      individualCriteria: 'Above',
-    },
-    age: 0,
-    gcc_percentage: 0, */
-  })
+  // const [eligibilityCriteria, setEligibilityCriteria] = useState({
+  //   type: 'Organization',
+  //   /* criteria: {
+  //     orgCriteria: 'Above',
+  //     individualCriteria: 'Above',
+  //   },
+  //   age: 0,
+  //   gcc_percentage: 0, */
+  // })
 
   const renderCurrentTabContent = () => {
     switch (currentStep) {
@@ -71,13 +71,13 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
         return (
           <DocumentsForm documents={documents} setDocuments={setDocuments} />
         )
-      case 4:
-        return (
-          <EligibilityCriteriaForm
-            eligibilityCriteria={eligibilityCriteria}
-            setEligibilityCriteria={setEligibilityCriteria}
-          />
-        )
+      // case 4:
+      //   return (
+      //     <EligibilityCriteriaForm
+      //       eligibilityCriteria={eligibilityCriteria}
+      //       setEligibilityCriteria={setEligibilityCriteria}
+      //     />
+      //   )
       default:
         break
     }
@@ -113,12 +113,12 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
             done={currentStep > 3}
           />
           <div className="stepper-separateur" />
-          <Step
+          {/* <Step
             index={4}
             label="Auction Details"
             active={currentStep === 4}
             done={currentStep > 4}
-          />
+          /> */}
         </div>
       </div>
       <div className="create-auction-body">{renderCurrentTabContent()}</div>
@@ -132,14 +132,14 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
           flat
           swapTheming
           onClick={() =>
-            currentStep > 3
+            currentStep > 2
               ? auctionUuid
                 ? onUpdateAuction()
                 : onSaveAuction()
               : setCurrentStep(currentStep + 1)
           }
         >
-          {currentStep < 4 ? 'Continue' : 'Publish'}
+          {currentStep < 3 ? 'Continue' : 'Publish'}
         </Button>
       </div>
     </div>

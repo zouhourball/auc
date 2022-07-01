@@ -8,6 +8,8 @@ import { dummyData } from 'components/auctions-public/helper'
 import './style.scss'
 
 const AuctionsList = () => {
+  const modules = location.pathname.split('/').filter((v) => v !== '')
+
   const [filterData, setFilterData] = useState({})
 
   const renderCards = () =>
@@ -17,12 +19,18 @@ const AuctionsList = () => {
         key={i}
         auctionData={el}
         status={'Active'}
+        live={modules.includes('live-auctions')}
       />
     ))
   return (
     <div className="auction-list">
       <div className="auction-list-header">
-        <div className="title">Live Auctions</div>
+        {modules.includes('live-auctions') && (
+          <div className="title">Live Auctions</div>
+        )}
+        {modules.includes('upcoming-auctions') && (
+          <div className="title">Upcoming Auctions</div>
+        )}
         <div>
           Showing Results <span>({dummyData?.length})</span>
         </div>

@@ -6,7 +6,7 @@ import { navigate } from '@reach/router'
 
 import './style.scss'
 /* eslint-disable */
-const BiddingCard = ({ buttonTitle, auctionData, className, status }) => {
+const BiddingCard = ({ buttonTitle, auctionData, className, status, live }) => {
   const [countdown, setCountdown] = useState({
     d: 0,
     h: 0,
@@ -111,7 +111,9 @@ const BiddingCard = ({ buttonTitle, auctionData, className, status }) => {
             <div className="description">
               Current Ask: {auctionData?.['starting_price']}
             </div>
-            <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
+            {live && (
+              <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
+            )}
           </div>
         )}
         <Button flat primary swapTheming className="bidding-card-btn">

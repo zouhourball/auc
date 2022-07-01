@@ -1,12 +1,21 @@
 import PropTypes from 'prop-types'
 import withOAuth from '@target-energysolutions/hoc-oauth'
-import { Provider } from 'react-redux'
-import { ApolloProvider } from 'react-apollo'
+import {
+  Provider,
+  // , useSelector, connect
+} from 'react-redux'
+import {
+  ApolloProvider,
+  // graphql,
+  // useQuery as useQueryGraphql,
+} from 'react-apollo'
 import { Router } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { QueryClient, QueryClientProvider } from 'react-query'
 // import { ShellProvider } from '@target-energysolutions/app-shell'
+// import { get as getLodash } from 'lodash-es'
+// import meQuery from 'libs/queries/me-query.gql'
 
 import { LangProvider, useSupportedLangs } from 'libs/langs'
 
@@ -41,11 +50,22 @@ const Root = ({ store, apolloClient }) => {
 Root.propTypes = {
   store: PropTypes.object.isRequired,
   apolloClient: PropTypes.object.isRequired,
-  ssoCallback: PropTypes.func.isRequired,
+  // ssoCallback: PropTypes.func.isRequired,
 }
 
 export default hot(Root)
 const Main = () => {
+  // const { data } =
+  //   location.pathname.split('/').filter((v) => v !== '')[0] !== 'home'
+  //     ? useQueryGraphql(meQuery, {
+  //       notifyOnNetworkStatusChange: true,
+  //       context: {
+  //         uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+  //       },
+  //     })
+  //     : {}
+  // const me = data?.mev2
+  // console.log(me, 'userInfo')
   return (
     <Router>
       <Public path={'/*'} />
@@ -54,6 +74,7 @@ const Main = () => {
     </Router>
   )
 }
+
 const Private = withOAuth()(({ ssoCallback }) => {
   const langs = useSupportedLangs()
 
@@ -64,3 +85,12 @@ const Private = withOAuth()(({ ssoCallback }) => {
     </Router>
   )
 })
+// const Private = () => {
+//   const langs = useSupportedLangs()
+
+//   return (
+//     <Router>
+//       <App path="/*" langs={langs} />
+//     </Router>
+//   )
+// }

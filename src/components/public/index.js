@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Router, Redirect } from '@reach/router'
+import { Router, Redirect, navigate } from '@reach/router'
 
 // import Auctions from 'components/auctions'
 import AuctionsPublic from 'components/auctions-public'
@@ -30,6 +30,7 @@ const Public = () => {
         modulesList={modulesList}
         logged={false}
         clear={modules && [modules[0], modules[1]].includes('home')}
+        onClickLoginUrl={() => navigate('/auctions')}
       />
 
       <Suspense fallback={<div>Loading...</div>}>
