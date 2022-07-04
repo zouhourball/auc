@@ -68,8 +68,8 @@ const Main = () => {
   // console.log(me, 'userInfo')
   return (
     <Router>
-      <Public path={'/*'} />
-      <Private path={'/auctions/*'} />
+      <Public path={'/public/*'} />
+      <Private path={'/*'} />
       <Admin path={'/admin'} />
     </Router>
   )

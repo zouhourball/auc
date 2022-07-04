@@ -35,7 +35,7 @@ const Public = () => {
 
       <Suspense fallback={<div>Loading...</div>}>
         <Router>
-          <Redirect from="/" to="/home" noThrow />
+          <Redirect from="/" to="/public/home" noThrow />
           {/* <Auctions path={'/add-auction'} /> */}
           <AuctionsPublic path={'/home'} />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
