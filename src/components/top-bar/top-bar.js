@@ -123,12 +123,18 @@ const TopBar = ({
               <ListItem
                 key={1}
                 primaryText="Live Auctions"
-                onClick={() => navigate('/live-auctions')}
+                onClick={() =>
+                  navigate(`/${logged ? 'auctions' : 'public'}/live-auctions`)
+                }
               />,
               <ListItem
                 key={2}
                 primaryText="upcoming-auctions"
-                onClick={() => navigate('/upcoming-auctions')}
+                onClick={() =>
+                  navigate(
+                    `/${logged ? 'auctions' : 'public'}/upcoming-auctions`,
+                  )
+                }
               />,
             ]}
             simplifiedMenu={false}
@@ -165,43 +171,55 @@ const TopBar = ({
 
           {modulesList &&
             modulesList.length > 0 &&
-            modulesList.map(({ label, link, key, linkToNewTab }, i) => {
-              return (
-                <>
-                  {linkToNewTab ? (
-                    <Link key={i} to={linkToNewTab}>
-                      <Button
+            modulesList.map(
+              ({ label, link, key, linkToNewTab, subMenu }, i) => {
+                return (
+                  <>
+                    {linkToNewTab ? (
+                      <Link key={i} to={linkToNewTab}>
+                        <Button
+                          className={cls(
+                            'modules-item',
+                            currentModule === key ? 'active' : '',
+                          )}
+                          flat
+                          onClick={() => {
+                            onClickModule && onClickModule(key)
+                            link && link()
+                          }}
+                        >
+                          {label}
+                        </Button>
+                      </Link>
+                    ) : (
+                      <MenuButton
                         className={cls(
                           'modules-item',
-                          currentModule === key ? 'active' : '',
+                          // currentModule === key ? 'active' : '',
                         )}
                         flat
-                        onClick={() => {
-                          onClickModule && onClickModule(key)
-                          link && link()
+                        menuItems={subMenu?.map((el) => (
+                          <ListItem
+                            key={1}
+                            primaryText={el?.label}
+                            onClick={() => navigate(`${el?.link}`)}
+                          />
+                        ))}
+                        simplifiedMenu={false}
+                        repositionOnScroll={false}
+                        anchor={{
+                          x: MenuButton.HorizontalAnchors.INNER_RIGHT,
+                          y: MenuButton.VerticalAnchors.BOTTOM,
                         }}
+                        position={MenuButton.Positions.BELOW}
                       >
                         {label}
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button
-                      className={cls(
-                        'modules-item',
-                        currentModule === key ? 'active' : '',
-                      )}
-                      onClick={() => {
-                        onClickModule && onClickModule(key)
-                        link && link()
-                      }}
-                      flat
-                    >
-                      {label}
-                    </Button>
-                  )}
-                </>
-              )
-            })}
+                      </MenuButton>
+                    )}
+                  </>
+                )
+              },
+            )}
         </div>
         <div className="top-bar-actions">
           {!logged && (

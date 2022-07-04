@@ -14,15 +14,14 @@ const Public = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
-    { label: 'Services', link: '', key: 'services', linkToNewTab: '' },
+    { label: 'Services', key: 'services', linkToNewTab: 'services' },
     {
       label: 'How it works',
-      link: '',
       key: 'how-it-works',
-      linkToNewTab: 'newtab',
+      linkToNewTab: 'how-it-works',
     },
 
-    { label: 'Contact us', link: '', key: 'contact-us' },
+    { label: 'Contact us', linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
   return (
     <div className="public-view">

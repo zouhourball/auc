@@ -112,7 +112,7 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
             active={currentStep === 3}
             done={currentStep > 3}
           />
-          <div className="stepper-separateur" />
+          {/* <div className="stepper-separateur" /> */}
           {/* <Step
             index={4}
             label="Auction Details"

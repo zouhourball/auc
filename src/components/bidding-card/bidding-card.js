@@ -6,7 +6,7 @@ import { navigate } from '@reach/router'
 
 import './style.scss'
 /* eslint-disable */
-const BiddingCard = ({ buttonTitle, auctionData, className, status, live }) => {
+const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
   const [countdown, setCountdown] = useState({
     d: 0,
     h: 0,
@@ -78,7 +78,9 @@ const BiddingCard = ({ buttonTitle, auctionData, className, status, live }) => {
   return (
     <div
       className={`bidding-card ${className || ''}`}
-      onClick={() => navigate(`detail/${auctionData?.id}`)}
+      onClick={() =>
+        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.id}`)
+      }
     >
       <img src={auctionData?.url} className="bidding-card-background" />
       <div className="bidding-card-header">
