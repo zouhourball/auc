@@ -1,6 +1,9 @@
 import { Router, Redirect } from '@reach/router'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { useQuery } from 'react-apollo'
+
+import { meQuery } from 'libs/queries/me-query.gql'
 
 // import Auctions from 'components/auctions'
 import AuctionsPublic from 'components/auctions-public'
@@ -18,6 +21,12 @@ import './style.scss'
 const queryClient = new QueryClient()
 
 const Home = () => {
+  const { data: currentUser } = useQuery(meQuery, {
+    notifyOnNetworkStatusChange: true,
+    context: {
+      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+    },
+  })
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
@@ -54,6 +63,7 @@ const Home = () => {
           modulesList={modulesList}
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
+          user={currentUser?.mev2?.user}
         />
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />

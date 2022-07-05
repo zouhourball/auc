@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { cls } from 'reactutils'
-import { useSelector } from 'react-redux'
 import { get } from 'lodash-es'
 
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
@@ -27,7 +26,7 @@ import {
 } from 'libs/langs'
 
 import './styles.scss'
-import CompanyInfoByOrg from 'components/company-info-by-org'
+import UserInfoBySubject from 'components/user-info-by-subject'
 
 const TopBar = ({
   onClickLogo,
@@ -46,11 +45,12 @@ const TopBar = ({
   const langs = useSupportedLangs()
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
-  const orgId = useSelector(({ shell }) => shell?.organizationId)
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
-  let avatarLetter = user ? user.match(/\b(\w)/g)?.join('') : null
+  let avatarLetter = user
+    ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
+    : null
 
   const getActiveLabel = ({ activeLabel }) => {
     if (activeLabel === 'اللغة العربية') {
@@ -227,7 +227,7 @@ const TopBar = ({
               <Button
                 flat
                 className="login-btn new-user"
-                onClick={() => navigate(onClickRegisterUrl)}
+                onClick={() => onClickRegisterUrl && onClickRegisterUrl()}
               >
                 {t('register')}
               </Button>
@@ -280,18 +280,18 @@ const TopBar = ({
                         {avatarLetter}
                       </span>
                       <span className="top-bar-profile-avatar-name">
-                        {user}
+                        {user?.profile?.fullName}
                       </span>
                     </div>
                     <div className="top-bar-profile-avatar-actions">
-                      <p
+                      {/* <p
                         className="top-bar-profile-avatar-actions-link"
                         onClick={() => {
                           navigate('/iskan/individual')
                         }}
                       >
                         {t('tatwir_platform')}
-                      </p>
+                      </p> */}
                       <p
                         className="top-bar-profile-avatar-actions-sign-out"
                         onClick={() => {
@@ -312,18 +312,23 @@ const TopBar = ({
                 }}
                 position={MenuButton.Positions.BOTTOM}
               >
-                <CompanyInfoByOrg key={orgId} organisationID={orgId}>
-                  {(org) => {
+                <UserInfoBySubject key={user?.subject} subject={user?.subject}>
+                  {(res) => {
                     return (
                       <Avatar
-                        src={getPublicUrl(
-                          get(org, '0.companyLogo.aPIID', null),
-                        )}
-                        className="top-bar_avatar"
-                      />
+                        src={
+                          get(res, 'photo.aPIURL', null)
+                            ? getPublicUrl(res?.photo?.aPIURL)
+                            : null
+                        }
+                      >
+                        {get(res, 'photo.aPIURL', null)
+                          ? null
+                          : get(res, 'fullName.0', '')}
+                      </Avatar>
                     )
                   }}
-                </CompanyInfoByOrg>
+                </UserInfoBySubject>
               </MenuButton>
             </div>
           )}
@@ -371,7 +376,7 @@ const TopBar = ({
               <Button
                 flat
                 className="login-btn new-user"
-                onClick={() => navigate(onClickRegisterUrl)}
+                onClick={() => onClickRegisterUrl && onClickRegisterUrl()}
               >
                 {t('new_user')}
               </Button>

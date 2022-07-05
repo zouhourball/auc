@@ -123,7 +123,12 @@ const CreateAuctionStepper = ({ auctionUuid }) => {
       </div>
       <div className="create-auction-body">{renderCurrentTabContent()}</div>
       <div className="create-auction-footer">
-        <Button flat primary className="action-btn" onClick={() => {}}>
+        <Button
+          flat
+          primary
+          className="action-btn"
+          onClick={() => setCurrentStep(currentStep - 1)}
+        >
           {'Cancel'}
         </Button>
         <Button

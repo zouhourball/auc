@@ -30,6 +30,7 @@ const Public = () => {
         logged={false}
         clear={modules && [modules[0], modules[1]].includes('home')}
         onClickLoginUrl={() => navigate('/auctions')}
+        onClickRegisterUrl={() => window.open(BASE_ENV_URL)}
       />
 
       <Suspense fallback={<div>Loading...</div>}>
