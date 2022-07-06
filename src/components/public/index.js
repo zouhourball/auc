@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Router, Redirect, navigate } from '@reach/router'
 
+import { OauthHelper } from '@target-energysolutions/hoc-oauth'
 // import Auctions from 'components/auctions'
 import AuctionsPublic from 'components/auctions-public'
 import AuctionsList from 'components/auctions-list'
@@ -12,6 +13,10 @@ import './style.scss'
 
 const Public = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
+  const goTo = (link) => {
+    window.location.href = link
+  }
+  const { authorizationUri, clientId, scopes } = OauthHelper.config
 
   const modulesList = [
     { label: 'Services', key: 'services', linkToNewTab: 'services' },
@@ -30,7 +35,13 @@ const Public = () => {
         logged={false}
         clear={modules && [modules[0], modules[1]].includes('home')}
         onClickLoginUrl={() => navigate('/auctions')}
-        onClickRegisterUrl={() => window.open(BASE_ENV_URL)}
+        onClickRegisterUrl={() =>
+          goTo(
+            `${authorizationUri}?client_id=${clientId}&redirect_uri=${BASE_ENV_URL}/sso/callback&response_type=code&state=&scope=${scopes.join(
+              '%20',
+            )}&is_register=true`,
+          )
+        }
       />
 
       <Suspense fallback={<div>Loading...</div>}>
