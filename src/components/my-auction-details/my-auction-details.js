@@ -11,7 +11,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
   const [propertyDetails, setPropertyDetails] = useState({})
   const [showMore, setShowMore] = useState(false)
-  const [editMode, setEditMode] = useState(true)
+  const [editMode, setEditMode] = useState(false)
 
   useEffect(() => {
     setPropertyDetails({
@@ -67,17 +67,19 @@ const MyAuctionDetails = ({ auctionId }) => {
     ))
   }
   const renderImages = () =>
-    propertyDetails?.images?.map((el, i) => <img key={i} src={el.url} />)
+    propertyDetails?.images?.map((el, i) => (
+      <img key={i} src={el.url} className="auction-details-img" />
+    ))
   const renderBidders = () =>
     propertyDetails?.bidders?.map((el) => (
-      <tr key={el?.id}>
-        <td>{el?.bidderName}</td>
-        <td>{el?.email}</td>
-        <td>{el?.phoneNumber}</td>
-        <td>{el?.bidDate}</td>
-        <td>{el?.bidTime}</td>
-        <td>{el?.bidAmount}</td>
-      </tr>
+      <div key={el?.id} className="auction-details-table-row">
+        <div>{el?.bidderName}</div>
+        <div>{el?.email}</div>
+        <div>{el?.phoneNumber}</div>
+        <div>{el?.bidDate}</div>
+        <div>{el?.bidTime}</div>
+        <div>{el?.bidAmount}</div>
+      </div>
     ))
   const setListImages = (newImages, keyAction, fileId) => {
     if (keyAction === 'delete') {
@@ -92,174 +94,200 @@ const MyAuctionDetails = ({ auctionId }) => {
     }
   }
   return (
-    <div>
-      {' '}
-      <div className="auction-list">
-        <div className="auction-list-header">
-          <div className="title">My Auctions - Details</div>
-        </div>
-        <div className="first-section">
-          <Button onClick={() => setEditMode(!editMode)}>Edit</Button>
+    <div className="auction-list">
+      <div className="auction-list-header">
+        <div className="title">My Auctions - Details</div>
+      </div>
+      <div className="auction-details-info">
+        <div className="auction-details-form">
           <TextField
             id={'title'}
-            label={'Title'}
+            label={'Title:'}
             value={dummyData?.title}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'property-type'}
-            label={'Property Type'}
+            label={'Property Type:'}
             value={dummyData?.propertyType}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'address'}
-            label={'Address'}
+            label={'Address:'}
             value={dummyData?.address}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'city'}
-            label={'City'}
+            label={'City:'}
             value={dummyData?.city}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
-            id={'country'}
-            label={'Country'}
-            value={dummyData?.country}
-            disabled={editMode}
+            id={'coundivy'}
+            label={'Coundivy:'}
+            value={dummyData?.coundivy}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'start-end-date'}
-            label={'Start-End Date'}
+            label={'Start-End Date:'}
             value={dummyData?.date}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'start-end-time'}
-            label={'Start-End Time'}
+            label={'Start-End Time:'}
             value={dummyData?.time}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'starting-price'}
-            label={'Starting Price'}
+            label={'Starting Price:'}
             value={dummyData?.startingPrice}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
           <TextField
             id={'incremental-price'}
-            label={'Incremental Price'}
+            label={'Incremental Price:'}
             value={dummyData?.incrementalPrice}
-            disabled={editMode}
+            disabled={!editMode}
+            className="auction-details-form-textField"
+            block
           />
-          <div className={showMore ? 'show-more' : 'show-less'}>
-            <TextField
-              id={'description'}
-              label={'Description'}
-              value={dummyData?.description}
-              disabled={editMode}
-            />
-            <div className="md-cell md-cell--12">
-              <label className="auction-details-form-label">
-                {'key features'}
-              </label>
-              {!editMode && (
-                <div className="feature-field">
-                  <TextField
-                    id="feature"
-                    placeholder={'Enter key feature'}
-                    value={keyFeature}
-                    onChange={(value) => setKeyFeature(value)}
-                    className="textField-withShadow"
-                    onClick={() => {
-                      setSuggestedKeysPanel(true)
-                    }}
-                    block
-                    rightIcon={
-                      <Button
-                        flat
-                        primary
-                        className="add-btn"
-                        onClick={addKeyFeature}
-                        disabled={!keyFeature}
-                        iconChildren="add"
-                      >
-                        {'Add'}
-                      </Button>
-                    }
-                  />
-                  {suggestedKeyPanel && (
-                    <div className="feature-field-list">
-                      {renderSuggestedKeys()}
-                    </div>
-                  )}
+        </div>
+        <Button onClick={() => setEditMode(!editMode)} icon primary>
+          more_vert
+        </Button>
+      </div>
+      {showMore && (
+        <div className="auction-details-details">
+          {editMode ? (
+            <>
+              <TextField
+                id={'description'}
+                label={'Description:'}
+                value={dummyData?.description}
+                className="auction-details-description-textField"
+                block
+                rows="3"
+              />
+              <TextField
+                id="feature"
+                placeholder={'Enter key feature'}
+                value={keyFeature}
+                onChange={(value) => setKeyFeature(value)}
+                className="textField-withShadow"
+                onClick={() => {
+                  setSuggestedKeysPanel(true)
+                }}
+                block
+                rightIcon={
+                  <Button
+                    flat
+                    primary
+                    className="add-btn"
+                    onClick={addKeyFeature}
+                    disabled={!keyFeature}
+                    iconChildren="add"
+                  >
+                    {'Add'}
+                  </Button>
+                }
+              />
+              {suggestedKeyPanel && (
+                <div className="feature-field-list">
+                  {renderSuggestedKeys()}
                 </div>
               )}
-
               <div className="chipWrapper">{renderNewKeys()}</div>
-            </div>
-            <div>
-              <label>Property Images</label>
-              {editMode && renderImages()}
-              {!editMode && (
-                <div className="md-cell md-cell--12">
-                  <label className="auction-details-form-label">
-                    {'Property Images'}
-                  </label>
-                  <UploadImages
-                    cover
-                    multiple={true}
-                    title={
-                      <>
-                        <span className="drop-zone-placeholder">
-                          {'Drag & Drop Files here or'}
-                          <b>{' Select File / Image'}</b>
-                        </span>
-                      </>
-                    }
-                    setListFiles={(files, keyAction, fileId) =>
-                      setListImages(files, keyAction, fileId)
-                    }
-                    listFiles={propertyDetails?.images}
-                    iconDelete={true}
-                    titleContent={' '}
-                    addTitle={
-                      <div className="">
-                        <FontIcon className="">add</FontIcon>
-                        {'add_images'}
-                      </div>
-                    }
-                    titleUpload={
-                      propertyDetails?.images?.length > 0 ? 'add_images' : ''
-                    }
-                    icon={<FontIcon>add_photo_alternate</FontIcon>}
-                    accept="image/jpeg, image/png, image/jpg"
-                    className="custom"
-                  />
-                </div>
-              )}
-            </div>
+              <UploadImages
+                cover
+                multiple={true}
+                title={
+                  <>
+                    <span className="drop-zone-placeholder">
+                      {'Drag & Drop Files here or'}
+                      <b>{' Select File / Image'}</b>
+                    </span>
+                  </>
+                }
+                setListFiles={(files, keyAction, fileId) =>
+                  setListImages(files, keyAction, fileId)
+                }
+                listFiles={propertyDetails?.images}
+                iconDelete={true}
+                titleContent={'Property Images'}
+                addTitle={
+                  <>
+                    <FontIcon>add</FontIcon>
+                    {'add images'}
+                  </>
+                }
+                titleUpload={
+                  propertyDetails?.images?.length > 0 ? 'add_images' : ''
+                }
+                icon={<FontIcon>add_photo_alternate</FontIcon>}
+                accept="image/jpeg, image/png, image/jpg"
+                className="custom"
+              />
+            </>
+          ) : (
+            <>
+              <div className="auction-details-description">
+                <label>Description:</label>
+                <span>{dummyData?.description}</span>
+              </div>
+              <div className="auction-details-subTitle">{'key features'}</div>
+              <div className="chipWrapper">{renderNewKeys()}</div>
+              <div className="auction-details-subTitle">
+                {'Property Images'}
+              </div>
+              <div className="auction-details-imagesWrapper">
+                {renderImages()}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+      <div className="auction-details-buttonWrapper">
+        <Button
+          iconChildren={showMore ? 'expand_less' : 'expand_more'}
+          iconBefore={showMore}
+          onClick={() => setShowMore(!showMore)}
+        >
+          {showMore ? 'Less' : 'More'}
+        </Button>
+      </div>
+      <div className="auction-details-bidderWrapper">
+        <div className="auction-details-subTitle">List of bidders</div>
+        <div className="auction-details-table">
+          <div className="auction-details-table-header">
+            <div>Bidder Name</div>
+            <div>Email</div>
+            <div>Phone Number</div>
+            <div>Bid Date</div>
+            <div>Bid Time</div>
+            <div>Bid Amount</div>
           </div>
-          <Button onClick={() => setShowMore(!showMore)}>
-            {showMore ? 'Show Less' : 'Show More'}
-          </Button>
-          <div>
-            <label>List of bidders</label>
-            <table>
-              {' '}
-              <tr>
-                <th>Bidder Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Bid Date</th>
-                <th>Bid Time</th>
-                <th>Bid Amount</th>
-              </tr>
-              {renderBidders()}
-            </table>
-          </div>
+          {renderBidders()}
         </div>
       </div>
     </div>

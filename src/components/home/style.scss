@@ -17,7 +17,13 @@
 }
 
 .auction-wrapper {
+  display: flex;
   position: relative;
+  flex-direction: column;
   height: 100vh;
   overflow: auto;
+
+  .footer {
+    margin-top: auto;
+  }
 }
