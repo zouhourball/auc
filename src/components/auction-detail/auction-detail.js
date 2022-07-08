@@ -166,7 +166,7 @@ const AuctionDetail = ({
         )}
 
         <div className="owner-card md-cell md-cell--12">
-          <Avatar className="owner-card-avatar" />
+          <Avatar className="owner-card-avatar" src={null} />
           <div className="owner-card-info">
             <div>Owned By</div>
             <div className="name">Ali Salim</div>
