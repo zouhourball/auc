@@ -6,6 +6,8 @@ import PropertyDetailsForm from 'components/property-details-form'
 import { useState } from 'react'
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
+import { v4 as uuidv4 } from 'uuid'
+
 import './style.scss'
 
 const Step = ({ label, index, active, done }) => {
@@ -17,17 +19,29 @@ const Step = ({ label, index, active, done }) => {
   )
 }
 
-const CreateAuctionStepper = ({ auctionUuid }) => {
+const CreateAuctionStepper = ({
+  auctionUuid,
+  auctionData,
+  setAuctionData,
+  onPublish,
+}) => {
   const [currentStep, setCurrentStep] = useState(1)
   const [auctionDetails, setAuctionDetails] = useState({
+    uuid: uuidv4(),
     title: '',
-    address: '',
-    city: '',
-    country: '',
-    startDate: '',
-    endDate: '',
-    startingPrice: '',
-    incrementalPrice: '',
+    general_location_x: 0,
+    general_location_y: 0,
+    city_id: 0,
+    country_id: 0,
+    auction_start_date: '',
+    auction_end_date: '',
+    starting_price: 0,
+    property_type: 0,
+    incremental_price: 0,
+    participation_fee: 0,
+    property_description: '',
+    images: [],
+    features: [],
   })
   const [propertyDetails, setPropertyDetails] = useState({
     description: '',

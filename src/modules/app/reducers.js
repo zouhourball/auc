@@ -12,6 +12,8 @@ import {
   setCreateWsVisible,
   setSideCollapsed,
   setVisibleLoader,
+  setFsToken,
+  setFsDlToken,
 } from './actions'
 
 const initialState = {
@@ -24,6 +26,8 @@ const initialState = {
   createWsVisible: false,
   sideCollapsed: true,
   visibleLoader: false,
+  uplToken: '',
+  dlToken: '',
 }
 
 export default handleActions(
@@ -31,6 +35,16 @@ export default handleActions(
     [addToast] (state, { payload }) {
       return update(state, {
         toasts: { $push: [payload] },
+      })
+    },
+    [setFsToken] (state = initialState, { payload: { uplToken } }) {
+      return update(state, {
+        uplToken: { $set: uplToken },
+      })
+    },
+    [setFsDlToken] (state = initialState, { payload: { dlToken } }) {
+      return update(state, {
+        dlToken: { $set: dlToken },
       })
     },
 
