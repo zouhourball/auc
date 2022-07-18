@@ -1,4 +1,5 @@
 import Mht from '@target-energysolutions/mht'
+import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Button } from 'react-md'
@@ -8,6 +9,7 @@ import { navigate } from '@reach/router'
 import DocumentsContainer from 'components/docs-dialog'
 
 const Admin = () => {
+  const { t } = useTranslation()
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
@@ -17,8 +19,8 @@ const Admin = () => {
   return (
     <div>
       <span>LOGO</span>
-      <Button primary>Log Out</Button>
-      <h1>Auctions</h1>
+      <Button primary>{t('log_out')}</Button>
+      <h1>{t('auctions')}</h1>
       <div>
         <Mht
           id={'admin-dashboard'}
@@ -34,10 +36,10 @@ const Admin = () => {
               <div>
                 {`${selectedRow.length} Row Selected`}
                 <Button onClick={() => navigate(`detail/${'1'}`)}>
-                  View Details
+                  {t('view_details')}
                 </Button>
-                <Button>Approve</Button>
-                <Button>Reject</Button>
+                <Button>{t('approve')}</Button>
+                <Button>{t('reject')}</Button>
               </div>
             )) || <div />
           }

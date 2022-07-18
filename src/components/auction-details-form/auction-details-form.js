@@ -1,3 +1,4 @@
+import { useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { useQuery as useQueryHook } from 'react-apollo-hooks'
 import { TextField, FontIcon, SelectField } from 'react-md'
@@ -13,6 +14,8 @@ import { DueDate } from 'components/due-date'
 import '@target-energysolutions/gis-map/styles.css'
 
 const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
+  const { t } = useTranslation()
+
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [startTime, setStartTime] = useState(moment())
@@ -75,10 +78,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         {'Add Auction Details'}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">Title*</label>
+        <label className="auction-details-form-label">{t('title')}</label>
         <TextField
           id="auctionTitle"
-          placeholder={'Enter title'}
+          placeholder={t('enter_title')}
           value={title}
           onChange={(title) => onSetFormDetails('title', title)}
           className="textField-withShadow"
@@ -87,7 +90,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">Address*</label>
+        <label className="auction-details-form-label">{t('address')}*</label>
         {addressView && (
           <DrawOnMap
             id={'address'}
@@ -106,7 +109,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
 
         <TextField
           id="auctionAddress"
-          placeholder={'Address'}
+          placeholder={t('address')}
           value={address?.meta?.['display_name']}
           // onChange={(address) => onSetFormDetails('address', address)}
           onClick={() => setAddressView(!addressView)}
@@ -116,10 +119,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">Country*</label>
+        <label className="auction-details-form-label">{t('country')}</label>
         <SelectField
           id="select-field-with-elements-country-spinner"
-          placeholder={'Select country'}
+          placeholder={t('select_country')}
           menuItems={renderCountry()}
           value={country}
           onChange={(country) => onSetFormDetails('country', country)}
@@ -133,10 +136,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">City*</label>
+        <label className="auction-details-form-label">{t('city')}</label>
         <TextField
           id="auctionCity"
-          placeholder={'City'}
+          placeholder={t('city_select')}
           value={city}
           onChange={(city) => onSetFormDetails('city', city)}
           className="textField-withShadow"
@@ -145,11 +148,13 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">Property Type*</label>
+        <label className="auction-details-form-label">
+          {t('property_type')}
+        </label>
         <SelectField
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
-          placeholder={'Select country'}
+          placeholder={t('property_select')}
           menuItems={[
             {
               label: 'menu item1',
@@ -175,9 +180,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
 
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          Start Date - End Date*
-        </label>
+        <label className="auction-details-form-label">{t('dates')}</label>
         <TextField
           id="range"
           placeholder={'Select start date - end date'}
@@ -219,12 +222,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         )}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          Auction Start Time*
-        </label>
+        <label className="auction-details-form-label">{t('start_time')}</label>
         <TextField
           id="time-start"
-          placeholder={'Select auction start time'}
+          placeholder={t('start_time_select')}
           block
           required
           // type="number"
@@ -259,10 +260,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         )}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">Auction End Time*</label>
+        <label className="auction-details-form-label">{t('end_time')}</label>
         <TextField
           id="time-end"
-          placeholder={'Select auction end time'}
+          placeholder={t('end_time_select')}
           block
           required
           // type="number"
@@ -297,12 +298,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         )}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          Starting Price (OMR/sq.m)*
-        </label>
+        <label className="auction-details-form-label">{t('start_price')}</label>
         <TextField
           id="startingPrice"
-          placeholder={'Enter starting price '}
+          placeholder={t('enter_start_price')}
           value={startingPrice < 0 ? 0 : startingPrice}
           onChange={(startingPrice) =>
             onSetFormDetails('startingPrice', startingPrice)
@@ -315,12 +314,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          Incremental Price (OMR/sq.m)*
-        </label>
+        <label className="auction-details-form-label">{t('incr_price')}</label>
         <TextField
           id="incrementalPrice"
-          placeholder={'Enter incremental price'}
+          placeholder={t('incr_price_enter')}
           value={incrementalPrice < 0 ? 0 : incrementalPrice}
           onChange={(incrementalPrice) =>
             onSetFormDetails('incrementalPrice', incrementalPrice)

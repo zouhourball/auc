@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { TextField, FontIcon, Checkbox, Button } from 'react-md'
+import { useTranslation } from 'libs/langs'
 
 import UploadImages from 'components/upload-images'
 
 const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
+  const { t } = useTranslation()
+
   const {
     description,
     keyFeatures,
@@ -41,7 +44,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       <div key={index} className="chipWrapper-item">
         <span className="label">{updatedKey?.label}</span>
         <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
-          close
+          {t('close')}
         </FontIcon>
       </div>
     ))
@@ -87,11 +90,11 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
   return (
     <div className="auction-details-form md-grid">
       <div className="auction-details-form-title md-cell md-cell--12">
-        {'Property Details'}
+        {t('property_details')}
       </div>
       <div className="md-cell md-cell--12">
         <label className="auction-details-form-label">
-          {'property description *'}
+          {t('property_description')}
         </label>
         <TextField
           id="auctionDescription"
@@ -102,15 +105,17 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           className="textField-withShadow"
           required
           rows={5}
-          placeholder={'Enter property description…'}
+          placeholder={'property_description_placeholder'}
           block
         />
       </div>
       <div className="md-cell md-cell--4">
-        <label className="auction-details-form-label">Bedrooms *</label>
+        <label className="auction-details-form-label">
+          {t('bedrooms_label')}
+        </label>
         <TextField
           id="bedrooms"
-          placeholder={'Enter number of bedrooms'}
+          placeholder={t('bedrooms_number_placeholder')}
           value={bedrooms}
           onChange={(value) => onSetFormDetails('bedrooms', value)}
           className="textField-withShadow"
@@ -118,10 +123,12 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--4">
-        <label className="auction-details-form-label">Bathrooms *</label>
+        <label className="auction-details-form-label">
+          {t('bathrooms_label')}
+        </label>
         <TextField
           id="bathrooms"
-          placeholder={'Enter number of bathrooms'}
+          placeholder={t('bathrooms_number_placeholder')}
           value={bathrooms}
           onChange={(value) => onSetFormDetails('bathrooms', value)}
           className="textField-withShadow"
@@ -129,10 +136,10 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--4">
-        <label className="auction-details-form-label">Area (sq.m) *</label>
+        <label className="auction-details-form-label">{t('area_label')}</label>
         <TextField
           id="area"
-          placeholder={'Enter area'}
+          placeholder={t('enter_area_placeholder')}
           value={area}
           onChange={(value) => onSetFormDetails('area', value)}
           className="textField-withShadow"
@@ -140,11 +147,13 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--12">
-        <label className="auction-details-form-label">{'key features'}</label>
+        <label className="auction-details-form-label">
+          {t('key_features')}
+        </label>
         <div className="feature-field">
           <TextField
             id="feature"
-            placeholder={'Enter key feature'}
+            placeholder={t('key_features_placeholder')}
             value={keyFeature}
             onChange={(value) => setKeyFeature(value)}
             className="textField-withShadow"
@@ -161,7 +170,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
                 disabled={!keyFeature}
                 iconChildren="add"
               >
-                {'Add'}
+                {t('add')}
               </Button>
             }
           />
@@ -174,7 +183,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       </div>
       <div className="md-cell md-cell--12">
         <label className="auction-details-form-label">
-          {'Property Images'}
+          {t('property_images')}
         </label>
         <UploadImages
           cover
@@ -182,8 +191,8 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           title={
             <>
               <span className="drop-zone-placeholder">
-                {'Drag & Drop Files here or'}
-                <b>{' Select File / Image'}</b>
+                {t('drag_and_drop')}
+                <b>{t('select_file')}</b>
               </span>
             </>
           }
@@ -196,7 +205,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           addTitle={
             <div className="">
               <FontIcon className="">add</FontIcon>
-              {'add_images'}
+              {t('add_images')}
             </div>
           }
           titleUpload={images?.length > 0 ? 'add_images' : ''}
