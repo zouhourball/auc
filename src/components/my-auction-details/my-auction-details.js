@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { TextField, Button, Checkbox, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import { dummyBiddersData, dummyData } from './helpers'
 

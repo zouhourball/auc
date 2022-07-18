@@ -1,5 +1,5 @@
 import { cls } from 'reactutils'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import AuctionDetailsForm from 'components/auction-details-form'
 import DocumentsForm from 'components/documents-form'

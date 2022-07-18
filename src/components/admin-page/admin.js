@@ -1,5 +1,5 @@
 import Mht from '@target-energysolutions/mht'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Button } from 'react-md'

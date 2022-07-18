@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
 import moment from 'moment'
@@ -155,8 +155,8 @@ const secondsToTime = (secs) => {
 
 BiddingCard.defaultProps = {
   auctionData: {
-    auction_start_date: moment().add(-1, t('day')).valueOf(),
-    auction_end_date: moment().add(2, t('day')).valueOf(),
+    auction_start_date: moment().add(-1, 'day').valueOf(),
+    auction_end_date: moment().add(2, 'day').valueOf(),
     starting_price: 1.2,
     name: 'Villa',
     location: 'Al Muscat, Oman',

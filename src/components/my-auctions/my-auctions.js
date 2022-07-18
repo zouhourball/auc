@@ -1,6 +1,6 @@
 import BiddingCard from 'components/bidding-card'
 import { navigate } from '@reach/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import { dummyData } from 'components/auctions-public/helper'
 

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { useQuery as useQueryHook } from 'react-apollo-hooks'
 import { TextField, FontIcon, SelectField } from 'react-md'

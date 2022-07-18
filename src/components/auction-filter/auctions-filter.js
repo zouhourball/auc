@@ -1,5 +1,5 @@
 import { FontIcon, SelectField, TextField } from 'react-md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 const AuctionsFilter = ({ filterData, setFilterData }) => {

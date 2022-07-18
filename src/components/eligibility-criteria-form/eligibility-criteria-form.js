@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { SelectionControlGroup, TextField } from 'react-md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 const { t } = useTranslation()
 const EligibilityCriteriaForm = ({

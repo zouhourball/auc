@@ -1,5 +1,5 @@
 import './style.scss'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 const AuctionTimer = ({ time, bid, minIncrement, label, iActive = true }) => {
   const { t } = useTranslation()

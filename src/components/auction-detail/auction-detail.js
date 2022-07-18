@@ -1,5 +1,5 @@
 import { Avatar, Button, FontIcon } from 'react-md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'

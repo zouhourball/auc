@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, DialogContainer, TextField } from 'react-md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 const PlaceBidDialog = ({

@@ -1,8 +1,7 @@
 import { Button, FontIcon } from 'react-md'
 import Slider from 'react-slick'
 
-import { useCurrentLang } from 'libs/langs'
-import { useTranslation } from 'react-i18next'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 
 import './style.scss'
 

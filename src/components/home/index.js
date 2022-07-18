@@ -1,5 +1,5 @@
 import { Router, Redirect } from '@reach/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'

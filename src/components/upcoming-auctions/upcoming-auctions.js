@@ -1,6 +1,6 @@
 import BiddingCard from 'components/bidding-card'
 import { Button } from 'react-md'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'libs/langs'
 
 import './styles.scss'
 
