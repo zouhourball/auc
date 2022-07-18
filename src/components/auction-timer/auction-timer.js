@@ -1,16 +1,28 @@
 import './style.scss'
+import { useTranslation } from 'react-i18next'
+
 const AuctionTimer = ({ time, bid, minIncrement, label, iActive = true }) => {
+  const { t } = useTranslation()
   const { days, hours, minutes, secondes } = time
   return (
     <div className={`auction-timer ${iActive ? 'active' : ''}`}>
       <div className="timer">
-        <span>{days} D</span>
+        <span>
+          {days}
+          {t('D')}
+        </span>
         <span> : </span>
-        <span>{hours} H </span>
+        <span>
+          {hours} {t('H')}{' '}
+        </span>
         <span>:</span>
-        <span>{minutes} M </span>
+        <span>
+          {minutes} {t('M')}{' '}
+        </span>
         <span>:</span>
-        <span>{secondes} S</span>
+        <span>
+          {secondes} {t('S')}
+        </span>
       </div>
       <div className="auction-timer-details">
         <div className="auction-timer-info">
@@ -24,7 +36,7 @@ const AuctionTimer = ({ time, bid, minIncrement, label, iActive = true }) => {
           <div>
             <strong>{minIncrement} AED</strong>
           </div>
-          <div>Minimum Increment</div>
+          <div>{t('minimum_incr')}</div>
         </div>
       </div>
     </div>

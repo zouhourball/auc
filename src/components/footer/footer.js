@@ -1,4 +1,7 @@
 import './style.scss'
+import { useTranslation } from 'react-i18next'
+
+const { t } = useTranslation()
 const Footer = () => {
   return (
     <div className="footer">
@@ -6,10 +9,10 @@ const Footer = () => {
         LOGO
       </div>
       <div className="footer-right">
-        <div onClick={() => {}}>Download the app</div>
-        <div onClick={() => {}}> Privacy Policy</div>
-        <div onClick={() => {}}>Terms and Condition</div>
-        <div onClick={() => {}}> contact Us</div>
+        <div onClick={() => {}}>{t('download_app')}</div>
+        <div onClick={() => {}}> {t('privacy_policy')}</div>
+        <div onClick={() => {}}>{'terms_condition'}</div>
+        <div onClick={() => {}}> {t('contact_us')}</div>
       </div>
     </div>
   )

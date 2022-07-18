@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import BiddingCard from 'components/bidding-card'
 
@@ -7,12 +8,14 @@ import { dummyData } from 'components/auctions-public/helper'
 import './style.scss'
 
 const ParticipatedAuctions = () => {
+  const { t } = useTranslation()
+
   const [tab, setTab] = useState(0)
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const tabsData = [
-    { id: 0, label: 'Active' },
-    { id: 1, label: 'Won' },
-    { id: 2, label: 'Lost' },
+    { id: 0, label: t('active') },
+    { id: 1, label: t('won') },
+    { id: 2, label: t('lost') },
   ]
 
   const renderCards = () => {
@@ -46,7 +49,7 @@ const ParticipatedAuctions = () => {
   return (
     <div className="auction-list">
       <div className="auction-list-header">
-        <div className="title">My Participation</div>
+        <div className="title">{t('my_participation')}</div>
         <div>{renderTabs()}</div>
       </div>
       <div className="md-grid auction-list-cards">{renderCards()}</div>

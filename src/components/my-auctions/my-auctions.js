@@ -1,11 +1,14 @@
 import BiddingCard from 'components/bidding-card'
 import { navigate } from '@reach/router'
+import { useTranslation } from 'react-i18next'
 
 import { dummyData } from 'components/auctions-public/helper'
 
 import './style.scss'
 
 const MyAuctions = () => {
+  const { t } = useTranslation()
+
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const renderCards = () =>
@@ -24,10 +27,10 @@ const MyAuctions = () => {
     <div className="auction-list">
       <div className="auction-list-header">
         {modules.includes('my-auctions') && (
-          <div className="title">My Auctions</div>
+          <div className="title">{t('my_auctions')}</div>
         )}
         {modules.includes('saved-auctions') && (
-          <div className="title">Saved Auctions</div>
+          <div className="title">{t('saved_auctions')}</div>
         )}
       </div>
       <div className="md-grid auction-list-cards">{renderCards()}</div>

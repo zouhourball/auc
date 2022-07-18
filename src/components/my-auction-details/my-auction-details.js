@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import { TextField, Button, Checkbox, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
+import { useTranslation } from 'react-i18next'
 
 import { dummyBiddersData, dummyData } from './helpers'
 
 import './style.scss'
 
 const MyAuctionDetails = ({ auctionId }) => {
+  const { t } = useTranslation()
+
   const [keyFeature, setKeyFeature] = useState()
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
   const [propertyDetails, setPropertyDetails] = useState({})
@@ -61,7 +64,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       <div key={index} className="chipWrapper-item">
         <span className="label">{updatedKey?.label}</span>
         <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
-          close
+          {t('close')}
         </FontIcon>
       </div>
     ))
@@ -96,13 +99,13 @@ const MyAuctionDetails = ({ auctionId }) => {
   return (
     <div className="auction-list">
       <div className="auction-list-header">
-        <div className="title">My Auctions - Details</div>
+        <div className="title">{t('auctions_details')}</div>
       </div>
       <div className="auction-details-info">
         <div className="auction-details-form">
           <TextField
             id={'title'}
-            label={'Title:'}
+            label={t('title_label')}
             value={dummyData?.title}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -110,7 +113,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'property-type'}
-            label={'Property Type:'}
+            label={t('property_type_label')}
             value={dummyData?.propertyType}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -118,7 +121,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'address'}
-            label={'Address:'}
+            label={t('address_label')}
             value={dummyData?.address}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -126,7 +129,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'city'}
-            label={'City:'}
+            label={t('city_label')}
             value={dummyData?.city}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -134,7 +137,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'coundivy'}
-            label={'Coundivy:'}
+            label={t('coundivy_label')}
             value={dummyData?.coundivy}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -142,7 +145,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'start-end-date'}
-            label={'Start-End Date:'}
+            label={t('start_end_dates_label')}
             value={dummyData?.date}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -150,7 +153,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'start-end-time'}
-            label={'Start-End Time:'}
+            label={t('start_end_time_label')}
             value={dummyData?.time}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -158,7 +161,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'starting-price'}
-            label={'Starting Price:'}
+            label={t('starting_price_label')}
             value={dummyData?.startingPrice}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -166,7 +169,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           />
           <TextField
             id={'incremental-price'}
-            label={'Incremental Price:'}
+            label={t('incremental_price_label')}
             value={dummyData?.incrementalPrice}
             disabled={!editMode}
             className="auction-details-form-textField"
@@ -183,7 +186,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             <>
               <TextField
                 id={'description'}
-                label={'Description:'}
+                label={t('description_label')}
                 value={dummyData?.description}
                 className="auction-details-description-textField"
                 block
@@ -191,7 +194,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               />
               <TextField
                 id="feature"
-                placeholder={'Enter key feature'}
+                placeholder={t('key_features_placeholder')}
                 value={keyFeature}
                 onChange={(value) => setKeyFeature(value)}
                 className="textField-withShadow"
@@ -208,7 +211,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                     disabled={!keyFeature}
                     iconChildren="add"
                   >
-                    {'Add'}
+                    {t('add')}
                   </Button>
                 }
               />
@@ -224,8 +227,8 @@ const MyAuctionDetails = ({ auctionId }) => {
                 title={
                   <>
                     <span className="drop-zone-placeholder">
-                      {'Drag & Drop Files here or'}
-                      <b>{' Select File / Image'}</b>
+                      {t('drag_and_drop')}
+                      <b>{t('select_file')}</b>
                     </span>
                   </>
                 }
@@ -234,11 +237,11 @@ const MyAuctionDetails = ({ auctionId }) => {
                 }
                 listFiles={propertyDetails?.images}
                 iconDelete={true}
-                titleContent={'Property Images'}
+                titleContent={t('property_images')}
                 addTitle={
                   <>
                     <FontIcon>add</FontIcon>
-                    {'add images'}
+                    {t('add_images')}
                   </>
                 }
                 titleUpload={
@@ -252,13 +255,13 @@ const MyAuctionDetails = ({ auctionId }) => {
           ) : (
             <>
               <div className="auction-details-description">
-                <label>Description:</label>
+                <label>{t('description_label')}</label>
                 <span>{dummyData?.description}</span>
               </div>
               <div className="auction-details-subTitle">{'key features'}</div>
               <div className="chipWrapper">{renderNewKeys()}</div>
               <div className="auction-details-subTitle">
-                {'Property Images'}
+                {t('property_images')}
               </div>
               <div className="auction-details-imagesWrapper">
                 {renderImages()}
@@ -277,15 +280,15 @@ const MyAuctionDetails = ({ auctionId }) => {
         </Button>
       </div>
       <div className="auction-details-bidderWrapper">
-        <div className="auction-details-subTitle">List of bidders</div>
+        <div className="auction-details-subTitle">{t('bidders_list')}</div>
         <div className="auction-details-table">
           <div className="auction-details-table-header">
-            <div>Bidder Name</div>
-            <div>Email</div>
-            <div>Phone Number</div>
-            <div>Bid Date</div>
-            <div>Bid Time</div>
-            <div>Bid Amount</div>
+            <div>{t('bidder_name')}</div>
+            <div>{t('email')}</div>
+            <div>{t('phone_number')}</div>
+            <div>{t('bid_date')}</div>
+            <div>{t('bid_time')}</div>
+            <div>{t('bid_amount')}</div>
           </div>
           {renderBidders()}
         </div>

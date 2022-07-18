@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import BiddingCard from 'components/bidding-card'
 import AuctionsFilter from 'components/auction-filter'
@@ -8,6 +9,8 @@ import { dummyData } from 'components/auctions-public/helper'
 import './style.scss'
 
 const AuctionsList = () => {
+  const { t } = useTranslation()
+
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const [filterData, setFilterData] = useState({})
@@ -26,13 +29,14 @@ const AuctionsList = () => {
     <div className="auction-list">
       <div className="auction-list-header">
         {modules.includes('live-auctions') && (
-          <div className="title">Live Auctions</div>
+          <div className="title">{t('live_auctions')}</div>
         )}
         {modules.includes('upcoming-auctions') && (
-          <div className="title">Upcoming Auctions</div>
+          <div className="title">{t('upcoming_auctions')}</div>
         )}
         <div>
-          Showing Results <span>({dummyData?.length})</span>
+          {t('showing_results')}
+          <span>({dummyData?.length})</span>
         </div>
       </div>
       <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />

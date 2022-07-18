@@ -1,4 +1,6 @@
 import { Router, Redirect } from '@reach/router'
+import { useTranslation } from 'react-i18next'
+
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { useQuery } from 'react-apollo'
@@ -18,6 +20,8 @@ import Footer from 'components/footer'
 
 import './style.scss'
 
+const { t } = useTranslation()
+
 const queryClient = new QueryClient()
 
 const Home = () => {
@@ -30,30 +34,30 @@ const Home = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
-    { label: 'Services', key: 'services', linkToNewTab: 'services' },
+    { label: t('services'), key: 'services', linkToNewTab: 'services' },
     {
-      label: 'How it works',
+      label: t('how_it_works'),
       key: 'how-it-works',
       linkToNewTab: 'how-it-works',
     },
     {
-      label: 'My activity',
+      label: t('my_activity'),
       key: 'my-activity',
       subMenu: [
         {
-          label: 'My Auctions',
+          label: t('my_auctions'),
           link: 'my-auctions',
         },
-        { label: 'Saved Auctions', link: 'saved-auctions' },
-        { label: 'My Participation', link: 'my-participation' },
+        { label: t('saved_auctions'), link: 'saved-auctions' },
+        { label: t('my_participation'), link: 'my-participation' },
       ],
     },
     {
-      label: 'Auction Asset',
+      label: t('auction_asset'),
       linkToNewTab: 'auction-asset',
       key: 'auction-asset',
     },
-    { label: 'Contact us', linkToNewTab: 'contact-us', key: 'contact-us' },
+    { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
 
   return (

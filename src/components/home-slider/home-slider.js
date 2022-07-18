@@ -2,8 +2,11 @@ import { Button, FontIcon } from 'react-md'
 import Slider from 'react-slick'
 
 import { useCurrentLang } from 'libs/langs'
+import { useTranslation } from 'react-i18next'
 
 import './style.scss'
+
+const { t } = useTranslation()
 
 const HomeSlider = () => {
   let currentLang = useCurrentLang()
@@ -34,7 +37,7 @@ const HomeSlider = () => {
       <div className="slide-section">
         <img src="https://picsum.photos/id/1031/2000/1000" />
         <div className="data-section">
-          <div className="data-section-title">Villa</div>
+          <div className="data-section-title">{t('villa')}</div>
           <div>Jumeirah, Dubai</div>
           <div className="data-section-separateur" />
           <div>Current Ask: 0</div>

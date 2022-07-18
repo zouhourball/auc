@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { SelectionControlGroup, TextField } from 'react-md'
+import { useTranslation } from 'react-i18next'
 
+const { t } = useTranslation()
 const EligibilityCriteriaForm = ({
   eligibilityCriteria,
   setEligibilityCriteria,
@@ -35,15 +37,15 @@ const EligibilityCriteriaForm = ({
           defaultValue={eligibilityCriteria?.type}
           controls={[
             {
-              label: 'Organization',
+              label: t('organization'),
               value: 'organization',
             },
             {
-              label: 'Individual',
+              label: t('individual'),
               value: 'individual',
             },
             {
-              label: 'Both',
+              label: t('both'),
               value: 'both',
             },
           ]}
@@ -52,7 +54,7 @@ const EligibilityCriteriaForm = ({
       {eligibilityCriteria?.type === 'individual' && (
         <div className="md-cell md-cell--12">
           <label className="auction-details-form-label">
-            Minimum Age Requirement*
+            {t('minimum_age')}
           </label>
           <TextField
             id="age-requirement"

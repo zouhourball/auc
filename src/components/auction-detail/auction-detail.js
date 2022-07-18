@@ -1,4 +1,5 @@
 import { Avatar, Button, FontIcon } from 'react-md'
+import { useTranslation } from 'react-i18next'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
@@ -23,6 +24,7 @@ const AuctionDetail = ({
   status,
   isActive = false,
 }) => {
+  const { t } = useTranslation()
   const data = dummyData[0]
   const [docAction, setDocAction] = useState(false)
   const [currentImg, setCurrentImg] = useState(data?.url)
@@ -30,14 +32,14 @@ const AuctionDetail = ({
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--5 md-grid">
         <div className="auction-details-header md-cell md-cell--12">
-          <div className="title">Auction Detail</div>
+          <div className="title">{t('auction_detail')}</div>
           <Button
             flat
             primary
             className=""
             iconClassName="mdi mdi-map-marker-outline"
           >
-            View Map
+            {t('view_map')}
           </Button>
         </div>
 
@@ -77,7 +79,7 @@ const AuctionDetail = ({
                   onClick={() => setDocAction(false)}
                   className="auction-details-action"
                 >
-                  Approve
+                  {t('approve')}
                 </Button>
                 <Button
                   flat
@@ -86,7 +88,7 @@ const AuctionDetail = ({
                   onClick={() => setDocAction(false)}
                   className="auction-details-action"
                 >
-                  Reject
+                  {t('reject')}
                 </Button>
               </>
             ))}
@@ -114,14 +116,14 @@ const AuctionDetail = ({
                 <div>
                   <strong>27th April, 2022</strong>
                 </div>
-                <div>Starting Date</div>
+                <div>{t('start_date')}</div>
               </div>
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
                   <strong>1623</strong>
                 </div>
-                <div>Lot Number</div>
+                <div>{t('lot_number')}</div>
               </div>
             </div>
             <div className="auction-timer-details">
@@ -129,14 +131,14 @@ const AuctionDetail = ({
                 <div>
                   <strong>22,000 AED</strong>
                 </div>
-                <div>Current Price</div>
+                <div>{t('current_price')}</div>
               </div>
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
                   <strong>1,000 AED</strong>
                 </div>
-                <div>Minimum Increment</div>
+                <div>{t('minimum_incr')}</div>
               </div>
             </div>
           </div>
@@ -145,7 +147,7 @@ const AuctionDetail = ({
             <div className="md-cell md-cell--12">
               <AuctionTimer
                 time={{ days: 0, hours: 0, minutes: 0, secondes: 0 }}
-                label={'Current Price'}
+                label={t('current_price')}
                 bid={0}
                 minIncrement={0}
               />
@@ -154,13 +156,13 @@ const AuctionDetail = ({
               <div>
                 <strong>14</strong>
               </div>
-              <div>Number of Bids</div>
+              <div>{t('number_bids')}</div>
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
                 <strong>0</strong>
               </div>
-              <div>Lot Number</div>
+              <div>{t('lot_number')}</div>
             </div>
           </>
         )}
@@ -168,7 +170,7 @@ const AuctionDetail = ({
         <div className="owner-card md-cell md-cell--12">
           <Avatar className="owner-card-avatar" src={null} />
           <div className="owner-card-info">
-            <div>Owned By</div>
+            <div>{t('owned_by')}</div>
             <div className="name">Ali Salim</div>
           </div>
           <Button
@@ -192,28 +194,28 @@ const AuctionDetail = ({
               onClick={() => setDocAction(true)}
               className="auction-details-btn"
             >
-              Documents
+              {t('documents')}
             </Button>
           ) : isActive ? (
             <Button flat primary swapTheming className="auction-details-btn">
-              Bid Now
+              {t('bid_now')}
             </Button>
           ) : (
             <div className="auction-details-card md-cell md-cell--12">
-              <div className="fees-commission-title">Fees & Commission</div>
+              <div className="fees-commission-title">{t('fees')}</div>
               <div className="auction-timer-details">
                 <div className="auction-timer-info">
                   <div>
                     <strong>12%</strong>
                   </div>
-                  <div>Buyer s Premium</div>
+                  <div>{t('buyer')}</div>
                 </div>
                 <div className="sep" />
                 <div className="auction-timer-info">
                   <div>
                     <strong>3%</strong>
                   </div>
-                  <div>Co-Broke Commission</div>
+                  <div>{t('comission')}</div>
                 </div>
               </div>
             </div>
@@ -227,29 +229,29 @@ const AuctionDetail = ({
         className="md-cell md-cell--12"
       />
       <div className="key-features  md-cell md-cell--12">
-        <div className="key-features-title">Key Features</div>
+        <div className="key-features-title">{t('key_features')}</div>
         <div className="key-features-content">
           <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> wifi
+            <FontIcon primary>task_alt</FontIcon> {t('wifi')}
           </div>
           <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> pool
+            <FontIcon primary>task_alt</FontIcon> {t('pool')}
           </div>
           <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> heat
+            <FontIcon primary>task_alt</FontIcon> {t('heat')}
           </div>
         </div>
       </div>
       {(isAdmin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
-          <div className="fees-commission-title">Fees & Commission</div>
+          <div className="fees-commission-title">{t('fees')}</div>
           <div className="fees-commission-content">
             <div className="fees-commission-item">
-              <div>Buyer s Premium</div>
+              <div>{t('buyer')}</div>
               <div className="value">11%</div>
             </div>
             <div className="fees-commission-item">
-              <div>Co-Broke Commission</div>
+              <div>{t('comission')}</div>
               <div className="value">3%</div>
             </div>
           </div>
