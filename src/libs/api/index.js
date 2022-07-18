@@ -54,23 +54,23 @@ export async function getInfosUser () {
   return res
 }
 
-const appendFileToForm = (form, file) => {
-  form.append('file', file)
-  return form
-}
+// const appendFileToForm = (form, file) => {
+//   form.append('file', file)
+//   return form
+// }
 
-export function fileManagerUpload (files, bucket = 'upload') {
-  const uploadURL = `/fm/upload?bucket=${bucket}&share_with=${'sys:anonymous'},sys:authenticated&permission=${'view'}`
-  const opts = {
-    method: 'POST',
-    isFormData: true,
-    body: Array.isArray(files)
-      ? files.reduce(appendFileToForm, new FormData())
-      : appendFileToForm(new FormData(), files),
-  }
+// export function fileManagerUpload (files, bucket = 'upload') {
+//   const uploadURL = `/fm/upload?bucket=${bucket}&share_with=${'sys:anonymous'},sys:authenticated&permission=${'view'}`
+//   const opts = {
+//     method: 'POST',
+//     isFormData: true,
+//     body: Array.isArray(files)
+//       ? files.reduce(appendFileToForm, new FormData())
+//       : appendFileToForm(new FormData(), files),
+//   }
 
-  return fetchJSON(uploadURL, opts)
-}
+//   return fetchJSON(uploadURL, opts)
+// }
 
 // export async function addApps (params) {
 //   let res = await fetchJSON(`${PRODUCT_WORKSPACE_URL}/rest/card`, {
@@ -97,11 +97,28 @@ export async function getFSToken (params) {
   let res
   try {
     res = await fetchJSON(
-      `https://api.dev.meeraspace.com/asset-management/file-token`,
+      `${PRODUCT_APP_URL_API}/auction/api/v1/public-file-token`,
       {
         method: 'POST',
         body: JSON.stringify({
           action: 'UPLOAD',
+        }),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export async function getFSDlToken (params) {
+  let res
+  try {
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_API}/auction/api/v1/public-file-token`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'DOWNLOAD',
         }),
       },
     )

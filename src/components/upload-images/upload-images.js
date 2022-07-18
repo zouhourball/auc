@@ -7,6 +7,7 @@ import { Button, FontIcon, DialogContainer } from 'react-md'
 import { uploadFileTus, fileDownloadTus } from 'libs/api/tus-upload'
 import { useTranslation } from 'libs/langs'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+import store from 'libs/store'
 
 import './style.scss'
 
@@ -40,20 +41,32 @@ const UploadImages = ({
   const [fileSrc, setFileSrc] = useState('')
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
-  const onDropFiles = (fls) => {
-    setLoading(true)
-    Promise.all(fls.map((f) => uploadFileTus(f))).then((res) => {
-      setLoading(false)
-      setFiles([
-        ...files,
 
-        ...res.map((r) => ({
-          url: r.url,
-          type: r.file.type,
-          options: r.options,
-          size: r._size,
-        })),
-      ])
+  const downloadToken = store?.getState()?.app?.dlToken
+
+  const onDropFiles = (fls) => {
+    let newFiles = []
+
+    setLoading(true)
+    Promise.all(
+      fls.map((f) =>
+        uploadFileTus(f, null, (res) => {
+          newFiles = [
+            ...newFiles,
+            {
+              id: res?.url,
+              url: res?.url,
+              size: res?.file?.size?.toString(),
+
+              fileName: res?.file?.name,
+              type: res?.file?.type,
+            },
+          ]
+        }),
+      ),
+    ).then((res) => {
+      setLoading(false)
+      setFiles([...newFiles])
 
       setListFiles &&
         setListFiles(
@@ -289,7 +302,7 @@ const UploadImages = ({
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? ( // .xlsx
                     <FontIcon className="xlsx-doc">file_present</FontIcon>
                   ) : (
-                    <img src={`${file.url}&view=true`} />
+                    <img src={`${file.url}?token=${downloadToken}&view=true`} />
                   )}
               </>
               )}

@@ -1,5 +1,6 @@
 import * as cookies from 'tiny-cookie'
 import * as tus from 'tus-js-client'
+
 import { downloadFromBlob } from 'libs/utils/download-blob'
 
 import store from 'libs/store'
@@ -12,8 +13,8 @@ export function uploadFileTus (
   onProgress,
   auth = true,
 ) {
-  const fileToken =
-    store?.getState()?.query?.DEFAULT?.getFSToken?.data?.['file_token']
+  const fileToken = store?.getState()?.app?.uplToken
+  // store?.getState()?.app?.DEFAULT?.getFsToken?.data?.['file_token']
   let token
   if (auth && process.env.NODE_ENV !== 'production') {
     token = localStorage.getItem('access_token')
@@ -42,14 +43,16 @@ export function uploadFileTus (
         // X-Meera-Storage-Token is true.
       },
       retryDelays: [0, 3000, 5000, 10000],
-      onError: (err) => {
+      onError,
+      /*: (err) => {
         const error = JSON.parse(err?.originalResponse?._xhr?.response)
         reject(onError(error))
-      },
+      }, */
 
       onProgress,
       onSuccess: function () {
-        resolve(onSuccess(upload))
+        onSuccess && onSuccess(upload)
+        resolve(upload)
       },
       removeFingerprintOnSuccess: true,
       //   headers: {

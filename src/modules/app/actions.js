@@ -50,3 +50,9 @@ export const setSideCollapsed = createAction(
     sideCollapsed,
   }),
 )
+export const setFsToken = createAction('APP_SET_FS_TOKEN', (uplToken) => ({
+  uplToken,
+}))
+export const setFsDlToken = createAction('APP_SET_FS_DL_TOKEN', (dlToken) => ({
+  dlToken,
+}))
