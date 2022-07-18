@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import { Button } from 'react-md'
 import moment from 'moment'
 
@@ -7,6 +9,8 @@ import { navigate } from '@reach/router'
 import './style.scss'
 /* eslint-disable */
 const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
+  const { t } = useTranslation()
+
   const [countdown, setCountdown] = useState({
     d: 0,
     h: 0,
@@ -36,8 +40,8 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
   //   }
 
   const renderBtnTitle = () => {
-    if (status === 'Upcoming') return 'View Details'
-    else return 'Bid Now'
+    if (status === 'Upcoming') return t('view_details')
+    else return t('bid_now')
   }
   /*   useEffect(() => {
     let interval = setInterval(() => {
@@ -85,7 +89,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
       <img src={auctionData?.url} className="bidding-card-background" />
       <div className="bidding-card-header">
         {auctionData.isHighestBid && (
-          <div className="highest-bidder">Highest Bidder</div>
+          <div className="highest-bidder">{t('highest_bidder')}</div>
         )}
         <Button icon primary className="save-btn">
           bookmark_outlined
@@ -98,7 +102,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
               {auctionData.name} in {auctionData.location}
             </div>
             <div className="description">
-              Start Date:{' '}
+              {t('date_start')}{' '}
               {moment(auctionData?.['auction_start_date']).format(
                 'DD MMM, YYYY',
               )}
@@ -111,7 +115,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
             <div className="description">
-              Current Ask: {auctionData?.['starting_price']}
+              {t('current_ask')} {auctionData?.['starting_price']}
             </div>
             {live && (
               <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>

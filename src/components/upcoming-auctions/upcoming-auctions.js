@@ -1,9 +1,12 @@
 import BiddingCard from 'components/bidding-card'
 import { Button } from 'react-md'
+import { useTranslation } from 'libs/langs'
 
 import './styles.scss'
 
 const UpcomingAuctions = ({ cards }) => {
+  const { t } = useTranslation()
+
   const renderCards = () =>
     cards?.map((el, i) => (
       <BiddingCard
@@ -15,19 +18,19 @@ const UpcomingAuctions = ({ cards }) => {
     ))
   return (
     <div className="upcoming-auctions">
-      <div className="upcoming-auctions-title">
-        REVOLUTIONIZING THE REAL ESTATE AUCTION MARKET
-      </div>
+      <div className="upcoming-auctions-title">{t('auction_market')}</div>
       <div className="upcoming-auctions-separateur" />
       <div className="upcoming-auctions-description">
-        With mazed, you can now browse through thousands of auctions to find
+        {t('browse_auctions')}
         <br />
-        your next big purchase
+        {t('big_purchase')}
       </div>
       <div className="upcoming-auctions-header">
-        <div className="upcoming-auctions-subTitle">Upcoming Auctions</div>
+        <div className="upcoming-auctions-subTitle">
+          {t('upcoming_auctions')}
+        </div>
         <Button flat primary className="upcoming-auctions-btn">
-          Explore more
+          {t('explore_more')}
         </Button>
       </div>
       <div className="upcoming-auctions-cards md-grid">{renderCards()}</div>

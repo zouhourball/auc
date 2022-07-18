@@ -1,4 +1,6 @@
 import { cls } from 'reactutils'
+import { useTranslation } from 'libs/langs'
+
 import AuctionDetailsForm from 'components/auction-details-form'
 import DocumentsForm from 'components/documents-form'
 // import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
@@ -25,6 +27,8 @@ const CreateAuctionStepper = ({
   setAuctionData,
   onPublish,
 }) => {
+  const { t } = useTranslation()
+
   const [currentStep, setCurrentStep] = useState(1)
   const [auctionDetails, setAuctionDetails] = useState({
     uuid: uuidv4(),
@@ -108,21 +112,21 @@ const CreateAuctionStepper = ({
         <div className="stepper">
           <Step
             index={1}
-            label="Auction Details"
+            label={t('auction_detail')}
             active={currentStep === 1}
             done={currentStep > 1}
           />
           <div className="stepper-separateur" />
           <Step
             index={2}
-            label="Property Details"
+            label={t('property_details')}
             active={currentStep === 2}
             done={currentStep > 2}
           />
           <div className="stepper-separateur" />
           <Step
             index={3}
-            label="Documents"
+            label={t('documents')}
             active={currentStep === 3}
             done={currentStep > 3}
           />
@@ -158,7 +162,7 @@ const CreateAuctionStepper = ({
               : setCurrentStep(currentStep + 1)
           }
         >
-          {currentStep < 3 ? 'Continue' : 'Publish'}
+          {currentStep < 3 ? t('continue') : t('publish')}
         </Button>
       </div>
     </div>
