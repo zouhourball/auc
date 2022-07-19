@@ -233,3 +233,29 @@ export const approveAuction = async ({ uuid, body }) => {
   }
   return res
 }
+// GET GOVERNORATES
+export const getGovernorates = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/governorates`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+// GET WILAYATS
+
+export const getWilayats = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/wilayats`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
