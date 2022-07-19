@@ -1,0 +1,25 @@
+.admin-page {
+  padding: 0 4.02vw;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  &-logo {
+    color: #1979ff;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 30px;
+    cursor: default;
+  }
+
+  &-loginBtn {
+    height: auto;
+    padding: 8px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+}
