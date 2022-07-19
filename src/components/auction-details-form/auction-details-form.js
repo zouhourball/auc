@@ -6,7 +6,12 @@ import moment from 'moment'
 import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
 
+import DrawOnMap from 'components/draw-on-map'
+// import MapResult from 'components/map-result'
+
 import { DueDate } from 'components/due-date'
+
+import '@target-energysolutions/gis-map/styles.css'
 
 const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const { t } = useTranslation()
@@ -16,6 +21,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [startTime, setStartTime] = useState(moment())
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [endTime, setEndTime] = useState(moment())
+  const [addressView, setAddressView] = useState(false)
 
   const { data: allCountryStateCities } = useQueryHook(
     allCountryStateCitiesGql,
@@ -84,12 +90,29 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('address')}</label>
+        <label className="auction-details-form-label">{t('address')}*</label>
+        {addressView && (
+          <DrawOnMap
+            id={'address'}
+            onClose={() => {
+              setAddressView(false)
+            }}
+            onSetAddress={(newCoordinates) => {
+              onSetFormDetails('address', {
+                general_location_x: newCoordinates?.['lat'],
+                general_location_y: newCoordinates?.['lon'],
+                meta: newCoordinates,
+              })
+            }}
+          />
+        )}
+
         <TextField
           id="auctionAddress"
           placeholder={t('address')}
-          value={address}
-          onChange={(address) => onSetFormDetails('address', address)}
+          value={address?.meta?.['display_name']}
+          // onChange={(address) => onSetFormDetails('address', address)}
+          onClick={() => setAddressView(!addressView)}
           className="textField-withShadow"
           required
           block
