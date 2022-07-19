@@ -74,7 +74,7 @@ const UploadImages = ({
             // ...files,
             ...res.map((r) => ({
               url: r.url,
-              type: r.file.type,
+              type: r?.file?.type,
               options: r.options,
               size: r._size,
             })),
@@ -109,7 +109,7 @@ const UploadImages = ({
     }
   }
   const chooseCover = (file) => {
-    let newFiles = files.map((el) =>
+    let newFiles = files?.map((el) =>
       el === file ? { ...file, cover: true } : { ...el, cover: false },
     )
     setFiles(newFiles)
@@ -229,7 +229,7 @@ const UploadImages = ({
   // }
 
   const renderFiles = () => {
-    return files.map((file, index) => (
+    return files?.map((file, index) => (
       <div
         key={index}
         className={'images'}
@@ -244,21 +244,21 @@ const UploadImages = ({
         )}
         {iconDownload && (
           <FontIcon
-            onClick={() => fileDownloadTus(file.url, file.fileName)}
+            onClick={() => fileDownloadTus(file?.url, file?.fileName)}
             className="download-btn"
           >
             download
           </FontIcon>
         )}
-        {file.type !==
+        {file?.type !==
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
-          file.type !==
+          file?.type !==
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
           iconPreview && (
-          <FontIcon onClick={() => preview(file)} className="preview-btn">
+            <FontIcon onClick={() => preview(file)} className="preview-btn">
               remove_red_eye
-          </FontIcon>
-        )}
+            </FontIcon>
+          )}
         {iconDelete && (
           <FontIcon icon onClick={() => onRemove(index, file)} className="btn">
             delete
@@ -280,7 +280,7 @@ const UploadImages = ({
             {file.selected ? 'radio_button_checked' : 'radio_button_unchecked'}
           </Button>
         )}
-        {file.type === 'application/pdf' ? ( // .pdf
+        {file?.type === 'application/pdf' ? ( // .pdf
           <Document
             className="imgPdfWrapper"
             file={`${file.url}&view=true`}
@@ -293,16 +293,16 @@ const UploadImages = ({
           </Document>
         ) : (
           <>
-            {file.type ===
+            {file?.type ===
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ? ( // .doc, .docs
                 <FontIcon className="word-doc">description</FontIcon>
               ) : (
               <>
-                {file.type ===
+                {file?.type ===
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? ( // .xlsx
                     <FontIcon className="xlsx-doc">file_present</FontIcon>
                   ) : (
-                    <img src={`${file.url}?token=${downloadToken}&view=true`} />
+                    <img src={`${file?.url}?token=${downloadToken}&view=true`} />
                   )}
               </>
               )}
@@ -319,7 +319,7 @@ const UploadImages = ({
         <div className="icons">
           {iconDownload && (
             <FontIcon
-              onClick={() => fileDownloadTus(file.url, file.fileName)}
+              onClick={() => fileDownloadTus(file?.url, file?.fileName)}
               className="download-btn"
             >
               download

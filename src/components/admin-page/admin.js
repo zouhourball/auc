@@ -3,10 +3,15 @@ import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Button } from 'react-md'
-import { configs, dummyDataMht, dummyDocs } from './helper'
+import { configs, dummyDataMht } from './helper'
 import { navigate } from '@reach/router'
+import { useQuery } from 'react-query'
+import moment from 'moment'
+
+import { auctionsRequest } from 'libs/api/auctions-api'
 
 import DocumentsContainer from 'components/docs-dialog'
+import UserInfoBySubject from 'components/user-info-by-subject'
 
 const Admin = () => {
   const { t } = useTranslation()
@@ -15,6 +20,32 @@ const Admin = () => {
     (state) => state?.selectRowsReducers?.selectedRows,
   )
   const selectedRow = selectedRowSelector.map((id) => dummyDataMht()?.[id])
+
+  const { data: auctionsRequestsData } = useQuery(
+    ['auctionsRequest', '', ''],
+    auctionsRequest,
+  )
+
+  const renderData = () =>
+    auctionsRequestsData?.results?.map((el) => ({
+      id: el?.uuid,
+      title: el?.listing?.title,
+      location: `${el?.listing?.property?.['country_id']}, ${el?.listing?.property?.['city_id']}`,
+      owner: (
+        <UserInfoBySubject subject={el?.['submitted_by']}>
+          {(res) => <div className="subject">{res ? res.fullName : 'N/A'}</div>}
+        </UserInfoBySubject>
+      ),
+      bidOpenDate: moment(el?.['auction_start_date']).format('DD MMM YYYY'),
+      bidCloseDate: moment(el?.['auction_end_date']).format('DD MMM YYYY'),
+      submissionDate: moment(el?.['created_date']).format('DD MMM YYYY'),
+      status: el?.status,
+      documents: (
+        <Button onClick={() => setDocumentsDialog(el?.listing?.documents)}>
+          View
+        </Button>
+      ),
+    }))
 
   return (
     <div>
@@ -25,7 +56,7 @@ const Admin = () => {
         <Mht
           id={'admin-dashboard'}
           configs={configs}
-          tableData={dummyDataMht(setDocumentsDialog)}
+          tableData={renderData() || []}
           withChecked
           singleSelect
           withSearch
@@ -49,7 +80,7 @@ const Admin = () => {
         <DocumentsContainer
           visible={documentsDialog}
           onHide={() => setDocumentsDialog(false)}
-          data={dummyDocs}
+          data={documentsDialog}
         />
       )}
     </div>

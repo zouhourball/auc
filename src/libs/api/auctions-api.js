@@ -73,11 +73,11 @@ export const listAuction = async ({ queryKey }) => {
   return res
 }
 // AUCTIONS REQUESTS
-export const auctionsRequest = async ({ searchKey, status }) => {
+export const auctionsRequest = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/requests?q=${searchKey}&auction_status=${status}`,
+      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}`,
       {
         method: 'GET',
       },
@@ -228,6 +228,32 @@ export const approveAuction = async ({ uuid, body }) => {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/approve`, {
       method: 'PUT',
       body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// GET GOVERNORATES
+export const getGovernorates = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/governorates`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+// GET WILAYATS
+
+export const getWilayats = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/wilayats`, {
+      method: 'GET',
     })
   } catch (e) {
     res = { error: e }
