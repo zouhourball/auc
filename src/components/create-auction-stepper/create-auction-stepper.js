@@ -5,8 +5,8 @@ import DocumentsForm from 'components/documents-form'
 import PropertyDetailsForm from 'components/property-details-form'
 import { useState } from 'react'
 import { Button } from 'react-md'
-import { navigate } from '@reach/router'
-import { v4 as uuidv4 } from 'uuid'
+// import { navigate } from '@reach/router'
+// import { v4 as uuidv4 } from 'uuid'
 
 import './style.scss'
 
@@ -21,40 +21,44 @@ const Step = ({ label, index, active, done }) => {
 
 const CreateAuctionStepper = ({
   auctionUuid,
-  auctionData,
-  setAuctionData,
+  auctionDetails,
+  setAuctionDetails,
+  propertyDetails,
+  setPropertyDetails,
   onPublish,
+  documents,
+  setDocuments,
 }) => {
   const [currentStep, setCurrentStep] = useState(1)
-  const [auctionDetails, setAuctionDetails] = useState({
-    uuid: uuidv4(),
-    title: '',
-    general_location_x: 0,
-    general_location_y: 0,
-    city_id: 0,
-    country_id: 0,
-    auction_start_date: '',
-    auction_end_date: '',
-    starting_price: 0,
-    property_type: 0,
-    incremental_price: 0,
-    participation_fee: 0,
-    property_description: '',
-    images: [],
-    features: [],
-  })
-  const [propertyDetails, setPropertyDetails] = useState({
-    description: '',
-    keyFeatures: [],
-    suggestedKeyFeatures: [
-      { label: 'Stone Wall' },
-      { label: 'Pesticides Spray' },
-      { label: 'Nearby Rest Area' },
-      { label: 'Tube Well' },
-    ],
-    images: [],
-  })
-  const [documents, setDocuments] = useState({})
+  // const [auctionDetails, setAuctionDetails] = useState({
+  //   uuid: uuidv4(),
+  //   title: '',
+  //   general_location_x: 0,
+  //   general_location_y: 0,
+  //   city_id: 0,
+  //   country_id: 0,
+  //   auction_start_date: '',
+  //   auction_end_date: '',
+  //   starting_price: 0,
+  //   property_type: 0,
+  //   incremental_price: 0,
+  //   participation_fee: 0,
+  //   property_description: '',
+  //   images: [],
+  //   features: [],
+  // })
+  // const [propertyDetails, setPropertyDetails] = useState({
+  //   description: '',
+  //   keyFeatures: [],
+  //   suggestedKeyFeatures: [
+  //     { label: 'Stone Wall' },
+  //     { label: 'Pesticides Spray' },
+  //     { label: 'Nearby Rest Area' },
+  //     { label: 'Tube Well' },
+  //   ],
+  //   images: [],
+  // })
+  // const [documents, setDocuments] = useState({})
   // const [eligibilityCriteria, setEligibilityCriteria] = useState({
   //   type: 'Organization',
   //   /* criteria: {
@@ -83,7 +87,10 @@ const CreateAuctionStepper = ({
         )
       case 3:
         return (
-          <DocumentsForm documents={documents} setDocuments={setDocuments} />
+          <DocumentsForm
+            documentsDetails={documents}
+            setDocumentDetails={setDocuments}
+          />
         )
       // case 4:
       //   return (
@@ -98,9 +105,9 @@ const CreateAuctionStepper = ({
   }
 
   const onUpdateAuction = () => {}
-  const onSaveAuction = () => {
-    navigate('/auctions/home')
-  }
+  // const onSaveAuction = () => {
+  //   navigate('/auctions/home')
+  // }
 
   return (
     <div className="create-auction">
@@ -154,7 +161,7 @@ const CreateAuctionStepper = ({
             currentStep > 2
               ? auctionUuid
                 ? onUpdateAuction()
-                : onSaveAuction()
+                : onPublish()
               : setCurrentStep(currentStep + 1)
           }
         >

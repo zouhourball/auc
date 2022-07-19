@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { useQuery as useQueryHook } from 'react-apollo-hooks'
+import { useQuery } from 'react-query'
+// import { useQuery as useQueryHook } from 'react-apollo-hooks'
 import { TextField, FontIcon, SelectField } from 'react-md'
 import moment from 'moment'
-import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
+// import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
+
+import { getGovernorates, getWilayats } from 'libs/api/auctions-api'
 
 import { DueDate } from 'components/due-date'
 
@@ -14,14 +17,18 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [endTime, setEndTime] = useState(moment())
 
-  const { data: allCountryStateCities } = useQueryHook(
-    allCountryStateCitiesGql,
-    {
-      context: {
-        uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
-      },
-    },
-  )
+  const { data: getGov } = useQuery(['getGovernorates'], getGovernorates)
+
+  const { data: getWila } = useQuery(['getWilayats'], getWilayats)
+
+  // const { data: allCountryStateCities } = useQueryHook(
+  //   allCountryStateCitiesGql,
+  //   {
+  //     context: {
+  //       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+  //     },
+  //   },
+  // )
 
   const onSetFormDetails = (property, value) => {
     setAuctionDetails({ ...auctionDetails, [property]: value })
@@ -38,13 +45,25 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const renderCountry = () => {
     let arrayName = []
     if (
-      allCountryStateCities &&
-      allCountryStateCities.allCountries &&
-      allCountryStateCities.allCountries.countries
+      getWila
     ) {
-      arrayName = allCountryStateCities?.allCountries?.countries?.map((ac) => {
+      arrayName = getWila?.results?.map((ac) => {
         return {
-          label: ac.countryName,
+          label: ac.name_en,
+          value: `${ac.id}`,
+        }
+      })
+      return arrayName
+    }
+  }
+  const renderCity = () => {
+    let arrayName = []
+    if (
+      getGov
+    ) {
+      arrayName = getGov?.results?.map((ac) => {
+        return {
+          label: ac.name_en,
           value: `${ac.id}`,
         }
       })
@@ -111,14 +130,19 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">City*</label>
-        <TextField
-          id="auctionCity"
-          placeholder={'City'}
+        <SelectField
+          id="select-field-with-elements-country-spinner"
+          placeholder={'Select city'}
+          menuItems={renderCity()}
           value={city}
           onChange={(city) => onSetFormDetails('city', city)}
-          className="textField-withShadow"
-          required
-          block
+          fullWidth
+          position={SelectField.Positions.BELOW}
+          repositionOnResize
+          repositionOnScroll
+          dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          simplifiedMenu={false}
+          className="selectField-withShadow"
         />
       </div>
       <div className="md-cell md-cell--6">
@@ -126,7 +150,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         <SelectField
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
-          placeholder={'Select country'}
+          placeholder={'Select type'}
           menuItems={[
             {
               label: 'menu item1',

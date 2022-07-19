@@ -1,7 +1,7 @@
 import { FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 
-const DocumentsForm = ({ propertyDetails, setPropertyDetails }) => {
+const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   //  const [images, setImages] = useState({})
 
   const images = []
@@ -18,7 +18,7 @@ const DocumentsForm = ({ propertyDetails, setPropertyDetails }) => {
   } */
 
   const onSetFormDetails = (property, value) => {
-    setPropertyDetails({ ...propertyDetails, [property]: value })
+    setDocumentDetails({ ...documentsDetails, [property]: value })
   }
 
   const setListImages = (newImages, keyAction, fileId) => {
