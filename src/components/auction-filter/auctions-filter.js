@@ -1,20 +1,23 @@
 import { FontIcon, SelectField, TextField } from 'react-md'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 const AuctionsFilter = ({ filterData, setFilterData }) => {
+  const { t } = useTranslation()
+
   const { search, price, type, bedsBaths, more, auctionEndingSoon } = filterData
   return (
     <div className="md-grid auctions-filter">
       <TextField
-        placeholder="What are looking for?"
+        placeholder={t('looking_for_what')}
         className="md-cell md-cell--3 auctions-filter-textField"
         value={search}
         onChange={(v) => setFilterData({ ...filterData, search: v })}
-        rightIcon={<FontIcon>search</FontIcon>}
+        rightIcon={<FontIcon>{t('search')}</FontIcon>}
         block
       />
       <SelectField
-        placeholder="Price"
+        placeholder={t('price')}
         className=" md-cell md-cell--1 auctions-filter-selectField"
         value={price}
         onChange={(v) => setFilterData({ ...filterData, price: v })}
@@ -25,7 +28,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        placeholder="Type"
+        placeholder={t('type')}
         className="md-cell md-cell--1 auctions-filter-selectField"
         value={type}
         onChange={(v) => setFilterData({ ...filterData, type: v })}
@@ -36,7 +39,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        placeholder="Beds & Baths"
+        placeholder={t('beds_baths')}
         className="md-cell md-cell--2 auctions-filter-selectField"
         value={bedsBaths}
         onChange={(v) => setFilterData({ ...filterData, bedsBaths: v })}
@@ -47,7 +50,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        placeholder="More"
+        placeholder={t('more')}
         className="md-cell md-cell--1 auctions-filter-selectField"
         value={more}
         onChange={(v) => setFilterData({ ...filterData, more: v })}
@@ -59,7 +62,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
       />
       <div className="md-cell md-cell--1">Sort By</div>
       <SelectField
-        placeholder="Auction ending soon"
+        placeholder={t('auction_ending')}
         className="md-cell md-cell--3 auctions-filter-selectField"
         value={auctionEndingSoon}
         onChange={(v) => setFilterData({ ...filterData, auctionEndingSoon: v })}

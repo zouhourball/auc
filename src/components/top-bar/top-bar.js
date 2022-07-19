@@ -145,7 +145,7 @@ const TopBar = ({
             }}
             position={MenuButton.Positions.BELOW}
           >
-            Auctions
+            {t('auctions')}
           </MenuButton>
           {/* <div>
             <span
@@ -339,7 +339,7 @@ const TopBar = ({
               setOpenMenu(true)
             }}
           >
-            menu
+            {t('menu')}
           </Button>
         </div>
 
@@ -364,7 +364,7 @@ const TopBar = ({
                     setOpenMenu(false)
                   }}
                 >
-                  close
+                  {t('close')}
                 </Button>
               }
             />
@@ -385,7 +385,7 @@ const TopBar = ({
                 className="login-btn"
                 onClick={() => navigate(onClickLoginUrl)}
               >
-                {t('sign-in')}
+                {t('sign_in')}
               </Button>
             </div>
           )}

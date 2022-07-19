@@ -1,8 +1,11 @@
 import { FontIcon } from 'react-md'
+import { useTranslation } from 'libs/langs'
+
 import UploadImages from 'components/upload-images'
 
 const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   //  const [images, setImages] = useState({})
+  const { t } = useTranslation()
 
   const images = []
 
@@ -22,12 +25,12 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   }
 
   const setListImages = (newImages, keyAction, fileId) => {
-    if (keyAction === 'delete') {
+    if (keyAction === t('delete')) {
       onSetFormDetails(
         'images',
         images?.filter((el) => el.url !== fileId),
       )
-    } else if (keyAction === 'add') {
+    } else if (keyAction === t('add')) {
       onSetFormDetails('images', [...images, ...newImages])
     } else {
       onSetFormDetails('images', newImages)
@@ -68,29 +71,27 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   return (
     <div div className="auction-details-form md-grid">
       <div className="auction-details-form-title md-cell md-cell--12">
-        Documents
+        {t('documents')}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          National ID/Passport of Owner *
-        </label>
+        <label className="auction-details-form-label">{t('id_passport')}</label>
         {fileInputCustom('ownerId')}
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">
-          Property Ownership Document *
+          {t('property_document')}
         </label>
         {fileInputCustom('propertyOwnership')}
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">
-          Universal Bidder Agreement *
+          {t('bidder_agreement')}
         </label>
         {fileInputCustom('bidderAgreement')}
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">
-          Letter of Authorization *
+          {t('authorization_letter')}
         </label>
         {fileInputCustom('authLetter')}
       </div>
