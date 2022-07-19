@@ -72,11 +72,11 @@ export const listAuction = async ({ searchKey, status }) => {
   return res
 }
 // AUCTIONS REQUESTS
-export const auctionsRequest = async ({ searchKey, status }) => {
+export const auctionsRequest = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/requests?q=${searchKey}&auction_status=${status}`,
+      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}`,
       {
         method: 'GET',
       },
