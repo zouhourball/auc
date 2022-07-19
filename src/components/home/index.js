@@ -20,11 +20,11 @@ import Footer from 'components/footer'
 
 import './style.scss'
 
-const { t } = useTranslation()
-
 const queryClient = new QueryClient()
 
 const Home = () => {
+  const { t } = useTranslation()
+
   const { data: currentUser } = useQuery(meQuery, {
     notifyOnNetworkStatusChange: true,
     context: {
