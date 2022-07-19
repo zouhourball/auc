@@ -57,11 +57,12 @@ export const saveAuction = async ({ body }) => {
 }
 
 // LIST AUCTIONs
-export const listAuction = async ({ searchKey, status }) => {
+export const listAuction = async ({ queryKey }) => {
   let res
+
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions?q=${searchKey}&auction_status=${status}`,
+      `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}`,
       {
         method: 'GET',
       },
@@ -91,7 +92,7 @@ export const featuredAuctions = async ({ searchKey, endingSoon }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/featured/auctions/requests?q=${searchKey}&ending_soon=${endingSoon}`,
+      `${appUrl}/api/v1/featured/auctions?auction_status=Active`,
       {
         method: 'GET',
       },
@@ -171,10 +172,10 @@ export const payAuctionFail = async ({ trackID, error }) => {
   return res
 }
 // GET AUCTION BY UUID
-export const getAuction = async ({ uuid }) => {
+export const getAuction = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}`, {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${queryKey[1]}`, {
       method: 'GET',
     })
   } catch (e) {
