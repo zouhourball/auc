@@ -9,7 +9,7 @@ import { getLanguage, setLanguage } from 'libs/utils/language'
 
 export const { Wrapper, withTranslation, useTranslation } =
   createTinyI18NWrapper({
-    productName: 'bayen',
+    productName: 'auctions-fe',
     translateVersion: 'v1',
   })
 
@@ -98,7 +98,7 @@ export function useSupportedLangs () {
     },
   ])
   React.useEffect(() => {
-    fetchJSON(`${PRODUCT_APP_URL_LANG}/rest/languages/v1/bayen`).then(
+    fetchJSON(`${PRODUCT_APP_URL_LANG}/rest/languages/v1/auctions-fe`).then(
       (resp) => {
         if (resp.success) {
           setLangs(

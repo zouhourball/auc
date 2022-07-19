@@ -5,9 +5,9 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const { t } = useTranslation()
-
 const HomeSlider = () => {
+  const { t } = useTranslation()
+
   let currentLang = useCurrentLang()
   var settings = {
     dots: false,

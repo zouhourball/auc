@@ -1,8 +1,9 @@
 import './style.scss'
 import { useTranslation } from 'libs/langs'
 
-const { t } = useTranslation()
 const Footer = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="footer">
       <div onClick={() => {}} className="footer-logo">
