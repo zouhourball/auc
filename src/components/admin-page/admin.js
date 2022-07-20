@@ -13,6 +13,8 @@ import { auctionsRequest } from 'libs/api/auctions-api'
 import DocumentsContainer from 'components/docs-dialog'
 import UserInfoBySubject from 'components/user-info-by-subject'
 
+import './style.scss'
+
 const Admin = () => {
   const { t } = useTranslation()
   const [documentsDialog, setDocumentsDialog] = useState(false)
@@ -48,9 +50,13 @@ const Admin = () => {
     }))
 
   return (
-    <div>
-      <span>LOGO</span>
-      <Button primary>{t('log_out')}</Button>
+    <div className="admin-page">
+      <div className="admin-page-header">
+        <div className="admin-page-logo">LOGO</div>
+        <Button flat swapTheming primary className="admin-page-loginBtn">
+          {t('log_out')}
+        </Button>
+      </div>
       <h1>{t('auctions')}</h1>
       <div>
         <Mht
