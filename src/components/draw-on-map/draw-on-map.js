@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react'
 import { MeeraMap } from '@target-energysolutions/gis-map'
-import { Button } from 'react-md'
+import { Button, DialogContainer } from 'react-md'
+import '@target-energysolutions/gis-map/styles.css'
 
-const DrawOnMap = ({ id, onClose, onSetAddress }) => {
+import './style.scss'
+
+const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
   const mapRef = useRef(null)
   const [newCoordinates, setNewCoordinates] = useState(null)
 
@@ -84,7 +87,32 @@ const DrawOnMap = ({ id, onClose, onSetAddress }) => {
   // let latitude = 56.494
   // let longitude = 20.667
   return (
-    <div className="drawOnMap">
+    <DialogContainer
+      visible={visible}
+      onHide={onClose}
+      focusOnMount={false}
+      className="drawOnMap"
+      actions={[
+        <Button key={0} flat onClick={() => onClose()}>
+          Discard
+        </Button>,
+        <Button
+          key={1}
+          flat
+          primary
+          swapTheming
+          onClick={() => {
+            if (newCoordinates) {
+              // formatMapToCoordinates(newCoordinates)
+            }
+            onSetAddress(newCoordinates)
+            onClose()
+          }}
+        >
+          Done
+        </Button>,
+      ]}
+    >
       <div className="drawOnMap-map">
         <MeeraMap
           // ack={console.log}
@@ -121,27 +149,7 @@ const DrawOnMap = ({ id, onClose, onSetAddress }) => {
           ]}
         />
       </div>
-
-      <div className="drawOnMap-footer">
-        <Button flat onClick={() => onClose()}>
-          Discard
-        </Button>
-        <Button
-          flat
-          primary
-          swapTheming
-          onClick={() => {
-            if (newCoordinates) {
-              // formatMapToCoordinates(newCoordinates)
-            }
-            onSetAddress(newCoordinates)
-            onClose()
-          }}
-        >
-          Done
-        </Button>
-      </div>
-    </div>
+    </DialogContainer>
   )
 }
 
