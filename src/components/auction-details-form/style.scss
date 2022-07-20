@@ -1,0 +1,10 @@
+.auction-details-form {
+  .dateWrapper {
+    position: relative;
+
+    .due-date-container {
+      position: absolute;
+      z-index: 999;
+    }
+  }
+}

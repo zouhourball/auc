@@ -13,7 +13,7 @@ import DrawOnMap from 'components/draw-on-map'
 
 import { DueDate } from 'components/due-date'
 
-import '@target-energysolutions/gis-map/styles.css'
+import './style.scss'
 
 const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const { t } = useTranslation()
@@ -115,6 +115,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             onClose={() => {
               setAddressView(false)
             }}
+            visible={addressView}
             onSetAddress={(newCoordinates) => {
               onSetFormDetails('address', {
                 general_location_x: newCoordinates?.['lat'],
@@ -202,7 +203,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
 
-      <div className="md-cell md-cell--6">
+      <div className="dateWrapper md-cell md-cell--6">
         <label className="auction-details-form-label">{t('dates')}</label>
         <TextField
           id="range"
