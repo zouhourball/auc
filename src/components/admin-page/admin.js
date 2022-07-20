@@ -3,7 +3,7 @@ import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Button } from 'react-md'
-import { configs, dummyDataMht } from './helper'
+import { configs } from './helper'
 import { navigate } from '@reach/router'
 import { useQuery } from 'react-query'
 import moment from 'moment'
@@ -19,7 +19,6 @@ const Admin = () => {
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
-  const selectedRow = selectedRowSelector.map((id) => dummyDataMht()?.[id])
 
   const { data: auctionsRequestsData } = useQuery(
     ['auctionsRequest', '', ''],
@@ -41,11 +40,17 @@ const Admin = () => {
       submissionDate: moment(el?.['created_date']).format('DD MMM YYYY'),
       status: el?.status,
       documents: (
-        <Button onClick={() => setDocumentsDialog(el?.listing?.documents)}>
+        <Button
+          onClick={() => {
+            setDocumentsDialog(el?.listing?.documents)
+            // console.log(el?.listing?.documents, 'docs')
+          }}
+        >
           View
         </Button>
       ),
     }))
+  const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
 
   return (
     <div>
