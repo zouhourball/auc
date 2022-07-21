@@ -5,10 +5,10 @@ import { useState } from 'react'
 import { Button } from 'react-md'
 import { configs } from './helper'
 import { navigate } from '@reach/router'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
 
-import { auctionsRequest } from 'libs/api/auctions-api'
+import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
 
 import DocumentsContainer from 'components/docs-dialog'
 import UserInfoBySubject from 'components/user-info-by-subject'
@@ -22,11 +22,17 @@ const Admin = () => {
     (state) => state?.selectRowsReducers?.selectedRows,
   )
 
-  const { data: auctionsRequestsData } = useQuery(
+  const { data: auctionsRequestsData, refetch } = useQuery(
     ['auctionsRequest', '', ''],
     auctionsRequest,
   )
-
+  const approveMutation = useMutation(approveAuction, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetch()
+      }
+    },
+  })
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
       id: el?.uuid,
@@ -53,7 +59,12 @@ const Admin = () => {
       ),
     }))
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
-
+  const onUpdateStatus = (status) => {
+    approveMutation.mutate({
+      uuid: selectedRow[0]?.id,
+      status,
+    })
+  }
   return (
     <div className="admin-page">
       <div className="admin-page-header">
@@ -64,6 +75,29 @@ const Admin = () => {
       </div>
       <h1>{t('auctions')}</h1>
       <div>
+        {selectedRow?.length === 1 && (
+          <div>
+            {`${selectedRow.length} Row Selected`}
+
+            <Button
+              onClick={() => navigate(`auctions/detail/${selectedRow[0]?.id}`)}
+            >
+              {t('view_details')}
+            </Button>
+            {selectedRow[0]?.status === 'Pending' && (
+              <>
+                <Button onClick={() => onUpdateStatus('Approved')}>
+                  {t('approve')}
+                </Button>
+                <Button onClick={() => onUpdateStatus('Rejected')}>
+                  {t('reject')}
+                </Button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+      <div>
         <Mht
           id={'admin-dashboard'}
           configs={configs}
@@ -73,18 +107,7 @@ const Admin = () => {
           withSearch
           withFooter
           commonActions
-          headerTemplate={
-            (selectedRow?.length === 1 && (
-              <div>
-                {`${selectedRow.length} Row Selected`}
-                <Button onClick={() => navigate(`detail/${'1'}`)}>
-                  {t('view_details')}
-                </Button>
-                <Button>{t('approve')}</Button>
-                <Button>{t('reject')}</Button>
-              </div>
-            )) || <div />
-          }
+          headerTemplate={<div />}
         />
       </div>
       {documentsDialog && (

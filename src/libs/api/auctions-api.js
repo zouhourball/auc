@@ -221,12 +221,12 @@ export const updateAuction = async ({ uuid, body }) => {
   return res
 }
 // APPROVE AUCTION BY UUID
-export const approveAuction = async ({ uuid, body }) => {
+export const approveAuction = async ({ uuid, status }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/approve`, {
       method: 'PUT',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ status }),
     })
   } catch (e) {
     res = { error: e }
