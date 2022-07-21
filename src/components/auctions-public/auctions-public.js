@@ -14,7 +14,7 @@ const AuctionsPublic = () => {
 
   const { data: featAuctions } = useQuery('featuredAuctions', featuredAuctions)
   const { data: upcomingAuctionsData } = useQuery(
-    ['UpcomingAuctions', 'Upcoming'],
+    ['UpcomingAuctions', 'Active', 10],
     listAuction,
   )
 
