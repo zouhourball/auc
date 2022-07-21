@@ -5,7 +5,7 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const HomeSlider = () => {
+const HomeSlider = ({ auctions }) => {
   const { t } = useTranslation()
 
   let currentLang = useCurrentLang()
@@ -33,45 +33,21 @@ const HomeSlider = () => {
   }
   return (
     <Slider {...settings} className="home-slider">
-      <div className="slide-section">
-        <img src="https://picsum.photos/id/1031/2000/1000" />
-        <div className="data-section">
-          <div className="data-section-title">{t('villa')}</div>
-          <div>Jumeirah, Dubai</div>
-          <div className="data-section-separateur" />
-          <div>Current Ask: 0</div>
-          <div>02 D : 08 H : 35 M : 10 S</div>
-          <Button flat primary swapTheming className="data-section-button">
-            Bid Now
-          </Button>
+      {auctions?.map((auction) => (
+        <div key={auction.uuid} className="slide-section">
+          <img src={auction?.listing?.images[0].url} />
+          <div className="data-section">
+            <div className="data-section-title">{t('villa')}</div>
+            <div>{auction?.listing?.title}</div>
+            <div className="data-section-separateur" />
+            <div>Current Ask: 0</div>
+            <div>02 D : 08 H : 35 M : 10 S</div>
+            <Button flat primary swapTheming className="data-section-button">
+              Bid Now
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="slide-section">
-        <img src="https://picsum.photos/id/1033/2000/1000" />
-        <div className="data-section">
-          <div className="data-section-title">Villa</div>
-          <div>Jumeirah, Dubai</div>
-          <div className="data-section-separateur" />
-          <div>Current Ask: 0</div>
-          <div>02 D : 08 H : 35 M : 10 S</div>
-          <Button flat primary swapTheming className="data-section-button">
-            Bid Now
-          </Button>
-        </div>
-      </div>
-      <div className="slide-section">
-        <img src="https://picsum.photos/id/1078/2000/1000" />
-        <div className="data-section">
-          <div className="data-section-title">Villa</div>
-          <div>Jumeirah, Dubai</div>
-          <div className="data-section-separateur" />
-          <div>Current Ask: 0</div>
-          <div>02 D : 08 H : 35 M : 10 S</div>
-          <Button flat primary swapTheming className="data-section-button">
-            Bid Now
-          </Button>
-        </div>
-      </div>
+      ))}
     </Slider>
   )
 }

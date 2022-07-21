@@ -7,6 +7,8 @@ import AuctionsFilter from 'components/auction-filter'
 import { dummyData } from 'components/auctions-public/helper'
 
 import './style.scss'
+import { useQuery } from 'react-query'
+import { listAuction } from 'libs/api/auctions-api'
 
 const AuctionsList = () => {
   const { t } = useTranslation()
@@ -14,17 +16,23 @@ const AuctionsList = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const [filterData, setFilterData] = useState({})
+  const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
+  const { data: auctionsData } = useQuery(
+    ['UpcomingAuctions', type],
+    listAuction,
+  )
 
   const renderCards = () =>
-    dummyData?.map((el, i) => (
+    auctionsData?.results?.map((el, i) => (
       <BiddingCard
         className="md-cell md-cell--6"
         key={i}
         auctionData={el}
-        status={'Active'}
+        status={type}
         live={modules.includes('live-auctions')}
       />
     ))
+
   return (
     <div className="auction-list">
       <div className="auction-list-header">

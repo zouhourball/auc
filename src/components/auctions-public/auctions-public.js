@@ -2,18 +2,26 @@
 
 //
 //
-import UpcomingAuctions from 'components/upcoming-auctions'
+
 import HomeSlider from 'components/home-slider'
 
-import { dummyData } from './helper.js'
+import { useQuery } from 'react-query'
+import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
+import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
 
 const AuctionsPublic = () => {
   //
 
+  const { data: featAuctions } = useQuery('featuredAuctions', featuredAuctions)
+  const { data: upcomingAuctionsData } = useQuery(
+    ['UpcomingAuctions', 'Active', 10],
+    listAuction,
+  )
+
   return (
     <>
-      <HomeSlider />
-      <UpcomingAuctions cards={dummyData} />
+      <HomeSlider auctions={featAuctions?.results} />
+      <UpcomingAuctions cards={upcomingAuctionsData?.results} />
     </>
   )
 }

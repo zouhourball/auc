@@ -83,10 +83,13 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
     <div
       className={`bidding-card ${className || ''}`}
       onClick={() =>
-        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.id}`)
+        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
       }
     >
-      <img src={auctionData?.url} className="bidding-card-background" />
+      <img
+        src={auctionData?.listing?.images[0]?.url}
+        className="bidding-card-background"
+      />
       <div className="bidding-card-header">
         {auctionData.isHighestBid && (
           <div className="highest-bidder">{t('highest_bidder')}</div>
@@ -99,23 +102,21 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
         {status === 'Upcoming' && (
           <div className="bidding-card-info">
             <div className="title">
-              {auctionData.name} in {auctionData.location}
+              {auctionData?.listing?.title} in {auctionData.location}
             </div>
             <div className="description">
               {t('date_start')}{' '}
-              {moment(auctionData?.['auction_start_date']).format(
-                'DD MMM, YYYY',
-              )}
+              {moment(auctionData?.auction_start_date).format('DD MMM, YYYY')}
             </div>
           </div>
         )}
         {status === 'Active' && (
           <div className="bidding-card-info">
-            <div className="title">{auctionData.name}</div>
+            <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
             <div className="description">
-              {t('current_ask')} {auctionData?.['starting_price']}
+              {t('current_ask')} {auctionData?.starting_price}
             </div>
             {live && (
               <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
