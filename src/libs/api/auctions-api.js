@@ -103,10 +103,10 @@ export const featuredAuctions = async ({ searchKey, endingSoon }) => {
   return res
 }
 // GET AUCTION'S PROPERTY
-export const auctionProperty = async ({ uuid }) => {
+export const auctionProperty = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/property`, {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${queryKey[1]}/property`, {
       method: 'GET',
     })
   } catch (e) {
