@@ -1,5 +1,8 @@
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import { useQuery } from 'react-query'
+import { getAuction } from 'libs/api/auctions-api'
+import moment from 'moment'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
@@ -16,9 +19,6 @@ import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
 
 import './style.scss'
-import { useQuery } from 'react-query'
-import { getAuction } from 'libs/api/auctions-api'
-import moment from 'moment'
 
 const AuctionDetail = ({
   auctionId,
@@ -50,26 +50,28 @@ const AuctionDetail = ({
         </div>
 
         <img className="gallery-image md-cell md-cell--12" src={currentImg} />
-        <img
-          className="gallery-image md-cell md-cell--3"
-          onClick={() => setCurrentImg(auctionData?.listing?.images[0]?.url)}
-          src={auctionData?.listing?.images[0]?.url}
-        />
-        <img
-          className="gallery-image md-cell md-cell--3"
-          onClick={() => setCurrentImg(auctionData?.listing?.images[1]?.url)}
-          src={auctionData?.listing?.images[1]?.url}
-        />
-        <img
-          className="gallery-image md-cell md-cell--3"
-          onClick={() => setCurrentImg(auctionData?.listing?.images[2]?.url)}
-          src={auctionData?.listing?.images[2]?.url}
-        />
-        <img
-          className="gallery-image md-cell md-cell--3"
-          onClick={() => setCurrentImg(auctionData?.listing?.images[3]?.url)}
-          src={auctionData?.listing?.images[3]?.url}
-        />
+        <div className="gallery-image-wrapper md-cell md-cell--12">
+          <img
+            className="gallery-image item"
+            onClick={() => setCurrentImg(auctionData?.listing?.images[0]?.url)}
+            src={auctionData?.listing?.images[0]?.url}
+          />
+          <img
+            className="gallery-image item"
+            onClick={() => setCurrentImg(auctionData?.listing?.images[1]?.url)}
+            src={auctionData?.listing?.images[1]?.url}
+          />
+          <img
+            className="gallery-image item"
+            onClick={() => setCurrentImg(auctionData?.listing?.images[2]?.url)}
+            src={auctionData?.listing?.images[2]?.url}
+          />
+          <img
+            className="gallery-image item"
+            onClick={() => setCurrentImg(auctionData?.listing?.images[3]?.url)}
+            src={auctionData?.listing?.images[3]?.url}
+          />
+        </div>
       </div>
       <div className="auction-details-info md-cell md-cell--7 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
@@ -123,7 +125,7 @@ const AuctionDetail = ({
               <div className="auction-timer-info">
                 <div>
                   <strong>
-                    {moment(auctionData.auction_start_date).format(
+                    {moment(auctionData.auction_start_date)?.format(
                       'DD MMM, YYYY',
                     )}
                   </strong>

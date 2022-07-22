@@ -58,7 +58,7 @@ const Admin = () => {
         </Button>
       </div>
       <h1>{t('auctions')}</h1>
-      <div>
+      <div className="admin-page-mht">
         <Mht
           id={'admin-dashboard'}
           configs={configs}
@@ -70,13 +70,23 @@ const Admin = () => {
           commonActions
           headerTemplate={
             (selectedRow?.length === 1 && (
-              <div>
-                {`${selectedRow.length} Row Selected`}
-                <Button onClick={() => navigate(`detail/${'1'}`)}>
-                  {t('view_details')}
-                </Button>
-                <Button>{t('approve')}</Button>
-                <Button>{t('reject')}</Button>
+              <div className="admin-page-mht-header">
+                <div> {`${selectedRow.length} Row Selected`}</div>
+                <div>
+                  <Button
+                    className="admin-page-actionBtn"
+                    flat
+                    onClick={() => navigate(`detail/${'1'}`)}
+                  >
+                    {t('view_details')}
+                  </Button>
+                  <Button className="admin-page-actionBtn" primary flat>
+                    {t('approve')}
+                  </Button>
+                  <Button className="admin-page-actionBtn" secondary flat>
+                    {t('reject')}
+                  </Button>
+                </div>
               </div>
             )) || <div />
           }
