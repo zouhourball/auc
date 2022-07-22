@@ -18,7 +18,7 @@ const AuctionsList = () => {
   const [filterData, setFilterData] = useState({})
   const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
   const { data: auctionsData } = useQuery(
-    ['UpcomingAuctions', type],
+    ['upcomingAuctions', type, 100],
     listAuction,
   )
 

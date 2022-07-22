@@ -3,17 +3,22 @@ import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
 import moment from 'moment'
 import { useQuery } from 'react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
+// import { useSubscription } from 'react-apollo'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 
 import { getAuction, auctionProperty } from 'libs/api/auctions-api'
 
+// import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
+import TermsDialogContainer from 'components/terms-dialog'
 
 import { dummyDocs } from 'components/admin-page/helper'
 
@@ -25,12 +30,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({
-  auctionId,
-  isAdmin = true,
-  status,
-  isActive = false,
-}) => {
+const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
 
@@ -41,9 +41,30 @@ const AuctionDetail = ({
     auctionProperty,
   )
   const [currentImg, setCurrentImg] = useState('')
+  const [termsDialog, setTermsDialog] = useState(false)
   useEffect(() => {
     setCurrentImg(auctionData?.listing?.images[0]?.url)
   }, [auctionData])
+  // const { data: subNewBid } = useSubscription(subscribeNewBid, {
+  //   variables: { auctionID: auctionId },
+  //   // uri: `${appUrl}/auction/graphql/query`,
+  // })
+  // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+  //   variables: { auctionID: auctionId },
+  // })
+  // useEffect(() => {
+  //   refetchBid()
+  // }, [subNewBid])
+
+  const isActive = useMemo(
+    () => Date.parse(auctionData?.['created_date']) > Date.now(),
+  )
+  // console.log(
+  //   Date.parse(auctionData?.['created_date']),
+  //   Date.now(),
+  //   isActive,
+  //   'isActive',
+  // )
   const renderPropertyImages = () =>
     auctionData?.listing?.images?.map((image) => (
       <img
@@ -247,8 +268,14 @@ const AuctionDetail = ({
             >
               {t('documents')}
             </Button>
-          ) : isActive ? (
-            <Button flat primary swapTheming className="auction-details-btn">
+          ) : !isActive ? (
+            <Button
+              flat
+              primary
+              swapTheming
+              className="auction-details-btn"
+              onClick={() => setTermsDialog(true)}
+            >
               {t('bid_now')}
             </Button>
           ) : (
@@ -314,6 +341,13 @@ const AuctionDetail = ({
           visible={docAction}
           onHide={() => setDocAction(false)}
           data={dummyDocs}
+        />
+      )}
+      {termsDialog && (
+        <TermsDialogContainer
+          visible={termsDialog}
+          onHide={() => setTermsDialog(false)}
+          auctionId={auctionData?.uuid}
         />
       )}
     </div>

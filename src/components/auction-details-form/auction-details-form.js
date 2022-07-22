@@ -52,9 +52,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
 
   const renderCountry = () => {
     let arrayName = []
-    if (
-      getWila
-    ) {
+    if (getWila) {
       arrayName = getWila?.results?.map((ac) => {
         return {
           label: ac.name_en,
@@ -66,9 +64,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   }
   const renderCity = () => {
     let arrayName = []
-    if (
-      getGov
-    ) {
+    if (getGov) {
       arrayName = getGov?.results?.map((ac) => {
         return {
           label: ac.name_en,
@@ -143,7 +139,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           id="select-field-with-elements-country-spinner"
           placeholder={t('select_country')}
           menuItems={renderCountry()}
-          value={country}
+          value={country || 1}
           onChange={(country) => onSetFormDetails('country', country)}
           fullWidth
           position={SelectField.Positions.BELOW}
