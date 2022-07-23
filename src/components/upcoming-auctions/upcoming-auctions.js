@@ -1,10 +1,11 @@
 import BiddingCard from 'components/bidding-card'
 import { Button } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import { navigate } from '@reach/router'
 
 import './styles.scss'
 
-const UpcomingAuctions = ({ cards }) => {
+const UpcomingAuctions = ({ cards, logged }) => {
   const { t } = useTranslation()
 
   const renderCards = () =>
@@ -29,7 +30,14 @@ const UpcomingAuctions = ({ cards }) => {
         <div className="upcoming-auctions-subTitle">
           {t('upcoming_auctions')}
         </div>
-        <Button flat primary className="upcoming-auctions-btn">
+        <Button
+          flat
+          primary
+          className="upcoming-auctions-btn"
+          onClick={() =>
+            navigate(`/${logged ? 'auctions' : 'public'}/upcoming-auctions`)
+          }
+        >
           {t('explore_more')}
         </Button>
       </div>

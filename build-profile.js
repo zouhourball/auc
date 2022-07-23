@@ -51,6 +51,10 @@ module.exports = {
   PRODUCT_APP_URL_WORKSPACE: JSON.stringify('https://dev.meeraspace.com'),
   TOKEN_DOMAIN: JSON.stringify('https://dev.meeraspace.com'),
   PRODUCT_APP_URL_DSO: JSON.stringify('https://dso.dev.meeraspace.com'),
+  PRODUCT_APP_URL_AUCTION: JSON.stringify(
+    'https://auctions.dev.meeraspace.com',
+  ),
   DASHBOARD_ID_DSO: JSON.stringify('np9s4cvNsERhFx1PLDPJo'),
   OVERWRITE_TRANSLATION: JSON.stringify(''),
+  PRODUCT_APP_URL_API_WEBSOCKET: JSON.stringify('wss://api.dev.meeraspace.com'),
 }

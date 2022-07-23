@@ -62,7 +62,9 @@ export const listAuction = async ({ queryKey }) => {
 
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}&limit=${queryKey[2]}`,
+      `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}&limit=${
+        queryKey[2]
+      }&search_key=${'timer'}`,
       {
         method: 'GET',
       },
@@ -91,22 +93,19 @@ export const auctionsRequest = async ({ queryKey }) => {
 export const featuredAuctions = async ({ searchKey, endingSoon }) => {
   let res
   try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/featured/auctions?auction_status=Active`,
-      {
-        method: 'GET',
-      },
-    )
+    res = await fetchJSON(`${appUrl}/api/v1/featured/auctions`, {
+      method: 'GET',
+    })
   } catch (e) {
     res = { error: e }
   }
   return res
 }
 // GET AUCTION'S PROPERTY
-export const auctionProperty = async ({ uuid }) => {
+export const auctionProperty = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/property`, {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${queryKey[1]}/property`, {
       method: 'GET',
     })
   } catch (e) {
@@ -222,12 +221,12 @@ export const updateAuction = async ({ uuid, body }) => {
   return res
 }
 // APPROVE AUCTION BY UUID
-export const approveAuction = async ({ uuid, body }) => {
+export const approveAuction = async ({ uuid, status }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/approve`, {
       method: 'PUT',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ status }),
     })
   } catch (e) {
     res = { error: e }

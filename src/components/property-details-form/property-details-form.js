@@ -73,7 +73,6 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       />
     ))
   }
-
   const setListImages = (newImages, keyAction, fileId) => {
     if (keyAction === 'delete') {
       onSetFormDetails(

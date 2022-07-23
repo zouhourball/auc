@@ -63,7 +63,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
         }
         titleUpload={images?.length > 0 ? 'add_images' : ''}
         icon={<FontIcon>add_photo_alternate</FontIcon>}
-        accept="image/jpeg, image/png, image/jpg"
+        // accept="image/jpeg, image/png, image/jpg"
         className="custom"
       />
     )

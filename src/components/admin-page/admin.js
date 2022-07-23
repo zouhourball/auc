@@ -3,12 +3,12 @@ import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { Button } from 'react-md'
-import { configs, dummyDataMht } from './helper'
+import { configs } from './helper'
 import { navigate } from '@reach/router'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
 
-import { auctionsRequest } from 'libs/api/auctions-api'
+import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
 
 import DocumentsContainer from 'components/docs-dialog'
 import UserInfoBySubject from 'components/user-info-by-subject'
@@ -21,13 +21,18 @@ const Admin = () => {
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
-  const selectedRow = selectedRowSelector.map((id) => dummyDataMht()?.[id])
 
-  const { data: auctionsRequestsData } = useQuery(
+  const { data: auctionsRequestsData, refetch } = useQuery(
     ['auctionsRequest', '', ''],
     auctionsRequest,
   )
-
+  const approveMutation = useMutation(approveAuction, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetch()
+      }
+    },
+  })
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
       id: el?.uuid,
@@ -43,12 +48,23 @@ const Admin = () => {
       submissionDate: moment(el?.['created_date']).format('DD MMM YYYY'),
       status: el?.status,
       documents: (
-        <Button onClick={() => setDocumentsDialog(el?.listing?.documents)}>
+        <Button
+          onClick={() => {
+            setDocumentsDialog(el?.listing?.documents)
+            // console.log(el?.listing?.documents, 'docs')
+          }}
+        >
           View
         </Button>
       ),
     }))
-
+  const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
+  const onUpdateStatus = (status) => {
+    approveMutation.mutate({
+      uuid: selectedRow[0]?.id,
+      status,
+    })
+  }
   return (
     <div className="admin-page">
       <div className="admin-page-header">
@@ -59,6 +75,31 @@ const Admin = () => {
       </div>
       <h1>{t('auctions')}</h1>
       <div className="admin-page-mht">
+
+        {selectedRow?.length === 1 && (
+          <div className="admin-page-mht-header">
+            {`${selectedRow.length} Row Selected`}
+            <div>
+              <Button
+                className="admin-page-actionBtn"
+                flat
+                onClick={() => navigate(`auctions/detail/${selectedRow[0]?.id}`)}
+              >
+                {t('view_details')}
+              </Button>
+              {selectedRow[0]?.status === 'Pending' && (
+              <>
+                <Button className="admin-page-actionBtn" primary flat onClick={() => onUpdateStatus('Approved')}>
+                  {t('approve')}
+                </Button>
+                <Button className="admin-page-actionBtn" secondary flat onClick={() => onUpdateStatus('Rejected')}>
+                  {t('reject')}
+                </Button>
+              </>
+              )}
+            </div>
+          </div>
+        )}
         <Mht
           id={'admin-dashboard'}
           configs={configs}
@@ -69,26 +110,7 @@ const Admin = () => {
           withFooter
           commonActions
           headerTemplate={
-            (selectedRow?.length === 1 && (
-              <div className="admin-page-mht-header">
-                <div> {`${selectedRow.length} Row Selected`}</div>
-                <div>
-                  <Button
-                    className="admin-page-actionBtn"
-                    flat
-                    onClick={() => navigate(`detail/${'1'}`)}
-                  >
-                    {t('view_details')}
-                  </Button>
-                  <Button className="admin-page-actionBtn" primary flat>
-                    {t('approve')}
-                  </Button>
-                  <Button className="admin-page-actionBtn" secondary flat>
-                    {t('reject')}
-                  </Button>
-                </div>
-              </div>
-            )) || <div />
+            <div />
           }
         />
       </div>
