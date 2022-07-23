@@ -81,7 +81,16 @@
     aspect-ratio: 1 / 1;
     object-fit: cover;
 
-    &.md-cell--3 {
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      overflow: auto;
+      gap: 16px;
+    }
+
+    &.item {
+      flex: 0 0 calc(25% - 12px);
       border-radius: 30px;
     }
   }

@@ -74,30 +74,32 @@ const Admin = () => {
         </Button>
       </div>
       <h1>{t('auctions')}</h1>
-      <div>
-        {selectedRow?.length === 1 && (
-          <div>
-            {`${selectedRow.length} Row Selected`}
+      <div className="admin-page-mht">
 
-            <Button
-              onClick={() => navigate(`auctions/detail/${selectedRow[0]?.id}`)}
-            >
-              {t('view_details')}
-            </Button>
-            {selectedRow[0]?.status === 'Pending' && (
+        {selectedRow?.length === 1 && (
+          <div className="admin-page-mht-header">
+            {`${selectedRow.length} Row Selected`}
+            <div>
+              <Button
+                className="admin-page-actionBtn"
+                flat
+                onClick={() => navigate(`auctions/detail/${selectedRow[0]?.id}`)}
+              >
+                {t('view_details')}
+              </Button>
+              {selectedRow[0]?.status === 'Pending' && (
               <>
-                <Button onClick={() => onUpdateStatus('Approved')}>
+                <Button className="admin-page-actionBtn" primary flat onClick={() => onUpdateStatus('Approved')}>
                   {t('approve')}
                 </Button>
-                <Button onClick={() => onUpdateStatus('Rejected')}>
+                <Button className="admin-page-actionBtn" secondary flat onClick={() => onUpdateStatus('Rejected')}>
                   {t('reject')}
                 </Button>
               </>
-            )}
+              )}
+            </div>
           </div>
         )}
-      </div>
-      <div>
         <Mht
           id={'admin-dashboard'}
           configs={configs}
@@ -107,7 +109,9 @@ const Admin = () => {
           withSearch
           withFooter
           commonActions
-          headerTemplate={<div />}
+          headerTemplate={
+            <div />
+          }
         />
       </div>
       {documentsDialog && (

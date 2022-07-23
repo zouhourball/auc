@@ -1,8 +1,8 @@
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import { useQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
-import { useQuery } from 'react-query'
 import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
@@ -69,7 +69,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     auctionData?.listing?.images?.map((image) => (
       <img
         key={image?.uuid}
-        className="gallery-image md-cell md-cell--3"
+        className="gallery-image item"
         onClick={() => setCurrentImg(image?.url)}
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
@@ -103,7 +103,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           className="gallery-image md-cell md-cell--12"
           src={`${currentImg}?token=${downloadToken}&view=true`}
         />
-        {renderPropertyImages()}
+        <div className="gallery-image-wrapper md-cell md-cell--12">
+
+          {renderPropertyImages()}
+        </div>
       </div>
       <div className="auction-details-info md-cell md-cell--7 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
