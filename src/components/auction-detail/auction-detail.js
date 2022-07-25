@@ -6,19 +6,24 @@ import moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
-// import { useSubscription } from 'react-apollo'
+import { useSubscription } from 'react-apollo'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 
-import { getAuction, auctionProperty } from 'libs/api/auctions-api'
+import {
+  getAuction,
+  auctionProperty,
+  checkParticipant,
+} from 'libs/api/auctions-api'
 
-// import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
+import BidDialog from 'components/place-bid-dialog'
 
 import { dummyDocs } from 'components/admin-page/helper'
 
@@ -40,21 +45,27 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ['auctionProperty', auctionId],
     auctionProperty,
   )
+  const { data: isParticipant } = useQuery(
+    ['checkParticipant', auctionId],
+    checkParticipant,
+  )
+
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
+  const [bidDialog, setBidDialog] = useState(false)
   useEffect(() => {
     setCurrentImg(auctionData?.listing?.images[0]?.url)
   }, [auctionData])
-  // const { data: subNewBid } = useSubscription(subscribeNewBid, {
-  //   variables: { auctionID: auctionId },
-  //   // uri: `${appUrl}/auction/graphql/query`,
-  // })
+  const { data: subNewBid } = useSubscription(subscribeNewBid, {
+    variables: { auctionID: auctionId },
+    // uri: `${appUrl}/auction/graphql/query`,
+  })
   // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
   //   variables: { auctionID: auctionId },
   // })
-  // useEffect(() => {
-  //   refetchBid()
-  // }, [subNewBid])
+  useEffect(() => {
+    // refetchBid()
+  }, [subNewBid])
 
   const isActive = useMemo(
     () => Date.parse(auctionData?.['created_date']) > Date.now(),
@@ -83,7 +94,14 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
       date.format('DD'),
     ]).fromNow()
   }
-
+  const renderKeyFeatures = () =>
+    auctionData?.listing?.features
+      ?.filter((el) => el?.['availability_status'])
+      .map((el) => (
+        <div key={el?.feature?.uuid} className="key-features-item">
+          <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
+        </div>
+      ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--5 md-grid">
@@ -104,7 +122,6 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           src={`${currentImg}?token=${downloadToken}&view=true`}
         />
         <div className="gallery-image-wrapper md-cell md-cell--12">
-
           {renderPropertyImages()}
         </div>
       </div>
@@ -277,7 +294,9 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               primary
               swapTheming
               className="auction-details-btn"
-              onClick={() => setTermsDialog(true)}
+              onClick={() =>
+                isParticipant ? setBidDialog(true) : setTermsDialog(true)
+              }
             >
               {t('bid_now')}
             </Button>
@@ -309,20 +328,12 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
         disclosure={auctionData?.disclosure}
         className="md-cell md-cell--12"
       />
-      <div className="key-features  md-cell md-cell--12">
-        <div className="key-features-title">{t('key_features')}</div>
-        <div className="key-features-content">
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('wifi')}
-          </div>
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('pool')}
-          </div>
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('heat')}
-          </div>
+      {renderKeyFeatures()?.length > 0 && (
+        <div className="key-features  md-cell md-cell--12">
+          <div className="key-features-title">{t('key_features')}</div>
+          <div className="key-features-content">{renderKeyFeatures()}</div>
         </div>
-      </div>
+      )}
       {(isAdmin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
           <div className="fees-commission-title">{t('fees')}</div>
@@ -351,6 +362,13 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           visible={termsDialog}
           onHide={() => setTermsDialog(false)}
           auctionId={auctionData?.uuid}
+        />
+      )}
+      {bidDialog && (
+        <BidDialog
+          visible={bidDialog}
+          onHide={() => setBidDialog(false)}
+          onClickCancel={() => setBidDialog(false)}
         />
       )}
     </div>

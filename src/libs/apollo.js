@@ -15,7 +15,7 @@ import { getAuthToken } from 'libs/utils/oauth-token'
 const token = getAuthToken()
 
 export const wsClient = new SubscriptionClient(
-  `${PRODUCT_APP_URL_API_WEBSOCKET}/auction/graphql/query/subscriptions?access_token=${token}`,
+  `${PRODUCT_APP_URL_API_WEBSOCKET}/auction/graphql/subscriptions?access_token=${token}`,
   {
     // uri: '/auction/graphql/query',
     reconnect: true,
@@ -35,12 +35,11 @@ const httpLink = new HttpLink({
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   const accessToken = getAuthToken()
-  operation.setContext(({ headers }) => ({
+  operation.setContext({
     headers: {
-      ...headers,
       Authorization: accessToken ? `Bearer ${accessToken}` : null,
     },
-  }))
+  })
 
   return forward(operation)
 })
