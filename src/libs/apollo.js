@@ -1,5 +1,5 @@
 /* eslint-disable jest/require-hook */
-import ApolloClient from 'apollo-boost'
+import ApolloClient from 'apollo-client'
 import ClientOauth2 from 'client-oauth2'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { WebSocketLink } from 'apollo-link-ws'
