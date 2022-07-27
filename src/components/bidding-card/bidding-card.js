@@ -8,6 +8,7 @@ import store from 'libs/store'
 import { navigate } from '@reach/router'
 
 import './style.scss'
+import AuctionTimer from 'components/auction-timer'
 /* eslint-disable */
 const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
   const { t } = useTranslation()
@@ -126,9 +127,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
             <div className="description">
               {t('current_ask')} {auctionData?.starting_price}
             </div>
-            {live && (
-              <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
-            )}
+            {live && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         <Button flat primary swapTheming className="bidding-card-btn">
