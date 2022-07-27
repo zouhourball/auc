@@ -19,7 +19,7 @@ import ToastMsg from 'components/toast-msg'
 import {
   getAuction,
   auctionProperty,
-  // checkParticipant,
+  checkParticipant,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -58,12 +58,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ['auctionProperty', auctionId],
     auctionProperty,
   )
-
-  // const { data: isParticipant } = useQuery(
-  //   ['checkParticipant', auctionId],
-  //   checkParticipant,
-  // )
-
+  const { data: isParticipant } = useQuery(
+    ['checkParticipant', auctionId],
+    checkParticipant,
+  )
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
@@ -373,8 +371,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               swapTheming
               className="auction-details-btn"
               onClick={() =>
-                // isParticipant ? setBidDialog(true) : setTermsDialog(true)
-                setBidDialog(true)
+                isParticipant ? setBidDialog(true) : setTermsDialog(true)
               }
             >
               {t('bid_now')}
