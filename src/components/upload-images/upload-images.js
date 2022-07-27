@@ -422,11 +422,9 @@ const UploadImages = ({
             </div>
           ) : (
             <div className="upload-images-content">
-
               {withIconDoc
                 ? /* renderFilesWithIcon() */ renderFilesWithIcon()
                 : renderFiles()}{' '}
-
             </div>
           )}
         </>

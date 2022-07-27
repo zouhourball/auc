@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import moment from 'moment'
+
 import { useTranslation } from 'libs/langs'
 
 import BiddingCard from 'components/bidding-card'
@@ -18,6 +20,18 @@ const ParticipatedAuctions = () => {
     { id: 2, label: t('lost') },
   ]
 
+  const renderStatus = (auction) => {
+    if (
+      +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
+        +moment() ||
+      auction?.['awarded_to']?.uuid
+    ) {
+      return 'Ended'
+    } else if (+moment.utc(auction?.['auction_start_date']) > +moment()) {
+      return 'Upcoming'
+    } else return 'Active'
+  }
+
   const renderCards = () => {
     switch (tab) {
       case 0:
@@ -28,7 +42,7 @@ const ParticipatedAuctions = () => {
             className="md-cell md-cell--6"
             key={i}
             auctionData={el}
-            status={'Active'}
+            status={renderStatus(el)}
             live={modules.includes('live-auctions')}
           />
         ))
