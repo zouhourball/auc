@@ -50,6 +50,8 @@ const Admin = () => {
       status: el?.status,
       documents: (
         <Button
+          flat
+          primary
           onClick={() => {
             setDocumentsDialog(el?.listing?.documents)
             navigate(`auctions/detail/${el?.uuid}`)
@@ -86,42 +88,6 @@ const Admin = () => {
       </div>
       <h1>{t('auctions')}</h1>
       <div className="admin-page-mht">
-        {selectedRow?.length === 1 && (
-          <div className="admin-page-mht-header">
-            {`${selectedRow.length} Row Selected`}
-            <div>
-              <Button
-                className="admin-page-actionBtn"
-                flat
-                onClick={() =>
-                  navigate(`auctions/detail/${selectedRow[0]?.id}`)
-                }
-              >
-                {t('view_details')}
-              </Button>
-              {selectedRow[0]?.status === 'Pending' && (
-                <>
-                  <Button
-                    className="admin-page-actionBtn"
-                    primary
-                    flat
-                    onClick={() => onUpdateStatus('Approved')}
-                  >
-                    {t('approve')}
-                  </Button>
-                  <Button
-                    className="admin-page-actionBtn"
-                    secondary
-                    flat
-                    onClick={() => onUpdateStatus('Rejected')}
-                  >
-                    {t('reject')}
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
         <Mht
           id={'admin-dashboard'}
           configs={configs}
@@ -129,9 +95,46 @@ const Admin = () => {
           withChecked
           singleSelect
           withSearch
-          withFooter
+          // withFooter
           commonActions
-          headerTemplate={<div />}
+          headerTemplate={
+            selectedRow?.length === 1 && (
+              <div className="admin-page-mht-header">
+                {`${selectedRow.length} Row Selected`}
+                <div>
+                  <Button
+                    className="admin-page-actionBtn"
+                    flat
+                    onClick={() =>
+                      navigate(`auctions/detail/${selectedRow[0]?.id}`)
+                    }
+                  >
+                    {t('view_details')}
+                  </Button>
+                  {selectedRow[0]?.status === 'Pending' && (
+                    <>
+                      <Button
+                        className="admin-page-actionBtn"
+                        primary
+                        flat
+                        onClick={() => onUpdateStatus('Approved')}
+                      >
+                        {t('approve')}
+                      </Button>
+                      <Button
+                        className="admin-page-actionBtn"
+                        secondary
+                        flat
+                        onClick={() => onUpdateStatus('Rejected')}
+                      >
+                        {t('reject')}
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )
+          }
         />
       </div>
       {documentsDialog && (

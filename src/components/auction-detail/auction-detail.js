@@ -45,7 +45,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
-  const { data: auctionData } = useQuery(['auctionData', auctionId], getAuction)
+  const { data: auctionData, refetch: refetchAuction } = useQuery(
+    ['auctionData', auctionId],
+    getAuction,
+  )
   const { data: auctionPropertyData } = useQuery(
     ['auctionProperty', auctionId],
     auctionProperty,
@@ -90,7 +93,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   //   variables: { auctionID: auctionId },
   // })
   useEffect(() => {
-    // refetchBid()
+    refetchAuction()
   }, [subNewBid])
 
   const isActive = useMemo(
@@ -322,7 +325,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               className="auction-details-btn"
               onClick={() =>
                 // isParticipant ? setBidDialog(true) : setTermsDialog(true)
-                setTermsDialog(true)
+                setBidDialog(true)
               }
             >
               {t('bid_now')}
