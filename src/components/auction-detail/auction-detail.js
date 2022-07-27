@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { useSubscription } from 'react-apollo'
+import { useDispatch } from 'react-redux'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 
@@ -18,12 +19,14 @@ import {
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import { addToast } from 'modules/app/actions'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
+import ToastMsg from 'components/toast-msg'
 
 import { dummyDocs } from 'components/admin-page/helper'
 
@@ -37,6 +40,8 @@ import './style.scss'
 
 const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -50,6 +55,27 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   //   checkParticipant,
   // )
 
+  const paymentCallback = location.pathname
+    .split('/')
+    .filter((v) => v === 'success' || v === 'error')[0]
+  useEffect(() => {
+    if (paymentCallback === 'success') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+          'hide',
+        ),
+      )
+    } else if (paymentCallback === 'error') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment procedure has failed'} type="error" />,
+          'hide',
+        ),
+      )
+    } else {
+    }
+  }, [paymentCallback])
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)

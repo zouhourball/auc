@@ -50,7 +50,7 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       onClick={() => {
         isPublic
           ? navigate(`auctions/detail/${auctionId}`)
-          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=https://auctions.dev.meeraspace.com/auctions/detail/${auctionId}`)
+          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionId}`)
       }}
       // redirectToPay()
     >

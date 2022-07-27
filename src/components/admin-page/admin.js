@@ -7,6 +7,7 @@ import { configs } from './helper'
 import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
+import { cleanUp } from '@target-energysolutions/hoc-oauth'
 
 import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
 
@@ -51,6 +52,7 @@ const Admin = () => {
         <Button
           onClick={() => {
             setDocumentsDialog(el?.listing?.documents)
+            navigate(`auctions/detail/${el?.uuid}`)
             // console.log(el?.listing?.documents, 'docs')
           }}
         >
@@ -69,13 +71,21 @@ const Admin = () => {
     <div className="admin-page">
       <div className="admin-page-header">
         <div className="admin-page-logo">LOGO</div>
-        <Button flat swapTheming primary className="admin-page-loginBtn">
+        <Button
+          onClick={() => {
+            cleanUp()
+            navigate('/public/home')
+          }}
+          flat
+          swapTheming
+          primary
+          className="admin-page-loginBtn"
+        >
           {t('log_out')}
         </Button>
       </div>
       <h1>{t('auctions')}</h1>
       <div className="admin-page-mht">
-
         {selectedRow?.length === 1 && (
           <div className="admin-page-mht-header">
             {`${selectedRow.length} Row Selected`}
@@ -83,19 +93,31 @@ const Admin = () => {
               <Button
                 className="admin-page-actionBtn"
                 flat
-                onClick={() => navigate(`auctions/detail/${selectedRow[0]?.id}`)}
+                onClick={() =>
+                  navigate(`auctions/detail/${selectedRow[0]?.id}`)
+                }
               >
                 {t('view_details')}
               </Button>
               {selectedRow[0]?.status === 'Pending' && (
-              <>
-                <Button className="admin-page-actionBtn" primary flat onClick={() => onUpdateStatus('Approved')}>
-                  {t('approve')}
-                </Button>
-                <Button className="admin-page-actionBtn" secondary flat onClick={() => onUpdateStatus('Rejected')}>
-                  {t('reject')}
-                </Button>
-              </>
+                <>
+                  <Button
+                    className="admin-page-actionBtn"
+                    primary
+                    flat
+                    onClick={() => onUpdateStatus('Approved')}
+                  >
+                    {t('approve')}
+                  </Button>
+                  <Button
+                    className="admin-page-actionBtn"
+                    secondary
+                    flat
+                    onClick={() => onUpdateStatus('Rejected')}
+                  >
+                    {t('reject')}
+                  </Button>
+                </>
               )}
             </div>
           </div>
@@ -109,9 +131,7 @@ const Admin = () => {
           withSearch
           withFooter
           commonActions
-          headerTemplate={
-            <div />
-          }
+          headerTemplate={<div />}
         />
       </div>
       {documentsDialog && (
