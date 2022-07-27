@@ -11,7 +11,7 @@ dependencies:
   '@target-energysolutions/messenger': 17.2.3_98caf3aa5b7bda04ab62d3a034d181a2
   '@target-energysolutions/mht': 2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/react-hoc-query': 1.0.4_7bda62a7d4688a636121e068167982a0
-  '@target-energysolutions/task-manager': 6.0.2_3ed9068696f6b436384f3f6145344c82
+  '@target-energysolutions/task-manager': 6.0.2_e172bace93b6da3ff6d0e3410bffbe70
   '@target-energysolutions/tiny-i18n': 2.2.0_f1e10e70da54bba41b21e1a0bd7e60b5
   '@target-energysolutions/utils': 1.4.4_react-dom@18.0.0+react@18.0.0
   '@types/react': 18.0.9
@@ -19,6 +19,7 @@ dependencies:
   '@typescript-eslint/parser': 3.10.1_eslint@5.16.0+typescript@3.9.10
   apollo-boost: 0.4.9_graphql@15.8.0
   apollo-cache-inmemory: 1.6.6_graphql@15.8.0
+  apollo-client: 2.6.10_graphql@15.8.0
   apollo-link: 1.2.14_graphql@15.8.0
   apollo-link-error: 1.1.13_graphql@15.8.0
   apollo-link-http: 1.5.17_graphql@15.8.0
@@ -51,8 +52,8 @@ dependencies:
   postcss-rtl: 1.7.3
   prop-types: 15.8.1
   react: 18.0.0
-  react-apollo: 3.1.5_8dce1db03761679aad42fd27118a7834
-  react-apollo-hooks: 0.5.0_graphql@15.8.0+react@18.0.0
+  react-apollo: 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
+  react-apollo-hooks: 0.5.0_2c96c9933ebd2915398bd36f5b1ded38
   react-color: 2.19.3_react@18.0.0
   react-day-picker: 7.4.10_react@18.0.0
   react-dom: 18.0.0_react@18.0.0
@@ -234,9 +235,10 @@ packages:
         optional: true
     resolution:
       integrity: sha512-Y1yu8qa2YeaCUBVuw08x8NHenFi0sw2I3KCu7Kw9mDSu86HmmtHJkCAifKVrN2iPgDTW/BbP3EpSV8/EQCcxZA==
-  /@apollo/react-common/3.1.4_21a33bf42888530b4f17177fd150d768:
+  /@apollo/react-common/3.1.4_71ede056ece51cd2923555111518fef1:
     dependencies:
       '@types/react': 18.0.9
+      apollo-client: 2.6.10_graphql@15.8.0
       apollo-utilities: 1.3.4_graphql@15.8.0
       graphql: 15.8.0
       react: 18.0.0
@@ -251,11 +253,12 @@ packages:
       react: ^16.8.0
     resolution:
       integrity: sha512-X5Kyro73bthWSCBJUC5XYQqMnG0dLWuDZmVkzog9dynovhfiVCV4kPSdgSIkqnb++cwCzOVuQ4rDKVwo2XRzQA==
-  /@apollo/react-components/3.1.5_8dce1db03761679aad42fd27118a7834:
+  /@apollo/react-components/3.1.5_2a7d8fe60e845d0a2172bca489b4c337:
     dependencies:
-      '@apollo/react-common': 3.1.4_21a33bf42888530b4f17177fd150d768
-      '@apollo/react-hooks': 3.1.5_657d2fb911e77f588eb1daf84b8b1f50
+      '@apollo/react-common': 3.1.4_71ede056ece51cd2923555111518fef1
+      '@apollo/react-hooks': 3.1.5_0e1e8c17933559590cabd5c86bf71dad
       '@types/react': 18.0.9
+      apollo-client: 2.6.10_graphql@15.8.0
       apollo-link: 1.2.14_graphql@15.8.0
       apollo-utilities: 1.3.4_graphql@15.8.0
       graphql: 15.8.0
@@ -276,11 +279,12 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-c82VyUuE9VBnJB7bnX+3dmwpIPMhyjMwyoSLyQWPHxz8jK4ak30XszJtqFf4eC4hwvvLYa+Ou6X73Q8V8e2/jg==
-  /@apollo/react-hoc/3.1.5_8dce1db03761679aad42fd27118a7834:
+  /@apollo/react-hoc/3.1.5_2a7d8fe60e845d0a2172bca489b4c337:
     dependencies:
-      '@apollo/react-common': 3.1.4_21a33bf42888530b4f17177fd150d768
-      '@apollo/react-components': 3.1.5_8dce1db03761679aad42fd27118a7834
+      '@apollo/react-common': 3.1.4_71ede056ece51cd2923555111518fef1
+      '@apollo/react-components': 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
       '@types/react': 18.0.9
+      apollo-client: 2.6.10_graphql@15.8.0
       graphql: 15.8.0
       hoist-non-react-statics: 3.3.2
       react: 18.0.0
@@ -298,11 +302,12 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-jlZ2pvEnRevLa54H563BU0/xrYSgWQ72GksarxUzCHQW85nmn9wQln0kLBX7Ua7SBt9WgiuYQXQVechaaCulfQ==
-  /@apollo/react-hooks/3.1.5_657d2fb911e77f588eb1daf84b8b1f50:
+  /@apollo/react-hooks/3.1.5_0e1e8c17933559590cabd5c86bf71dad:
     dependencies:
-      '@apollo/react-common': 3.1.4_21a33bf42888530b4f17177fd150d768
+      '@apollo/react-common': 3.1.4_71ede056ece51cd2923555111518fef1
       '@types/react': 18.0.9
       '@wry/equality': 0.1.11
+      apollo-client: 2.6.10_graphql@15.8.0
       graphql: 15.8.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -328,16 +333,17 @@ packages:
       subscriptions-transport-ws: '*'
     resolution:
       integrity: sha512-fCu0cbne3gbUl0QbA8X4L33iuuFVQbC5Jo2MIKRK8CyawR6PoxDpFdFA1kc6033ODZuZZ9Eo4RdeJFlFIIYcLA==
-  /@apollo/react-ssr/3.1.5_657d2fb911e77f588eb1daf84b8b1f50:
+  /@apollo/react-ssr/3.1.5_0e1e8c17933559590cabd5c86bf71dad:
     dependencies:
-      '@apollo/react-common': 3.1.4_21a33bf42888530b4f17177fd150d768
-      '@apollo/react-hooks': 3.1.5_657d2fb911e77f588eb1daf84b8b1f50
+      '@apollo/react-common': 3.1.4_71ede056ece51cd2923555111518fef1
+      '@apollo/react-hooks': 3.1.5_0e1e8c17933559590cabd5c86bf71dad
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
       tslib: 1.14.1
     dev: false
     peerDependencies:
       '@types/react': '*'
+      apollo-client: '*'
       apollo-utilities: '*'
       graphql: '*'
       react: ^16.8.0
@@ -5481,7 +5487,7 @@ packages:
       redux: ^4.0.4
     resolution:
       integrity: sha512-ZEi8MWV+ACvbLkqvRRAsXf9Zx+0gMGHB/heP6Hm9VuxAwvaR+Ivfk8/P5IbRMcEjg66vmx/FsraXvIXldog4UQ==
-  /@target-energysolutions/task-manager/6.0.2_3ed9068696f6b436384f3f6145344c82:
+  /@target-energysolutions/task-manager/6.0.2_e172bace93b6da3ff6d0e3410bffbe70:
     dependencies:
       '@emotion/core': 10.3.1_react@18.0.0
       '@material/chips': 3.2.0
@@ -5510,6 +5516,7 @@ packages:
       '@types/draft-js': 0.10.45
       '@types/emoji-mart': 2.11.3
       '@types/react-redux': 7.1.24
+      apollo-client: 2.6.10_graphql@15.8.0
       axios: 0.19.2
       classnames: 2.3.1
       date-fns: 2.28.0
@@ -17624,8 +17631,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pLJkPbZCe+3ml+9Q15z+R69qYZDsluj0KwrdFb8kSNaqDzYAveDUblf7voHH9hNTdKIiIvP8iIdGFFKSgffVaQ==
-  /react-apollo-hooks/0.5.0_graphql@15.8.0+react@18.0.0:
+  /react-apollo-hooks/0.5.0_2c96c9933ebd2915398bd36f5b1ded38:
     dependencies:
+      apollo-client: 2.6.10_graphql@15.8.0
       graphql: 15.8.0
       lodash: 4.17.21
       react: 18.0.0
@@ -17636,14 +17644,15 @@ packages:
       react: ^16.8.0
     resolution:
       integrity: sha512-Us5KqFe7/c6vY1NaiyfhnD2Pz4lPLTojQXLppShaBVYU/vYvJrRjmj4MzIPXnExXaSfnQ+K2bWDr4lP4efbsRQ==
-  /react-apollo/3.1.5_8dce1db03761679aad42fd27118a7834:
+  /react-apollo/3.1.5_2a7d8fe60e845d0a2172bca489b4c337:
     dependencies:
-      '@apollo/react-common': 3.1.4_21a33bf42888530b4f17177fd150d768
-      '@apollo/react-components': 3.1.5_8dce1db03761679aad42fd27118a7834
-      '@apollo/react-hoc': 3.1.5_8dce1db03761679aad42fd27118a7834
-      '@apollo/react-hooks': 3.1.5_657d2fb911e77f588eb1daf84b8b1f50
-      '@apollo/react-ssr': 3.1.5_657d2fb911e77f588eb1daf84b8b1f50
+      '@apollo/react-common': 3.1.4_71ede056ece51cd2923555111518fef1
+      '@apollo/react-components': 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
+      '@apollo/react-hoc': 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
+      '@apollo/react-hooks': 3.1.5_0e1e8c17933559590cabd5c86bf71dad
+      '@apollo/react-ssr': 3.1.5_0e1e8c17933559590cabd5c86bf71dad
       '@types/react': 18.0.9
+      apollo-client: 2.6.10_graphql@15.8.0
       graphql: 15.8.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -22486,6 +22495,7 @@ specifiers:
   '@typescript-eslint/parser': ^3.5.0
   apollo-boost: ^0.4.9
   apollo-cache-inmemory: ^1.6.6
+  apollo-client: ^2.6.10
   apollo-link: ^1.2.14
   apollo-link-error: ^1.1.13
   apollo-link-http: ^1.5.17
