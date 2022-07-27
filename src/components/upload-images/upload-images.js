@@ -14,6 +14,7 @@ import './style.scss'
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 const UploadImages = ({
+  key,
   multiple,
   icon,
   title,
@@ -227,7 +228,6 @@ const UploadImages = ({
   //     </div>
   //   ))
   // }
-
   const renderFiles = () => {
     return files?.map((file, index) => (
       <div
@@ -363,7 +363,7 @@ const UploadImages = ({
   // ------------------
 
   return (
-    <div className={cls('upload-images', className)}>
+    <div key={key} className={cls('upload-images', className)}>
       <div
         className={cls(
           'upload-images-title-content',
@@ -422,9 +422,11 @@ const UploadImages = ({
             </div>
           ) : (
             <div className="upload-images-content">
+
               {withIconDoc
                 ? /* renderFilesWithIcon() */ renderFilesWithIcon()
                 : renderFiles()}{' '}
+
             </div>
           )}
         </>
