@@ -1,19 +1,29 @@
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import { useQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
-import { useQuery } from 'react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
+import { useSubscription } from 'react-apollo'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 
-import { getAuction, auctionProperty } from 'libs/api/auctions-api'
+import {
+  getAuction,
+  auctionProperty,
+  // checkParticipant,
+} from 'libs/api/auctions-api'
+
+import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
+import TermsDialogContainer from 'components/terms-dialog'
+import BidDialog from 'components/place-bid-dialog'
 
 import { dummyDocs } from 'components/admin-page/helper'
 
@@ -25,12 +35,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({
-  auctionId,
-  isAdmin = true,
-  status,
-  isActive = false,
-}) => {
+const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
 
@@ -40,15 +45,42 @@ const AuctionDetail = ({
     ['auctionProperty', auctionId],
     auctionProperty,
   )
+  // const { data: isParticipant } = useQuery(
+  //   ['checkParticipant', auctionId],
+  //   checkParticipant,
+  // )
+
   const [currentImg, setCurrentImg] = useState('')
+  const [termsDialog, setTermsDialog] = useState(false)
+  const [bidDialog, setBidDialog] = useState(false)
   useEffect(() => {
     setCurrentImg(auctionData?.listing?.images[0]?.url)
   }, [auctionData])
+  const { data: subNewBid } = useSubscription(subscribeNewBid, {
+    variables: { auctionID: auctionId },
+    // uri: `${appUrl}/auction/graphql/query`,
+  })
+  // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+  //   variables: { auctionID: auctionId },
+  // })
+  useEffect(() => {
+    // refetchBid()
+  }, [subNewBid])
+
+  const isActive = useMemo(
+    () => Date.parse(auctionData?.['created_date']) > Date.now(),
+  )
+  // console.log(
+  //   Date.parse(auctionData?.['created_date']),
+  //   Date.now(),
+  //   isActive,
+  //   'isActive',
+  // )
   const renderPropertyImages = () =>
     auctionData?.listing?.images?.map((image) => (
       <img
         key={image?.uuid}
-        className="gallery-image md-cell md-cell--3"
+        className="gallery-image item"
         onClick={() => setCurrentImg(image?.url)}
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
@@ -62,7 +94,14 @@ const AuctionDetail = ({
       date.format('DD'),
     ]).fromNow()
   }
+  const renderKeyFeatures = () =>
+  // .filter((el) => el?.['availability_status'])
 
+    auctionData?.listing?.features?.map((el) => (
+      <div key={el?.feature?.uuid} className="key-features-item">
+        <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
+      </div>
+    ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--5 md-grid">
@@ -82,7 +121,9 @@ const AuctionDetail = ({
           className="gallery-image md-cell md-cell--12"
           src={`${currentImg}?token=${downloadToken}&view=true`}
         />
-        {renderPropertyImages()}
+        <div className="gallery-image-wrapper md-cell md-cell--12">
+          {renderPropertyImages()}
+        </div>
       </div>
       <div className="auction-details-info md-cell md-cell--7 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
@@ -247,8 +288,17 @@ const AuctionDetail = ({
             >
               {t('documents')}
             </Button>
-          ) : isActive ? (
-            <Button flat primary swapTheming className="auction-details-btn">
+          ) : !isActive ? (
+            <Button
+              flat
+              primary
+              swapTheming
+              className="auction-details-btn"
+              onClick={() =>
+                // isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                setTermsDialog(true)
+              }
+            >
               {t('bid_now')}
             </Button>
           ) : (
@@ -279,20 +329,12 @@ const AuctionDetail = ({
         disclosure={auctionData?.disclosure}
         className="md-cell md-cell--12"
       />
-      <div className="key-features  md-cell md-cell--12">
-        <div className="key-features-title">{t('key_features')}</div>
-        <div className="key-features-content">
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('wifi')}
-          </div>
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('pool')}
-          </div>
-          <div className="key-features-item">
-            <FontIcon primary>task_alt</FontIcon> {t('heat')}
-          </div>
+      {renderKeyFeatures()?.length > 0 && (
+        <div className="key-features  md-cell md-cell--12">
+          <div className="key-features-title">{t('key_features')}</div>
+          <div className="key-features-content">{renderKeyFeatures()}</div>
         </div>
-      </div>
+      )}
       {(isAdmin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
           <div className="fees-commission-title">{t('fees')}</div>
@@ -314,6 +356,21 @@ const AuctionDetail = ({
           visible={docAction}
           onHide={() => setDocAction(false)}
           data={dummyDocs}
+        />
+      )}
+      {termsDialog && (
+        <TermsDialogContainer
+          visible={termsDialog}
+          onHide={() => setTermsDialog(false)}
+          auctionId={auctionData?.uuid}
+        />
+      )}
+      {bidDialog && (
+        <BidDialog
+          visible={bidDialog}
+          onHide={() => setBidDialog(false)}
+          onClickCancel={() => setBidDialog(false)}
+          // onclickPlace={}
         />
       )}
     </div>

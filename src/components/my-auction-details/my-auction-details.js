@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { TextField, Button, Checkbox, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 import { useTranslation } from 'libs/langs'
+import store from 'libs/store'
 
 import { dummyBiddersData, dummyData } from './helpers'
 
@@ -31,6 +32,8 @@ const MyAuctionDetails = ({ auctionId }) => {
       propertyDetails?.keyFeatures.filter((el) => el?.label !== key?.label),
     )
   }
+  const downloadToken = store?.getState()?.app?.dlToken
+
   const renderSuggestedKeys = () => {
     return propertyDetails?.suggestedKeyFeatures?.map((key, i) => (
       <Checkbox
@@ -71,7 +74,11 @@ const MyAuctionDetails = ({ auctionId }) => {
   }
   const renderImages = () =>
     propertyDetails?.images?.map((el, i) => (
-      <img key={i} src={el.url} className="auction-details-img" />
+      <img
+        key={i}
+        src={`${el.url}?token=${downloadToken}&view=true`}
+        className="auction-details-img"
+      />
     ))
   const renderBidders = () =>
     propertyDetails?.bidders?.map((el) => (

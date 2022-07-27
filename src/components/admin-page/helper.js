@@ -50,6 +50,9 @@ export const configs = [
     width: '200',
     type: 'text',
     displayInCsv: true,
+    render: (row) => {
+      return <div className={`status ${row.status}`}>{row.status}</div>
+    },
   },
   {
     label: 'Documents',
@@ -68,7 +71,11 @@ export const dummyDataMht = (setDocDialog) => [
     bidCloseDate: '14 Apr 2022',
     submissionDate: '14 Apr 2022',
     status: 'New Request',
-    documents: <Button onClick={() => setDocDialog(true)}>View</Button>,
+    documents: (
+      <Button flat onClick={() => setDocDialog(true)}>
+        View
+      </Button>
+    ),
   },
   {
     title: 'Villa',
@@ -78,7 +85,11 @@ export const dummyDataMht = (setDocDialog) => [
     bidCloseDate: '14 Apr 2022',
     submissionDate: '14 Apr 2022',
     status: 'Approved',
-    documents: <Button onClick={() => setDocDialog(true)}>View</Button>,
+    documents: (
+      <Button flat onClick={() => setDocDialog(true)}>
+        View
+      </Button>
+    ),
   },
   {
     title: 'Villa',
@@ -88,7 +99,11 @@ export const dummyDataMht = (setDocDialog) => [
     bidCloseDate: '14 Apr 2022',
     submissionDate: '14 Apr 2022',
     status: 'Rejected',
-    documents: <Button onClick={() => setDocDialog(true)}>View</Button>,
+    documents: (
+      <Button flat onClick={() => setDocDialog(true)}>
+        View
+      </Button>
+    ),
   },
 ]
 export const dummyDocs = [

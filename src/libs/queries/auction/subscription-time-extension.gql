@@ -1,0 +1,7 @@
+subscription subscribeTimeExtension($auctionID: ID!) {
+  timeExtension(auctionID: $auctionID) {
+    addedSeconds
+    endDate
+    auctionID
+  }
+}

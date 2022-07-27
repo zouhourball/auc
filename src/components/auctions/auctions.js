@@ -54,6 +54,8 @@ const Auctions = () => {
         auction_end_date: moment(auctionDetails?.endDate).format(),
         starting_price: +auctionDetails?.startingPrice,
         incremental_price: +auctionDetails?.incrementalPrice,
+        participation_fee: +auctionDetails?.participationFee,
+        guarentee_fee: +auctionDetails?.guaranteeFee,
         property_description: propertyDetails?.description,
         count_bedrooms: +propertyDetails?.bedrooms,
         count_bathrooms: +propertyDetails?.bathrooms,

@@ -3,6 +3,7 @@ import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
 import moment from 'moment'
+import store from 'libs/store'
 
 import { navigate } from '@reach/router'
 
@@ -42,6 +43,8 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
     if (status === 'Upcoming') return t('view_details')
     else return t('bid_now')
   }
+  const downloadToken = store?.getState()?.app?.dlToken
+
   /*   useEffect(() => {
     let interval = setInterval(() => {
       let status =
@@ -85,7 +88,12 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
       }
     >
       <img
-        src={auctionData?.listing?.images[0]?.url}
+        src={`${
+          auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+            ? auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+                ?.url
+            : auctionData?.listing?.images?.[0]?.url
+        }?token=${downloadToken}&view=true`}
         className="bidding-card-background"
       />
       <div className="bidding-card-header">

@@ -3,18 +3,19 @@ import { fetchJSON } from 'libs/fetch'
 const appUrl = `${PRODUCT_APP_URL_API}/auction`
 
 // FILTER AUCTIONS
-export const filterAuctions = async ({ body }) => {
+export const filterAuctions = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/filter/auctions`, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify(queryKey[1]),
     })
   } catch (e) {
     res = { error: e }
   }
   return res
 }
+
 // AWARD AUCTION BY UUID
 export const awardAuction = async ({ uuid, body }) => {
   let res
@@ -55,11 +56,42 @@ export const saveAuction = async ({ body }) => {
   }
   return res
 }
+// GET AUCTIONS BY PARTICIPANT
+export const participantAuctions = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/filter/auctions/for-participant-member`,
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// CHECK IF PARTICIPANT
+export const checkParticipant = async ({ queryKey }) => {
+  let res
 
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/auctions/${queryKey[1]}/is-participant`,
+      {
+        method: 'GET',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // LIST AUCTIONs
 export const listAuction = async ({ queryKey }) => {
   let res
-
+  // &search_key=${'auctionspecialzouhour'}
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}&limit=${queryKey[2]}`,
@@ -91,12 +123,9 @@ export const auctionsRequest = async ({ queryKey }) => {
 export const featuredAuctions = async ({ searchKey, endingSoon }) => {
   let res
   try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/featured/auctions?auction_status=Active`,
-      {
-        method: 'GET',
-      },
-    )
+    res = await fetchJSON(`${appUrl}/api/v1/featured/auctions`, {
+      method: 'GET',
+    })
   } catch (e) {
     res = { error: e }
   }
@@ -134,7 +163,7 @@ export const payAuction = async ({ uuid, host }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}?host=${host}`, {
-      method: 'GET',
+      method: 'POST',
     })
   } catch (e) {
     res = { error: e }

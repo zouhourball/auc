@@ -1,0 +1,6 @@
+subscription subscribeNewBid($auctionID: ID!) {
+  newBid(auctionID: $auctionID) {
+    id
+    amount
+  }
+}

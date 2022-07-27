@@ -3,10 +3,13 @@ import Slider from 'react-slick'
 
 import { useCurrentLang, useTranslation } from 'libs/langs'
 
+import store from 'libs/store'
+
 import './style.scss'
 
 const HomeSlider = ({ auctions }) => {
   const { t } = useTranslation()
+  const downloadToken = store?.getState()?.app?.dlToken
 
   let currentLang = useCurrentLang()
   var settings = {
@@ -35,7 +38,11 @@ const HomeSlider = ({ auctions }) => {
     <Slider {...settings} className="home-slider">
       {auctions?.map((auction) => (
         <div key={auction.uuid} className="slide-section">
-          <img src={auction?.listing?.images[0].url} />
+          <img
+            src={`${
+              auction?.listing?.images?.find((img) => img?.['cover_image'])?.url
+            }?token=${downloadToken}&view=true`}
+          />
           <div className="data-section">
             <div className="data-section-title">{t('villa')}</div>
             <div>{auction?.listing?.title}</div>
