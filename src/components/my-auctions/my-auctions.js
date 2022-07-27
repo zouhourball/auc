@@ -35,7 +35,10 @@ const MyAuctions = () => {
         auctionData={el}
         status={'Active'}
         {...(modules.includes('my-auctions')
-          ? { detailsUrl: () => navigate(`/auctions/my-auction-details/${i}`) }
+          ? {
+            detailsUrl: () =>
+              navigate(`/auctions/my-auction-details/${el.id}`),
+          }
           : {})}
       />
     ))
