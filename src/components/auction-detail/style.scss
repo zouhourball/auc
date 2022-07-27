@@ -91,6 +91,7 @@
 
     &.item {
       flex: 0 0 calc(25% - 12px);
+      width: calc(25% - 12px);
       border-radius: 30px;
     }
   }
