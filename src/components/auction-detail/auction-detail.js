@@ -13,7 +13,7 @@ import UserInfoBySubject from 'components/user-info-by-subject'
 import {
   getAuction,
   auctionProperty,
-  checkParticipant,
+  // checkParticipant,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -45,10 +45,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ['auctionProperty', auctionId],
     auctionProperty,
   )
-  const { data: isParticipant } = useQuery(
-    ['checkParticipant', auctionId],
-    checkParticipant,
-  )
+  // const { data: isParticipant } = useQuery(
+  //   ['checkParticipant', auctionId],
+  //   checkParticipant,
+  // )
 
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
@@ -95,13 +95,13 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ]).fromNow()
   }
   const renderKeyFeatures = () =>
-    auctionData?.listing?.features
-      ?.filter((el) => el?.['availability_status'])
-      .map((el) => (
-        <div key={el?.feature?.uuid} className="key-features-item">
-          <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
-        </div>
-      ))
+  // .filter((el) => el?.['availability_status'])
+
+    auctionData?.listing?.features?.map((el) => (
+      <div key={el?.feature?.uuid} className="key-features-item">
+        <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
+      </div>
+    ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--5 md-grid">
@@ -295,7 +295,8 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               swapTheming
               className="auction-details-btn"
               onClick={() =>
-                isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                // isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                setTermsDialog(true)
               }
             >
               {t('bid_now')}
@@ -369,6 +370,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           visible={bidDialog}
           onHide={() => setBidDialog(false)}
           onClickCancel={() => setBidDialog(false)}
+          // onclickPlace={}
         />
       )}
     </div>

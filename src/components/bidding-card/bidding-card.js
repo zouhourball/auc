@@ -91,7 +91,10 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
     >
       <img
         src={`${
-          auctionData?.listing?.images?.find((img) => img?.['cover_image'])?.url
+          auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+            ? auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+                ?.url
+            : auctionData?.listing?.images?.[0]?.url
         }?token=${downloadToken}&view=true`}
         className="bidding-card-background"
       />

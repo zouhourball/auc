@@ -56,6 +56,22 @@ export const saveAuction = async ({ body }) => {
   }
   return res
 }
+// GET AUCTIONS BY PARTICIPANT
+export const participantAuctions = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/filter/auctions/for-participant-member`,
+      {
+        method: 'POST',
+        body: JSON.stringify(body),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // CHECK IF PARTICIPANT
 export const checkParticipant = async ({ queryKey }) => {
   let res
@@ -75,12 +91,10 @@ export const checkParticipant = async ({ queryKey }) => {
 // LIST AUCTIONs
 export const listAuction = async ({ queryKey }) => {
   let res
-
+  // &search_key=${'auctionspecialzouhour'}
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}&limit=${
-        queryKey[2]
-      }&search_key=${'timer'}`,
+      `${appUrl}/api/v1/auctions?auction_status=${queryKey[1]}&limit=${queryKey[2]}`,
       {
         method: 'GET',
       },
@@ -149,7 +163,7 @@ export const payAuction = async ({ uuid, host }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}?host=${host}`, {
-      method: 'GET',
+      method: 'POST',
     })
   } catch (e) {
     res = { error: e }
