@@ -44,9 +44,9 @@ import icon3 from './icons/area.svg'
 import './style.scss'
 
 const AuctionDetail = ({ auctionId, isAdmin, status }) => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
 
-  const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -64,6 +64,27 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   //   checkParticipant,
   // )
 
+  const paymentCallback = location.pathname
+    .split('/')
+    .filter((v) => v === 'success' || v === 'error')[0]
+  useEffect(() => {
+    if (paymentCallback === 'success') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+          'hide',
+        ),
+      )
+    } else if (paymentCallback === 'error') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment procedure has failed'} type="error" />,
+          'hide',
+        ),
+      )
+    } else {
+    }
+  }, [paymentCallback])
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
@@ -121,7 +142,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   //   variables: { auctionID: auctionId },
   // })
   useEffect(() => {
-    // refetchBid()
+    refetchAuction()
   }, [subNewBid])
 
   const isActive = useMemo(
@@ -353,7 +374,6 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               className="auction-details-btn"
               onClick={() =>
                 // isParticipant ? setBidDialog(true) : setTermsDialog(true)
-                // setTermsDialog(true)
                 setBidDialog(true)
               }
             >
