@@ -2,13 +2,21 @@ import { useState } from 'react'
 import { Button, DialogContainer, Checkbox } from 'react-md'
 import { navigate } from '@reach/router'
 
+// import { payAuction } from 'libs/api/auctions-api'
+
 import { useTranslation } from 'libs/langs'
+// import { useMutation } from 'react-query'
 
 // import './style.scss'
 
 const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
   const [agree, setAgree] = useState(false)
-
+  // const payAuctionMutation = useMutation(payAuction)
+  // const redirectToPay = () =>
+  //   payAuctionMutation.mutate({
+  //     uuid: auctionId,
+  //     host: `https://auctions.dev.meeraspace.com/auctions/detail/${auctionId}`,
+  //   })
   const { t } = useTranslation()
 
   const conditionsActions = [
@@ -42,8 +50,9 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       onClick={() => {
         isPublic
           ? navigate(`auctions/detail/${auctionId}`)
-          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay/?host=https://auctions.dev.meeraspace.com/auctions/detail/${auctionId}`)
+          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=https://auctions.dev.meeraspace.com/auctions/detail/${auctionId}`)
       }}
+      // redirectToPay()
     >
       Proceed
     </Button>,

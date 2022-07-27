@@ -84,6 +84,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     endDate,
     startingPrice,
     incrementalPrice,
+    participationFee,
+    guaranteeFee,
   } = auctionDetails
 
   return (
@@ -342,6 +344,38 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(incrementalPrice) =>
             onSetFormDetails('incrementalPrice', incrementalPrice)
           }
+          className="textField-withShadow"
+          required
+          type="number"
+          min={0}
+          block
+        />
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          {t('participation_fee')}
+        </label>
+        <TextField
+          id="participationFee"
+          placeholder={t('incr_price_enter')}
+          value={participationFee < 0 ? 0 : participationFee}
+          onChange={(val) => onSetFormDetails('participationFee', val)}
+          className="textField-withShadow"
+          required
+          type="number"
+          min={0}
+          block
+        />
+      </div>
+      <div className="md-cell md-cell--6">
+        <label className="auction-details-form-label">
+          {t('guarantee_fee')}
+        </label>
+        <TextField
+          id="guaranteeFee"
+          placeholder={t('incr_price_enter')}
+          value={guaranteeFee < 0 ? 0 : guaranteeFee}
+          onChange={(val) => onSetFormDetails('guaranteeFee', val)}
           className="textField-withShadow"
           required
           type="number"
