@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Button, DialogContainer, TextField } from 'react-md'
 import { useTranslation } from 'libs/langs'
 
@@ -10,10 +9,10 @@ const PlaceBidDialog = ({
   onClickCancel,
   lastBidAmount,
   incrementPrice,
+  bidAmount,
+  setBidAmount,
 }) => {
   const { t } = useTranslation()
-
-  const [bidAmount, setBidAmount] = useState()
 
   return (
     <DialogContainer

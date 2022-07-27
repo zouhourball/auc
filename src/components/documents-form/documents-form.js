@@ -7,7 +7,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   //  const [images, setImages] = useState({})
   const { t } = useTranslation()
 
-  const images = []
+  const images = documentsDetails?.images || []
 
   /* const onFileSelected = (file, key) => {
     const myFileItemReader = new FileReader()
@@ -19,19 +19,18 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
       }
     })
   } */
-
   const onSetFormDetails = (property, value) => {
     setDocumentDetails({ ...documentsDetails, [property]: value })
   }
 
-  const setListImages = (newImages, keyAction, fileId) => {
-    if (keyAction === t('delete')) {
+  const setListImages = (newImages, keyAction, fileId, key) => {
+    if (keyAction === 'delete') {
       onSetFormDetails(
         'images',
         images?.filter((el) => el.url !== fileId),
       )
-    } else if (keyAction === t('add')) {
-      onSetFormDetails('images', [...images, ...newImages])
+    } else if (keyAction === 'add') {
+      onSetFormDetails('images', [...images, { ...newImages[0], id: key }])
     } else {
       onSetFormDetails('images', newImages)
     }
@@ -40,7 +39,6 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
     return (
       <UploadImages
         cover
-        multiple={true}
         title={
           <>
             <span className="drop-zone-placeholder">
@@ -50,18 +48,18 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
           </>
         }
         setListFiles={(files, keyAction, fileId) =>
-          setListImages(files, keyAction, fileId)
+          setListImages(files, keyAction, fileId, key)
         }
-        listFiles={images}
+        listFiles={images?.filter(img => img?.id === key)}
         iconDelete={true}
         titleContent={' '}
-        addTitle={
-          <div className="">
-            <FontIcon className="">add</FontIcon>
-            {'add_images'}
-          </div>
-        }
-        titleUpload={images?.length > 0 ? 'add_images' : ''}
+        // addTitle={
+        //   <div className="">
+        //     <FontIcon className="">add</FontIcon>
+        //     {'add_images'}
+        //   </div>
+        // }
+        // titleUpload={images?.length > 0 ? 'add_images' : ''}
         icon={<FontIcon>add_photo_alternate</FontIcon>}
         // accept="image/jpeg, image/png, image/jpg"
         className="custom"
