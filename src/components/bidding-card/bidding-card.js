@@ -10,8 +10,7 @@ import './style.scss'
 /* eslint-disable */
 const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
   const { t } = useTranslation()
-
-  const [countdown, setCountdown] = useState({
+   const [countdown, setCountdown] = useState({
     d: 0,
     h: 0,
     m: 0,
@@ -78,8 +77,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
       clearInterval(interval)
     }
   }, [auctionData]) */
-
-  return (
+   return (
     <div
       className={`bidding-card ${className || ''}`}
       onClick={() =>
@@ -116,7 +114,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
             <div className="description">
-              {t('current_ask')} {auctionData?.starting_price}
+              {t('current_ask')} {auctionData?.['last_bid']?.['bid_amount'] || 0}
             </div>
             {live && (
               <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>

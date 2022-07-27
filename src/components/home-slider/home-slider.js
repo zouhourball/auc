@@ -40,7 +40,7 @@ const HomeSlider = ({ auctions }) => {
             <div className="data-section-title">{t('villa')}</div>
             <div>{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
-            <div>Current Ask: 0</div>
+            <div>Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}</div>
             <div>02 D : 08 H : 35 M : 10 S</div>
             <Button flat primary swapTheming className="data-section-button">
               Bid Now

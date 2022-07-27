@@ -7,7 +7,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   //  const [images, setImages] = useState({})
   const { t } = useTranslation()
 
-  const images = []
+  const images = documentsDetails?.images || []
 
   /* const onFileSelected = (file, key) => {
     const myFileItemReader = new FileReader()
@@ -19,18 +19,17 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
       }
     })
   } */
-
   const onSetFormDetails = (property, value) => {
     setDocumentDetails({ ...documentsDetails, [property]: value })
   }
 
   const setListImages = (newImages, keyAction, fileId) => {
-    if (keyAction === t('delete')) {
+    if (keyAction === 'delete') {
       onSetFormDetails(
         'images',
         images?.filter((el) => el.url !== fileId),
       )
-    } else if (keyAction === t('add')) {
+    } else if (keyAction === 'add') {
       onSetFormDetails('images', [...images, ...newImages])
     } else {
       onSetFormDetails('images', newImages)
