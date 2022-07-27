@@ -74,7 +74,7 @@ const Home = () => {
           {/* <Auctions path={'/add-auction'} /> */}
           <AuctionsPublic path={'/home'} logged />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
-            <AuctionsList key={i} path={page} />
+            <AuctionsList logged key={i} path={page} />
           ))}
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />

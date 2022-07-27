@@ -23,10 +23,10 @@ const ParticipatedAuctions = () => {
       case 0:
       case 1:
       case 2:
-        return dummyData?.map((el, i) => (
+        return dummyData?.map((el) => (
           <BiddingCard
             className="md-cell md-cell--6"
-            key={i}
+            key={el?.uuid}
             auctionData={el}
             status={'Active'}
             live={modules.includes('live-auctions')}

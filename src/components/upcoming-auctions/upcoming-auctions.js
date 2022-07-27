@@ -9,10 +9,10 @@ const UpcomingAuctions = ({ cards, logged }) => {
   const { t } = useTranslation()
 
   const renderCards = () =>
-    cards?.map((el, i) => (
+    cards?.map((el) => (
       <BiddingCard
         className={'md-cell md-cell--6'}
-        key={i}
+        key={el?.uuid}
         auctionData={el}
         status={'Upcoming'}
       />

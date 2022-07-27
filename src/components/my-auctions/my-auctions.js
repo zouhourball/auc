@@ -28,10 +28,10 @@ const MyAuctions = () => {
     }
   }, [modules])
   const renderCards = () =>
-    dummyData?.map((el, i) => (
+    dummyData?.map((el) => (
       <BiddingCard
         className="md-cell md-cell--6"
-        key={i}
+        key={el?.uuid}
         auctionData={el}
         status={'Active'}
         {...(modules.includes('my-auctions')
