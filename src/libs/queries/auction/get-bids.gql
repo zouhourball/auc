@@ -1,0 +1,9 @@
+query getBids($auctionUUID: String!) {
+  bids(auctionUUID: $auctionUUID, page: 0, limit: 4) {
+    id
+    amount
+    sub
+    auctionID
+    date
+  }
+}

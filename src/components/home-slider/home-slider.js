@@ -50,7 +50,7 @@ const HomeSlider = ({ auctions }) => {
             <div className="data-section-title">{t('villa')}</div>
             <div>{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
-            <div>Current Ask: 0</div>
+            <div>Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}</div>
             {+moment.utc(auction?.['auction_start_date']) < +moment() &&
               +moment.utc(auction?.['auction_end_date']) > +moment() && (
               <AuctionTimer auctionData={auction} />

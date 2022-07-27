@@ -1,4 +1,4 @@
-subscription subscribeNewBid($auctionID: ID!) {
+subscription onNewBid($auctionID: ID!) {
   newBid(auctionID: $auctionID) {
     id
     amount

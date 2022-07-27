@@ -3,20 +3,28 @@ import { useTranslation } from 'libs/langs'
 import { useQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
+
+import { useDispatch } from 'react-redux'
+
+import { addToast } from 'modules/app/actions'
+
 import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
-import { useSubscription } from 'react-apollo'
+import { useSubscription, useMutation } from 'react-apollo'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
+import ToastMsg from 'components/toast-msg'
 
 import {
   getAuction,
   auctionProperty,
-  // checkParticipant,
+  checkParticipant,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import placeBid from 'libs/queries/auction/place-bid.gql'
+
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import AuctionTimer from 'components/auction-timer'
@@ -37,25 +45,93 @@ import './style.scss'
 
 const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
-  const { data: auctionData } = useQuery(['auctionData', auctionId], getAuction)
+  const { data: auctionData, refetch: refetchAuction } = useQuery(
+    ['auctionData', auctionId],
+    getAuction,
+  )
   const { data: auctionPropertyData } = useQuery(
     ['auctionProperty', auctionId],
     auctionProperty,
   )
-  // const { data: isParticipant } = useQuery(
-  //   ['checkParticipant', auctionId],
-  //   checkParticipant,
-  // )
-
+  const { data: isParticipant } = useQuery(
+    ['checkParticipant', auctionId],
+    checkParticipant,
+  )
+  const paymentCallback = location.pathname
+    .split('/')
+    .filter((v) => v === 'success' || v === 'error')[0]
+  useEffect(() => {
+    if (paymentCallback === 'success') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+          'hide',
+        ),
+      )
+    } else if (paymentCallback === 'error') {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment procedure has failed'} type="error" />,
+          'hide',
+        ),
+      )
+    } else {
+    }
+  }, [paymentCallback])
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
+  const [bidAmount, setBidAmount] = useState('')
+
   useEffect(() => {
     setCurrentImg(auctionData?.listing?.images[0]?.url)
   }, [auctionData])
+  const [placeNewBid] = useMutation(placeBid, {
+    context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
+  })
+
+  const onConfirmBid = () => {
+    placeNewBid({
+      variables: {
+        input: {
+          auctionUUID: auctionData?.uuid,
+          LastBidID: auctionData?.['last_bid']?.uuid || '',
+          Amount: +bidAmount,
+        },
+      },
+    }).then((res) => {
+      if (!res.error) {
+        refetchAuction()
+        setBidAmount('')
+        setBidDialog(false)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res.message || 'Bid placed successfully !'}
+              type="success"
+            />,
+            'hide',
+          ),
+        )
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res.error?.body?.message || 'error'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
+      }
+    })
+  }
+
   const { data: subNewBid } = useSubscription(subscribeNewBid, {
     variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
@@ -64,7 +140,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
   //   variables: { auctionID: auctionId },
   // })
   useEffect(() => {
-    // refetchBid()
+    refetchAuction()
   }, [subNewBid])
 
   const isActive = useMemo(
@@ -295,8 +371,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
               swapTheming
               className="auction-details-btn"
               onClick={() =>
-                // isParticipant ? setBidDialog(true) : setTermsDialog(true)
-                setTermsDialog(true)
+                isParticipant ? setBidDialog(true) : setTermsDialog(true)
               }
             >
               {t('bid_now')}
@@ -370,7 +445,11 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           visible={bidDialog}
           onHide={() => setBidDialog(false)}
           onClickCancel={() => setBidDialog(false)}
-          // onclickPlace={}
+          incrementPrice={auctionData?.['incremental_price'] | 0}
+          lastBidAmount={auctionData?.['last_bid']?.['bid_amount'] || 0}
+          onclickPlace={onConfirmBid}
+          bidAmount={bidAmount}
+          setBidAmount={setBidAmount}
         />
       )}
     </div>

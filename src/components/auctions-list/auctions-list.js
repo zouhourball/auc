@@ -4,8 +4,6 @@ import { useTranslation } from 'libs/langs'
 import BiddingCard from 'components/bidding-card'
 import AuctionsFilter from 'components/auction-filter'
 
-import { dummyData } from 'components/auctions-public/helper'
-
 import './style.scss'
 import { useQuery } from 'react-query'
 import { listAuction } from 'libs/api/auctions-api'
@@ -44,7 +42,7 @@ const AuctionsList = () => {
         )}
         <div>
           {t('showing_results')}
-          <span>({dummyData?.length})</span>
+          <span>({auctionsData?.results?.length || 0})</span>
         </div>
       </div>
       <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
