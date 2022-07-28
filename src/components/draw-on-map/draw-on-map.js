@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import { MeeraMap } from '@target-energysolutions/gis-map'
 import { Button, DialogContainer } from 'react-md'
 import '@target-energysolutions/gis-map/styles.css'
@@ -8,6 +10,7 @@ import './style.scss'
 const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
   const mapRef = useRef(null)
   const [newCoordinates, setNewCoordinates] = useState(null)
+  const { t } = useTranslation()
 
   // const wkt = [
 
@@ -94,7 +97,7 @@ const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
       className="drawOnMap"
       actions={[
         <Button key={0} flat onClick={() => onClose()}>
-          Discard
+          {t('discard')}
         </Button>,
         <Button
           key={1}
@@ -109,7 +112,7 @@ const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
             onClose()
           }}
         >
-          Done
+          {t('done')}
         </Button>,
       ]}
     >
