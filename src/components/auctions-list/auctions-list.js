@@ -12,7 +12,7 @@ import {
   //  filterAuctions
 } from 'libs/api/auctions-api'
 
-const AuctionsList = ({ logged }) => {
+const AuctionsList = ({ logged, user }) => {
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
@@ -43,6 +43,7 @@ const AuctionsList = ({ logged }) => {
   const renderCards = () =>
     auctionsData?.results?.map((el) => (
       <BiddingCard
+        user={user}
         className="md-cell md-cell--6"
         key={el?.uuid}
         auctionData={el}

@@ -72,9 +72,9 @@ const Home = () => {
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />
           {/* <Auctions path={'/add-auction'} /> */}
-          <AuctionsPublic path={'/home'} logged />
+          <AuctionsPublic user={currentUser?.mev2?.user} path={'/home'} logged />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
-            <AuctionsList logged key={i} path={page} />
+            <AuctionsList user={currentUser?.mev2?.user} logged key={i} path={page} />
           ))}
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />

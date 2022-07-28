@@ -41,7 +41,6 @@ const Auctions = () => {
       }
     },
   })
-
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
@@ -80,6 +79,7 @@ const Auctions = () => {
             name: el?.options?.metadata?.filename,
             size: el?.size,
             type: el?.type,
+            idProperty: el.id,
           }
         }),
       },

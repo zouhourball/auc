@@ -117,6 +117,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       { label: keyFeature, status: 'new' },
     ])
   }
+
   const renderNewKeys = () => {
     return propertyDetails?.keyFeatures?.map((updatedKey, index) => (
       <div key={index} className="chipWrapper-item">
@@ -127,6 +128,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       </div>
     ))
   }
+
   const renderImages = () =>
     propertyDetails?.images?.map((el, i) => (
       <img

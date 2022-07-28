@@ -10,7 +10,14 @@ import { navigate } from '@reach/router'
 import './style.scss'
 import AuctionTimer from 'components/auction-timer'
 /* eslint-disable */
-const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
+const BiddingCard = ({
+  detailsUrl,
+  auctionData,
+  className,
+  status,
+  live,
+  user,
+}) => {
   const { t } = useTranslation()
   const [countdown, setCountdown] = useState({
     d: 0,
@@ -18,7 +25,9 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
     m: 0,
     s: 0,
   })
+  console.log(user?.subject, 'user')
 
+console.log(auctionData.last_bid?.["member_subject"],"jjjjjj");
   //   const startingBid = auctionData?.['starting_price']
 
   /* const status =
@@ -98,7 +107,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
         className="bidding-card-background"
       />
       <div className="bidding-card-header">
-        {auctionData.isHighestBid && (
+        {auctionData.last_bid?.["member_subject"] === user?.subject && (
           <div className="highest-bidder">{t('highest_bidder')}</div>
         )}
         <Button icon primary className="save-btn">
