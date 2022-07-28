@@ -82,7 +82,7 @@ const Home = () => {
           <ParticipatedAuctions path={'/my-participation'} />
           {['/detail/:auctionId', '/detail/:auctionId/public/:callback'].map(
             (page, i) => (
-              <AuctionDetail key={i} path={page} />
+              <AuctionDetail key={i} path={page} logged />
             ),
           )}
           {/* <AuctionDetail path={'/detail/:auctionId'} /> */}

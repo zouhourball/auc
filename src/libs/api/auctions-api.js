@@ -147,11 +147,11 @@ export const auctionProperty = async ({ queryKey }) => {
   return res
 }
 // GET FEATURED AUCTION'S PROPERTY
-export const auctionFeaturedProperty = async ({ uuid }) => {
+export const auctionFeaturedProperty = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/featured/auctions/${uuid}/property`,
+      `${appUrl}/api/v1/featured/auctions/${queryKey[1]}/property`,
       {
         method: 'GET',
       },
@@ -162,47 +162,47 @@ export const auctionFeaturedProperty = async ({ uuid }) => {
   return res
 }
 // PAY AUCTION
-export const payAuction = async ({ uuid, host }) => {
-  let res
-  try {
-    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}?host=${host}`, {
-      method: 'POST',
-    })
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
-}
+// export const payAuction = async ({ uuid, host }) => {
+//   let res
+//   try {
+//     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}?host=${host}`, {
+//       method: 'POST',
+//     })
+//   } catch (e) {
+//     res = { error: e }
+//   }
+//   return res
+// }
 // PAY AUCTION SUCCESS CALLBACK
-export const payAuctionSuccess = async ({ trackID }) => {
-  let res
-  try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/pay/success/callback/${trackID}`,
-      {
-        method: 'GET',
-      },
-    )
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
-}
+// export const payAuctionSuccess = async ({ trackID }) => {
+//   let res
+//   try {
+//     res = await fetchJSON(
+//       `${appUrl}/api/v1/auctions/pay/success/callback/${trackID}`,
+//       {
+//         method: 'GET',
+//       },
+//     )
+//   } catch (e) {
+//     res = { error: e }
+//   }
+//   return res
+// }
 // PAY AUCTION FAIL CALLBACK
-export const payAuctionFail = async ({ trackID, error }) => {
-  let res
-  try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/pay/success/callback/${trackID}/${error}`,
-      {
-        method: 'GET',
-      },
-    )
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
-}
+// export const payAuctionFail = async ({ trackID, error }) => {
+//   let res
+//   try {
+//     res = await fetchJSON(
+//       `${appUrl}/api/v1/auctions/pay/success/callback/${trackID}/${error}`,
+//       {
+//         method: 'GET',
+//       },
+//     )
+//   } catch (e) {
+//     res = { error: e }
+//   }
+//   return res
+// }
 // GET AUCTION BY UUID
 export const getAuction = async ({ queryKey }) => {
   let res
@@ -216,10 +216,10 @@ export const getAuction = async ({ queryKey }) => {
   return res
 }
 // GET FEATURED AUCTION BY UUID
-export const getFeaturedAuction = async ({ uuid }) => {
+export const getFeaturedAuction = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/featured/auctions/${uuid}`, {
+    res = await fetchJSON(`${appUrl}/api/v1/featured/auctions/${queryKey[1]}`, {
       method: 'GET',
     })
   } catch (e) {

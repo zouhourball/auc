@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
@@ -12,12 +12,12 @@ import AuctionTimer from 'components/auction-timer'
 /* eslint-disable */
 const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
   const { t } = useTranslation()
-  const [countdown, setCountdown] = useState({
-    d: 0,
-    h: 0,
-    m: 0,
-    s: 0,
-  })
+  // const [countdown, setCountdown] = useState({
+  //   d: 0,
+  //   h: 0,
+  //   m: 0,
+  //   s: 0,
+  // })
 
   //   const startingBid = auctionData?.['starting_price']
 
