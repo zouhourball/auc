@@ -9,7 +9,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
 
   const {
     description,
-    keyFeatures,
+    keyFeatures = [],
     suggestedKeyFeatures,
     images = [],
     bedrooms,
