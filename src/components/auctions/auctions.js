@@ -67,8 +67,10 @@ const Auctions = () => {
         }),
         images: propertyDetails?.images?.map((el) => {
           return {
-            ...el,
-            cover_image: el?.cover,
+            url: el?.url,
+            name: el?.options?.metadata?.filename,
+            size: el?.size,
+            type: el?.type,
           }
         }),
         documents: documents?.images?.map((el) => {

@@ -6,11 +6,11 @@ import moment from 'moment'
 import store from 'libs/store'
 
 import { navigate } from '@reach/router'
+import AuctionTimer from 'components/auction-timer'
 
 import './style.scss'
-import AuctionTimer from 'components/auction-timer'
 /* eslint-disable */
-const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
+const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
   const { t } = useTranslation()
   // const [countdown, setCountdown] = useState({
   //   d: 0,
@@ -106,7 +106,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
         </Button>
       </div>
       <div className="bidding-card-footer">
-        {status === 'Upcoming' && (
+        {status !== 'active' && (
           <div className="bidding-card-info">
             <div className="title">
               {auctionData?.listing?.title} in {auctionData.location}
@@ -117,7 +117,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
             </div>
           </div>
         )}
-        {status === 'Active' && (
+        {status === 'active' && (
           <div className="bidding-card-info">
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
@@ -126,7 +126,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
               {t('current_ask')}{' '}
               {auctionData?.['last_bid']?.['bid_amount'] || 0}
             </div>
-            {live && <AuctionTimer auctionData={auctionData} />}
+            {status === 'active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         <Button flat primary swapTheming className="bidding-card-btn">
