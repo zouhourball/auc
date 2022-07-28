@@ -44,7 +44,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
+const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -375,7 +375,7 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
                 {t('documents')}
               </Button>
             ) : (
-              !isActive && (
+              isActive && (
                 <Button
                   flat
                   primary
