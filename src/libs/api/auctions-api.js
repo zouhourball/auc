@@ -4,12 +4,20 @@ const appUrl = `${PRODUCT_APP_URL_API}/auction`
 
 // FILTER AUCTIONS
 export const filterAuctions = async ({ queryKey }) => {
+  const params = Object.keys(queryKey[1])
+    .filter((key) => typeof queryKey[1][key] === 'number' || !!queryKey[1][key])
+    .map((key) => `${key}=${queryKey[1][key]}`)
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/filter/auctions`, {
-      method: 'POST',
-      body: JSON.stringify(queryKey[1]),
-    })
+    res = await fetchJSON(
+      `${appUrl}/api/v1/filter/auctions${
+        params.length ? `?${params.join('&')}` : ''
+      }`,
+      {
+        method: 'POST',
+        body: JSON.stringify(queryKey[2]),
+      }
+    )
   } catch (e) {
     res = { error: e }
   }
@@ -292,3 +300,4 @@ export const getWilayats = async ({ queryKey }) => {
   }
   return res
 }
+// filter auctions

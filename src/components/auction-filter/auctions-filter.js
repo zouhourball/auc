@@ -1,10 +1,9 @@
 import { FontIcon, SelectField, TextField } from 'react-md'
 import { useTranslation } from 'libs/langs'
-
+import { propertyTypeList } from 'components/helpers/index'
 import './style.scss'
 const AuctionsFilter = ({ filterData, setFilterData }) => {
   const { t } = useTranslation()
-
   const { search, price, type, bedsBaths, more, auctionEndingSoon } = filterData
   return (
     <div className="md-grid auctions-filter">
@@ -32,10 +31,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         className="md-cell md-cell--1 auctions-filter-selectField"
         value={type}
         onChange={(v) => setFilterData({ ...filterData, type: v })}
-        menuItems={[
-          { label: 'type1', value: 't1' },
-          { label: 'type2', value: 't2' },
-        ]}
+        menuItems={propertyTypeList}
         position={SelectField.Positions.BELOW}
       />
       <SelectField
