@@ -6,25 +6,24 @@ import AuctionsFilter from 'components/auction-filter'
 
 import './style.scss'
 import { useQuery } from 'react-query'
-import { listAuction } from 'libs/api/auctions-api'
+import { listAuction, featuredAuctions } from 'libs/api/auctions-api'
 
-const AuctionsList = () => {
+const AuctionsList = ({ logged }) => {
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
-
   const [filterData, setFilterData] = useState({})
   const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
   const { data: auctionsData } = useQuery(
-    ['upcomingAuctions', type, 100],
-    listAuction,
+    [logged ? 'upcomingAuctions' : 'featuredAuctions', type, 100],
+    logged ? listAuction : featuredAuctions,
   )
 
   const renderCards = () =>
-    auctionsData?.results?.map((el, i) => (
+    auctionsData?.results?.map((el) => (
       <BiddingCard
         className="md-cell md-cell--6"
-        key={i}
+        key={el?.uuid}
         auctionData={el}
         status={type}
         live={modules.includes('live-auctions')}

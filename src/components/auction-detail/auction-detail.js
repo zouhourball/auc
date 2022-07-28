@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
 import { useQuery } from 'react-query'
@@ -8,7 +9,6 @@ import { useDispatch } from 'react-redux'
 
 import { addToast } from 'modules/app/actions'
 
-import { useEffect, useMemo, useState } from 'react'
 import { get } from 'lodash-es'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { useSubscription, useMutation } from 'react-apollo'
@@ -143,9 +143,9 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     refetchAuction()
   }, [subNewBid])
 
-  const isActive = useMemo(
-    () => Date.parse(auctionData?.['created_date']) > Date.now(),
-  )
+  const isActive =
+    +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
+    +moment.utc(auctionData?.['auction_end_date']) > +moment()
   // console.log(
   //   Date.parse(auctionData?.['created_date']),
   //   Date.now(),
@@ -287,12 +287,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer
-                time={{ days: 0, hours: 0, minutes: 0, secondes: 0 }}
-                label={t('current_price')}
-                bid={0}
-                minIncrement={0}
-              />
+              <AuctionTimer auctionData={auctionData} />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>

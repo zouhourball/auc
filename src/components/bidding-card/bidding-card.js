@@ -6,6 +6,7 @@ import moment from 'moment'
 import store from 'libs/store'
 
 import { navigate } from '@reach/router'
+import AuctionTimer from 'components/auction-timer'
 
 import './style.scss'
 /* eslint-disable */
@@ -105,7 +106,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
         </Button>
       </div>
       <div className="bidding-card-footer">
-        {status === 'Upcoming' && (
+        {status !== 'active' && (
           <div className="bidding-card-info">
             <div className="title">
               {auctionData?.listing?.title} in {auctionData.location}
@@ -116,7 +117,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
             </div>
           </div>
         )}
-        {status === 'Active' && (
+        {status === 'active' && (
           <div className="bidding-card-info">
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
@@ -125,9 +126,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
               {t('current_ask')}{' '}
               {auctionData?.['last_bid']?.['bid_amount'] || 0}
             </div>
-            {status === 'active' && (
-              <div className="countdown-container">{`${countdown.d} D : ${countdown.h} H : ${countdown.m} M : ${countdown.s} S`}</div>
-            )}
+            {status === 'active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         <Button flat primary swapTheming className="bidding-card-btn">

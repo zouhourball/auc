@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useQuery, useSubscription } from 'react-apollo'
+import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
 import { TextField, Button, Checkbox, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 import { useTranslation } from 'libs/langs'
@@ -7,21 +7,61 @@ import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 
-import { dummyBiddersData, dummyData } from './helpers'
+import { dummyBiddersData, dummyData, updateAuctionFormatData } from './helpers'
 
 import './style.scss'
+import { useQuery, useMutation } from 'react-query'
+import { getAuction, updateAuction } from 'libs/api/auctions-api'
 import moment from 'moment'
+import { DatePicker } from '@target-energysolutions/date-picker'
+import { useDispatch } from 'react-redux'
+import { addToast } from 'modules/app/actions'
+import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
 
 const MyAuctionDetails = ({ auctionId }) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   const [keyFeature, setKeyFeature] = useState()
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
   const [propertyDetails, setPropertyDetails] = useState({})
   const [showMore, setShowMore] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  const { data: biddersList, refetch: refetchBids } = useQuery(getBids, {
+  const [auctionEditData, setAuctionEditData] = useState({
+    title: '',
+    propertyType: '',
+    city: '',
+    startDate: '',
+    endDate: '',
+    startingPrice: '',
+    incrementalPrice: '',
+    description: '',
+  })
+  const [showDatePicker, setShowDatePicker] = useState({
+    startDate: false,
+    endDate: false,
+  })
+
+  // get auction details api
+  const { data: auctionDetails, refetch: refetchAuction } = useQuery(
+    ['auctionDetails', auctionId],
+    getAuction,
+  )
+  useEffect(() => {
+    setAuctionEditData({
+      title: auctionDetails?.listing?.title,
+      propertyType: auctionDetails?.listing?.property?.['property_type_id'],
+      city: auctionDetails?.listing?.property?.city?.['name_en'],
+      startDate: auctionDetails?.['auction_start_date'],
+      endDate: auctionDetails?.['auction_end_date'],
+      startingPrice: auctionDetails?.['starting_price'],
+      incrementalPrice: auctionDetails?.['incremental_price'],
+      description: auctionDetails?.description,
+    })
+  }, [auctionDetails])
+
+  const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
     variables: { auctionUUID: '3159502d-7f66-4722-9a19-74319b216468' },
   })
@@ -122,6 +162,51 @@ const MyAuctionDetails = ({ auctionId }) => {
       onSetFormDetails('images', newImages)
     }
   }
+  // update auction details
+  const updateAuctionData = useMutation(updateAuction, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetchAuction()
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res.error?.body?.message || 'error'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
+      }
+    },
+  })
+  const onDisableEdit = () => {
+    if (editMode) {
+      updateAuctionData.mutate({
+        uuid: auctionId,
+        body: {
+          ...updateAuctionFormatData(auctionDetails),
+          title: auctionEditData?.title,
+          auction_start_date: new Date(auctionEditData?.startDate),
+          auction_end_date: new Date(auctionEditData?.endDate),
+          incremental_price: +auctionEditData?.incrementalPrice,
+          starting_price: +auctionEditData?.startingPrice,
+          property_type: +auctionEditData?.propertyType,
+          property_description: auctionEditData?.description,
+        },
+      })
+    }
+    setEditMode(!editMode)
+    setShowDatePicker({ startDate: false, endDate: false })
+  }
+  /// ///////////
+  const onHandleDate = (date, key) => {
+    setAuctionEditData({
+      ...auctionEditData,
+      [key]: moment(date.timestamp).format('DD MMM YYYY'),
+    })
+    setShowDatePicker({ ...showDatePicker, [key]: false })
+  }
   return (
     <div className="auction-list">
       <div className="auction-list-header">
@@ -132,15 +217,21 @@ const MyAuctionDetails = ({ auctionId }) => {
           <TextField
             id={'title'}
             label={t('title_label')}
-            value={dummyData?.title}
+            value={auctionEditData?.title}
             disabled={!editMode}
+            onChange={(v) =>
+              setAuctionEditData({ ...auctionEditData, title: v })
+            }
             className="auction-details-form-textField"
             block
           />
           <TextField
             id={'property-type'}
             label={t('property_type_label')}
-            value={dummyData?.propertyType}
+            value={auctionEditData?.propertyType}
+            onChange={(v) =>
+              setAuctionEditData({ ...auctionEditData, propertyType: v })
+            }
             disabled={!editMode}
             className="auction-details-form-textField"
             block
@@ -156,7 +247,10 @@ const MyAuctionDetails = ({ auctionId }) => {
           <TextField
             id={'city'}
             label={t('city_label')}
-            value={dummyData?.city}
+            value={auctionEditData?.city}
+            onChange={(v) =>
+              setAuctionEditData({ ...auctionEditData, city: v })
+            }
             disabled={!editMode}
             className="auction-details-form-textField"
             block
@@ -169,26 +263,73 @@ const MyAuctionDetails = ({ auctionId }) => {
             className="auction-details-form-textField"
             block
           />
-          <TextField
-            id={'start-end-date'}
-            label={t('start_end_dates_label')}
-            value={dummyData?.date}
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            block
-          />
-          <TextField
-            id={'start-end-time'}
-            label={t('start_end_time_label')}
-            value={dummyData?.time}
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            block
-          />
+          <div>
+            <TextField
+              id={'start-end-date'}
+              label={t('start_end_dates_label')}
+              value={moment(auctionEditData?.startDate).format('DD MMM YYYY')}
+              onChange={(v) =>
+                setAuctionEditData({ ...auctionEditData, startDate: v })
+              }
+              onClick={() => {
+                editMode &&
+                  setShowDatePicker({ ...showDatePicker, startDate: true })
+              }}
+              disabled={!editMode}
+              className="auction-details-form-textField"
+              block
+            />
+            {showDatePicker.startDate && (
+              <DatePicker
+                singlePick
+                translation={{ update: 'select' }}
+                onUpdate={(date) => onHandleDate(date, 'startDate')}
+                onCancel={() =>
+                  setShowDatePicker({ ...showDatePicker, startDate: false })
+                }
+                minValidDate={{ timestamp: new Date().getTime() }}
+                startView="year"
+                endView="day"
+              />
+            )}
+          </div>
+          <div>
+            <TextField
+              id={'start-end-time'}
+              label={t('start_end_time_label')}
+              value={moment(auctionEditData?.endDate).format('DD MMM YYYY')}
+              onChange={(v) =>
+                setAuctionEditData({ ...auctionEditData, endDate: v })
+              }
+              onClick={() => {
+                editMode &&
+                  setShowDatePicker({ ...showDatePicker, endDate: true })
+              }}
+              disabled={!editMode}
+              className="auction-details-form-textField"
+              block
+            />
+            {showDatePicker.endDate && (
+              <DatePicker
+                singlePick
+                translation={{ update: 'select' }}
+                onUpdate={(date) => onHandleDate(date, 'endDate')}
+                onCancel={() =>
+                  setShowDatePicker({ ...showDatePicker, endDate: false })
+                }
+                minValidDate={{ timestamp: new Date().getTime() }}
+                startView="year"
+                endView="day"
+              />
+            )}
+          </div>
           <TextField
             id={'starting-price'}
             label={t('starting_price_label')}
-            value={dummyData?.startingPrice}
+            value={auctionEditData?.startingPrice}
+            onChange={(v) =>
+              setAuctionEditData({ ...auctionEditData, startingPrice: v })
+            }
             disabled={!editMode}
             className="auction-details-form-textField"
             block
@@ -196,13 +337,16 @@ const MyAuctionDetails = ({ auctionId }) => {
           <TextField
             id={'incremental-price'}
             label={t('incremental_price_label')}
-            value={dummyData?.incrementalPrice}
+            value={auctionEditData?.incrementalPrice}
+            onChange={(v) =>
+              setAuctionEditData({ ...auctionEditData, incrementalPrice: v })
+            }
             disabled={!editMode}
             className="auction-details-form-textField"
             block
           />
         </div>
-        <Button onClick={() => setEditMode(!editMode)} icon primary>
+        <Button onClick={() => onDisableEdit()} icon primary>
           more_vert
         </Button>
       </div>
@@ -213,7 +357,10 @@ const MyAuctionDetails = ({ auctionId }) => {
               <TextField
                 id={'description'}
                 label={t('description_label')}
-                value={dummyData?.description}
+                value={auctionEditData?.description}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, description: v })
+                }
                 className="auction-details-description-textField"
                 block
                 rows="3"
@@ -282,7 +429,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             <>
               <div className="auction-details-description">
                 <label>{t('description_label')}</label>
-                <span>{dummyData?.description}</span>
+                <span>{auctionEditData?.description}</span>
               </div>
               <div className="auction-details-subTitle">{'key features'}</div>
               <div className="chipWrapper">{renderNewKeys()}</div>

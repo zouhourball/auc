@@ -1,4 +1,6 @@
 import { useState } from 'react'
+// import moment from 'moment'
+
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
@@ -49,7 +51,7 @@ const ParticipatedAuctions = () => {
         className="md-cell md-cell--6"
         key={i}
         auctionData={el}
-        status={tab === 0 ? 'active' : ''}
+        status={tab === 0 ? 'active' : 'active'}
       />
     ))
   }
@@ -64,13 +66,28 @@ const ParticipatedAuctions = () => {
         {el.label}
       </Button>
     ))
+
+  // const renderStatus = (auction) => {
+  //   if (
+  //     +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
+  //       +moment() ||
+  //     auction?.['awarded_to']?.uuid
+  //   ) {
+  //     return 'Ended'
+  //   } else if (+moment.utc(auction?.['auction_start_date']) > +moment()) {
+  //     return 'Upcoming'
+  //   } else return 'Active'
+  // }
+
   return (
-    <div className="auction-list">
-      <div className="auction-list-header">
+    <div className="auction-participation-list">
+      <div className="auction-participation-list-header">
         <div className="title">{t('my_participation')}</div>
-        <div>{renderTabs()}</div>
+        <div className="tabs-list">{renderTabs()}</div>
       </div>
-      <div className="md-grid auction-list-cards">{renderCards()}</div>
+      <div className="md-grid auction-participation-list-cards">
+        {renderCards()}
+      </div>
     </div>
   )
 }

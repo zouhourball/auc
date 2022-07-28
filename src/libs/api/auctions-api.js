@@ -137,12 +137,15 @@ export const auctionsRequest = async ({ queryKey }) => {
   return res
 }
 // FEATURED AUCTIONS
-export const featuredAuctions = async ({ searchKey, endingSoon }) => {
+export const featuredAuctions = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/featured/auctions`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${appUrl}/api/v1/featured/auctions?auction_status=${queryKey[1]}&limit=${queryKey[2]}`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }

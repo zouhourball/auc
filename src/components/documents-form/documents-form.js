@@ -50,7 +50,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
         setListFiles={(files, keyAction, fileId) =>
           setListImages(files, keyAction, fileId, key)
         }
-        listFiles={images?.filter(img => img?.id === key)}
+        listFiles={images?.filter((img) => img?.id === key)}
         iconDelete={true}
         titleContent={' '}
         // addTitle={

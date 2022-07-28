@@ -1,46 +1,75 @@
-import './style.scss'
+import { useEffect, useState } from 'react'
+import moment from 'moment'
+
 import { useTranslation } from 'libs/langs'
 
-const AuctionTimer = ({ time, bid, minIncrement, label, iActive = true }) => {
+import './style.scss'
+
+const AuctionTimer = ({ auctionData, isActive = true }) => {
   const { t } = useTranslation()
-  const { days, hours, minutes, secondes } = time
+  const [countdown, setCountdown] = useState({
+    d: 0,
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  useEffect(() => {
+    let interval = setInterval(() => {
+      let newCount = secondsToTime(
+        (+moment.utc(auctionData?.['auction_end_date']) - +new Date()) / 1000,
+      )
+      setCountdown(newCount)
+    }, 1000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [auctionData])
+
   return (
-    <div className={`auction-timer ${iActive ? 'active' : ''}`}>
-      <div className="timer">
-        <span>
-          {days}
-          {t('D')}
-        </span>
-        <span> : </span>
-        <span>
-          {hours} {t('H')}{' '}
-        </span>
-        <span>:</span>
-        <span>
-          {minutes} {t('M')}{' '}
-        </span>
-        <span>:</span>
-        <span>
-          {secondes} {t('S')}
-        </span>
+    <div className={`auction-timer ${isActive ? 'active' : ''}`}>
+      <div className="countdown-element">
+        <span className="value">{countdown.d}</span>{' '}
+        <span className="label">{t('days')}</span>
       </div>
-      <div className="auction-timer-details">
-        <div className="auction-timer-info">
-          <div>
-            <strong className={iActive ? 'active' : ''}>{bid} AED</strong>
-          </div>
-          <div>{label}</div>
-        </div>
-        <div className="sep" />
-        <div className="auction-timer-info">
-          <div>
-            <strong>{minIncrement} AED</strong>
-          </div>
-          <div>{t('minimum_incr')}</div>
-        </div>
+      <div className="countdown-separator">:</div>
+      <div className="countdown-element">
+        <span className="value">{countdown.h}</span>{' '}
+        <span className="label">{t('hours_auction')}</span>
+      </div>
+      <div className="countdown-separator">:</div>
+      <div className="countdown-element">
+        <span className="value">{countdown.m}</span>{' '}
+        <span className="label">{t('min_auctions')}</span>
+      </div>
+      <div className="countdown-separator">:</div>
+      <div className="countdown-element">
+        <span className="value">{countdown.s}</span>{' '}
+        <span className="label">{t('seconds_auction')}</span>
       </div>
     </div>
   )
 }
 
 export default AuctionTimer
+
+const secondsToTime = (secs) => {
+  let days = Math.floor(secs / (60 * 60 * 24))
+
+  let divisorForHours = secs % (60 * 60 * 24)
+  let hours = Math.floor(divisorForHours / (60 * 60))
+
+  let divisorForMinutes = divisorForHours % (60 * 60)
+  let minutes = Math.floor(divisorForMinutes / 60)
+
+  let divisorForSeconds = divisorForMinutes % 60
+  let seconds = Math.ceil(divisorForSeconds)
+
+  let obj = {
+    d: days,
+    h: hours,
+    m: minutes,
+    s: seconds,
+  }
+  return obj
+}
