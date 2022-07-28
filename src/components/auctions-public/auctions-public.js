@@ -12,15 +12,18 @@ import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
 const AuctionsPublic = ({ logged }) => {
   //
 
-  const { data: featAuctions } = useQuery('featuredAuctions', featuredAuctions)
+  const { data: featAuctions } = useQuery(
+    ['featuredAuctions', 'Active', 4],
+    featuredAuctions,
+  )
   const { data: upcomingAuctionsData } = useQuery(
-    ['UpcomingAuctions', 'Active', 4],
-    listAuction,
+    [logged ? 'UpcomingAuctions' : 'featuredAuctions', 'Active', 4],
+    logged ? listAuction : featuredAuctions,
   )
 
   return (
     <>
-      <HomeSlider auctions={featAuctions?.results} />
+      <HomeSlider logged={logged} auctions={featAuctions?.results} />
       <UpcomingAuctions cards={upcomingAuctionsData?.results} logged={logged} />
     </>
   )

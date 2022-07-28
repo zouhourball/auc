@@ -184,18 +184,23 @@ body,
 }
 
 .md-dialog-footer--inline {
+  height: auto;
   padding: 16px;
   border-top: 1px solid #eee;
+  border-radius: 0 0 20px 20px;
+  background: #fff;
 
   .md-btn--text {
-    height: 30px;
-    margin-left: 8px;
-    padding: 4px 8px;
-    border-radius: 5px;
+    height: auto;
+    margin-left: 16px !important;
+    padding: 16px 24px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    font-size: 16px;
     font-weight: 700;
 
     &.md-text {
-      background: rgba(0, 0, 0, 0.1);
+      background: #fff;
 
       &--disabled {
         background: rgba($color: #1979ff, $alpha: 0.1);

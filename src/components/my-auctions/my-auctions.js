@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
+import moment from 'moment'
 import { navigate } from '@reach/router'
+
 import { useTranslation } from 'libs/langs'
 // import { useMutation, useQuery } from 'react-query'
 
@@ -27,15 +29,29 @@ const MyAuctions = () => {
       setTab(1)
     }
   }, [modules])
+  const renderStatus = (auction) => {
+    if (
+      +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
+        +moment() ||
+      auction?.['awarded_to']?.uuid
+    ) {
+      return 'Ended'
+    } else if (+moment.utc(auction?.['auction_start_date']) > +moment()) {
+      return 'Upcoming'
+    } else return 'Active'
+  }
   const renderCards = () =>
-    dummyData?.map((el, i) => (
+    dummyData?.map((el) => (
       <BiddingCard
         className="md-cell md-cell--6"
-        key={i}
+        key={el?.uuid}
         auctionData={el}
-        status={'Active'}
+        status={renderStatus(el)}
         {...(modules.includes('my-auctions')
-          ? { detailsUrl: () => navigate(`/auctions/my-auction-details/${i}`) }
+          ? {
+            detailsUrl: () =>
+              navigate(`/auctions/my-auction-details/${el.id}`),
+          }
           : {})}
       />
     ))

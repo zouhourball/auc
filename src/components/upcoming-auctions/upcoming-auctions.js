@@ -1,5 +1,7 @@
-import BiddingCard from 'components/bidding-card'
 import { Button } from 'react-md'
+import moment from 'moment'
+
+import BiddingCard from 'components/bidding-card'
 import { useTranslation } from 'libs/langs'
 import { navigate } from '@reach/router'
 
@@ -8,13 +10,25 @@ import './styles.scss'
 const UpcomingAuctions = ({ cards, logged }) => {
   const { t } = useTranslation()
 
+  const renderStatus = (auction) => {
+    if (
+      +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
+        +moment() ||
+      auction?.['awarded_to']?.uuid
+    ) {
+      return 'Ended'
+    } else if (+moment.utc(auction?.['auction_start_date']) > +moment()) {
+      return 'Upcoming'
+    } else return 'Active'
+  }
+
   const renderCards = () =>
-    cards?.map((el, i) => (
+    cards?.map((el) => (
       <BiddingCard
         className={'md-cell md-cell--6'}
-        key={i}
+        key={el?.uuid}
         auctionData={el}
-        status={'Upcoming'}
+        status={renderStatus(el)}
       />
     ))
   return (

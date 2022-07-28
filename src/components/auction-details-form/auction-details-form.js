@@ -12,6 +12,7 @@ import DrawOnMap from 'components/draw-on-map'
 // import MapResult from 'components/map-result'
 
 import { DueDate } from 'components/due-date'
+import { propertyTypeList } from 'components/helpers'
 
 import './style.scss'
 
@@ -177,16 +178,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
           placeholder={'Select type'}
-          menuItems={[
-            {
-              label: 'menu item1',
-              value: 'A',
-            },
-            {
-              label: 'menu item2',
-              value: 'B',
-            },
-          ]}
+          menuItems={propertyTypeList}
           value={propertyType}
           onChange={(propertyType) =>
             onSetFormDetails('propertyType', propertyType)
