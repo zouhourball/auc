@@ -16,6 +16,23 @@ export const filterAuctions = async ({ queryKey }) => {
   return res
 }
 
+// FILTER MY AUCTIONS
+export const getMyAuctions = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/filter/auctions/for-participant-member?auction_filter=${queryKey[2]}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(queryKey[1]),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
 // AWARD AUCTION BY UUID
 export const awardAuction = async ({ uuid, body }) => {
   let res
