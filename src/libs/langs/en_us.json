@@ -138,5 +138,9 @@
   "browse_auctions": "With mazed, you can now browse through thousands of auctions to find",
   "big_purchase": "your next big purchase",
   "explore_more": "Explore more",
-  "day": "day"
+  "day": "day",
+  "days": "D",
+  "hours_auction": "H",
+  "min_auctions": "M",
+  "seconds_auction": "S"
 }
