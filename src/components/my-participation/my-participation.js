@@ -61,12 +61,14 @@ const ParticipatedAuctions = () => {
       </div>
     ))
   return (
-    <div className="auction-list">
-      <div className="auction-list-header">
+    <div className="auction-participation-list">
+      <div className="auction-participation-list-header">
         <div className="title">{t('my_participation')}</div>
-        <div>{renderTabs()}</div>
+        <div className="tabs-list">{renderTabs()}</div>
       </div>
-      <div className="md-grid auction-list-cards">{renderCards()}</div>
+      <div className="md-grid auction-participation-list-cards">
+        {renderCards()}
+      </div>
     </div>
   )
 }
