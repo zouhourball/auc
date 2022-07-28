@@ -7,7 +7,7 @@ import { navigate } from '@reach/router'
 import { useTranslation } from 'libs/langs'
 // import { useMutation } from 'react-query'
 
-// import './style.scss'
+import './style.scss'
 
 const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
   const [agree, setAgree] = useState(false)
@@ -20,17 +20,6 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
   const { t } = useTranslation()
 
   const conditionsActions = [
-    <Checkbox
-      key={0}
-      id="checkbox-read-material-design-spec"
-      name="simple-checkboxes[]"
-      label={t('i_agree_to_the_terms_and_conditions')}
-      checked={agree}
-      onChange={(v) => {
-        setAgree(v)
-      }}
-      className="conditions-dialog-checkbox"
-    />,
     <Button
       key={1}
       flat
@@ -44,13 +33,13 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
     <Button
       key={2}
       flat
-      secondary={agree}
+      primary={agree}
       swapTheming={agree}
       disabled={!agree}
       onClick={() => {
         isPublic
           ? navigate(`auctions/detail/${auctionId}`)
-          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=https://auctions.dev.meeraspace.com/auctions/detail/${auctionId}`)
+          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionId}`)
       }}
       // redirectToPay()
     >
@@ -99,6 +88,18 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
         <li>{t('condition8')}</li>
         <li>{t('condition9')}</li>
       </ul>
+      <Checkbox
+        key={0}
+        id="checkbox-read-material-design-spec"
+        name="simple-checkboxes[]"
+        label={t('i_agree_to_the_terms_and_conditions')}
+        checked={agree}
+        onChange={(v) => {
+          setAgree(v)
+        }}
+        className="conditions-dialog-checkbox"
+      />
+      ,
     </DialogContainer>
   )
 }

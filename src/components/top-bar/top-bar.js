@@ -176,7 +176,14 @@ const TopBar = ({
                 return (
                   <>
                     {linkToNewTab ? (
-                      <Link key={i} to={linkToNewTab}>
+                      <Link
+                        key={i}
+                        to={
+                          logged
+                            ? `/auctions/${linkToNewTab}`
+                            : `/public/${linkToNewTab}`
+                        }
+                      >
                         <Button
                           className={cls(
                             'modules-item',
@@ -202,7 +209,13 @@ const TopBar = ({
                           <ListItem
                             key={1}
                             primaryText={el?.label}
-                            onClick={() => navigate(`${el?.link}`)}
+                            onClick={() =>
+                              navigate(
+                                logged
+                                  ? `/auctions/${el?.link}`
+                                  : `/public/${el?.link}`,
+                              )
+                            }
                           />
                         ))}
                         simplifiedMenu={false}

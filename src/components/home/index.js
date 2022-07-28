@@ -74,13 +74,18 @@ const Home = () => {
           {/* <Auctions path={'/add-auction'} /> */}
           <AuctionsPublic path={'/home'} logged />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
-            <AuctionsList key={i} path={page} />
+            <AuctionsList logged key={i} path={page} />
           ))}
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />
           ))}
           <ParticipatedAuctions path={'/my-participation'} />
-          <AuctionDetail path={'/detail/:auctionId'} />
+          {['/detail/:auctionId', '/detail/:auctionId/public/:callback'].map(
+            (page, i) => (
+              <AuctionDetail key={i} path={page} />
+            ),
+          )}
+          {/* <AuctionDetail path={'/detail/:auctionId'} /> */}
           <MyAuctionDetails path={'/my-auction-details/:auctionId'} />
           <AuctionAsset path={'/auction-asset'} />
         </Router>

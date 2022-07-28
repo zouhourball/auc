@@ -41,6 +41,7 @@ const Auctions = () => {
       }
     },
   })
+
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
@@ -74,9 +75,9 @@ const Auctions = () => {
         documents: documents?.images?.map((el) => {
           return {
             url: el?.url,
-            name: el?.['file_name'],
+            name: el?.options?.metadata?.filename,
             size: el?.size,
-            type: el?.['document_type'],
+            type: el?.type,
           }
         }),
       },

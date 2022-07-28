@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
 import { TextField, Button, Checkbox, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
+import getBids from 'libs/queries/auction/get-bids.gql'
+import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 
 import { dummyBiddersData, dummyData, updateAuctionFormatData } from './helpers'
 
@@ -14,6 +17,7 @@ import { DatePicker } from '@target-energysolutions/date-picker'
 import { useDispatch } from 'react-redux'
 import { addToast } from 'modules/app/actions'
 import ToastMsg from 'components/toast-msg'
+import UserInfoBySubject from 'components/user-info-by-subject'
 
 const MyAuctionDetails = ({ auctionId }) => {
   const { t } = useTranslation()
@@ -57,6 +61,17 @@ const MyAuctionDetails = ({ auctionId }) => {
     })
   }, [auctionDetails])
 
+  const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
+    context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
+    variables: { auctionUUID: '3159502d-7f66-4722-9a19-74319b216468' },
+  })
+  const { data: subNewBid } = useSubscription(subscribeNewBid, {
+    variables: { auctionID: '3159502d-7f66-4722-9a19-74319b216468' },
+    // uri: `${appUrl}/auction/graphql/query`,
+  })
+  useEffect(() => {
+    refetchBids()
+  }, [subNewBid])
   useEffect(() => {
     setPropertyDetails({
       ...dummyBiddersData,
@@ -121,15 +136,19 @@ const MyAuctionDetails = ({ auctionId }) => {
       />
     ))
   const renderBidders = () =>
-    propertyDetails?.bidders?.map((el) => (
-      <div key={el?.id} className="auction-details-table-row">
-        <div>{el?.bidderName}</div>
-        <div>{el?.email}</div>
-        <div>{el?.phoneNumber}</div>
-        <div>{el?.bidDate}</div>
-        <div>{el?.bidTime}</div>
-        <div>{el?.bidAmount}</div>
-      </div>
+    biddersList?.bids?.map((el) => (
+      <UserInfoBySubject key={el?.sub} subject={el?.sub}>
+        {(res) => (
+          <div key={el?.sub} className="auction-details-table-row">
+            <div>{res?.fullName}</div>
+            <div>{res?.email}</div>
+            <div>{res?.phoneMobile}</div>
+            <div>{moment(el?.date * 1000).format('DD MMM YYYY')}</div>
+            <div>{moment(el?.date * 1000).format('hh:mm')}</div>
+            <div>{el?.amount}</div>
+          </div>
+        )}
+      </UserInfoBySubject>
     ))
   const setListImages = (newImages, keyAction, fileId) => {
     if (keyAction === 'delete') {

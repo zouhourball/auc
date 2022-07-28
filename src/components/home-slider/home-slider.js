@@ -1,16 +1,19 @@
 import { Button, FontIcon } from 'react-md'
 import Slider from 'react-slick'
+import moment from 'moment'
 
 import { useCurrentLang, useTranslation } from 'libs/langs'
+import { navigate } from '@reach/router'
 
 import store from 'libs/store'
 
+import AuctionTimer from 'components/auction-timer'
+
 import './style.scss'
 
-const HomeSlider = ({ auctions }) => {
+const HomeSlider = ({ auctions, logged }) => {
   const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
-
   let currentLang = useCurrentLang()
   var settings = {
     dots: false,
@@ -40,16 +43,32 @@ const HomeSlider = ({ auctions }) => {
         <div key={auction.uuid} className="slide-section">
           <img
             src={`${
-              auction?.listing?.images?.find((img) => img?.['cover_image'])?.url
+              auction?.listing?.images?.find((img) => img?.['cover_image'])
+                ? auction?.listing?.images?.find((img) => img?.['cover_image'])
+                    ?.url
+                : auction?.listing?.images?.[0].url
             }?token=${downloadToken}&view=true`}
           />
           <div className="data-section">
             <div className="data-section-title">{t('villa')}</div>
             <div>{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
-            <div>Current Ask: 0</div>
-            <div>02 D : 08 H : 35 M : 10 S</div>
-            <Button flat primary swapTheming className="data-section-button">
+            <div>Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}</div>
+            {+moment.utc(auction?.['auction_start_date']) < +moment() &&
+              +moment.utc(auction?.['auction_end_date']) > +moment() && (
+              <AuctionTimer auctionData={auction} />
+            )}
+            <Button
+              flat
+              primary
+              swapTheming
+              className="data-section-button"
+              onClick={() =>
+                navigate(
+                  `/${logged ? 'auctions' : 'public'}/detail/${auction?.uuid}`,
+                )
+              }
+            >
               Bid Now
             </Button>
           </div>

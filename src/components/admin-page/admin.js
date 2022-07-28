@@ -7,6 +7,7 @@ import { configs } from './helper'
 import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
+import { cleanUp } from '@target-energysolutions/hoc-oauth'
 
 import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
 
@@ -53,6 +54,7 @@ const Admin = () => {
           primary
           onClick={() => {
             setDocumentsDialog(el?.listing?.documents)
+            navigate(`auctions/detail/${el?.uuid}`)
             // console.log(el?.listing?.documents, 'docs')
           }}
         >
@@ -71,7 +73,16 @@ const Admin = () => {
     <div className="admin-page">
       <div className="admin-page-header">
         <div className="admin-page-logo">LOGO</div>
-        <Button flat swapTheming primary className="admin-page-loginBtn">
+        <Button
+          onClick={() => {
+            cleanUp()
+            navigate('/public/home')
+          }}
+          flat
+          swapTheming
+          primary
+          className="admin-page-loginBtn"
+        >
           {t('log_out')}
         </Button>
       </div>
