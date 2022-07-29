@@ -57,6 +57,8 @@ const Auctions = () => {
         property_description: propertyDetails?.description,
         count_bedrooms: +propertyDetails?.bedrooms,
         count_bathrooms: +propertyDetails?.bathrooms,
+        general_location_x: +auctionDetails?.address?.['general_location_x'],
+        general_location_y: +auctionDetails?.address?.['general_location_y'],
         features: propertyDetails?.keyFeatures?.map((el) => {
           return {
             // uuid: uuidv4(),
@@ -75,10 +77,10 @@ const Auctions = () => {
         documents: documents?.images?.map((el) => {
           return {
             url: el?.url,
-            name: el?.options?.metadata?.filename,
+            file_name: `${el?.options?.metadata?.filename}-${el.id}`,
             size: el?.size,
             type: el?.type,
-            idProperty: el.id,
+            // idProperty: el.id,
           }
         }),
       },
