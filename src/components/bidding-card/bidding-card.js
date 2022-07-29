@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
@@ -9,15 +9,14 @@ import { navigate } from '@reach/router'
 import AuctionTimer from 'components/auction-timer'
 
 import './style.scss'
-/* eslint-disable */
-const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
+const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
   const { t } = useTranslation()
-  const [countdown, setCountdown] = useState({
-    d: 0,
-    h: 0,
-    m: 0,
-    s: 0,
-  })
+  // const [countdown, setCountdown] = useState({
+  //   d: 0,
+  //   h: 0,
+  //   m: 0,
+  //   s: 0,
+  // })
 
   //   const startingBid = auctionData?.['starting_price']
 
@@ -98,7 +97,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
         className="bidding-card-background"
       />
       <div className="bidding-card-header">
-        {auctionData.isHighestBid && (
+        {auctionData.last_bid?.['member_subject'] === user?.subject && (
           <div className="highest-bidder">{t('highest_bidder')}</div>
         )}
         <Button icon primary className="save-btn">
@@ -113,7 +112,9 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status }) => {
             </div>
             <div className="description">
               {t('date_start')}{' '}
-              {moment(auctionData?.auction_start_date).format('DD MMM, YYYY')}
+              {moment(auctionData?.['auction_start_date']).format(
+                'DD MMM, YYYY',
+              )}
             </div>
           </div>
         )}

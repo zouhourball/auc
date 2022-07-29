@@ -44,6 +44,39 @@
     font-size: 16px;
   }
 
+  .auction-timer {
+    &.active {
+      .countdown {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #3d3d3e;
+        border-radius: 13px;
+        gap: 18px;
+
+        &-element {
+          .value {
+            color: #3d3d3e;
+            font-size: 48px;
+            font-weight: normal;
+          }
+
+          .label {
+            color: #3d3d3e;
+            font-size: 48px;
+            font-weight: normal;
+          }
+        }
+
+        &-separator {
+          color: #3d3d3e;
+          font-size: 44px;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
   &-card {
     padding: 30px;
     border-radius: 30px;

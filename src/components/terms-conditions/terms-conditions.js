@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
 const TermsCondition = ({ description, termOfSale, disclosure, className }) => {
+  const { t } = useTranslation()
+
   const [currentTab, setCurrentTab] = useState(0)
   const renderContent = () => {
     switch (currentTab) {
@@ -21,19 +24,19 @@ const TermsCondition = ({ description, termOfSale, disclosure, className }) => {
           className={currentTab === 0 ? 'active' : ''}
           onClick={() => setCurrentTab(0)}
         >
-          Description
+          {t('description')}
         </div>
         <div
           className={currentTab === 1 ? 'active' : ''}
           onClick={() => setCurrentTab(1)}
         >
-          Terms of Sale
+          {t('terms')}
         </div>
         <div
           className={currentTab === 2 ? 'active' : ''}
           onClick={() => setCurrentTab(2)}
         >
-          Disclosure
+          {t('disclosure')}
         </div>
       </div>
       <div className="terms-condition-content">{renderContent()}</div>

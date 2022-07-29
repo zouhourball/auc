@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { Router, Redirect, navigate } from '@reach/router'
+import { useTranslation } from 'libs/langs'
 
 import { OauthHelper } from '@target-energysolutions/hoc-oauth'
 // import Auctions from 'components/auctions'
@@ -12,6 +13,8 @@ import Footer from 'components/footer'
 import './style.scss'
 
 const Public = () => {
+  const { t } = useTranslation()
+
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const goTo = (link) => {
     window.location.href = link
@@ -44,7 +47,7 @@ const Public = () => {
         }
       />
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>{t('loading')}</div>}>
         <Router>
           <Redirect from="/" to="/public/home" noThrow />
           {/* <Auctions path={'/add-auction'} /> */}

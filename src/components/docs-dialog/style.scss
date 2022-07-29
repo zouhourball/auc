@@ -1,0 +1,54 @@
+.documents-dialog {
+  width: 420px;
+
+  .md-background--card {
+    border-radius: 8px;
+  }
+
+  .md-dialog {
+    width: 320px;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    &-title {
+      flex-grow: 1;
+      color: #7c7c7c;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .md-icon {
+      color: #5078e1;
+    }
+  }
+
+  &-list {
+    > li {
+      display: flex;
+      justify-content: space-between;
+
+      .file-name {
+        flex-grow: 1;
+        color: #7c7c7c;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+
+    .md-btn {
+      flex-shrink: 1;
+
+      &.md-text {
+        color: #5078e1;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+}

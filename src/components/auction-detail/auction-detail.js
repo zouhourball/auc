@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
-import { useQuery } from 'react-query'
+import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
 
@@ -19,7 +19,10 @@ import ToastMsg from 'components/toast-msg'
 import {
   getAuction,
   auctionProperty,
+  auctionFeaturedProperty,
   checkParticipant,
+  getFeaturedAuction,
+  approveAuction,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -33,8 +36,6 @@ import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
 
-import { dummyDocs } from 'components/admin-page/helper'
-
 import mailIcon from 'images/mail_gray.svg'
 import phoneIcon from 'images/phone_white.svg'
 import icon1 from './icons/bedroom.svg'
@@ -43,7 +44,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin, status }) => {
+const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -51,17 +52,30 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
 
   const [docAction, setDocAction] = useState(false)
   const { data: auctionData, refetch: refetchAuction } = useQuery(
-    ['auctionData', auctionId],
-    getAuction,
+    [logged ? 'auctionData' : 'featAuctionData', auctionId],
+    logged ? getAuction : getFeaturedAuction,
   )
   const { data: auctionPropertyData } = useQuery(
-    ['auctionProperty', auctionId],
-    auctionProperty,
+    [logged ? 'auctionProperty' : 'auctionFeaturedProperty', auctionId],
+    logged ? auctionProperty : auctionFeaturedProperty,
   )
   const { data: isParticipant } = useQuery(
     ['checkParticipant', auctionId],
-    checkParticipant,
+    logged && checkParticipant,
   )
+  const approveMutation = useMutationQuery(approveAuction, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetchAuction()
+      }
+    },
+  })
+  const onUpdateStatus = (status) => {
+    approveMutation.mutate({
+      uuid: auctionId,
+      status,
+    })
+  }
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
@@ -180,7 +194,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--5 md-grid">
+      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
         <div className="auction-details-header md-cell md-cell--12">
           <div className="title">{t('auction_detail')}</div>
           <Button
@@ -201,18 +215,18 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--7 md-grid">
+      <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {isAdmin &&
-            (status ? (
-              <div>{status}</div>
+            (auctionData?.status !== 'Pending' ? (
+              <div>{auctionData?.status}</div>
             ) : (
               <>
                 <Button
                   flat
                   primary
                   swapTheming
-                  onClick={() => setDocAction(false)}
+                  onClick={() => onUpdateStatus('Approved')}
                   className="auction-details-action"
                 >
                   {t('approve')}
@@ -221,7 +235,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
                   flat
                   secondary
                   swapTheming
-                  onClick={() => setDocAction(false)}
+                  onClick={() => onUpdateStatus('Rejected')}
                   className="auction-details-action"
                 >
                   {t('reject')}
@@ -287,7 +301,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer auctionData={auctionData} />
+              <AuctionTimer
+                auctionData={auctionData}
+                node={{ increment: 1.0, bid: 23.0 }}
+              />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
@@ -349,53 +366,58 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           </UserInfoBySubject>
         </div>
         <div className="md-cell md-cell--12">
-          {isAdmin ? (
-            <Button
-              primary
-              flat
-              swapTheming
-              onClick={() => setDocAction(true)}
-              className="auction-details-btn"
-            >
-              {t('documents')}
-            </Button>
-          ) : !isActive ? (
-            <Button
-              flat
-              primary
-              swapTheming
-              className="auction-details-btn"
-              onClick={() =>
-                isParticipant ? setBidDialog(true) : setTermsDialog(true)
-              }
-            >
-              {t('bid_now')}
-            </Button>
-          ) : (
-            <div className="auction-details-card md-cell md-cell--12">
-              <div className="fees-commission-title">{t('fees')}</div>
-              <div className="auction-timer-details">
-                <div className="auction-timer-info">
-                  <div>
-                    <strong>12%</strong>
-                  </div>
-                  <div>{t('buyer')}</div>
-                </div>
-                <div className="sep" />
-                <div className="auction-timer-info">
-                  <div>
-                    <strong>3%</strong>
-                  </div>
-                  <div>{t('comission')}</div>
-                </div>
-              </div>
-            </div>
-          )}
+          {
+            isAdmin ? (
+              <Button
+                primary
+                flat
+                swapTheming
+                onClick={() => setDocAction(true)}
+                className="auction-details-btn"
+              >
+                {t('documents')}
+              </Button>
+            ) : (
+              isActive && (
+                <Button
+                  flat
+                  primary
+                  swapTheming
+                  className="auction-details-btn"
+                  onClick={() =>
+                    isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                  }
+                >
+                  {t('bid_now')}
+                </Button>
+              )
+            )
+            // ) : (
+            //   <div className="auction-details-card md-cell md-cell--12">
+            //     <div className="fees-commission-title">{t('fees')}</div>
+            //     <div className="auction-timer-details">
+            //       <div className="auction-timer-info">
+            //         <div>
+            //           <strong>12%</strong>
+            //         </div>
+            //         <div>{t('buyer')}</div>
+            //       </div>
+            //       <div className="sep" />
+            //       <div className="auction-timer-info">
+            //         <div>
+            //           <strong>3%</strong>
+            //         </div>
+            //         <div>{t('comission')}</div>
+            //       </div>
+            //     </div>
+            //   </div>
+            // )
+          }
         </div>
       </div>
       <TermsCondition
         description={auctionData?.description}
-        termOfSale={'terms of sale'}
+        termOfSale={auctionData?.['terms_of_sale']}
         disclosure={auctionData?.disclosure}
         className="md-cell md-cell--12"
       />
@@ -425,7 +447,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
         <DocumentsContainer
           visible={docAction}
           onHide={() => setDocAction(false)}
-          data={dummyDocs}
+          data={auctionData?.listing?.documents}
         />
       )}
       {termsDialog && (

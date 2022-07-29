@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
+import { navigate } from '@reach/router'
 // import { v4 as uuidv4 } from 'uuid'
 
 import { addToast } from 'modules/app/actions'
@@ -24,32 +25,29 @@ const Auctions = () => {
       if (!res.error) {
         dispatch(
           addToast(
-            <ToastMsg text={res.message || 'success'} type="success" />,
+            <ToastMsg text={'Auction published successfully'} type="success" />,
             'hide',
           ),
         )
+        navigate('/auctions')
       } else {
         dispatch(
           addToast(
-            <ToastMsg
-              text={res.error?.body?.message || 'error'}
-              type="error"
-            />,
+            <ToastMsg text={'Something went wrong'} type="error" />,
             'hide',
           ),
         )
       }
     },
   })
-
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
         title: auctionDetails?.title,
         address: auctionDetails?.address,
         country_id: +auctionDetails?.country,
-        city_id: 1,
-        property_type: 4,
+        city_id: +auctionDetails?.city,
+        property_type: +auctionDetails?.propertyType,
         auction_start_date: moment(auctionDetails?.startDate).format(),
         auction_end_date: moment(auctionDetails?.endDate).format(),
         starting_price: +auctionDetails?.startingPrice,
@@ -80,6 +78,7 @@ const Auctions = () => {
             name: el?.options?.metadata?.filename,
             size: el?.size,
             type: el?.type,
+            idProperty: el.id,
           }
         }),
       },
