@@ -38,6 +38,47 @@
     padding: 40px;
     color: #fff;
 
+    .auction-timer {
+      padding: 2px 6px;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      background: transparent;
+      font-weight: 500;
+
+      &.active {
+        background: none;
+        box-shadow: none;
+      }
+
+      .countdown {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        gap: 8px;
+
+        &-element {
+          .value {
+            color: #fff;
+            font-size: 20px;
+            font-weight: normal;
+          }
+
+          .label {
+            color: #fff;
+            font-size: 20px;
+            font-weight: normal;
+          }
+        }
+
+        &-separator {
+          color: #fff;
+          font-size: 20px;
+          font-weight: normal;
+        }
+      }
+    }
+
     .countdown-container {
       padding: 6px 10px;
       border: #fff solid 1px;

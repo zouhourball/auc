@@ -194,7 +194,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--5 md-grid">
+      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
         <div className="auction-details-header md-cell md-cell--12">
           <div className="title">{t('auction_detail')}</div>
           <Button
@@ -215,7 +215,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--7 md-grid">
+      <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {isAdmin &&
             (auctionData?.status !== 'Pending' ? (
@@ -301,7 +301,10 @@ const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer auctionData={auctionData} />
+              <AuctionTimer
+                auctionData={auctionData}
+                node={{ increment: 1.0, bid: 23.0 }}
+              />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>

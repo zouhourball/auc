@@ -1,5 +1,6 @@
 import { Button, DialogContainer, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import './style.scss'
 
 const DocumentsContainer = ({ data, visible, onHide }) => {
   const { t } = useTranslation()
@@ -7,16 +8,22 @@ const DocumentsContainer = ({ data, visible, onHide }) => {
   const renderDocs = () =>
     data?.map((el, i) => (
       <li key={i}>
-        {i + 1} -{el?.fileName}
-        <Button>{t('view')}</Button>
-        <Button>{t('download')}</Button>
+        <div className="file-name">
+          {i + 1} -{el?.fileName}
+        </div>
+        <Button className="viewBtn">{t('view')}</Button>
+        <Button className="downloadBtn">{t('download')}</Button>
       </li>
     ))
   return (
-    <DialogContainer visible={visible}>
-      <h1>{t('documents')}</h1>
-      <FontIcon onClick={onHide}>close</FontIcon>
-      <ol>{renderDocs()}</ol>
+    <DialogContainer visible={visible} dialogClassName="documents-dialog">
+      <div className="documents-dialog-header">
+        <div className="documents-dialog-header-title">{t('documents')}</div>
+        <FontIcon className="documents-dialog-header-icon" onClick={onHide}>
+          highlight_off
+        </FontIcon>
+      </div>
+      <ol className="documents-dialog-list">{renderDocs()}</ol>
     </DialogContainer>
   )
 }

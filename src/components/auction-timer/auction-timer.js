@@ -5,7 +5,7 @@ import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const AuctionTimer = ({ auctionData, isActive = true }) => {
+const AuctionTimer = ({ auctionData, isActive = true, node }) => {
   const { t } = useTranslation()
   const [countdown, setCountdown] = useState({
     d: 0,
@@ -28,25 +28,40 @@ const AuctionTimer = ({ auctionData, isActive = true }) => {
 
   return (
     <div className={`auction-timer ${isActive ? 'active' : ''}`}>
-      <div className="countdown-element">
-        <span className="value">{countdown.d}</span>{' '}
-        <span className="label">{t('days')}</span>
+      <div className="countdown">
+        <div className="countdown-element">
+          <span className="value">{countdown.d}</span>{' '}
+          <span className="label">{t('days')}</span>
+        </div>
+        <div className="countdown-separator">:</div>
+        <div className="countdown-element">
+          <span className="value">{countdown.h}</span>{' '}
+          <span className="label">{t('hours_auction')}</span>
+        </div>
+        <div className="countdown-separator">:</div>
+        <div className="countdown-element">
+          <span className="value">{countdown.m}</span>{' '}
+          <span className="label">{t('min_auctions')}</span>
+        </div>
+        <div className="countdown-separator">:</div>
+        <div className="countdown-element">
+          <span className="value">{countdown.s}</span>{' '}
+          <span className="label">{t('seconds_auction')}</span>
+        </div>
       </div>
-      <div className="countdown-separator">:</div>
-      <div className="countdown-element">
-        <span className="value">{countdown.h}</span>{' '}
-        <span className="label">{t('hours_auction')}</span>
-      </div>
-      <div className="countdown-separator">:</div>
-      <div className="countdown-element">
-        <span className="value">{countdown.m}</span>{' '}
-        <span className="label">{t('min_auctions')}</span>
-      </div>
-      <div className="countdown-separator">:</div>
-      <div className="countdown-element">
-        <span className="value">{countdown.s}</span>{' '}
-        <span className="label">{t('seconds_auction')}</span>
-      </div>
+      {node && (
+        <div className="auction-info">
+          <div className="auction-info-details">
+            <div className="price blueText">{node?.bid} AED</div>
+            <div className="label">My Bid</div>
+          </div>
+          <div className="sep"></div>
+          <div className="auction-info-details">
+            <div className="price">{node?.increment} AED</div>
+            <div className="label">Minimum Increment</div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

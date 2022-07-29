@@ -112,7 +112,9 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
             </div>
             <div className="description">
               {t('date_start')}{' '}
-              {moment(auctionData?.['auction_start_date']).format('DD MMM, YYYY')}
+              {moment(auctionData?.['auction_start_date']).format(
+                'DD MMM, YYYY',
+              )}
             </div>
           </div>
         )}

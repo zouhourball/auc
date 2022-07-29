@@ -16,7 +16,7 @@ export const filterAuctions = async ({ queryKey }) => {
       {
         method: 'POST',
         body: JSON.stringify(queryKey[2]),
-      }
+      },
     )
   } catch (e) {
     res = { error: e }
