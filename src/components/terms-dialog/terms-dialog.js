@@ -87,7 +87,6 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
         }}
         className="conditions-dialog-checkbox"
       />
-      ,
     </DialogContainer>
   )
 }
