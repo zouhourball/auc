@@ -9,14 +9,13 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
 
   const {
     description,
-    keyFeatures,
+    keyFeatures = [],
     suggestedKeyFeatures,
-    images,
+    images = [],
     bedrooms,
     bathrooms,
     area,
   } = propertyDetails
-
   const [keyFeature, setKeyFeature] = useState()
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
 

@@ -9,7 +9,7 @@ import { useQuery } from 'react-query'
 import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
 import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
 
-const AuctionsPublic = ({ logged }) => {
+const AuctionsPublic = ({ logged, user }) => {
   //
 
   const { data: featAuctions } = useQuery(
@@ -24,7 +24,11 @@ const AuctionsPublic = ({ logged }) => {
   return (
     <>
       <HomeSlider logged={logged} auctions={featAuctions?.results} />
-      <UpcomingAuctions cards={upcomingAuctionsData?.results} logged={logged} />
+      <UpcomingAuctions
+        cards={upcomingAuctionsData?.results}
+        logged={logged}
+        user={user}
+      />
     </>
   )
 }

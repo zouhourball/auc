@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
@@ -6,18 +6,17 @@ import moment from 'moment'
 import store from 'libs/store'
 
 import { navigate } from '@reach/router'
+import AuctionTimer from 'components/auction-timer'
 
 import './style.scss'
-import AuctionTimer from 'components/auction-timer'
-/* eslint-disable */
-const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
+const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
   const { t } = useTranslation()
-  const [countdown, setCountdown] = useState({
-    d: 0,
-    h: 0,
-    m: 0,
-    s: 0,
-  })
+  // const [countdown, setCountdown] = useState({
+  //   d: 0,
+  //   h: 0,
+  //   m: 0,
+  //   s: 0,
+  // })
 
   //   const startingBid = auctionData?.['starting_price']
 
@@ -98,7 +97,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
         className="bidding-card-background"
       />
       <div className="bidding-card-header">
-        {auctionData.isHighestBid && (
+        {auctionData.last_bid?.['member_subject'] === user?.subject && (
           <div className="highest-bidder">{t('highest_bidder')}</div>
         )}
         <Button icon primary className="save-btn">
@@ -106,18 +105,20 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
         </Button>
       </div>
       <div className="bidding-card-footer">
-        {status === 'Upcoming' && (
+        {status !== 'active' && (
           <div className="bidding-card-info">
             <div className="title">
               {auctionData?.listing?.title} in {auctionData.location}
             </div>
             <div className="description">
               {t('date_start')}{' '}
-              {moment(auctionData?.auction_start_date).format('DD MMM, YYYY')}
+              {moment(auctionData?.['auction_start_date']).format(
+                'DD MMM, YYYY',
+              )}
             </div>
           </div>
         )}
-        {status === 'Active' && (
+        {status === 'active' && (
           <div className="bidding-card-info">
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
@@ -126,7 +127,7 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, live }) => {
               {t('current_ask')}{' '}
               {auctionData?.['last_bid']?.['bid_amount'] || 0}
             </div>
-            {live && <AuctionTimer auctionData={auctionData} />}
+            {status === 'active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         <Button flat primary swapTheming className="bidding-card-btn">
