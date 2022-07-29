@@ -7,7 +7,7 @@ import moment from 'moment'
 // import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
 
-import { getGovernorates, getWilayats } from 'libs/api/auctions-api'
+import { getCountry, getCity } from 'libs/api/auctions-api'
 import DrawOnMap from 'components/draw-on-map'
 // import MapResult from 'components/map-result'
 
@@ -26,9 +26,11 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [endTime, setEndTime] = useState(moment())
   const [addressView, setAddressView] = useState(false)
 
-  const { data: getGov } = useQuery(['getGovernorates'], getGovernorates)
-
-  const { data: getWila } = useQuery(['getWilayats'], getWilayats)
+  const { data: getCountryList } = useQuery(['getCountry'], getCountry)
+  const { data: getCityList } = useQuery(
+    ['getCity', auctionDetails?.country],
+    getCity,
+  )
 
   // const { data: allCountryStateCities } = useQueryHook(
   //   allCountryStateCitiesGql,
@@ -53,8 +55,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
 
   const renderCountry = () => {
     let arrayName = []
-    if (getWila) {
-      arrayName = getWila?.results?.map((ac) => {
+    if (getCountryList) {
+      arrayName = getCountryList?.results?.map((ac) => {
         return {
           label: ac.name_en,
           value: `${ac.id}`,
@@ -63,10 +65,11 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       return arrayName
     }
   }
+
   const renderCity = () => {
     let arrayName = []
-    if (getGov) {
-      arrayName = getGov?.results?.map((ac) => {
+    if (getCityList) {
+      arrayName = getCityList?.results?.map((ac) => {
         return {
           label: ac.name_en,
           value: `${ac.id}`,
