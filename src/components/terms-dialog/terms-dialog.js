@@ -59,7 +59,7 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
     >
       <ul className="conditions-list">
         <li>
-          {t('part')}
+          {t('term1')}
           <ul className="conditions-list-sublist">
             <li>{t('term2')}</li>
             <li>{t('term3')}</li>
