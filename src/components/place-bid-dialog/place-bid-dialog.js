@@ -20,19 +20,28 @@ const PlaceBidDialog = ({
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
+      actions={[
+        <Button key={1} flat onClick={onClickCancel}>
+          {t('cancel')}
+        </Button>,
+        <Button key={2} flat primary swapTheming onClick={onclickPlace}>
+          {t('place_bid_button')}
+        </Button>,
+      ]}
     >
       <div className="header">
-        <h1>{t('place_bid')}</h1>
-        <h1>{t('add_bidding_amount')}</h1>
+        <div className="title">{t('place_bid')}</div>
+        <div className="subTitle">{t('add_bidding_amount')}</div>
       </div>
 
       <div className="placeBid">
         <TextField
-          className="placeBid-TextField"
+          className={`placeBid-TextField  ${
+            bidAmount < lastBidAmount + incrementPrice ? 'error' : ''
+          }`}
           placeholder={t('add_bidding_amount_placeholder')}
           value={bidAmount}
           onChange={setBidAmount}
-          block
           rightIcon={<span>AED</span>}
           type="number"
           error={bidAmount < lastBidAmount + incrementPrice}
@@ -41,21 +50,14 @@ const PlaceBidDialog = ({
       </div>
       <div className="amounts">
         <div className="lastBid">
-          <h5>{lastBidAmount} AED</h5>
-          <span>{t('last_bid_amount')}</span>
+          <div className="title">{lastBidAmount} AED</div>
+          <div className="value">{t('last_bid_amount')}</div>
         </div>
+        <div className="sep" />
         <div className="increment">
-          <h5> {incrementPrice} AED</h5>
-          <span>{t('increment_price')}</span>
+          <div className="title"> {incrementPrice} AED</div>
+          <div className="value">{t('increment_price')}</div>
         </div>
-      </div>
-      <div className="actions">
-        <Button flat onClick={onClickCancel}>
-          {t('cancel')}
-        </Button>
-        <Button flat primary onClick={onclickPlace}>
-          {t('place_bid_button')}
-        </Button>
       </div>
     </DialogContainer>
   )
