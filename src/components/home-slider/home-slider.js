@@ -71,7 +71,7 @@ const HomeSlider = ({ auctions, logged }) => {
                 )
               }
             >
-              Bid Now
+              {t('bid_now')}
             </Button>
           </div>
         </div>

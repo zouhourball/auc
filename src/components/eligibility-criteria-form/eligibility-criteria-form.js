@@ -58,7 +58,7 @@ const EligibilityCriteriaForm = ({
           </label>
           <TextField
             id="age-requirement"
-            placeholder={'Enter number of bedrooms'}
+            placeholder={t('bedrooms_number_placeholder')}
             value={eligibilityCriteria?.ageRequirement}
             onChange={(value) =>
               setEligibilityCriteria({

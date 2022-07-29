@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import { useDropzone } from 'react-dropzone'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { cls } from 'reactutils'
@@ -239,7 +240,7 @@ const UploadImages = ({
       >
         {cover && (
           <div className="cover">
-            <div className="button-cover">Set As Cover</div>
+            <div className="button-cover">{t('set_cover')}</div>
           </div>
         )}
         {iconDownload && (
@@ -442,7 +443,7 @@ const UploadImages = ({
                 setFileSrc(null)
               }}
             >
-              close
+              {t('close')}
             </Button>
           </div>
         }
