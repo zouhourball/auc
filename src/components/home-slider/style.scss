@@ -83,4 +83,75 @@
       text-transform: capitalize;
     }
   }
+
+  .auction-timer {
+    padding: 10px 0;
+    background: transparent;
+    font-weight: 500;
+
+    &.active {
+      background: none;
+      box-shadow: none;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: space-evenly;
+      color: #3d3d3e;
+      font-size: 48px;
+    }
+
+    &-details {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      .sep {
+        width: 1px;
+        height: 35px;
+        background: #d6d1d1;
+      }
+    }
+
+    &-info {
+      flex: 1;
+      color: #7c7c7c;
+      font-size: 25px;
+      text-align: center;
+
+      strong {
+        color: #3d3d3e;
+        font-size: 30px;
+        font-weight: 700;
+      }
+    }
+
+    .countdown {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+
+      &-element {
+        .value {
+          color: #fff;
+          font-size: 25px;
+          font-weight: normal;
+        }
+
+        .label {
+          color: #fff;
+          font-size: 25px;
+          font-weight: normal;
+        }
+      }
+
+      &-separator {
+        color: #fff;
+        font-size: 35px;
+        font-weight: normal;
+      }
+    }
+  }
 }

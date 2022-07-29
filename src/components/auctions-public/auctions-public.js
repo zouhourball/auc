@@ -24,7 +24,11 @@ const AuctionsPublic = ({ logged, user }) => {
   return (
     <>
       <HomeSlider logged={logged} auctions={featAuctions?.results} />
-      <UpcomingAuctions cards={upcomingAuctionsData?.results} logged={logged} user={user} />
+      <UpcomingAuctions
+        cards={upcomingAuctionsData?.results}
+        logged={logged}
+        user={user}
+      />
     </>
   )
 }
