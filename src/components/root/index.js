@@ -70,7 +70,6 @@ const Main = () => {
     <Router>
       <Public path={'/public/*'} />
       <Private path={'/*'} />
-      <Admin path={'/admin'} />
     </Router>
   )
 }
@@ -82,6 +81,7 @@ const Private = withOAuth()(({ ssoCallback }) => {
     <Router>
       <SSO path="/sso/callback" ssoCallback={ssoCallback} />
       <App path="/*" langs={langs} />
+      <Admin path={'/admin'} />
     </Router>
   )
 })

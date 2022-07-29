@@ -2,17 +2,19 @@ import { Button, FontIcon } from 'react-md'
 import Slider from 'react-slick'
 import moment from 'moment'
 
-import { useCurrentLang, useTranslation } from 'libs/langs'
+import { useCurrentLang } from 'libs/langs'
 import { navigate } from '@reach/router'
 
 import store from 'libs/store'
 
 import AuctionTimer from 'components/auction-timer'
 
+// import { propertyTypeList } from 'components/helpers'
+
 import './style.scss'
 
 const HomeSlider = ({ auctions, logged }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
   let currentLang = useCurrentLang()
   var settings = {
@@ -50,7 +52,7 @@ const HomeSlider = ({ auctions, logged }) => {
             }?token=${downloadToken}&view=true`}
           />
           <div className="data-section">
-            <div className="data-section-title">{t('villa')}</div>
+            {/* <div className="data-section-title">{propertyTypeList[]}</div> */}
             <div>{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
             <div>Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}</div>

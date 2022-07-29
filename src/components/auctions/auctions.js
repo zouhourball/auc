@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
+import { navigate } from '@reach/router'
 // import { v4 as uuidv4 } from 'uuid'
 
 import { addToast } from 'modules/app/actions'
@@ -24,24 +25,21 @@ const Auctions = () => {
       if (!res.error) {
         dispatch(
           addToast(
-            <ToastMsg text={res.message || 'success'} type="success" />,
+            <ToastMsg text={'Auction published successfully'} type="success" />,
             'hide',
           ),
         )
+        navigate('/auctions')
       } else {
         dispatch(
           addToast(
-            <ToastMsg
-              text={res.error?.body?.message || 'error'}
-              type="error"
-            />,
+            <ToastMsg text={'Something went wrong'} type="error" />,
             'hide',
           ),
         )
       }
     },
   })
-
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
@@ -68,8 +66,10 @@ const Auctions = () => {
         }),
         images: propertyDetails?.images?.map((el) => {
           return {
-            ...el,
-            cover_image: el?.cover,
+            url: el?.url,
+            name: el?.options?.metadata?.filename,
+            size: el?.size,
+            type: el?.type,
           }
         }),
         documents: documents?.images?.map((el) => {
@@ -78,6 +78,7 @@ const Auctions = () => {
             name: el?.options?.metadata?.filename,
             size: el?.size,
             type: el?.type,
+            idProperty: el.id,
           }
         }),
       },
