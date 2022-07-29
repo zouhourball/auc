@@ -44,4 +44,36 @@
       font-weight: 700;
     }
   }
+
+  .auction-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 20px;
+
+    .sep {
+      width: 1px;
+      height: 50px;
+      background: #d6d1d1;
+    }
+
+    .price {
+      color: #3d3d3e;
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+
+      &.blueText {
+        color: #5078e1;
+      }
+    }
+
+    .label {
+      color: #7c7c7c;
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
 }

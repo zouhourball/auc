@@ -43,7 +43,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin, status }) => {
+const AuctionDetail = ({ auctionId, isAdmin = true, status }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -180,7 +180,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--5 md-grid">
+      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
         <div className="auction-details-header md-cell md-cell--12">
           <div className="title">{t('auction_detail')}</div>
           <Button
@@ -201,7 +201,7 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--7 md-grid">
+      <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {isAdmin &&
             (status ? (
@@ -287,7 +287,10 @@ const AuctionDetail = ({ auctionId, isAdmin, status }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer auctionData={auctionData} />
+              <AuctionTimer
+                auctionData={auctionData}
+                node={{ increment: 1.0, bid: 23.0 }}
+              />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
