@@ -44,8 +44,8 @@ const PlaceBidDialog = ({
           onChange={setBidAmount}
           rightIcon={<span>AED</span>}
           type="number"
-          error={bidAmount < lastBidAmount + incrementPrice}
-          errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
+          // error={bidAmount < lastBidAmount + incrementPrice}
+          // errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
         />
       </div>
       <div className="amounts">

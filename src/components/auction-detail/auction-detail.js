@@ -26,6 +26,8 @@ import {
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+
 import placeBid from 'libs/queries/auction/place-bid.gql'
 
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
@@ -150,12 +152,12 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
     variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
   })
-  // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
-  //   variables: { auctionID: auctionId },
-  // })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
+  })
   useEffect(() => {
     refetchAuction()
-  }, [subNewBid])
+  }, [subNewBid, timeExtension])
 
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
@@ -185,8 +187,6 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
     ]).fromNow()
   }
   const renderKeyFeatures = () =>
-  // .filter((el) => el?.['availability_status'])
-
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
         <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
@@ -200,7 +200,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
           <Button
             flat
             primary
-            className=""
+            className="view-map-btn"
             iconClassName="mdi mdi-map-marker-outline"
           >
             {t('view_map')}

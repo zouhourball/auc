@@ -6,6 +6,7 @@ import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import { dummyBiddersData, dummyData, updateAuctionFormatData } from './helpers'
 
@@ -63,15 +64,19 @@ const MyAuctionDetails = ({ auctionId }) => {
 
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
-    variables: { auctionUUID: '3159502d-7f66-4722-9a19-74319b216468' },
+    variables: { auctionUUID: auctionId },
   })
   const { data: subNewBid } = useSubscription(subscribeNewBid, {
-    variables: { auctionID: '3159502d-7f66-4722-9a19-74319b216468' },
+    variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
+  })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
   })
   useEffect(() => {
     refetchBids()
-  }, [subNewBid])
+  }, [subNewBid, timeExtension])
+
   useEffect(() => {
     setPropertyDetails({
       ...dummyBiddersData,
