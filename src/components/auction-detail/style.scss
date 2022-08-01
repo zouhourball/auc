@@ -168,6 +168,21 @@
   }
 }
 
+.btn-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .auction-highest-btn {
+    flex-grow: 1;
+    background-color: #78deb3;
+    color: #fff;
+    height: 80px;
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 25px;
+  }
+}
+
 .key-features {
   margin: 8px 0 !important;
   padding: 30px;
