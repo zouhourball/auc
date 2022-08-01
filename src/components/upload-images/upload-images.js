@@ -102,7 +102,7 @@ const UploadImages = ({
   })
   const onRemove = (index, file) => {
     if (onRemoveFile) {
-      onRemoveFile(index, file)
+      onRemoveFile(files, 'delete', file?.url)
     } else {
       const array = files
       array.splice(index, 1)
@@ -261,7 +261,14 @@ const UploadImages = ({
             </FontIcon>
           )}
         {iconDelete && (
-          <FontIcon icon onClick={() => onRemove(index, file)} className="btn">
+          <FontIcon
+            icon
+            onClick={(e) => {
+              e.stopPropagation()
+              onRemove(index, file)
+            }}
+            className="btn"
+          >
             delete
           </FontIcon>
         )}
