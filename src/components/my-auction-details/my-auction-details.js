@@ -6,6 +6,7 @@ import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import { dummyData, updateAuctionFormatData } from './helpers'
 
@@ -71,9 +72,13 @@ const MyAuctionDetails = ({ auctionId }) => {
     variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
   })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
+  })
   useEffect(() => {
     refetchBids()
-  }, [subNewBid])
+  }, [subNewBid, timeExtension])
+
   // useEffect(() => {
   //   setPropertyDetails({
   //     ...dummyBiddersData,

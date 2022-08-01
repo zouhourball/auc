@@ -137,6 +137,14 @@
     font-size: 25px;
     font-weight: 700;
   }
+
+  .view-map-btn {
+    font-size: 22px;
+
+    .md-icon-text {
+      font-weight: 600;
+    }
+  }
 }
 
 .owner-card {
@@ -165,6 +173,22 @@
     .name {
       color: #3d3d3e;
     }
+  }
+}
+
+.btn-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .auction-highest-btn {
+    flex-grow: 1;
+    height: 80px;
+    border-radius: 18px;
+    background-color: #78deb3;
+    color: #fff;
+    font-size: 25px;
+    font-weight: bold;
   }
 }
 

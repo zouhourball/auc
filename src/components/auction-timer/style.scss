@@ -76,4 +76,33 @@
       text-align: center;
     }
   }
+
+  &.inactive {
+    background: #fff;
+
+    .countdown {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      border: solid 2px #000;
+      border-radius: 13px;
+      gap: 18px;
+
+      .value {
+        color: #3d3d3e;
+        font-size: 40px;
+      }
+
+      .label {
+        color: #3d3d3e;
+        font-size: 40px;
+      }
+
+      &-separator {
+        color: #3d3d3e;
+        font-size: 40px;
+      }
+    }
+  }
 }

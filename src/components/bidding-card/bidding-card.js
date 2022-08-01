@@ -87,7 +87,7 @@ const BiddingCard = ({
         )}
       </div>
       <div className="bidding-card-footer">
-        {status !== 'active' && (
+        {status !== 'Active' && (
           <div className="bidding-card-info">
             <div className="title">
               {auctionData?.listing?.title} in {auctionData.location}
@@ -100,7 +100,7 @@ const BiddingCard = ({
             </div>
           </div>
         )}
-        {status === 'active' && (
+        {status === 'Active' && (
           <div className="bidding-card-info">
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
@@ -109,7 +109,7 @@ const BiddingCard = ({
               {t('current_ask')}{' '}
               {auctionData?.['last_bid']?.['bid_amount'] || 0}
             </div>
-            {status === 'active' && <AuctionTimer auctionData={auctionData} />}
+            {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         <Button
