@@ -64,14 +64,14 @@ const MyAuctionDetails = ({ auctionId }) => {
 
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
-    variables: { auctionUUID: '7d35ae96-6380-46ed-a25f-b3e4a468c34d' },
+    variables: { auctionUUID: auctionId },
   })
   const { data: subNewBid } = useSubscription(subscribeNewBid, {
-    variables: { auctionID: '7d35ae96-6380-46ed-a25f-b3e4a468c34d' },
+    variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
   })
   const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
-    variables: { auctionID: '7d35ae96-6380-46ed-a25f-b3e4a468c34d' },
+    variables: { auctionID: auctionId },
   })
   useEffect(() => {
     refetchBids()

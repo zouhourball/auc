@@ -153,9 +153,8 @@ const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
     // uri: `${appUrl}/auction/graphql/query`,
   })
   const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
-    variables: { auctionID: '7d35ae96-6380-46ed-a25f-b3e4a468c34d' },
+    variables: { auctionID: auctionId },
   })
-
   useEffect(() => {
     refetchAuction()
   }, [subNewBid, timeExtension])
