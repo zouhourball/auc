@@ -303,6 +303,18 @@ export const saveAsFav = async ({ uuid }) => {
   }
   return res
 }
+export const updateImgs = async ({ uuid, body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/images`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // GET SAVED AUCTIONS
 export const savedAuctions = async () => {
   let res
