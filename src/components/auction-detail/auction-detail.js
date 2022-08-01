@@ -177,7 +177,6 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
     ))
-
   const renderDays = () => {
     let date = moment(auctionData?.['created_date'])
     return moment([
@@ -305,7 +304,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>14</strong>
+                <strong>{auctionData?.['number_of_bids'] || 0}</strong>
               </div>
               <div>{t('number_bids')}</div>
             </div>
