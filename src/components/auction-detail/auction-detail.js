@@ -185,8 +185,6 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
     ]).fromNow()
   }
   const renderKeyFeatures = () =>
-  // .filter((el) => el?.['availability_status'])
-
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
         <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
@@ -200,7 +198,7 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
           <Button
             flat
             primary
-            className=""
+            className="view-map-btn"
             iconClassName="mdi mdi-map-marker-outline"
           >
             {t('view_map')}
