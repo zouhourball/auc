@@ -9,6 +9,33 @@
     background: #e7ebf5;
     box-shadow: 0 0 0 3px #527bde inset, 0 3px 6px 0 rgba(0, 0, 0, 0.18);
   }
+  &.inactive {
+    background: #fff;
+
+    .countdown {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: center;
+      border: solid 2px #000;
+      border-radius: 13px;
+      padding: 8px 0;
+
+      .value {
+        font-size: 40px;
+        color: #3d3d3e;
+      }
+      .label {
+        font-size: 40px;
+        color: #3d3d3e;
+      }
+
+      &-separator {
+        font-size: 40px;
+        color: #3d3d3e;
+      }
+    }
+  }
 
   .timer {
     display: flex;

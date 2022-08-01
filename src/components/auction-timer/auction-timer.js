@@ -5,7 +5,7 @@ import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const AuctionTimer = ({ auctionData, isActive = true, node }) => {
+const AuctionTimer = ({ auctionData, node, user }) => {
   const { t } = useTranslation()
   const [countdown, setCountdown] = useState({
     d: 0,
@@ -27,7 +27,13 @@ const AuctionTimer = ({ auctionData, isActive = true, node }) => {
   }, [auctionData])
 
   return (
-    <div className={`auction-timer ${isActive ? 'active' : ''}`}>
+    <div
+      className={`auction-timer ${
+        auctionData.last_bid?.['member_subject'] === user?.subject
+          ? 'active'
+          : 'inactive'
+      }`}
+    >
       <div className="countdown">
         <div className="countdown-element">
           <span className="value">{countdown.d}</span>{' '}
@@ -52,12 +58,28 @@ const AuctionTimer = ({ auctionData, isActive = true, node }) => {
       {node && (
         <div className="auction-info">
           <div className="auction-info-details">
-            <div className="price blueText">{node?.bid} AED</div>
-            <div className="label">My Bid</div>
+            {auctionData.last_bid?.['member_subject'] === user?.subject ? (
+              <>
+                {' '}
+                <div className="price blueText">
+                  {auctionData?.['last_bid']?.['bid_amount']} AED
+                </div>
+                <div className="label">My Bid</div>
+              </>
+            ) : (
+              <>
+                <div className="price blueText">
+                  {auctionData?.['current_price']} AED
+                </div>
+                <div className="label">Current Price</div>
+              </>
+            )}
           </div>
           <div className="sep"></div>
           <div className="auction-info-details">
-            <div className="price">{node?.increment} AED</div>
+            <div className="price">
+              {auctionData?.['incremental_price']} AED
+            </div>
             <div className="label">Minimum Increment</div>
           </div>
         </div>
