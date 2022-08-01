@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
-import { TextField, Button, Checkbox, FontIcon } from 'react-md'
+import { TextField, Button, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
@@ -8,9 +8,8 @@ import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
-import { dummyBiddersData, dummyData, updateAuctionFormatData } from './helpers'
+import { dummyData, updateAuctionFormatData } from './helpers'
 
-import './style.scss'
 import { useQuery, useMutation } from 'react-query'
 import { getAuction, updateAuction } from 'libs/api/auctions-api'
 import moment from 'moment'
@@ -20,13 +19,15 @@ import { addToast } from 'modules/app/actions'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
 
+import './style.scss'
+
 const MyAuctionDetails = ({ auctionId }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const [keyFeature, setKeyFeature] = useState()
-  const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
-  const [propertyDetails, setPropertyDetails] = useState({})
+  // const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
+  // const [propertyDetails, setPropertyDetails] = useState({})
   const [showMore, setShowMore] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [auctionEditData, setAuctionEditData] = useState({
@@ -59,6 +60,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       startingPrice: auctionDetails?.['starting_price'],
       incrementalPrice: auctionDetails?.['incremental_price'],
       description: auctionDetails?.description,
+      keyFeatures: auctionDetails?.listing?.features?.map((el) => el?.feature),
     })
   }, [auctionDetails])
 
@@ -77,56 +79,56 @@ const MyAuctionDetails = ({ auctionId }) => {
     refetchBids()
   }, [subNewBid, timeExtension])
 
-  useEffect(() => {
-    setPropertyDetails({
-      ...dummyBiddersData,
-    })
-  }, [dummyBiddersData])
+  // useEffect(() => {
+  //   setPropertyDetails({
+  //     ...dummyBiddersData,
+  //   })
+  // }, [dummyBiddersData])
 
   const onSetFormDetails = (property, value) => {
-    setPropertyDetails({ ...propertyDetails, [property]: value })
+    setAuctionEditData({ ...auctionEditData, [property]: value })
   }
   const handleRemoveKey = (key) => {
     onSetFormDetails(
       'keyFeatures',
-      propertyDetails?.keyFeatures.filter((el) => el?.label !== key?.label),
+      auctionEditData?.keyFeatures.filter((el) => el?.name !== key?.name),
     )
   }
   const downloadToken = store?.getState()?.app?.dlToken
 
-  const renderSuggestedKeys = () => {
-    return propertyDetails?.suggestedKeyFeatures?.map((key, i) => (
-      <Checkbox
-        key={i}
-        id={key?.label}
-        checked={
-          !!propertyDetails?.keyFeatures?.find((el) => el.label === key.label)
-        }
-        onChange={(v) =>
-          v
-            ? onSetFormDetails('keyFeatures', [
-              ...propertyDetails?.keyFeatures,
-              { label: key.label, status: 'new' },
-            ])
-            : handleRemoveKey(key)
-        }
-        className="md-cell md-cell--3"
-        label={key?.label}
-      />
-    ))
-  }
+  // const renderSuggestedKeys = () => {
+  //   return auctionEditData?.keyFeatures?.map((key, i) => (
+  //     <Checkbox
+  //       key={i}
+  //       id={key?.uuid}
+  //       checked={
+  //         !!auctionEditData?.keyFeatures?.find((el) => el.name === key.name)
+  //       }
+  //       onChange={(v) =>
+  //         v
+  //           ? onSetFormDetails('keyFeatures', [
+  //             ...auctionEditData?.keyFeatures,
+  //             { name: key.name, status: 'new' },
+  //           ])
+  //           : handleRemoveKey(key)
+  //       }
+  //       className="md-cell md-cell--3"
+  //       label={key?.name}
+  //     />
+  //   ))
+  // }
   const addKeyFeature = () => {
     setKeyFeature('')
     onSetFormDetails('keyFeatures', [
-      ...propertyDetails?.keyFeatures,
-      { label: keyFeature, status: 'new' },
+      ...auctionEditData?.keyFeatures,
+      { name: keyFeature, status: 'new' },
     ])
   }
 
   const renderNewKeys = () => {
-    return propertyDetails?.keyFeatures?.map((updatedKey, index) => (
+    return auctionEditData?.keyFeatures?.map((updatedKey, index) => (
       <div key={index} className="chipWrapper-item">
-        <span className="label">{updatedKey?.label}</span>
+        <span className="label">{updatedKey?.name}</span>
         <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
           {t('close')}
         </FontIcon>
@@ -135,7 +137,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   }
 
   const renderImages = () =>
-    propertyDetails?.images?.map((el, i) => (
+    auctionEditData?.images?.map((el, i) => (
       <img
         key={i}
         src={`${el.url}?token=${downloadToken}&view=true`}
@@ -161,10 +163,10 @@ const MyAuctionDetails = ({ auctionId }) => {
     if (keyAction === 'delete') {
       onSetFormDetails(
         'images',
-        propertyDetails?.images?.filter((el) => el.url !== fileId),
+        auctionEditData?.images?.filter((el) => el.url !== fileId),
       )
     } else if (keyAction === 'add') {
-      onSetFormDetails('images', [...propertyDetails?.images, ...newImages])
+      onSetFormDetails('images', [...auctionEditData?.images, ...newImages])
     } else {
       onSetFormDetails('images', newImages)
     }
@@ -378,9 +380,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                 value={keyFeature}
                 onChange={(value) => setKeyFeature(value)}
                 className="textField-withShadow"
-                onClick={() => {
-                  setSuggestedKeysPanel(true)
-                }}
+                // onClick={() => {
+                //   setSuggestedKeysPanel(true)
+                // }}
                 block
                 rightIcon={
                   <Button
@@ -395,11 +397,11 @@ const MyAuctionDetails = ({ auctionId }) => {
                   </Button>
                 }
               />
-              {suggestedKeyPanel && (
+              {/* {suggestedKeyPanel && (
                 <div className="feature-field-list">
                   {renderSuggestedKeys()}
                 </div>
-              )}
+              )} */}
               <div className="chipWrapper">{renderNewKeys()}</div>
               <UploadImages
                 cover
@@ -415,7 +417,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 setListFiles={(files, keyAction, fileId) =>
                   setListImages(files, keyAction, fileId)
                 }
-                listFiles={propertyDetails?.images}
+                listFiles={auctionEditData?.images}
                 iconDelete={true}
                 titleContent={t('property_images')}
                 addTitle={
@@ -425,7 +427,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   </>
                 }
                 titleUpload={
-                  propertyDetails?.images?.length > 0 ? 'add_images' : ''
+                  auctionEditData?.images?.length > 0 ? 'add_images' : ''
                 }
                 icon={<FontIcon>add_photo_alternate</FontIcon>}
                 accept="image/jpeg, image/png, image/jpg"

@@ -46,7 +46,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
+const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -177,7 +177,6 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
     ))
-
   const renderDays = () => {
     let date = moment(auctionData?.['created_date'])
     return moment([
@@ -301,14 +300,11 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer
-                auctionData={auctionData}
-                node={{ increment: 1.0, bid: 23.0 }}
-              />
+              <AuctionTimer user={user} auctionData={auctionData} node />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>14</strong>
+                <strong>{auctionData?.['number_of_bids'] || 0}</strong>
               </div>
               <div>{t('number_bids')}</div>
             </div>
@@ -365,33 +361,46 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
             }}
           </UserInfoBySubject>
         </div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--12 btn-cell">
           {
-            isAdmin ? (
-              <Button
-                primary
-                flat
-                swapTheming
-                onClick={() => setDocAction(true)}
-                className="auction-details-btn"
-              >
-                {t('documents')}
-              </Button>
-            ) : (
-              isActive && (
+            auctionData?.['last_bid'] &&
+            auctionData?.['last_bid']?.['member_subject'] === user?.subject ? (
                 <Button
-                  flat
                   primary
+                  flat
                   swapTheming
-                  className="auction-details-btn"
-                  onClick={() =>
-                    isParticipant ? setBidDialog(true) : setTermsDialog(true)
-                  }
+                  // onClick={() => setDocAction(true)}
+                  className="auction-highest-btn"
                 >
-                  {t('bid_now')}
+                Current Highest Bidder
                 </Button>
+              ) : isAdmin ? (
+                <Button
+                  primary
+                  flat
+                  swapTheming
+                  onClick={() => setDocAction(true)}
+                  className="auction-details-btn"
+                >
+                  {t('documents')}
+                </Button>
+              ) : (
+                isActive && (
+                  <Button
+                    flat
+                    primary
+                    swapTheming
+                    className="auction-details-btn"
+                    onClick={
+                      () =>
+                        isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                    // setBidDialog(true)
+                    }
+                  >
+                    {t('bid_now')}
+                  </Button>
+                )
               )
-            )
             // ) : (
             //   <div className="auction-details-card md-cell md-cell--12">
             //     <div className="fees-commission-title">{t('fees')}</div>
