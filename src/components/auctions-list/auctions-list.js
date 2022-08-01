@@ -49,6 +49,7 @@ const AuctionsList = ({ logged, user }) => {
         auctionData={el}
         status={type}
         live={modules.includes('live-auctions')}
+        saveAuctionTag
       />
     ))
   return (

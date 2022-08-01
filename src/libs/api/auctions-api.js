@@ -291,6 +291,30 @@ export const approveAuction = async ({ uuid, status }) => {
   }
   return res
 }
+// SAVE AS FAVOURITE
+export const saveAsFav = async ({ uuid }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/save-as-fav`, {
+      method: 'PUT',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// GET SAVED AUCTIONS
+export const savedAuctions = async () => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/saved`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // GET GOVERNORATES
 export const getGovernorates = async ({ queryKey }) => {
   let res

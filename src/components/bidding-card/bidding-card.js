@@ -1,43 +1,53 @@
 // import { useState } from 'react'
+
+import { useMutation } from 'react-query'
+import { Button } from 'react-md'
+import { navigate } from '@reach/router'
+import moment from 'moment'
+import { useDispatch } from 'react-redux'
+
+import store from 'libs/store'
 import { useTranslation } from 'libs/langs'
 
-import { Button } from 'react-md'
-import moment from 'moment'
-import store from 'libs/store'
+import { saveAsFav } from 'libs/api/auctions-api'
 
-import { navigate } from '@reach/router'
+import { addToast } from 'modules/app/actions'
+
 import AuctionTimer from 'components/auction-timer'
+import ToastMsg from 'components/toast-msg'
 
 import './style.scss'
-const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
+
+const BiddingCard = ({
+  detailsUrl,
+  auctionData,
+  className,
+  status,
+  user,
+  saveAuctionTag,
+}) => {
+  const dispatch = useDispatch()
+
+  const saveAuctionMutation = useMutation(saveAsFav, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Auction saved as favorite'} type="success" />,
+            'hide',
+          ),
+        )
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Something is wrong'} type="error" />,
+            'hide',
+          ),
+        )
+      }
+    },
+  })
   const { t } = useTranslation()
-  // const [countdown, setCountdown] = useState({
-  //   d: 0,
-  //   h: 0,
-  //   m: 0,
-  //   s: 0,
-  // })
-
-  //   const startingBid = auctionData?.['starting_price']
-
-  /* const status =
-    +moment.utc(auctionData?.['auction_end_date']) < +moment() ||
-    auctionData?.['awarded_to']?.uuid
-      ? 'Ended'
-      : +moment.utc(auctionData?.['auction_start_date']) > +moment()
-        ? 'Upcoming'
-        : 'Active' */
-
-  //   const renderStatusClassName = () => {
-  //     switch (status) {
-  //       case 'Active':
-  //         return 'auction_active'
-  //       case 'Upcoming':
-  //         return 'upcoming_auction'
-  //       case 'Ended':
-  //         return 'auction_ended'
-  //     }
-  //   }
 
   const renderBtnTitle = () => {
     if (status === 'Upcoming') return t('view_details')
@@ -45,48 +55,13 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
   }
   const downloadToken = store?.getState()?.app?.dlToken
 
-  /*   useEffect(() => {
-    let interval = setInterval(() => {
-      let status =
-        +moment.utc(auctionData?.['auction_end_date']).add(2, 'seconds') <
-          +moment() || auctionData?.['awarded_to']?.uuid
-          ? 'Ended'
-          : +moment.utc(auctionData?.['auction_start_date']) > +moment()
-            ? 'Upcoming'
-            : 'Active'
-      switch (status) {
-        case 'Upcoming':
-          if (+moment.utc(auctionData?.['auction_start_date']) < +moment()) {
-            let newCount = secondsToTime(
-              (+moment.utc(auctionData?.['auction_end_date']) - +new Date()) /
-                1000,
-            )
-            setCountdown(newCount)
-          }
-          break
-        case 'Active':
-          let newCount = secondsToTime(
-            (+moment.utc(auctionData?.['auction_end_date']) - +new Date()) /
-              1000,
-          )
-          setCountdown(newCount)
-          break
-        default:
-          break
-      }
-    }, 1000)
-
-    return () => {
-      clearInterval(interval)
-    }
-  }, [auctionData]) */
+  const saveAuction = (uuid) => {
+    saveAuctionMutation.mutate({
+      uuid,
+    })
+  }
   return (
-    <div
-      className={`bidding-card ${className || ''}`}
-      onClick={() =>
-        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
-      }
-    >
+    <div className={`bidding-card ${className || ''}`}>
       <img
         src={`${
           auctionData?.listing?.images?.find((img) => img?.['cover_image'])
@@ -100,9 +75,16 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
         {auctionData.last_bid?.['member_subject'] === user?.subject && (
           <div className="highest-bidder">{t('highest_bidder')}</div>
         )}
-        <Button icon primary className="save-btn">
-          bookmark_outlined
-        </Button>
+        {saveAuctionTag && (
+          <Button
+            icon
+            primary
+            className="save-btn"
+            onClick={() => saveAuction(auctionData?.uuid)}
+          >
+            bookmark_outlined
+          </Button>
+        )}
       </div>
       <div className="bidding-card-footer">
         {status !== 'active' && (
@@ -130,7 +112,15 @@ const BiddingCard = ({ detailsUrl, auctionData, className, status, user }) => {
             {status === 'active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        <Button flat primary swapTheming className="bidding-card-btn">
+        <Button
+          flat
+          primary
+          swapTheming
+          className="bidding-card-btn"
+          onClick={() =>
+            detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
+          }
+        >
           {renderBtnTitle()}
         </Button>
       </div>
