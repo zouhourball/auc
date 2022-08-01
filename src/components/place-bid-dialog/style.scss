@@ -1,36 +1,100 @@
 .placeBidDialog {
   .md-paper {
-    width: 25%;
+    width: 30%;
     border-radius: 10px;
   }
 
   .header {
+    margin-bottom: 15px;
     text-align: center;
+
+    &-title {
+      color: #3d3d3e;
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    &-subtitle {
+      color: #7c7c7c;
+      font-size: 25px;
+      font-weight: 600;
+    }
   }
 
   .placeBid {
+    margin-bottom: 20px;
+
     &-TextField {
       padding-right: 20px;
       padding-left: 10px;
-      border: 1px solid #ccc;
       border-radius: 10px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+      .md-text-field {
+        color: #7c7c7c;
+        font-size: 18px;
+        font-weight: 500;
+      }
 
       span {
-        color: blue;
+        color: #5078e1;
+        font-size: 18px;
+        font-weight: 500;
       }
     }
+  }
+
+  .sep {
+    width: 1px;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.18);
   }
 
   .amounts {
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    gap: 10px;
+    gap: 30px;
+
+    .value {
+      color: #3d3d3e;
+      font-size: 25px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .label {
+      color: #7c7c7c;
+      font-size: 25px;
+      font-weight: 500;
+      text-align: center;
+    }
+  }
+
+  .action-btn {
+    width: 150px;
+    height: auto;
+    margin: 0 8px;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+
+    &.md-text--theme-primary {
+      background: #5078e1;
+      color: #fff;
+    }
+
+    &.cancel-btn {
+      background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      color: #7c7c7c;
+    }
   }
 
   .actions {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
   }
 }

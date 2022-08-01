@@ -22,8 +22,8 @@ const PlaceBidDialog = ({
       focusOnMount={false}
     >
       <div className="header">
-        <h1>{t('place_bid')}</h1>
-        <h1>{t('add_bidding_amount')}</h1>
+        <div className="header-title">{t('place_bid')}</div>
+        <div className="header-subtitle">{t('add_bidding_amount')}</div>
       </div>
 
       <div className="placeBid">
@@ -35,25 +35,26 @@ const PlaceBidDialog = ({
           block
           rightIcon={<span>AED</span>}
           type="number"
-          error={bidAmount < lastBidAmount + incrementPrice}
-          errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
+          // error={bidAmount < lastBidAmount + incrementPrice}
+          // errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
         />
       </div>
       <div className="amounts">
         <div className="lastBid">
-          <h5>{lastBidAmount} AED</h5>
-          <span>{t('last_bid_amount')}</span>
+          <div className="value">{lastBidAmount} AED</div>
+          <span className="label">{t('last_bid_amount')}</span>
         </div>
+        <div className="sep"></div>
         <div className="increment">
-          <h5> {incrementPrice} AED</h5>
-          <span>{t('increment_price')}</span>
+          <div className="value">{incrementPrice} AED</div>
+          <span className="label">{t('increment_price')}</span>
         </div>
       </div>
       <div className="actions">
-        <Button flat onClick={onClickCancel}>
+        <Button flat onClick={onClickCancel} className="action-btn cancel-btn">
           {t('cancel')}
         </Button>
-        <Button flat primary onClick={onclickPlace}>
+        <Button flat primary onClick={onclickPlace} className="action-btn">
           {t('place_bid_button')}
         </Button>
       </div>
