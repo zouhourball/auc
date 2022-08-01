@@ -46,7 +46,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
+const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
