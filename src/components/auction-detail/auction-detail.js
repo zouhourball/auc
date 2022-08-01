@@ -26,6 +26,8 @@ import {
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+
 import placeBid from 'libs/queries/auction/place-bid.gql'
 
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
@@ -44,7 +46,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
+const AuctionDetail = ({ auctionId, isAdmin, logged }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -150,12 +152,12 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
     variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
   })
-  // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
-  //   variables: { auctionID: auctionId },
-  // })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
+  })
   useEffect(() => {
     refetchAuction()
-  }, [subNewBid])
+  }, [subNewBid, timeExtension])
 
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
