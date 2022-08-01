@@ -1,4 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import { MeeraMap } from '@target-energysolutions/gis-map'
 import { FontIcon } from 'react-md'
 import { flatMap, get } from 'lodash'
@@ -19,6 +21,8 @@ import { checkIntersections } from 'libs/api/api-map'
 //   { sourceName: 'MOH', entityName: 'ROAD', x: 45, y: 45 },
 // ]
 const MapResult = ({ id, list, dataset }) => {
+  const { t } = useTranslation()
+
   const dataSources = useMemo(
     () =>
       flatMap(dataset, ({ dataSourceValueList, dataSourceName }) =>
@@ -114,16 +118,16 @@ const MapResult = ({ id, list, dataset }) => {
       <div className="mapResult-table md-paper--1">
         {!!dataSourcesContentLength.filter(({ length }) => !!length).length && (
           <div className="mapResult-table-header">
-            <div className="mapResult-table-cell">Source Name</div>
-            <div className="mapResult-table-cell">Entity Name</div>
-            <div className="mapResult-table-cell">Intersection Point x</div>
-            <div className="mapResult-table-cell">Intersection Point y</div>
+            <div className="mapResult-table-cell">{t('source')}</div>
+            <div className="mapResult-table-cell">{t('entity_name')}</div>
+            <div className="mapResult-table-cell">{t('inter_x')}</div>
+            <div className="mapResult-table-cell">{t('inter_y')}</div>
           </div>
         )}
         <div className="mapResult-table-body">{renderTableBody}</div>
       </div>
       <div className="mapResult-validation md-paper--1">
-        <div className="mapResult-validation-header">Validation Result</div>
+        <div className="mapResult-validation-header">{t('valid_result')}</div>
         <div className="mapResult-validation-content">
           {dataSources.map((dataSource, index) => (
             <div key={index} className="mapResult-validation-item">

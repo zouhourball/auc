@@ -7,9 +7,9 @@ const DocumentsContainer = ({ data, visible, onHide }) => {
 
   const renderDocs = () =>
     data?.map((el, i) => (
-      <li key={i}>
+      <li key={el?.uuid}>
         <div className="file-name">
-          {i + 1} -{el?.fileName}
+          {i + 1} -{el?.['file_name'] || 'file'}
         </div>
         <Button className="viewBtn">{t('view')}</Button>
         <Button className="downloadBtn">{t('download')}</Button>

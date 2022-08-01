@@ -1,39 +1,63 @@
 .placeBidDialog {
   .md-paper {
-    width: 30%;
+    width: 480px;
     border-radius: 10px;
   }
 
   .header {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
 
-    &-title {
+    .title {
       color: #3d3d3e;
-      font-size: 25px;
-      font-weight: bold;
+      font-size: 30px;
+      font-weight: 700;
     }
 
-    &-subtitle {
+    .subTitle {
       color: #7c7c7c;
       font-size: 25px;
-      font-weight: 600;
+      font-weight: 500;
     }
+  }
+
+  .md-dialog-footer--inline {
+    justify-content: center;
+    border-top: none;
   }
 
   .placeBid {
     margin-bottom: 20px;
 
     &-TextField {
-      padding-right: 20px;
-      padding-left: 10px;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      .md-text-field-icon-container {
+        padding: 20px 32px;
+        border-radius: 18px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
-      .md-text-field {
-        color: #7c7c7c;
-        font-size: 18px;
-        font-weight: 500;
+        .md-divider {
+          display: none;
+        }
+
+        .md-text-field {
+          margin-top: 0;
+        }
+
+        .md-text-field-icon--positioned {
+          margin-bottom: 0;
+        }
+      }
+
+      .md-text--error {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      &.error {
+        .md-text-field-icon-container {
+          border: 1px solid #fc0d1b;
+          box-shadow: none;
+        }
       }
 
       span {
@@ -52,43 +76,26 @@
 
   .amounts {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 10px;
-    gap: 30px;
+    text-align: center;
 
-    .value {
-      color: #3d3d3e;
-      font-size: 25px;
-      font-weight: bold;
-      text-align: center;
+    .sep {
+      width: 1px;
+      background: #d6d1d1;
     }
 
-    .label {
+    .title {
+      color: #3d3d3e;
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .value {
       color: #7c7c7c;
       font-size: 25px;
       font-weight: 500;
-      text-align: center;
-    }
-  }
-
-  .action-btn {
-    width: 150px;
-    height: auto;
-    margin: 0 8px;
-    padding: 20px;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-
-    &.md-text--theme-primary {
-      background: #5078e1;
-      color: #fff;
-    }
-
-    &.cancel-btn {
-      background-color: #fff;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
-      color: #7c7c7c;
     }
   }
 

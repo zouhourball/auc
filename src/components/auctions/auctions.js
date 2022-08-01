@@ -46,8 +46,8 @@ const Auctions = () => {
         title: auctionDetails?.title,
         address: auctionDetails?.address,
         country_id: +auctionDetails?.country,
-        city_id: 1,
-        property_type: 4,
+        city_id: +auctionDetails?.city,
+        property_type: +auctionDetails?.propertyType,
         auction_start_date: moment(auctionDetails?.startDate).format(),
         auction_end_date: moment(auctionDetails?.endDate).format(),
         starting_price: +auctionDetails?.startingPrice,
@@ -57,6 +57,8 @@ const Auctions = () => {
         property_description: propertyDetails?.description,
         count_bedrooms: +propertyDetails?.bedrooms,
         count_bathrooms: +propertyDetails?.bathrooms,
+        general_location_x: +auctionDetails?.address?.['general_location_x'],
+        general_location_y: +auctionDetails?.address?.['general_location_y'],
         features: propertyDetails?.keyFeatures?.map((el) => {
           return {
             // uuid: uuidv4(),
@@ -75,10 +77,10 @@ const Auctions = () => {
         documents: documents?.images?.map((el) => {
           return {
             url: el?.url,
-            name: el?.options?.metadata?.filename,
+            file_name: `${el?.options?.metadata?.filename}-${el.id}`,
             size: el?.size,
             type: el?.type,
-            idProperty: el.id,
+            // idProperty: el.id,
           }
         }),
       },

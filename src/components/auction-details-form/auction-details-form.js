@@ -7,7 +7,7 @@ import moment from 'moment'
 // import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
 
-import { getGovernorates, getWilayats } from 'libs/api/auctions-api'
+import { getCountry, getCity } from 'libs/api/auctions-api'
 import DrawOnMap from 'components/draw-on-map'
 // import MapResult from 'components/map-result'
 
@@ -26,9 +26,11 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [endTime, setEndTime] = useState(moment())
   const [addressView, setAddressView] = useState(false)
 
-  const { data: getGov } = useQuery(['getGovernorates'], getGovernorates)
-
-  const { data: getWila } = useQuery(['getWilayats'], getWilayats)
+  const { data: getCountryList } = useQuery(['getCountry'], getCountry)
+  const { data: getCityList } = useQuery(
+    ['getCity', auctionDetails?.country],
+    getCity,
+  )
 
   // const { data: allCountryStateCities } = useQueryHook(
   //   allCountryStateCitiesGql,
@@ -53,8 +55,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
 
   const renderCountry = () => {
     let arrayName = []
-    if (getWila) {
-      arrayName = getWila?.results?.map((ac) => {
+    if (getCountryList) {
+      arrayName = getCountryList?.results?.map((ac) => {
         return {
           label: ac.name_en,
           value: `${ac.id}`,
@@ -63,10 +65,11 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       return arrayName
     }
   }
+
   const renderCity = () => {
     let arrayName = []
-    if (getGov) {
-      arrayName = getGov?.results?.map((ac) => {
+    if (getCityList) {
+      arrayName = getCityList?.results?.map((ac) => {
         return {
           label: ac.name_en,
           value: `${ac.id}`,
@@ -92,7 +95,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   return (
     <div className="auction-details-form md-grid">
       <div className="auction-details-form-title md-cell md-cell--12">
-        {'Add Auction Details'}
+        {t('add_details')}
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">{t('title')}</label>
@@ -107,7 +110,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('address')}*</label>
+        <label className="auction-details-form-label">{t('address')}</label>
         {addressView && (
           <DrawOnMap
             id={'address'}
@@ -154,10 +157,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">City*</label>
+        <label className="auction-details-form-label">{t('city')}</label>
         <SelectField
           id="select-field-with-elements-country-spinner"
-          placeholder={'Select city'}
+          placeholder={t('city_select')}
           menuItems={renderCity()}
           value={city}
           onChange={(city) => onSetFormDetails('city', city)}
@@ -177,7 +180,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         <SelectField
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
-          placeholder={'Select type'}
+          placeholder={t('property_select')}
           menuItems={propertyTypeList}
           value={propertyType}
           onChange={(propertyType) =>
@@ -197,7 +200,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         <label className="auction-details-form-label">{t('dates')}</label>
         <TextField
           id="range"
-          placeholder={'Select start date - end date'}
+          placeholder={t('select_dates')}
           block
           required
           rightIcon={<FontIcon>date_range</FontIcon>}
@@ -349,7 +352,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         </label>
         <TextField
           id="participationFee"
-          placeholder={t('incr_price_enter')}
+          placeholder={t('part_price_enter')}
           value={participationFee < 0 ? 0 : participationFee}
           onChange={(val) => onSetFormDetails('participationFee', val)}
           className="textField-withShadow"
@@ -365,7 +368,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         </label>
         <TextField
           id="guaranteeFee"
-          placeholder={t('incr_price_enter')}
+          placeholder={t('guar_fee_enter')}
           value={guaranteeFee < 0 ? 0 : guaranteeFee}
           onChange={(val) => onSetFormDetails('guaranteeFee', val)}
           className="textField-withShadow"

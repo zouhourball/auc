@@ -3,13 +3,11 @@ import moment from 'moment'
 import { navigate } from '@reach/router'
 
 import { useTranslation } from 'libs/langs'
-// import { useMutation, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 
-// import { filterAuctions } from 'libs/api/auctions-api'
+import { getMyAuctions } from 'libs/api/auctions-api'
 
 import BiddingCard from 'components/bidding-card'
-
-import { dummyData } from 'components/auctions-public/helper'
 
 import './style.scss'
 
@@ -17,6 +15,19 @@ const MyAuctions = () => {
   // const { data: filterAuctionsData } = useQuery(['filterAuctions', {
   //   filter: { 'member_subject': 'CiQwMzQxYzc0NS05NmFjLTQ1NDItODMwMy0xNWNmMWU1MGZjOWYSBWxvY2Fs' },
   // }], filterAuctions)
+  const { data: auctionsData } = useQuery(
+    [
+      'getMyAuctions',
+      {
+        filter: {},
+        sort: [],
+        limit: 10,
+        offset: 0,
+      },
+      '',
+    ],
+    getMyAuctions,
+  )
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
@@ -41,7 +52,7 @@ const MyAuctions = () => {
     } else return 'Active'
   }
   const renderCards = () =>
-    dummyData?.map((el) => (
+    auctionsData?.results?.map((el) => (
       <BiddingCard
         className="md-cell md-cell--6"
         key={el?.uuid}
@@ -50,7 +61,7 @@ const MyAuctions = () => {
         {...(modules.includes('my-auctions')
           ? {
             detailsUrl: () =>
-              navigate(`/auctions/my-auction-details/${el.id}`),
+              navigate(`/auctions/my-auction-details/${el?.uuid}`),
           }
           : {})}
       />

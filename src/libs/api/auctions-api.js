@@ -317,4 +317,27 @@ export const getWilayats = async ({ queryKey }) => {
   }
   return res
 }
-// filter auctions
+// get country
+
+export const getCountry = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/countries`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const getCity = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/countries/${queryKey[1]}/cities`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}

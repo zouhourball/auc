@@ -28,7 +28,7 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
         onHide(false)
       }}
     >
-      Cancel
+      {t('cancel')}
     </Button>,
     <Button
       key={2}
@@ -43,7 +43,7 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       }}
       // redirectToPay()
     >
-      Proceed
+      {t('proceed')}
     </Button>,
   ]
 
@@ -55,14 +55,11 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       onHide={onHide}
       focusOnMount={false}
       actions={conditionsActions}
-      title={t('terms_&_conditions')}
+      title={t('terms_condition')}
     >
       <ul className="conditions-list">
         <li>
-          To participate in the auction for granting government commercial,
-          residential, commercial and industrial lands and investment lands
-          using the usufruct right system through public auction, the following
-          are required
+          {t('term1')}
           <ul className="conditions-list-sublist">
             <li>{t('term2')}</li>
             <li>{t('term3')}</li>
@@ -70,17 +67,8 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
             <li>{t('term5')}</li>
           </ul>
         </li>
-        <li>
-          Once the auction is closed, the winner (who submitted the highest
-          price) must accept the payment of the usufruct value of the square
-          meter of the land being auctioned according to the price he submitted
-        </li>
-        <li>
-          The winner will be contacted with the outcome of the auction by text
-          message to review the ministry within (10) ten working days from the
-          date of the notification to complete the procedures and contract. The
-          award and confiscation of the subscription value
-        </li>
+        <li>{t('part_two')}</li>
+        <li>{t('part_three')}</li>
         <li>{t('condition4')}</li>
         <li>{t('condition5')}</li>
         <li>{t('condition6')}</li>
@@ -99,7 +87,6 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
         }}
         className="conditions-dialog-checkbox"
       />
-      ,
     </DialogContainer>
   )
 }

@@ -154,7 +154,7 @@ const CreateAuctionStepper = ({
           className="action-btn"
           onClick={() => setCurrentStep(currentStep - 1)}
         >
-          {'Cancel'}
+          {t('cancel')}
         </Button>
         <Button
           className="action-btn"
