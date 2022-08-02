@@ -9,7 +9,7 @@ import store from 'libs/store'
 
 import AuctionTimer from 'components/auction-timer'
 
-// import { propertyTypeList } from 'components/helpers'
+import { propertyTypeList } from 'components/helpers'
 
 import './style.scss'
 
@@ -52,7 +52,15 @@ const HomeSlider = ({ auctions, logged }) => {
             }?token=${downloadToken}&view=true`}
           />
           <div className="data-section">
-            {/* <div className="data-section-title">{propertyTypeList[]}</div> */}
+            <div className="data-section-title">
+              {
+                propertyTypeList.find(
+                  (el) =>
+                    el?.value ===
+                    +auction?.listing?.property?.['property_type_id'],
+                )?.label
+              }
+            </div>
             <div>{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
             <div>Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}</div>

@@ -1,21 +1,18 @@
 import PropTypes from 'prop-types'
 import withOAuth from '@target-energysolutions/hoc-oauth'
-import {
-  Provider,
-  // , useSelector, connect
-} from 'react-redux'
+import { Provider } from 'react-redux'
 import {
   ApolloProvider,
   // graphql,
-  // useQuery as useQueryGraphql,
+  useQuery as useQueryGraphql,
 } from 'react-apollo'
-import { Router } from '@reach/router'
+import { Router, Redirect } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { QueryClient, QueryClientProvider } from 'react-query'
 // import { ShellProvider } from '@target-energysolutions/app-shell'
 // import { get as getLodash } from 'lodash-es'
-// import meQuery from 'libs/queries/me-query.gql'
+import meQuery from 'libs/queries/me-query.gql'
 
 import { LangProvider, useSupportedLangs } from 'libs/langs'
 
@@ -25,6 +22,7 @@ import GeneralErrorBoundary from 'components/general-error-boundary'
 
 import Public from 'components/public'
 import Admin from 'components/admin-page'
+import { useMemo } from 'react'
 
 const queryClient = new QueryClient()
 
@@ -66,6 +64,7 @@ const Main = () => {
   //     : {}
   // const me = data?.mev2
   // console.log(me, 'userInfo')
+
   return (
     <Router>
       <Public path={'/public/*'} />
@@ -76,12 +75,30 @@ const Main = () => {
 
 const Private = withOAuth()(({ ssoCallback }) => {
   const langs = useSupportedLangs()
+  const { data } = useQueryGraphql(meQuery, {
+    notifyOnNetworkStatusChange: true,
+    context: {
+      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+    },
+  })
+  const roles = useMemo(() => data?.mev2?.roles, [data])
+  const auctionRole = roles?.map((role) => {
+    let roleSplitted = role.split(':')
+    return (roleSplitted = roleSplitted
+      .slice(roleSplitted?.length - 3, roleSplitted?.length)
+      .join(' '))
+  })
 
   return (
     <Router>
       <SSO path="/sso/callback" ssoCallback={ssoCallback} />
+      {auctionRole?.find((el) => el === 'auction template approver') && (
+        <>
+          <Redirect from="/auctions/home" to="/admin" />
+          <Admin path={'/admin'} />
+        </>
+      )}
       <App path="/*" langs={langs} />
-      <Admin path={'/admin'} />
     </Router>
   )
 })

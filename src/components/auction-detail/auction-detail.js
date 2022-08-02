@@ -46,7 +46,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
+const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -216,7 +216,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
       </div>
       <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
-          {isAdmin &&
+          {admin &&
             (auctionData?.status !== 'Pending' ? (
               <div>{auctionData?.status}</div>
             ) : (
@@ -260,7 +260,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
             </div>
           </div>
         </div>
-        {!isActive || isAdmin ? (
+        {!isActive || admin ? (
           <div className="auction-details-card md-cell md-cell--12">
             <div className="auction-timer-details">
               <div className="auction-timer-info">
@@ -374,7 +374,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
                 >
                 Current Highest Bidder
                 </Button>
-              ) : isAdmin ? (
+              ) : admin ? (
                 <Button
                   primary
                   flat
@@ -436,7 +436,7 @@ const AuctionDetail = ({ auctionId, isAdmin, logged, user }) => {
           <div className="key-features-content">{renderKeyFeatures()}</div>
         </div>
       )}
-      {(isAdmin || isActive) && (
+      {(admin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
           <div className="fees-commission-title">{t('fees')}</div>
           <div className="fees-commission-content">

@@ -54,7 +54,7 @@ const Admin = () => {
           primary
           onClick={() => {
             setDocumentsDialog(el?.listing?.documents)
-            navigate(`auctions/detail/${el?.uuid}`)
+            navigate(`auctions/detail/${el?.uuid}/a`)
             // console.log(el?.listing?.documents, 'docs')
           }}
         >

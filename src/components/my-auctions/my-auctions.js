@@ -5,7 +5,7 @@ import { navigate } from '@reach/router'
 import { useTranslation } from 'libs/langs'
 import { useQuery } from 'react-query'
 
-import { getMyAuctions, savedAuctions } from 'libs/api/auctions-api'
+import { myAuctions, savedAuctions } from 'libs/api/auctions-api'
 
 import BiddingCard from 'components/bidding-card'
 
@@ -15,7 +15,7 @@ const MyAuctions = () => {
   const [tab, setTab] = useState(0)
   const { data: auctionsData } = useQuery(
     [
-      tab === 1 ? 'savedAuctions' : 'getMyAuctions',
+      tab === 1 ? 'savedAuctions' : 'myAuctions',
       {
         filter: {},
         sort: [],
@@ -24,7 +24,7 @@ const MyAuctions = () => {
       },
       '',
     ],
-    tab === 1 ? savedAuctions : getMyAuctions,
+    tab === 1 ? savedAuctions : myAuctions,
   )
   const { t } = useTranslation()
 
@@ -61,6 +61,7 @@ const MyAuctions = () => {
               navigate(`/auctions/my-auction-details/${el?.uuid}`),
           }
           : {})}
+        {...(tab === 1 ? { saveAuctionTag: false } : {})}
       />
     ))
   return (
