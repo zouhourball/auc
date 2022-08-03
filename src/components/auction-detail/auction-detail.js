@@ -177,14 +177,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
     ))
-  const renderDays = () => {
-    let date = moment(auctionData?.['created_date'])
-    return moment([
-      date.format('YYYY'),
-      date.format('MM') - 1,
-      date.format('DD'),
-    ]).fromNow()
-  }
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -243,7 +235,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
             ))}
         </div>
         <div className="auction-details-card md-cell md-cell--12">
-          <div className="note">Posted {renderDays()}</div>
+          <div className="note">
+            Posted {moment(auctionData?.['created_date']).fromNow()}
+          </div>
           <div className="title">{auctionData?.listing?.title}</div>
           <div className="auction-details-card-details">
             <div className="auction-details-card-details-item">
