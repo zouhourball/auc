@@ -1,21 +1,15 @@
+/* eslint-disable indent */
 import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
-import { useTranslation } from 'libs/langs'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
-
 import { useDispatch } from 'react-redux'
-
-import { addToast } from 'modules/app/actions'
-
 import { get } from 'lodash-es'
-import { getPublicUrl } from 'libs/utils/custom-function'
 import { useSubscription, useMutation } from 'react-apollo'
 
-import UserInfoBySubject from 'components/user-info-by-subject'
-import ToastMsg from 'components/toast-msg'
-
+import { useTranslation } from 'libs/langs'
+import { getPublicUrl } from 'libs/utils/custom-function'
 import {
   getAuction,
   auctionProperty,
@@ -24,19 +18,22 @@ import {
   getFeaturedAuction,
   approveAuction,
 } from 'libs/api/auctions-api'
-
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
-
 import placeBid from 'libs/queries/auction/place-bid.gql'
 
-// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import { addToast } from 'modules/app/actions'
 
+import UserInfoBySubject from 'components/user-info-by-subject'
+import ToastMsg from 'components/toast-msg'
+import DrawOnMap from 'components/draw-on-map'
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
+
+// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import mailIcon from 'images/mail_gray.svg'
 import phoneIcon from 'images/phone_white.svg'
@@ -49,6 +46,7 @@ import './style.scss'
 const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const [addressView, setAddressView] = useState(false)
 
   const downloadToken = store?.getState()?.app?.dlToken
 
@@ -193,9 +191,30 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
             primary
             className="view-map-btn"
             iconClassName="mdi mdi-map-marker-outline"
+            onClick={() => setAddressView(!addressView)}
           >
             {t('view_map')}
           </Button>
+
+          {addressView && (
+            <DrawOnMap
+              id={'address'}
+              onClose={() => {
+                setAddressView(false)
+              }}
+              readOnly={true}
+              visible={addressView}
+              layers={[
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id',
+                  items: [],
+                },
+              ]}
+              longitude={auctionPropertyData?.['general_location_x']}
+              latitude={auctionPropertyData?.['general_location_x']}
+            />
+          )}
         </div>
 
         <img
@@ -359,42 +378,43 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           {
             auctionData?.['last_bid'] &&
             auctionData?.['last_bid']?.['member_subject'] === user?.subject ? (
-                <Button
-                  primary
-                  flat
-                  swapTheming
-                  // onClick={() => setDocAction(true)}
-                  className="auction-highest-btn"
-                >
+              <Button
+                primary
+                flat
+                swapTheming
+                // onClick={() => setDocAction(true)}
+                className="auction-highest-btn"
+              >
                 Current Highest Bidder
-                </Button>
-              ) : admin ? (
+              </Button>
+            ) : admin ? (
+              <Button
+                primary
+                flat
+                swapTheming
+                onClick={() => setDocAction(true)}
+                className="auction-details-btn"
+              >
+                {t('documents')}
+              </Button>
+            ) : (
+              isActive && (
                 <Button
-                  primary
                   flat
+                  primary
                   swapTheming
-                  onClick={() => setDocAction(true)}
                   className="auction-details-btn"
-                >
-                  {t('documents')}
-                </Button>
-              ) : (
-                isActive && (
-                  <Button
-                    flat
-                    primary
-                    swapTheming
-                    className="auction-details-btn"
-                    onClick={
-                      () =>
-                        isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                  onClick={
+                    () =>
+                      isParticipant ? setBidDialog(true) : setTermsDialog(true)
                     // setBidDialog(true)
-                    }
-                  >
-                    {t('bid_now')}
-                  </Button>
-                )
+                  }
+                >
+                  {t('bid_now')}
+                </Button>
               )
+            )
+
             // ) : (
             //   <div className="auction-details-card md-cell md-cell--12">
             //     <div className="fees-commission-title">{t('fees')}</div>
