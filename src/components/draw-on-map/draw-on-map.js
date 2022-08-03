@@ -7,7 +7,15 @@ import '@target-energysolutions/gis-map/styles.css'
 
 import './style.scss'
 
-const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
+const DrawOnMap = ({
+  id,
+  onClose,
+  onSetAddress,
+  visible,
+  readOnly,
+  longitude,
+  latitude,
+}) => {
   const mapRef = useRef(null)
   const [newCoordinates, setNewCoordinates] = useState(null)
   const { t } = useTranslation()
@@ -135,21 +143,32 @@ const DrawOnMap = ({ id, onClose, onSetAddress, visible }) => {
           ref={mapRef}
           fitBy="symbol-layer-id2"
           zoom={8}
-          center={[56.494, 20.667]}
-          layers={[
-            {
-              type: 'symbol',
-              id: 'Symbol-Layer-Id',
-              items: [
-                ...layers,
-                // {
-                //   latitude,
-                //   longitude,
-                //   // svg: mapIcon,
-                // },
-              ],
-            },
-          ]}
+          // center={[56.494, 20.667]}
+          // geolocation={true}
+          layers={
+            readOnly
+              ? [
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id2',
+                  displayName: 'Plot Layer',
+                  items: [
+                    {
+                      id: 'Pinned',
+                      latitude,
+                      longitude,
+                    },
+                  ],
+                },
+              ]
+              : [
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id1',
+                  items: [...layers],
+                },
+              ]
+          }
         />
       </div>
     </DialogContainer>
