@@ -24,7 +24,7 @@ export const filterAuctions = async ({ queryKey }) => {
   return res
 }
 
-// FILTER MY AUCTIONS
+// FILTER MY AUCTIONS THAT I PARTICIPATED IN
 export const getMyAuctions = async ({ queryKey }) => {
   let res
   try {
@@ -35,6 +35,18 @@ export const getMyAuctions = async ({ queryKey }) => {
         body: JSON.stringify(queryKey[1]),
       },
     )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// GET MY AUCTIONS
+export const myAuctions = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/my-auctions`, {
+      method: 'GET',
+    })
   } catch (e) {
     res = { error: e }
   }
@@ -308,7 +320,7 @@ export const updateImgs = async ({ uuid, body }) => {
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/images`, {
       method: 'PUT',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ images: body }),
     })
   } catch (e) {
     res = { error: e }

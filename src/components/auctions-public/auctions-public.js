@@ -13,11 +13,11 @@ const AuctionsPublic = ({ logged, user }) => {
   //
 
   const { data: featAuctions } = useQuery(
-    ['featuredAuctions', 'Active', 4],
+    ['featuredAuctions', 'Upcoming', 4],
     featuredAuctions,
   )
   const { data: upcomingAuctionsData } = useQuery(
-    [logged ? 'UpcomingAuctions' : 'featuredAuctions', 'Active', 4],
+    [logged ? 'UpcomingAuctions' : 'featuredAuctions', 'Upcoming', 4],
     logged ? listAuction : featuredAuctions,
   )
 

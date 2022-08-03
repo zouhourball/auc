@@ -94,6 +94,10 @@
       box-shadow: none;
     }
 
+    &.inactive {
+      box-shadow: none;
+    }
+
     .timer {
       display: flex;
       justify-content: space-evenly;
@@ -132,6 +136,7 @@
       align-items: center;
       justify-content: flex-start;
       gap: 8px;
+      border: none;
 
       &-element {
         .value {

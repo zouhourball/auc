@@ -19,7 +19,7 @@ const AuctionsList = ({ logged, user }) => {
   const [filterData, setFilterData] = useState({})
   const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
 
-  const { data: auctionsData } = useQuery(
+  const { data: auctionsData, refetch } = useQuery(
     [logged ? 'upcomingAuctions' : 'featuredAuctions', type, 100],
     logged ? listAuction : featuredAuctions,
   )
@@ -50,6 +50,7 @@ const AuctionsList = ({ logged, user }) => {
         status={type}
         live={modules.includes('live-auctions')}
         saveAuctionTag
+        refetch={() => refetch()}
       />
     ))
   return (

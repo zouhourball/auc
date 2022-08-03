@@ -43,22 +43,10 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({
-  auctionId,
-  isAdmin,
-  logged,
-  user,
-  setAuctionDetails,
-  auctionDetails,
-  renderLayers,
-  readOnly,
-  latitude,
-  longitude,
-}) => {
-  const [addressView, setAddressView] = useState(false)
-
+const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const [addressView, setAddressView] = useState(false)
 
   const downloadToken = store?.getState()?.app?.dlToken
 
@@ -187,14 +175,6 @@ const AuctionDetail = ({
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
     ))
-  const renderDays = () => {
-    let date = moment(auctionData?.['created_date'])
-    return moment([
-      date.format('YYYY'),
-      date.format('MM') - 1,
-      date.format('DD'),
-    ]).fromNow()
-  }
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -247,7 +227,7 @@ const AuctionDetail = ({
       </div>
       <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
-          {isAdmin &&
+          {admin &&
             (auctionData?.status !== 'Pending' ? (
               <div>{auctionData?.status}</div>
             ) : (
@@ -274,7 +254,9 @@ const AuctionDetail = ({
             ))}
         </div>
         <div className="auction-details-card md-cell md-cell--12">
-          <div className="note">Posted {renderDays()}</div>
+          <div className="note">
+            Posted {moment(auctionData?.['created_date']).fromNow()}
+          </div>
           <div className="title">{auctionData?.listing?.title}</div>
           <div className="auction-details-card-details">
             <div className="auction-details-card-details-item">
@@ -291,7 +273,7 @@ const AuctionDetail = ({
             </div>
           </div>
         </div>
-        {!isActive || isAdmin ? (
+        {!isActive || admin ? (
           <div className="auction-details-card md-cell md-cell--12">
             <div className="auction-timer-details">
               <div className="auction-timer-info">
@@ -405,7 +387,7 @@ const AuctionDetail = ({
               >
                 Current Highest Bidder
               </Button>
-            ) : isAdmin ? (
+            ) : admin ? (
               <Button
                 primary
                 flat
@@ -432,6 +414,7 @@ const AuctionDetail = ({
                 </Button>
               )
             )
+
             // ) : (
             //   <div className="auction-details-card md-cell md-cell--12">
             //     <div className="fees-commission-title">{t('fees')}</div>
@@ -467,7 +450,7 @@ const AuctionDetail = ({
           <div className="key-features-content">{renderKeyFeatures()}</div>
         </div>
       )}
-      {(isAdmin || isActive) && (
+      {(admin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
           <div className="fees-commission-title">{t('fees')}</div>
           <div className="fees-commission-content">

@@ -15,6 +15,7 @@ import { addToast } from 'modules/app/actions'
 
 import AuctionTimer from 'components/auction-timer'
 import ToastMsg from 'components/toast-msg'
+import { propertyTypeList } from 'components/helpers'
 
 import './style.scss'
 
@@ -25,6 +26,7 @@ const BiddingCard = ({
   status,
   user,
   saveAuctionTag,
+  refetch,
 }) => {
   const dispatch = useDispatch()
 
@@ -37,6 +39,7 @@ const BiddingCard = ({
             'hide',
           ),
         )
+        refetch()
       } else {
         dispatch(
           addToast(
@@ -62,6 +65,12 @@ const BiddingCard = ({
   }
   return (
     <div className={`bidding-card ${className || ''}`}>
+      <div
+        className="mask"
+        onClick={() =>
+          detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
+        }
+      ></div>
       <img
         src={`${
           auctionData?.listing?.images?.find((img) => img?.['cover_image'])
@@ -72,23 +81,43 @@ const BiddingCard = ({
         className="bidding-card-background"
       />
       <div className="bidding-card-header">
-        {auctionData.last_bid?.['member_subject'] === user?.subject && (
-          <div className="highest-bidder">{t('highest_bidder')}</div>
-        )}
-        {saveAuctionTag && (
-          <Button
-            icon
-            primary
-            className="save-btn"
-            onClick={() => saveAuction(auctionData?.uuid)}
-          >
-            bookmark_outlined
-          </Button>
-        )}
+        {user?.subject &&
+          user?.subject === auctionData.last_bid?.['member_subject'] && (
+            <div className="highest-bidder">{t('highest_bidder')}</div>
+          )}
+        {saveAuctionTag &&
+          (auctionData?.['is_bookmarked'] ? (
+            <Button
+              icon
+              primary
+              className="save-btn"
+              onClick={() => saveAuction(auctionData?.uuid)}
+            >
+              bookmark_inlined
+            </Button>
+          ) : (
+            <Button
+              icon
+              primary
+              className="save-btn"
+              onClick={() => saveAuction(auctionData?.uuid)}
+            >
+              bookmark_outlined
+            </Button>
+          ))}
       </div>
       <div className="bidding-card-footer">
         {status !== 'Active' && (
           <div className="bidding-card-info">
+            <div className="data-section-title">
+              {
+                propertyTypeList.find(
+                  (el) =>
+                    el?.value ===
+                    +auctionData?.listing?.property?.['property_type_id'],
+                )?.label
+              }
+            </div>
             <div className="title">
               {auctionData?.listing?.title} in {auctionData.location}
             </div>
@@ -102,6 +131,15 @@ const BiddingCard = ({
         )}
         {status === 'Active' && (
           <div className="bidding-card-info">
+            <div className="data-section-title">
+              {
+                propertyTypeList.find(
+                  (el) =>
+                    el?.value ===
+                    +auctionData?.listing?.property?.['property_type_id'],
+                )?.label
+              }
+            </div>
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
@@ -112,17 +150,23 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        <Button
-          flat
-          primary
-          swapTheming
-          className="bidding-card-btn"
-          onClick={() =>
-            detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
-          }
-        >
-          {renderBtnTitle()}
-        </Button>
+        {!detailsUrl &&
+          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
+          status === 'Active' && (
+          <Button
+            flat
+            primary
+            swapTheming
+            className="bidding-card-btn"
+            onClick={() =>
+              detailsUrl
+                ? detailsUrl()
+                : navigate(`detail/${auctionData?.uuid}`)
+            }
+          >
+            {renderBtnTitle()}
+          </Button>
+        )}
       </div>
     </div>
   )

@@ -89,16 +89,18 @@ const Home = () => {
             <MyAuctions key={i} path={page} />
           ))}
           <ParticipatedAuctions path={'/my-participation'} />
-          {['/detail/:auctionId', '/detail/:auctionId/public/:callback'].map(
-            (page, i) => (
-              <AuctionDetail
-                user={currentUser?.mev2?.user}
-                key={i}
-                path={page}
-                logged
-              />
-            ),
-          )}
+          {[
+            '/detail/:auctionId',
+            '/detail/:auctionId/public/:callback',
+            '/detail/:auctionId/:admin',
+          ].map((page, i) => (
+            <AuctionDetail
+              user={currentUser?.mev2?.user}
+              key={i}
+              path={page}
+              logged
+            />
+          ))}
           {/* <AuctionDetail path={'/detail/:auctionId'} /> */}
           <MyAuctionDetails path={'/my-auction-details/:auctionId'} />
           <AuctionAsset path={'/auction-asset'} />
