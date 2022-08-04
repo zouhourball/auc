@@ -106,7 +106,7 @@ const Admin = () => {
                     className="admin-page-actionBtn"
                     flat
                     onClick={() =>
-                      navigate(`auctions/detail/${selectedRow[0]?.id}`)
+                      navigate(`auctions/detail/${selectedRow[0]?.id}/a`)
                     }
                   >
                     {t('view_details')}

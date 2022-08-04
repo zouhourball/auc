@@ -95,9 +95,10 @@ const Private = withOAuth()(({ ssoCallback }) => {
       {auctionRole?.find((el) => el === 'auction template approver') && (
         <>
           <Redirect from="/auctions/home" to="/admin" />
-          <Admin path={'/admin'} />
         </>
       )}
+      <Admin path={'/admin'} />
+
       <App path="/*" langs={langs} />
     </Router>
   )
