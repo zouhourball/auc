@@ -79,7 +79,32 @@ const DrawOnMap = ({
       // items: this.getWellsPopupsForMap(),
     },
   ]
-
+  const actions = readOnly
+    ? [
+      <Button key={0} flat onClick={() => onClose()}>
+        {t('discard')}
+      </Button>,
+    ]
+    : [
+      <Button key={0} flat onClick={() => onClose()}>
+        {t('discard')}
+      </Button>,
+      <Button
+        key={1}
+        flat
+        primary
+        swapTheming
+        onClick={() => {
+          if (newCoordinates) {
+            // formatMapToCoordinates(newCoordinates)
+          }
+          onSetAddress(newCoordinates)
+          onClose()
+        }}
+      >
+        {t('done')}
+      </Button>,
+    ]
   // if (formatCoordinatesToMap?.length) {
   //   layers.push({
   //     type: 'polygon',
@@ -103,29 +128,11 @@ const DrawOnMap = ({
       onHide={onClose}
       focusOnMount={false}
       className="drawOnMap"
-      actions={[
-        <Button key={0} flat onClick={() => onClose()}>
-          {t('discard')}
-        </Button>,
-        <Button
-          key={1}
-          flat
-          primary
-          swapTheming
-          onClick={() => {
-            if (newCoordinates) {
-              // formatMapToCoordinates(newCoordinates)
-            }
-            onSetAddress(newCoordinates)
-            onClose()
-          }}
-        >
-          {t('done')}
-        </Button>,
-      ]}
+      actions={actions}
     >
       <div className="drawOnMap-map">
         <MeeraMap
+          isOnlyShowMeasureAndDraw={readOnly}
           // ack={console.log}
           // onClickReverseGeoCode={console.log}
           // onLayerDataLoaded={console.log}
