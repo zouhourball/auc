@@ -107,7 +107,51 @@ const CreateAuctionStepper = ({
         break
     }
   }
+  const {
+    address,
+    city,
+    country,
+    endDate,
+    guaranteeFee,
+    incrementalPrice,
+    participationFee,
+    propertyType,
+    startDate,
+    startingPrice,
+    title,
+  } = auctionDetails
+  const { area, bathrooms, bedrooms, description, images, keyFeatures } =
+    propertyDetails
 
+  const validData = () => {
+    switch (currentStep) {
+      case 1:
+        return !(
+          title &&
+          address &&
+          city &&
+          country &&
+          guaranteeFee &&
+          incrementalPrice &&
+          participationFee &&
+          propertyType &&
+          startingPrice &&
+          startDate &&
+          endDate
+        )
+      case 2:
+        return !(
+          area &&
+          bathrooms &&
+          bedrooms &&
+          description &&
+          images?.length > 0 &&
+          keyFeatures?.length > 0
+        )
+      case 3:
+        return !(documents?.images?.length === 4)
+    }
+  }
   const onUpdateAuction = () => {}
   // const onSaveAuction = () => {
   //   navigate('/auctions/home')
@@ -158,9 +202,10 @@ const CreateAuctionStepper = ({
         </Button>
         <Button
           className="action-btn"
-          primary
+          primary={!validData()}
           flat
-          swapTheming
+          swapTheming={!validData()}
+          disabled={validData()}
           onClick={() =>
             currentStep > 2
               ? auctionUuid
