@@ -291,7 +291,7 @@ const UploadImages = ({
         {file?.type === 'application/pdf' ? ( // .pdf
           <Document
             className="imgPdfWrapper"
-            file={`${file.url}&view=true`}
+            file={`${file.url}?token=${downloadToken}&view=true`}
             onLoadSuccess={() => {}}
             options={{
               withCredentials: true,

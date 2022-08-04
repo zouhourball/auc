@@ -85,26 +85,25 @@ const BiddingCard = ({
           user?.subject === auctionData.last_bid?.['member_subject'] && (
             <div className="highest-bidder">{t('highest_bidder')}</div>
           )}
-        {saveAuctionTag &&
-          (auctionData?.['is_bookmarked'] ? (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              onClick={() => saveAuction(auctionData?.uuid)}
-            >
-              bookmark_inlined
-            </Button>
-          ) : (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              onClick={() => saveAuction(auctionData?.uuid)}
-            >
-              bookmark_outlined
-            </Button>
-          ))}
+        {auctionData?.['is_bookmarked'] || !saveAuctionTag ? (
+          <Button
+            icon
+            primary
+            className="save-btn"
+            onClick={() => saveAuction(auctionData?.uuid)}
+          >
+            bookmark_inlined
+          </Button>
+        ) : (
+          <Button
+            icon
+            primary
+            className="save-btn"
+            onClick={() => saveAuction(auctionData?.uuid)}
+          >
+            bookmark_outlined
+          </Button>
+        )}
       </div>
       <div className="bidding-card-footer">
         {status !== 'Active' && (
