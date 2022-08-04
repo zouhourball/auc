@@ -16,7 +16,7 @@ import UserInfoBySubject from 'components/user-info-by-subject'
 
 import './style.scss'
 
-const Admin = () => {
+const Admin = (logged, auctionId) => {
   const { t } = useTranslation()
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const selectedRowSelector = useSelector(
@@ -34,6 +34,7 @@ const Admin = () => {
       }
     },
   })
+
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
       id: el?.uuid,
@@ -52,10 +53,11 @@ const Admin = () => {
         <Button
           flat
           primary
+          // onClick={() => setDocAction(true)}
           onClick={() => {
             setDocumentsDialog(el?.listing?.documents)
-            navigate(`auctions/detail/${el?.uuid}/a`)
-            // console.log(el?.listing?.documents, 'docs')
+            // navigate(`auctions/detail/${el?.uuid}/a`)
+            // console.log(el?.listing?.documents, documentsDialog, 'docs')
           }}
         >
           View
@@ -137,11 +139,12 @@ const Admin = () => {
           }
         />
       </div>
+
       {documentsDialog && (
         <DocumentsContainer
           visible={documentsDialog}
           onHide={() => setDocumentsDialog(false)}
-          data={documentsDialog}
+          data={documentsDialog || []}
         />
       )}
     </div>
