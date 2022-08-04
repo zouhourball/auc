@@ -217,7 +217,11 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
         <div className="auction-details-info-header md-cell md-cell--12">
           {isAdmin &&
             (auctionData?.status !== 'Pending' ? (
-              <div>{auctionData?.status}</div>
+              <div
+                className={`auction-details-info-header-status ${auctionData?.status}`}
+              >
+                {auctionData?.status}
+              </div>
             ) : (
               <>
                 <Button

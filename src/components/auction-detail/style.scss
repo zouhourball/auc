@@ -31,6 +31,18 @@
       align-items: center;
       justify-content: flex-end;
       height: 50px;
+
+      &-status {
+        padding: 4px 14px;
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 500;
+
+        &.Approved {
+          background-color: #dff4eb;
+          color: #78deb3;
+        }
+      }
     }
   }
 
