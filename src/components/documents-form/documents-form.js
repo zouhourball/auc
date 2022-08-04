@@ -42,7 +42,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
         title={
           <>
             <span className="drop-zone-placeholder">
-              {'Drag & Drop Files here or'}
+              {'Drag & Drop Files Here or'}
               <b>{' Select File / Image'}</b>
             </span>
           </>
