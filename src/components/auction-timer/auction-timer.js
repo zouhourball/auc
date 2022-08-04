@@ -62,14 +62,14 @@ const AuctionTimer = ({ auctionData, node, user }) => {
               <>
                 {' '}
                 <div className="price blueText">
-                  {auctionData?.['last_bid']?.['bid_amount']} AED
+                  {auctionData?.['last_bid']?.['bid_amount']} OMR
                 </div>
                 <div className="label">My Bid</div>
               </>
             ) : (
               <>
                 <div className="price blueText">
-                  {auctionData?.['current_price']} AED
+                  {auctionData?.['current_price']} OMR
                 </div>
                 <div className="label">Current Price</div>
               </>
@@ -78,7 +78,7 @@ const AuctionTimer = ({ auctionData, node, user }) => {
           <div className="sep"></div>
           <div className="auction-info-details">
             <div className="price">
-              {auctionData?.['incremental_price']} AED
+              {auctionData?.['incremental_price']} OMR
             </div>
             <div className="label">Minimum Increment</div>
           </div>

@@ -103,7 +103,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           className="textField-withShadow"
           required
           rows={5}
-          placeholder={'property_description_placeholder'}
+          placeholder={t('property_description_placeholder')}
           block
         />
       </div>

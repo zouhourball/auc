@@ -31,6 +31,23 @@
       align-items: center;
       justify-content: flex-end;
       height: 50px;
+
+      &-status {
+        padding: 4px 14px;
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 500;
+
+        &.Approved {
+          background-color: #dff4eb;
+          color: #78deb3;
+        }
+
+        &.Rejected {
+          background-color: #fc0d1b;
+          color: #ffced1;
+        }
+      }
     }
   }
 
@@ -173,22 +190,6 @@
     .name {
       color: #3d3d3e;
     }
-  }
-}
-
-.btn-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .auction-highest-btn {
-    flex-grow: 1;
-    height: 80px;
-    border-radius: 18px;
-    background-color: #78deb3;
-    color: #fff;
-    font-size: 25px;
-    font-weight: bold;
   }
 }
 
