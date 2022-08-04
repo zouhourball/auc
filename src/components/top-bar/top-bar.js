@@ -129,7 +129,7 @@ const TopBar = ({
               />,
               <ListItem
                 key={2}
-                primaryText="upcoming-auctions"
+                primaryText="Upcoming Auctions"
                 onClick={() =>
                   navigate(
                     `/${logged ? 'auctions' : 'public'}/upcoming-auctions`,
