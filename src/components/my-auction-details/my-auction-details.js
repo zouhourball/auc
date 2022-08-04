@@ -1,33 +1,39 @@
 import { useState, useEffect } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
-import { TextField, Button, Checkbox, FontIcon } from 'react-md'
+import { TextField, Button, FontIcon } from 'react-md'
 import UploadImages from 'components/upload-images'
 import { useTranslation } from 'libs/langs'
 import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
-import { dummyBiddersData, dummyData, updateAuctionFormatData } from './helpers'
+import { dummyData } from './helpers'
 
-import './style.scss'
 import { useQuery, useMutation } from 'react-query'
-import { getAuction, updateAuction } from 'libs/api/auctions-api'
+import { getAuction, updateAuction, updateImgs } from 'libs/api/auctions-api'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
+import { DueDate } from 'components/due-date'
 import { useDispatch } from 'react-redux'
 import { addToast } from 'modules/app/actions'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
+
+import './style.scss'
 
 const MyAuctionDetails = ({ auctionId }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const [keyFeature, setKeyFeature] = useState()
-  const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
-  const [propertyDetails, setPropertyDetails] = useState({})
+  // const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
+  // const [propertyDetails, setPropertyDetails] = useState({})
   const [showMore, setShowMore] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [images, setImages] = useState([])
+  const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
+
   const [auctionEditData, setAuctionEditData] = useState({
     title: '',
     propertyType: '',
@@ -38,10 +44,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     incrementalPrice: '',
     description: '',
   })
-  const [showDatePicker, setShowDatePicker] = useState({
-    startDate: false,
-    endDate: false,
-  })
+  const [showDatePicker, setShowDatePicker] = useState(false)
 
   // get auction details api
   const { data: auctionDetails, refetch: refetchAuction } = useQuery(
@@ -58,70 +61,76 @@ const MyAuctionDetails = ({ auctionId }) => {
       startingPrice: auctionDetails?.['starting_price'],
       incrementalPrice: auctionDetails?.['incremental_price'],
       description: auctionDetails?.description,
+      keyFeatures: auctionDetails?.listing?.features?.map((el) => el?.feature),
     })
+    setImages(auctionDetails?.listing?.images)
   }, [auctionDetails])
 
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
-    variables: { auctionUUID: '3159502d-7f66-4722-9a19-74319b216468' },
+    variables: { auctionUUID: auctionId },
   })
   const { data: subNewBid } = useSubscription(subscribeNewBid, {
-    variables: { auctionID: '3159502d-7f66-4722-9a19-74319b216468' },
+    variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
+  })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
   })
   useEffect(() => {
     refetchBids()
-  }, [subNewBid])
-  useEffect(() => {
-    setPropertyDetails({
-      ...dummyBiddersData,
-    })
-  }, [dummyBiddersData])
+  }, [subNewBid, timeExtension])
+
+  // useEffect(() => {
+  //   setPropertyDetails({
+  //     ...dummyBiddersData,
+  //   })
+  // }, [dummyBiddersData])
 
   const onSetFormDetails = (property, value) => {
-    setPropertyDetails({ ...propertyDetails, [property]: value })
+    setAuctionEditData({ ...auctionEditData, [property]: value })
   }
   const handleRemoveKey = (key) => {
     onSetFormDetails(
       'keyFeatures',
-      propertyDetails?.keyFeatures.filter((el) => el?.label !== key?.label),
+      auctionEditData?.keyFeatures.filter((el) => el?.name !== key?.name),
     )
   }
   const downloadToken = store?.getState()?.app?.dlToken
 
-  const renderSuggestedKeys = () => {
-    return propertyDetails?.suggestedKeyFeatures?.map((key, i) => (
-      <Checkbox
-        key={i}
-        id={key?.label}
-        checked={
-          !!propertyDetails?.keyFeatures?.find((el) => el.label === key.label)
-        }
-        onChange={(v) =>
-          v
-            ? onSetFormDetails('keyFeatures', [
-              ...propertyDetails?.keyFeatures,
-              { label: key.label, status: 'new' },
-            ])
-            : handleRemoveKey(key)
-        }
-        className="md-cell md-cell--3"
-        label={key?.label}
-      />
-    ))
-  }
+  // const renderSuggestedKeys = () => {
+  //   return auctionEditData?.keyFeatures?.map((key, i) => (
+  //     <Checkbox
+  //       key={i}
+  //       id={key?.uuid}
+  //       checked={
+  //         !!auctionEditData?.keyFeatures?.find((el) => el.name === key.name)
+  //       }
+  //       onChange={(v) =>
+  //         v
+  //           ? onSetFormDetails('keyFeatures', [
+  //             ...auctionEditData?.keyFeatures,
+  //             { name: key.name, status: 'new' },
+  //           ])
+  //           : handleRemoveKey(key)
+  //       }
+  //       className="md-cell md-cell--3"
+  //       label={key?.name}
+  //     />
+  //   ))
+  // }
   const addKeyFeature = () => {
     setKeyFeature('')
     onSetFormDetails('keyFeatures', [
-      ...propertyDetails?.keyFeatures,
-      { label: keyFeature, status: 'new' },
+      ...auctionEditData?.keyFeatures,
+      { name: keyFeature, status: 'new' },
     ])
   }
 
   const renderNewKeys = () => {
-    return propertyDetails?.keyFeatures?.map((updatedKey, index) => (
+    return auctionEditData?.keyFeatures?.map((updatedKey, index) => (
       <div key={index} className="chipWrapper-item">
-        <span className="label">{updatedKey?.label}</span>
+        <span className="label">{updatedKey?.name}</span>
         <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
           {t('close')}
         </FontIcon>
@@ -130,7 +139,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   }
 
   const renderImages = () =>
-    propertyDetails?.images?.map((el, i) => (
+    images?.map((el, i) => (
       <img
         key={i}
         src={`${el.url}?token=${downloadToken}&view=true`}
@@ -154,14 +163,11 @@ const MyAuctionDetails = ({ auctionId }) => {
     ))
   const setListImages = (newImages, keyAction, fileId) => {
     if (keyAction === 'delete') {
-      onSetFormDetails(
-        'images',
-        propertyDetails?.images?.filter((el) => el.url !== fileId),
-      )
+      setImages((imgs) => imgs?.filter((el) => el.url !== fileId))
     } else if (keyAction === 'add') {
-      onSetFormDetails('images', [...propertyDetails?.images, ...newImages])
+      setImages((imgs) => [...imgs, ...newImages])
     } else {
-      onSetFormDetails('images', newImages)
+      setImages(newImages)
     }
   }
   // update auction details
@@ -169,6 +175,15 @@ const MyAuctionDetails = ({ auctionId }) => {
     onSuccess: (res) => {
       if (!res.error) {
         refetchAuction()
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={'Auction is updated successfully' || 'success'}
+              type="success"
+            />,
+            'hide',
+          ),
+        )
       } else {
         dispatch(
           addToast(
@@ -182,12 +197,13 @@ const MyAuctionDetails = ({ auctionId }) => {
       }
     },
   })
+  const updateImages = useMutation(updateImgs)
   const onDisableEdit = () => {
     if (editMode) {
       updateAuctionData.mutate({
         uuid: auctionId,
         body: {
-          ...updateAuctionFormatData(auctionDetails),
+          // ...updateAuctionFormatData(auctionDetails),
           title: auctionEditData?.title,
           auction_start_date: new Date(auctionEditData?.startDate),
           auction_end_date: new Date(auctionEditData?.endDate),
@@ -195,19 +211,30 @@ const MyAuctionDetails = ({ auctionId }) => {
           starting_price: +auctionEditData?.startingPrice,
           property_type: +auctionEditData?.propertyType,
           property_description: auctionEditData?.description,
+          features: auctionEditData?.keyFeatures,
         },
+      })
+      updateImages.mutate({
+        uuid: auctionId,
+        body: images,
       })
     }
     setEditMode(!editMode)
-    setShowDatePicker({ startDate: false, endDate: false })
+    setShowDatePicker(false)
   }
-  /// ///////////
-  const onHandleDate = (date, key) => {
+  // const onHandleDate = (date, key) => {
+  //   setAuctionEditData({
+  //     ...auctionEditData,
+  //     [key]: moment(date.timestamp).format('DD MMM YYYY'),
+  //   })
+  //   setShowDatePicker({ ...showDatePicker, [key]: false })
+  // }
+  const onSetDate = (start, end) => {
     setAuctionEditData({
       ...auctionEditData,
-      [key]: moment(date.timestamp).format('DD MMM YYYY'),
+      startDate: start,
+      endDate: end,
     })
-    setShowDatePicker({ ...showDatePicker, [key]: false })
   }
   return (
     <div className="auction-list">
@@ -269,29 +296,51 @@ const MyAuctionDetails = ({ auctionId }) => {
             <TextField
               id={'start-end-date'}
               label={t('start_end_dates_label')}
-              value={moment(auctionEditData?.startDate).format('DD MMM YYYY')}
+              value={`${moment(auctionEditData?.startDate).format(
+                'DD/MM/YYYY',
+              )} - ${moment(auctionEditData?.endDate).format('DD/MM/YYYY')}`}
               onChange={(v) =>
                 setAuctionEditData({ ...auctionEditData, startDate: v })
               }
               onClick={() => {
-                editMode &&
-                  setShowDatePicker({ ...showDatePicker, startDate: true })
+                editMode && setShowDatePicker(true)
               }}
               disabled={!editMode}
               className="auction-details-form-textField"
               block
             />
-            {showDatePicker.startDate && (
-              <DatePicker
-                singlePick
-                translation={{ update: 'select' }}
-                onUpdate={(date) => onHandleDate(date, 'startDate')}
-                onCancel={() =>
-                  setShowDatePicker({ ...showDatePicker, startDate: false })
-                }
-                minValidDate={{ timestamp: new Date().getTime() }}
-                startView="year"
-                endView="day"
+            {showDatePicker && (
+              // <DatePicker
+              //   singlePick
+              //   translation={{ update: 'select' }}
+              //   onUpdate={(date) => onHandleDate(date, 'startDate')}
+              //   onCancel={() =>
+              //     setShowDatePicker({ ...showDatePicker, startDate: false })
+              //   }
+              //   minValidDate={{ timestamp: new Date().getTime() }}
+              //   startView="year"
+              //   endView="day"
+              // />
+              <DueDate
+                duedate={showDatePicker?.endDate}
+                startDate={showDatePicker?.startDate}
+                applicationStartDate={showDatePicker?.startDate}
+                onDateChange={(start, end) => {
+                  let startD = new Date(
+                    moment(start)
+                      .hour(moment(showDatePicker?.startTime).hour())
+                      .minute(moment(showDatePicker?.startTime).minute())
+                      .valueOf(),
+                  )
+                  let endD = new Date(
+                    moment(end)
+                      .hour(moment(showDatePicker?.endTime).hour())
+                      .minute(moment(showDatePicker?.endTime).minute())
+                      .valueOf(),
+                  )
+                  onSetDate(startD, endD)
+                  setShowDatePicker(!showDatePicker)
+                }}
               />
             )}
           </div>
@@ -299,19 +348,66 @@ const MyAuctionDetails = ({ auctionId }) => {
             <TextField
               id={'start-end-time'}
               label={t('start_end_time_label')}
-              value={moment(auctionEditData?.endDate).format('DD MMM YYYY')}
-              onChange={(v) =>
-                setAuctionEditData({ ...auctionEditData, endDate: v })
-              }
+              value={`${moment(auctionEditData?.startDate).format(
+                'HH:mm',
+              )} - ${moment(auctionEditData?.endDate).format('HH:mm')}`}
+              // onChange={(v) =>
+              //   setAuctionEditData({ ...auctionEditData, endDate: v })
+              // }
               onClick={() => {
-                editMode &&
-                  setShowDatePicker({ ...showDatePicker, endDate: true })
+                editMode && setVisibleStartTimePicker(true)
               }}
               disabled={!editMode}
               className="auction-details-form-textField"
               block
             />
-            {showDatePicker.endDate && (
+            {visibleStartTimePicker && (
+              <>
+                <DatePicker
+                  startView="time"
+                  endView="time"
+                  singlePick={true}
+                  minuteInterval={5}
+                  timeFormat={null}
+                  onUpdate={({ timestamp }) => {
+                    setAuctionEditData({
+                      ...auctionEditData,
+                      startDate: new Date(
+                        moment(auctionEditData?.startDate)
+                          .hour(moment(timestamp).hour())
+                          .minute(moment(timestamp).minute())
+                          .valueOf(),
+                      ),
+                    })
+                    // setVisibleStartTimePicker(false)
+                  }}
+                  onCancel={() => setVisibleStartTimePicker(false)}
+                  translation={{ date: 'Time' }}
+                />
+                <DatePicker
+                  startView="time"
+                  endView="time"
+                  singlePick={true}
+                  minuteInterval={5}
+                  timeFormat={null}
+                  onUpdate={({ timestamp }) => {
+                    setAuctionEditData({
+                      ...auctionEditData,
+                      endDate: new Date(
+                        moment(auctionEditData?.endDate)
+                          .hour(moment(timestamp).hour())
+                          .minute(moment(timestamp).minute())
+                          .valueOf(),
+                      ),
+                    })
+                    setVisibleStartTimePicker(false)
+                  }}
+                  onCancel={() => setVisibleStartTimePicker(false)}
+                  translation={{ date: 'Time' }}
+                />
+              </>
+            )}
+            {/* {showDatePicker.endDate && (
               <DatePicker
                 singlePick
                 translation={{ update: 'select' }}
@@ -323,7 +419,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 startView="year"
                 endView="day"
               />
-            )}
+            )} */}
           </div>
           <TextField
             id={'starting-price'}
@@ -373,9 +469,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                 value={keyFeature}
                 onChange={(value) => setKeyFeature(value)}
                 className="textField-withShadow"
-                onClick={() => {
-                  setSuggestedKeysPanel(true)
-                }}
+                // onClick={() => {
+                //   setSuggestedKeysPanel(true)
+                // }}
                 block
                 rightIcon={
                   <Button
@@ -390,11 +486,11 @@ const MyAuctionDetails = ({ auctionId }) => {
                   </Button>
                 }
               />
-              {suggestedKeyPanel && (
+              {/* {suggestedKeyPanel && (
                 <div className="feature-field-list">
                   {renderSuggestedKeys()}
                 </div>
-              )}
+              )} */}
               <div className="chipWrapper">{renderNewKeys()}</div>
               <UploadImages
                 cover
@@ -410,7 +506,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 setListFiles={(files, keyAction, fileId) =>
                   setListImages(files, keyAction, fileId)
                 }
-                listFiles={propertyDetails?.images}
+                listFiles={images}
                 iconDelete={true}
                 titleContent={t('property_images')}
                 addTitle={
@@ -419,9 +515,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                     {t('add_images')}
                   </>
                 }
-                titleUpload={
-                  propertyDetails?.images?.length > 0 ? 'add_images' : ''
-                }
+                titleUpload={images?.length > 0 ? 'add_images' : ''}
                 icon={<FontIcon>add_photo_alternate</FontIcon>}
                 accept="image/jpeg, image/png, image/jpg"
                 className="custom"

@@ -27,7 +27,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
     if (keyAction === 'delete') {
       onSetFormDetails(
         'images',
-        images?.filter((el) => el.url !== fileId),
+        images?.filter((el) => key !== el?.id),
       )
     } else if (keyAction === 'add') {
       onSetFormDetails('images', [...images, { ...newImages[0], id: key }])
@@ -48,6 +48,9 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
           </>
         }
         setListFiles={(files, keyAction, fileId) =>
+          setListImages(files, keyAction, fileId, key)
+        }
+        onRemoveFile={(files, keyAction, fileId) =>
           setListImages(files, keyAction, fileId, key)
         }
         listFiles={images?.filter((img) => img?.id === key)}

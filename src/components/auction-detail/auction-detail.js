@@ -1,21 +1,15 @@
+/* eslint-disable indent */
 import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
-import { useTranslation } from 'libs/langs'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
-
 import { useDispatch } from 'react-redux'
-
-import { addToast } from 'modules/app/actions'
-
 import { get } from 'lodash-es'
-import { getPublicUrl } from 'libs/utils/custom-function'
 import { useSubscription, useMutation } from 'react-apollo'
 
-import UserInfoBySubject from 'components/user-info-by-subject'
-import ToastMsg from 'components/toast-msg'
-
+import { useTranslation } from 'libs/langs'
+import { getPublicUrl } from 'libs/utils/custom-function'
 import {
   getAuction,
   auctionProperty,
@@ -24,17 +18,22 @@ import {
   getFeaturedAuction,
   approveAuction,
 } from 'libs/api/auctions-api'
-
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
+import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 import placeBid from 'libs/queries/auction/place-bid.gql'
 
-// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import { addToast } from 'modules/app/actions'
 
+import UserInfoBySubject from 'components/user-info-by-subject'
+import ToastMsg from 'components/toast-msg'
+import DrawOnMap from 'components/draw-on-map'
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
+
+// import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import mailIcon from 'images/mail_gray.svg'
 import phoneIcon from 'images/phone_white.svg'
@@ -44,9 +43,10 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
+const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
+  const [addressView, setAddressView] = useState(false)
 
   const downloadToken = store?.getState()?.app?.dlToken
 
@@ -150,12 +150,12 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
     variables: { auctionID: auctionId },
     // uri: `${appUrl}/auction/graphql/query`,
   })
-  // const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
-  //   variables: { auctionID: auctionId },
-  // })
+  const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
+    variables: { auctionID: auctionId },
+  })
   useEffect(() => {
     refetchAuction()
-  }, [subNewBid])
+  }, [subNewBid, timeExtension])
 
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
@@ -175,15 +175,6 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
         src={`${image?.url}?token=${downloadToken}&view=true`}
       />
     ))
-
-  const renderDays = () => {
-    let date = moment(auctionData?.['created_date'])
-    return moment([
-      date.format('YYYY'),
-      date.format('MM') - 1,
-      date.format('DD'),
-    ]).fromNow()
-  }
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -200,9 +191,30 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
             primary
             className="view-map-btn"
             iconClassName="mdi mdi-map-marker-outline"
+            onClick={() => setAddressView(!addressView)}
           >
             {t('view_map')}
           </Button>
+
+          {addressView && (
+            <DrawOnMap
+              id={'address'}
+              onClose={() => {
+                setAddressView(false)
+              }}
+              readOnly={true}
+              visible={addressView}
+              layers={[
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id',
+                  items: [],
+                },
+              ]}
+              longitude={auctionPropertyData?.['general_location_x']}
+              latitude={auctionPropertyData?.['general_location_x']}
+            />
+          )}
         </div>
 
         <img
@@ -215,7 +227,7 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
       </div>
       <div className="auction-details-info md-cell md-cell--5 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
-          {isAdmin &&
+          {admin &&
             (auctionData?.status !== 'Pending' ? (
               <div
                 className={`auction-details-info-header-status ${auctionData?.status}`}
@@ -246,7 +258,9 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
             ))}
         </div>
         <div className="auction-details-card md-cell md-cell--12">
-          <div className="note">Posted {renderDays()}</div>
+          <div className="note">
+            Posted {moment(auctionData?.['created_date']).fromNow()}
+          </div>
           <div className="title">{auctionData?.listing?.title}</div>
           <div className="auction-details-card-details">
             <div className="auction-details-card-details-item">
@@ -263,7 +277,7 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
             </div>
           </div>
         </div>
-        {!isActive || isAdmin ? (
+        {!isActive || admin ? (
           <div className="auction-details-card md-cell md-cell--12">
             <div className="auction-timer-details">
               <div className="auction-timer-info">
@@ -303,14 +317,11 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer
-                auctionData={auctionData}
-                node={{ increment: 1.0, bid: 23.0 }}
-              />
+              <AuctionTimer user={user} auctionData={auctionData} node />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>14</strong>
+                <strong>{auctionData?.['number_of_bids'] || 0}</strong>
               </div>
               <div>{t('number_bids')}</div>
             </div>
@@ -367,9 +378,20 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
             }}
           </UserInfoBySubject>
         </div>
-        <div className="md-cell md-cell--12">
+        <div className="md-cell md-cell--12 btn-cell">
           {
-            isAdmin ? (
+            auctionData?.['last_bid'] &&
+            auctionData?.['last_bid']?.['member_subject'] === user?.subject ? (
+              <Button
+                primary
+                flat
+                swapTheming
+                // onClick={() => setDocAction(true)}
+                className="auction-highest-btn"
+              >
+                Current Highest Bidder
+              </Button>
+            ) : admin ? (
               <Button
                 primary
                 flat
@@ -386,14 +408,17 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
                   primary
                   swapTheming
                   className="auction-details-btn"
-                  onClick={() =>
-                    isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                  onClick={
+                    () =>
+                      isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                    // setBidDialog(true)
                   }
                 >
                   {t('bid_now')}
                 </Button>
               )
             )
+
             // ) : (
             //   <div className="auction-details-card md-cell md-cell--12">
             //     <div className="fees-commission-title">{t('fees')}</div>
@@ -429,7 +454,7 @@ const AuctionDetail = ({ auctionId, isAdmin = true, logged }) => {
           <div className="key-features-content">{renderKeyFeatures()}</div>
         </div>
       )}
-      {(isAdmin || isActive) && (
+      {(admin || isActive) && (
         <div className="fees-commission md-cell md-cell--12">
           <div className="fees-commission-title">{t('fees')}</div>
           <div className="fees-commission-content">

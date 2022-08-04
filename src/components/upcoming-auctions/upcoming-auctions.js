@@ -30,6 +30,7 @@ const UpcomingAuctions = ({ cards, logged, user }) => {
         key={el?.uuid}
         auctionData={el}
         status={renderStatus(el)}
+        saveAuctionTag
       />
     ))
   return (
