@@ -190,7 +190,7 @@ const CreateAuctionStepper = ({
           /> */}
         </div>
       </div>
-      <div className="create-auction-body">{renderCurrentTabContent()}</div>
+      <div className="">{renderCurrentTabContent()}</div>
       <div className="create-auction-footer">
         <Button
           flat
@@ -205,7 +205,7 @@ const CreateAuctionStepper = ({
           primary={!validData()}
           flat
           swapTheming={!validData()}
-          disabled={validData()}
+          // disabled={validData()}
           onClick={() =>
             currentStep > 2
               ? auctionUuid

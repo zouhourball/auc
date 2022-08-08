@@ -66,7 +66,36 @@
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
+    align-items: center;
+    .images {
+      flex-grow: 1;
 
+      .btn {
+        background-color: #7a839f;
+        font-size: 14px;
+      }
+      .box {
+        display: flex;
+        gap: 8px;
+        .mdi-file-pdf {
+          font-size: 35px;
+        }
+        .file {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          &-name {
+            font-size: 14px;
+            text-align: center;
+            color: #2f3842;
+          }
+          &-size {
+            font-size: 12px;
+            color: #727677;
+          }
+        }
+      }
+    }
     .img-item {
       justify-content: center;
       margin: 10px;
@@ -87,6 +116,8 @@
       display: inline-block;
       position: relative;
       margin: 5px;
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
 
       .cover-tag {
         display: flex;
@@ -101,7 +132,7 @@
         background-color: rgb(64, 194, 118);
         box-shadow: 0 3px 5px 0 rgba(#000, 0.16);
         color: #fff;
-        font-size: 16px;
+        font-size: 14px;
       }
 
       .cover {
@@ -179,7 +210,7 @@
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0.54);
         color: white;
-        font-size: 20px;
+        font-size: 18px;
         cursor: pointer;
       }
 

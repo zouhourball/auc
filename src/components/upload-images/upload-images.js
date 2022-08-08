@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useDropzone } from 'react-dropzone'
-import { Document, Page, pdfjs } from 'react-pdf'
+import { pdfjs } from 'react-pdf'
 import { cls } from 'reactutils'
 import { Button, FontIcon, DialogContainer } from 'react-md'
 // import { useSelector } from 'react-redux'
@@ -43,7 +43,6 @@ const UploadImages = ({
   const [fileSrc, setFileSrc] = useState('')
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
-
   const downloadToken = store?.getState()?.app?.dlToken
 
   const onDropFiles = (fls) => {
@@ -95,6 +94,7 @@ const UploadImages = ({
         ])
     })
   }
+
   const { getRootProps, getInputProps, open } = useDropzone({
     accept: accept,
     onDrop: onDropFiles,
@@ -229,6 +229,7 @@ const UploadImages = ({
   //     </div>
   //   ))
   // }
+
   const renderFiles = () => {
     return files?.map((file, index) => (
       <div
@@ -288,18 +289,36 @@ const UploadImages = ({
             {file.selected ? 'radio_button_checked' : 'radio_button_unchecked'}
           </Button>
         )}
-        {file?.type === 'application/pdf' ? ( // .pdf
-          <Document
-            className="imgPdfWrapper"
-            file={`${file.url}?token=${downloadToken}&view=true`}
-            onLoadSuccess={() => {}}
-            options={{
-              withCredentials: true,
-            }}
-          >
-            <Page pageNumber={1} />
-          </Document>
+        {file?.type === 'application/pdf' ? (
+          // .pdf
+
+          <>
+            {' '}
+            <div className="box">
+              <FontIcon
+                icon
+                iconClassName={`mdi mdi-file-pdf`}
+                title={file?.options?.metadata?.filename}
+              />
+              <div className="file">
+                <div className="file-name">
+                  {file?.options?.metadata?.filename}
+                </div>{' '}
+                <div className="file-size">{file?.size}</div>
+              </div>
+            </div>
+          </>
         ) : (
+          // <Document
+          //   className="imgPdfWrapper"
+          //   file={`${file.url}?token=${downloadToken}&view=true`}
+          //   onLoadSuccess={() => {}}
+          //   options={{
+          //     withCredentials: true,
+          //   }}
+          // >
+          //   <Page pageNumber={1} />
+          // </Document>
           <>
             {file?.type ===
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ? ( // .doc, .docs
