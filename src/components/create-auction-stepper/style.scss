@@ -26,6 +26,11 @@
       border-radius: 18px;
       font-size: 22px;
 
+      &[disabled] {
+        background-color: #5079e146;
+        color: #fff;
+      }
+
       &.md-text--theme-primary {
         border: 2px solid #5078e1;
       }

@@ -38,7 +38,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   const fileInputCustom = (key) => {
     return (
       <UploadImages
-        cover
+        // cover
         title={
           <>
             <span className="drop-zone-placeholder">
