@@ -13,7 +13,7 @@ import './style.scss'
 
 const MyAuctions = () => {
   const [tab, setTab] = useState(0)
-  const { data: auctionsData } = useQuery(
+  const { data: auctionsData, refetch } = useQuery(
     [
       tab === 1 ? 'savedAuctions' : 'myAuctions',
       {
@@ -62,6 +62,7 @@ const MyAuctions = () => {
           }
           : {})}
         {...(tab === 1 ? { saveAuctionTag: false } : {})}
+        refetch={() => refetch()}
       />
     ))
   return (

@@ -74,7 +74,9 @@ const Admin = (logged, auctionId) => {
   return (
     <div className="admin-page">
       <div className="admin-page-header">
-        <div className="admin-page-logo">LOGO</div>
+        <div className="admin-page-logo" onClick={() => navigate('/admin')}>
+          LOGO
+        </div>
         <Button
           onClick={() => {
             cleanUp()

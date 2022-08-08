@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import store from 'libs/store'
 import { useTranslation } from 'libs/langs'
 
-import { saveAsFav } from 'libs/api/auctions-api'
+import { saveAsFav, unsaveAsFav } from 'libs/api/auctions-api'
 
 import { addToast } from 'modules/app/actions'
 
@@ -50,6 +50,29 @@ const BiddingCard = ({
       }
     },
   })
+  const unsaveAuctionMutation = useMutation(unsaveAsFav, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={'Auction is removed from favorites list successfully'}
+              type="success"
+            />,
+            'hide',
+          ),
+        )
+        refetch()
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Something is wrong'} type="error" />,
+            'hide',
+          ),
+        )
+      }
+    },
+  })
   const { t } = useTranslation()
 
   const renderBtnTitle = () => {
@@ -60,6 +83,11 @@ const BiddingCard = ({
 
   const saveAuction = (uuid) => {
     saveAuctionMutation.mutate({
+      uuid,
+    })
+  }
+  const unsaveAuction = (uuid) => {
+    unsaveAuctionMutation.mutate({
       uuid,
     })
   }
@@ -90,7 +118,7 @@ const BiddingCard = ({
             icon
             primary
             className="save-btn"
-            onClick={() => saveAuction(auctionData?.uuid)}
+            onClick={() => unsaveAuction(auctionData?.uuid)}
           >
             bookmark_inlined
           </Button>
@@ -118,7 +146,9 @@ const BiddingCard = ({
               }
             </div>
             <div className="title">
-              {auctionData?.listing?.title} in {auctionData.location}
+              {auctionData?.listing?.title} in{' '}
+              {auctionData?.listing?.property?.city?.['name_en']},{' '}
+              {auctionData?.listing?.property?.country?.['name_en']}
             </div>
             <div className="description">
               {t('date_start')}{' '}

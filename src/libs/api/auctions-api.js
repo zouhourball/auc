@@ -315,6 +315,19 @@ export const saveAsFav = async ({ uuid }) => {
   }
   return res
 }
+
+// UNSAVE AS FAVOURITE
+export const unsaveAsFav = async ({ uuid }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${uuid}/unsave-as-fav`, {
+      method: 'PUT',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 export const updateImgs = async ({ uuid, body }) => {
   let res
   try {

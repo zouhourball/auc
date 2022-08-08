@@ -13,10 +13,10 @@ const AuctionsPublic = ({ logged, user }) => {
   //
 
   const { data: featAuctions } = useQuery(
-    ['featuredAuctions', 'Upcoming', 4],
+    ['featuredAuctions', 'Active', 4],
     featuredAuctions,
   )
-  const { data: upcomingAuctionsData } = useQuery(
+  const { data: upcomingAuctionsData, refetch } = useQuery(
     [logged ? 'UpcomingAuctions' : 'featuredAuctions', 'Upcoming', 4],
     logged ? listAuction : featuredAuctions,
   )
@@ -28,6 +28,7 @@ const AuctionsPublic = ({ logged, user }) => {
         cards={upcomingAuctionsData?.results}
         logged={logged}
         user={user}
+        refetch={() => refetch()}
       />
     </>
   )

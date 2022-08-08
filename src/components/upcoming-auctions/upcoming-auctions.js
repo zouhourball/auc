@@ -7,7 +7,7 @@ import { navigate } from '@reach/router'
 
 import './styles.scss'
 
-const UpcomingAuctions = ({ cards, logged, user }) => {
+const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
   const { t } = useTranslation()
 
   const renderStatus = (auction) => {
@@ -31,6 +31,7 @@ const UpcomingAuctions = ({ cards, logged, user }) => {
         auctionData={el}
         status={renderStatus(el)}
         saveAuctionTag
+        refetch={refetch}
       />
     ))
   return (

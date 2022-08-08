@@ -107,7 +107,13 @@ const TopBar = ({
           onClick={onClickLogo}
         >
           <picture>
-            <span>Logo</span>
+            <span
+              onClick={() =>
+                logged ? navigate('/auctions/home') : navigate('/public/home')
+              }
+            >
+              Logo
+            </span>
             {/* <img src={ logoWebp} alt="icon" height="40px" /> */}
           </picture>
         </h1>
