@@ -64,38 +64,53 @@
 
   &-content {
     display: flex;
+    align-items: center;
     overflow-x: auto;
     white-space: nowrap;
-    align-items: center;
-    .images {
-      flex-grow: 1;
 
-      .btn {
-        background-color: #7a839f;
-        font-size: 14px;
+    .upload-images {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      padding: 0 5px;
+      border: solid 1px #eaeaea;
+      border-radius: 4px;
+
+      .close-btn {
+        order: 2;
+        color: #7a839f;
+        font-size: 20px;
       }
+
       .box {
         display: flex;
+        flex-grow: 1;
+        order: 1;
         gap: 8px;
+
         .mdi-file-pdf {
           font-size: 35px;
         }
+
         .file {
           display: flex;
           flex-direction: column;
           justify-content: center;
+
           &-name {
+            color: #2f3842;
             font-size: 14px;
             text-align: center;
-            color: #2f3842;
           }
+
           &-size {
-            font-size: 12px;
             color: #727677;
+            font-size: 12px;
           }
         }
       }
     }
+
     .img-item {
       justify-content: center;
       margin: 10px;
@@ -176,8 +191,8 @@
         .react-pdf__Page {
           .react-pdf__Page__canvas {
             width: 100px !important;
-            object-fit: fill !important;
             height: 150px !important;
+            object-fit: fill !important;
           }
 
           .react-pdf__Page__textContent {

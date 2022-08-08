@@ -234,7 +234,7 @@ const UploadImages = ({
     return files?.map((file, index) => (
       <div
         key={index}
-        className={'images'}
+        className={'upload-images'}
         onClick={() => {
           cover && !selected && chooseCover(file)
         }}
@@ -268,9 +268,9 @@ const UploadImages = ({
               e.stopPropagation()
               onRemove(index, file)
             }}
-            className="btn"
+            className="close-btn"
           >
-            delete
+            cancel
           </FontIcon>
         )}
         {cover && file?.cover && <div className="cover-tag">Cover</div>}
