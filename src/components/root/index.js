@@ -95,22 +95,17 @@ const Private = withOAuth()(({ ssoCallback }) => {
     },
   })
   const roles = useMemo(() => data?.mev2?.roles, [data])
-  const auctionRole = roles?.map((role) => {
-    let roleSplitted = role.split(':')
-    return (roleSplitted = roleSplitted
-      .slice(roleSplitted?.length - 3, roleSplitted?.length)
-      .join(' '))
-  })
+  const auctionRole = roles?.includes('public:auction:template:approver')
 
   return (
     <Router>
       <SSO path="/sso/callback" ssoCallback={ssoCallback} />
-      {auctionRole?.find((el) => el === 'auction template approver') && (
+      {auctionRole && (
         <>
           <Redirect from="/auctions/home" to="/admin" />
+          <Admin path={'/admin'} />
         </>
       )}
-      <Admin path={'/admin'} />
 
       <App path="/*" langs={langs} />
     </Router>
