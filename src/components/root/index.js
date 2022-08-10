@@ -6,13 +6,16 @@ import {
   // graphql,
   useQuery as useQueryGraphql,
 } from 'react-apollo'
+
 import { Router, Redirect } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 // import { ShellProvider } from '@target-energysolutions/app-shell'
 // import { get as getLodash } from 'lodash-es'
 import meQuery from 'libs/queries/me-query.gql'
+import { getFSToken, getFSDlToken } from 'libs/api'
+import store from 'libs/store'
 
 import { LangProvider, useSupportedLangs } from 'libs/langs'
 
@@ -53,6 +56,16 @@ Root.propTypes = {
 
 export default hot(Root)
 const Main = () => {
+  const { data: dataTokenUp } = useQuery('getFSToken', getFSToken)
+  const { data: dataTokenDo } = useQuery('getFSDlToken', getFSDlToken)
+  store.dispatch({
+    type: 'APP_SET_FS_TOKEN',
+    payload: { uplToken: dataTokenUp?.['file_token'] },
+  })
+  store.dispatch({
+    type: 'APP_SET_FS_DL_TOKEN',
+    payload: { dlToken: dataTokenDo?.['file_token'] },
+  })
   // const { data } =
   //   location.pathname.split('/').filter((v) => v !== '')[0] !== 'home'
   //     ? useQueryGraphql(meQuery, {

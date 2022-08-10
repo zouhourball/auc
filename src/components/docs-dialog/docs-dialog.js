@@ -1,9 +1,12 @@
 import { Button, DialogContainer, FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import store from 'libs/store'
+
 import './style.scss'
 
 const DocumentsContainer = ({ data, visible, onHide }) => {
   const { t } = useTranslation()
+  const downloadToken = store?.getState()?.app?.dlToken
 
   const renderFileName = (key) => {
     switch (key) {
@@ -32,8 +35,22 @@ const DocumentsContainer = ({ data, visible, onHide }) => {
             ),
           ) || 'file'}
         </div>
-        <Button className="viewBtn">{t('view')}</Button>
-        <Button className="downloadBtn">{t('download')}</Button>
+        <Button
+          className="viewBtn"
+          onClick={() => {
+            window.open(`${el?.url}?token=${downloadToken}&view=true`)
+          }}
+        >
+          {t('view')}
+        </Button>
+        <Button
+          className="downloadBtn"
+          onClick={() => {
+            window.open(`${el?.url}?token=${downloadToken}`)
+          }}
+        >
+          {t('download')}
+        </Button>
       </li>
     ))
   return (
