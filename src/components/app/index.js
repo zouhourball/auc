@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
-import { useQuery as useQueryReact } from 'react-query'
+// import { useQuery as useQueryReact } from 'react-query'
 import { get as getLodash } from 'lodash-es'
 // import { AppShellSide } from '@target-energysolutions/app-shell'
 // import { cleanUp } from '@target-energysolutions/hoc-oauth'
 // import * as cookies from 'tiny-cookie'
-import store from 'libs/store'
+// import store from 'libs/store'
 import {
   //  navigate,
   Router,
@@ -16,7 +16,7 @@ import {
   Snackbar,
   //  SVGIcon
 } from 'react-md'
-import { getFSToken, getFSDlToken } from 'libs/api'
+// import { getFSToken, getFSDlToken } from 'libs/api'
 import Home from 'components/home'
 import { IntlContext, ContentContext } from 'components/app/context'
 
@@ -38,16 +38,16 @@ const Shell = ({ lang }) => {
       uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
     },
   })
-  const { data: dataTokenUp } = useQueryReact('getFSToken', getFSToken)
-  const { data: dataTokenDo } = useQueryReact('getFSDlToken', getFSDlToken)
-  store.dispatch({
-    type: 'APP_SET_FS_TOKEN',
-    payload: { uplToken: dataTokenUp?.['file_token'] },
-  })
-  store.dispatch({
-    type: 'APP_SET_FS_DL_TOKEN',
-    payload: { dlToken: dataTokenDo?.['file_token'] },
-  })
+  // const { data: dataTokenUp } = useQueryReact('getFSToken', getFSToken)
+  // const { data: dataTokenDo } = useQueryReact('getFSDlToken', getFSDlToken)
+  // store.dispatch({
+  //   type: 'APP_SET_FS_TOKEN',
+  //   payload: { uplToken: dataTokenUp?.['file_token'] },
+  // })
+  // store.dispatch({
+  //   type: 'APP_SET_FS_DL_TOKEN',
+  //   payload: { dlToken: dataTokenDo?.['file_token'] },
+  // })
   const { toasts } = useSelector(({ app, shell, query }) => ({
     organizationID: shell.organizationId,
     toasts: app.toasts,
