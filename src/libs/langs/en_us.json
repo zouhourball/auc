@@ -177,5 +177,15 @@
   "term4": "The value of participating in the auction is (500) five hundred Omani riyals, refundable for those who did not win the auction, and this does not include the registration fees on the electronic platform",
   "term5": "Inspection of the site is an examination due to ignorance before participating in the bidding, and accordingly the bidder is considered to have fulfilled this condition just for his participation so that he cannot later claim any ignorance regarding the site, and bear the costs incurred in case of preparing or reclaiming the site for the establishment of the project",
   "i_agree_to_the_terms_and_conditions": "I agree on the terms and conditions",
-  "property_description_placeholder": "Enter property description…"
+  "property_description_placeholder": "Enter property description…",
+  "Home": "Home",
+  "Villa": "Villa",
+  "Apartment": "Apartment",
+  "Hostel": "Hostel",
+  "Land": "Land",
+  "Building": "Building",
+  "Shop": "Shop",
+  "Office": "Office",
+  "Plot": "Plot",
+  "Unit": "Unit"
 }

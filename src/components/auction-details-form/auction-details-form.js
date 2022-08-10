@@ -1,4 +1,4 @@
-import { useTranslation } from 'libs/langs'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 // import { useQuery as useQueryHook } from 'react-apollo-hooks'
@@ -18,6 +18,7 @@ import './style.scss'
 
 const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const { t } = useTranslation()
+  const lang = useCurrentLang()
 
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
@@ -58,7 +59,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     if (getCountryList) {
       arrayName = getCountryList?.results?.map((ac) => {
         return {
-          label: ac.name_en,
+          label: lang === 'ar' ? ac.name_ar : ac.name_en,
           value: `${ac.id}`,
         }
       })
@@ -181,7 +182,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
           placeholder={t('property_select')}
-          menuItems={propertyTypeList}
+          menuItems={propertyTypeList.map((pr) => {
+            return { label: t(pr.label), value: pr.value }
+          })}
           value={propertyType}
           onChange={(propertyType) =>
             onSetFormDetails('propertyType', propertyType)
