@@ -118,19 +118,17 @@ const BiddingCard = ({
             icon
             primary
             className="save-btn"
+            iconClassName="fa fa-bookmark"
             onClick={() => unsaveAuction(auctionData?.uuid)}
-          >
-            bookmark_inlined
-          </Button>
+          />
         ) : (
           <Button
             icon
             primary
             className="save-btn"
+            iconClassName="fa fa-bookmark-o"
             onClick={() => saveAuction(auctionData?.uuid)}
-          >
-            bookmark_outlined
-          </Button>
+          />
         )}
       </div>
       <div className="bidding-card-footer">
