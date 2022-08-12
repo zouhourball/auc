@@ -12,6 +12,7 @@ import Footer from 'components/footer'
 import BrokerPage from 'components/broker-page'
 
 import './style.scss'
+import HowItWorks from 'components/how-it-works'
 
 const Public = () => {
   const { t } = useTranslation()
@@ -59,6 +60,7 @@ const Public = () => {
           <BrokerPage path={'/broker'} />
 
           <AuctionDetail path={'/detail/:auctionId'} />
+          <HowItWorks path={'/how-it-works'} />
         </Router>
       </Suspense>
 
