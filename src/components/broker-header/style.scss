@@ -1,0 +1,83 @@
+.broker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background-color: #fff;
+
+  &-title {
+    //border-bottom: 3px solid #5078e1;
+    border-radius: 3px;
+    color: #5078e1;
+    font-size: 20px;
+    font-weight: 700;
+
+    &.active {
+      position: relative;
+      color: #1979ff;
+      font-weight: 700;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: auto;
+        right: -4px;
+        bottom: -15px;
+        left: 4px;
+        height: 4px;
+        border-radius: 8px 8px 0 0;
+        background-color: #1979ff;
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+
+    .switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 300px;
+      padding: 4px;
+      border-radius: 8px;
+      background-color: #eee;
+      gap: 12px;
+
+      &-toggle {
+        flex-grow: 1;
+        width: auto;
+        padding: 3px;
+        border: none;
+        border-radius: 6px;
+        color: #5078e1;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+
+        &.active {
+          background-color: #fff;
+        }
+      }
+    }
+
+    .search-field {
+      width: auto;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #eee;
+
+      .md-text-field--margin {
+        margin-top: 0;
+      }
+
+      .md-divider {
+        display: none;
+      }
+    }
+  }
+}

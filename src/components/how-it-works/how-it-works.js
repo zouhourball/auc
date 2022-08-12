@@ -13,8 +13,8 @@ const HowItWorks = () => {
           FREQUENTLY ASKED QUESTIONS
         </div>
       </div>
-      <div className="md-grid how-it-works-body">
-        <div className="md-cell md-cell--2">
+      <div className="how-it-works-body">
+        <div className="">
           <div className="tabs-select">
             <Button
               className={selectedTab ? 'active' : 'inactive'}
@@ -30,12 +30,12 @@ const HowItWorks = () => {
             </Button>
           </div>
         </div>
-        <div className="md-cell md-cell--10">
-          <ExpansionList className="md-cell md-cell--12">
+        <div className="">
+          <ExpansionList className="expansion-list">
             {(selectedTab ? questions1 : questions2).map((el) => (
               <ExpansionPanel key={el.id} label={el.title} footer={null}>
-                <h3>{el?.subtitle}</h3>
-                <p>{el?.answer}</p>
+                <div className="subtitle">{el?.subtitle}</div>
+                <p className="description">{el?.answer}</p>
               </ExpansionPanel>
             ))}
           </ExpansionList>
