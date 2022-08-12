@@ -17,6 +17,7 @@ import ParticipatedAuctions from 'components/my-participation'
 import MyAuctionDetails from 'components/my-auction-details'
 import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
+import BrokerPage from 'components/broker-page'
 
 import './style.scss'
 
@@ -34,7 +35,7 @@ const Home = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
-    { label: t('services'), key: 'services', linkToNewTab: 'services' },
+    { label: t('Broker'), key: 'broker', linkToNewTab: 'broker' },
     {
       label: t('how_it_works'),
       key: 'how-it-works',
@@ -85,6 +86,7 @@ const Home = () => {
               path={page}
             />
           ))}
+          <BrokerPage path={'/broker'} />
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />
           ))}

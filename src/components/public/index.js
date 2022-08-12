@@ -9,6 +9,7 @@ import AuctionsList from 'components/auctions-list'
 import AuctionDetail from 'components/auction-detail'
 import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
+import BrokerPage from 'components/broker-page'
 
 import './style.scss'
 
@@ -22,7 +23,7 @@ const Public = () => {
   const { authorizationUri, clientId, scopes } = OauthHelper.config
 
   const modulesList = [
-    { label: 'Services', key: 'services', linkToNewTab: 'services' },
+    { label: 'Broker', key: 'broker', linkToNewTab: 'broker' },
     {
       label: 'How it works',
       key: 'how-it-works',
@@ -55,6 +56,8 @@ const Public = () => {
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
             <AuctionsList key={i} path={page} />
           ))}
+          <BrokerPage path={'/broker'} />
+
           <AuctionDetail path={'/detail/:auctionId'} />
         </Router>
       </Suspense>

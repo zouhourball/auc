@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div onClick={() => {}} className="footer-logo">
-        LOGO
+        ZEED
       </div>
       <div className="footer-right">
         <div onClick={() => {}}>{t('download_app')}</div>

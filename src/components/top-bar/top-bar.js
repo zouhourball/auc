@@ -112,7 +112,7 @@ const TopBar = ({
                 logged ? navigate('/auctions/home') : navigate('/public/home')
               }
             >
-              Logo
+              ZEED
             </span>
             {/* <img src={ logoWebp} alt="icon" height="40px" /> */}
           </picture>
