@@ -1,0 +1,39 @@
+.how-it-works {
+  &-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+
+    &-image-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    &-title {
+      z-index: 1;
+      color: white;
+      font-size: 36px;
+    }
+  }
+
+  &-body {
+    .tabs-select {
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+      > .active {
+        border-left: 3px solid rgb(27, 169, 235);
+      }
+
+      > .inactive {
+        color: grey;
+      }
+    }
+  }
+}

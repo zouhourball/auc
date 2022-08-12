@@ -11,6 +11,7 @@ import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
 
 import './style.scss'
+import HowItWorks from 'components/how-it-works'
 
 const Public = () => {
   const { t } = useTranslation()
@@ -56,6 +57,7 @@ const Public = () => {
             <AuctionsList key={i} path={page} />
           ))}
           <AuctionDetail path={'/detail/:auctionId'} />
+          <HowItWorks path={'/how-it-works'} />
         </Router>
       </Suspense>
 

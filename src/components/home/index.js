@@ -19,6 +19,7 @@ import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
 
 import './style.scss'
+import HowItWorks from 'components/how-it-works'
 
 const queryClient = new QueryClient()
 
@@ -89,6 +90,7 @@ const Home = () => {
             <MyAuctions key={i} path={page} />
           ))}
           <ParticipatedAuctions path={'/my-participation'} />
+          <HowItWorks path={'/how-it-works'} />
           {[
             '/detail/:auctionId',
             '/detail/:auctionId/public/:callback',
