@@ -270,7 +270,7 @@ const UploadImages = ({
             }}
             className="close-btn"
           >
-            cancel
+            delete
           </FontIcon>
         )}
         {cover && file?.cover && <div className="cover-tag">Cover</div>}
@@ -448,7 +448,7 @@ const UploadImages = ({
               <FontIcon className="mdi mdi-loading mdi-spin" primary />
             </div>
           ) : (
-            <div className="upload-images-content">
+            <div className="upload-images-content ">
               {withIconDoc
                 ? /* renderFilesWithIcon() */ renderFilesWithIcon()
                 : renderFiles()}{' '}
