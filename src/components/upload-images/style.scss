@@ -67,18 +67,43 @@
     align-items: center;
     overflow-x: auto;
     white-space: nowrap;
+    gap: 8px;
 
     .upload-images {
       display: flex;
+      position: relative;
       flex-grow: 1;
       align-items: center;
       padding: 0 5px;
-      border: solid 1px #eaeaea;
       border-radius: 4px;
+      text-align: center;
+
+      > img {
+        flex-grow: 1;
+        width: auto;
+        height: 200px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+
+      .cover {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        padding: 5px 12px;
+        transform: translate(-50%, -50%);
+        border-radius: 17px;
+        background-color: #fff;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        color: #7c7c7c;
+      }
 
       .close-btn {
+        position: absolute;
+        top: 8px;
+        right: 16px;
         order: 2;
-        color: #7a839f;
+        color: #5078e1;
         font-size: 20px;
       }
 

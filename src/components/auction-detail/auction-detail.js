@@ -369,6 +369,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                       setShowContactInfo({
                         ownerName: res?.fullName,
                         contact: res?.email,
+                        type: 'email',
                       })
                     }
                     // res?.phoneMobile
@@ -382,6 +383,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                       setShowContactInfo({
                         ownerName: res?.fullName,
                         contact: res?.phoneMobile,
+                        type: 'phone',
                       })
                     }
                     // res?.email
