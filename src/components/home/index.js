@@ -36,7 +36,7 @@ const Home = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
-    { label: t('Broker'), key: 'broker', linkToNewTab: 'broker' },
+    { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
     {
       label: t('how_it_works'),
       key: 'how-it-works',

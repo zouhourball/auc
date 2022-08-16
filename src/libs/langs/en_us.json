@@ -187,5 +187,6 @@
   "Shop": "Shop",
   "Office": "Office",
   "Plot": "Plot",
-  "Unit": "Unit"
+  "Unit": "Unit",
+  "broker": "Broker"
 }

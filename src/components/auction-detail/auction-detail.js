@@ -42,12 +42,13 @@ import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
 
 import './style.scss'
+import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
 
 const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
-
+  const [showContactInfo, setShowContactInfo] = useState(null)
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -364,6 +365,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                     floating
                     iconEl={<img src={mailIcon} />}
                     className="owner-card-btn"
+                    onClick={() =>
+                      setShowContactInfo({
+                        ownerName: res?.fullName,
+                        contact: res?.email,
+                      })
+                    }
                     // res?.phoneMobile
                   />
                   <Button
@@ -371,6 +378,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                     primary
                     iconEl={<img src={phoneIcon} />}
                     className="owner-card-btn"
+                    onClick={() =>
+                      setShowContactInfo({
+                        ownerName: res?.fullName,
+                        contact: res?.phoneMobile,
+                      })
+                    }
                     // res?.email
                   />
                 </>
@@ -494,6 +507,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}
+        />
+      )}
+      {showContactInfo && (
+        <ContactInfoDialog
+          visible={showContactInfo}
+          onHide={() => setShowContactInfo()}
         />
       )}
     </div>

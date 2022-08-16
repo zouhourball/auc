@@ -1,5 +1,4 @@
 module.exports = {
-  OAUTH_CLIENT_SECRET: JSON.stringify('DzXZxyDObSpsnR7qLqQ4p1LEVoIiE49e'),
   OAUTH_CLIENT_ID: JSON.stringify('meera-dx'),
   OAUTH_HOST: JSON.stringify('https://sso-v2.dev.meeraspace.com'),
   OAUTH_CALLBACK_HOST: JSON.stringify('https://profile.dev.meeraspace.com'),
