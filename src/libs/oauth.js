@@ -1,6 +1,5 @@
 export default {
   clientId: OAUTH_CLIENT_ID,
-  clientSecret: OAUTH_CLIENT_SECRET,
   accessTokenUri: `${OAUTH_HOST}/token`,
   authorizationUri: `${OAUTH_HOST}/auth`,
   redirectUri:
