@@ -10,7 +10,6 @@
     "GIT_COMMIT_HASH": false,
     "OAUTH_HOST": false,
     "OAUTH_CLIENT_ID": false,
-    "OAUTH_CLIENT_SECRET": false,
     "GRPC_API": false,
     "GRAPHQL_API": false,
     "API_KEYWORDS": false,

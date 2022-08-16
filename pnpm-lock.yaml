@@ -7,7 +7,7 @@ dependencies:
   '@target-energysolutions/auth-check': 0.3.7_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/gis-map': 2.9.104_250825046311308e722f6f77c6a4d405
-  '@target-energysolutions/hoc-oauth': 1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e
+  '@target-energysolutions/hoc-oauth': 2.1.2_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/messenger': 17.2.3_98caf3aa5b7bda04ab62d3a034d181a2
   '@target-energysolutions/mht': 2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/react-hoc-query': 1.0.4_7bda62a7d4688a636121e068167982a0
@@ -5042,11 +5042,12 @@ packages:
       react-dom: ^16.2.0
     resolution:
       integrity: sha512-KvHYqUu+yqjXgSKlV+lbeXifoY7LwfYTj3OIXhfTDx830p7vwjzLtvsvqI5pRN2x+dgC1OS07w/PX5a8mkVlcg==
-  /@target-energysolutions/hoc-oauth/1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e:
+  /@target-energysolutions/hoc-oauth/2.1.2_bdb4aea89f170aaa1ddb585ff4b9f19e:
     dependencies:
       client-oauth2: 4.3.3
       fake-progress: 1.0.4
       jsonwebtoken: 8.5.1
+      nanoid: 4.0.0
       prop-types: 15.8.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -5058,7 +5059,7 @@ packages:
       react: ^16.2.0
       react-dom: ^16.2.0
     resolution:
-      integrity: sha512-c/bpqyA1DjxM2KF+OUOAz+lrYsphgNNcrZpsH3XaEN9FZIHoRRgKD7JAZGKXFeBDq++68+qvg302jUDFJ+CMEA==
+      integrity: sha512-zs+wSB+MSZ4HzTpjRbiwMPaltLttPV3cFShWI3j57thRjwXkTYPOr77f06vR6CHkXX8bA++uVLy0ot23GL1yig==
   /@target-energysolutions/material-design/0.6.3_c4837f62d683678630715495e19ab5ba:
     dependencies:
       '@material/dialog': 3.1.0
@@ -14000,30 +14001,30 @@ packages:
   /lodash.includes/4.3.0:
     dev: false
     resolution:
-      integrity: sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
+      integrity: sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==
   /lodash.isboolean/3.0.3:
     dev: false
     resolution:
-      integrity: sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=
+      integrity: sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==
   /lodash.isequal/4.5.0:
     resolution:
       integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=
   /lodash.isinteger/4.0.4:
     dev: false
     resolution:
-      integrity: sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=
+      integrity: sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==
   /lodash.isnumber/3.0.3:
     dev: false
     resolution:
-      integrity: sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=
+      integrity: sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==
   /lodash.isplainobject/4.0.6:
     dev: false
     resolution:
-      integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+      integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
   /lodash.isstring/4.0.1:
     dev: false
     resolution:
-      integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
+      integrity: sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==
   /lodash.memoize/4.1.2:
     dev: true
     resolution:
@@ -14035,7 +14036,7 @@ packages:
   /lodash.once/4.1.1:
     dev: false
     resolution:
-      integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
+      integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==
   /lodash.template/4.5.0:
     dependencies:
       lodash._reinterpolate: 3.0.0
@@ -14796,6 +14797,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-sFVPaa2J4i0JB/ehKwmTpdlhN+8=
+  /nanoid/4.0.0:
+    dev: false
+    engines:
+      node: ^14 || ^16 || >=18
+    hasBin: true
+    resolution:
+      integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -22483,7 +22491,7 @@ specifiers:
   '@target-energysolutions/auth-check': ^0.3.7
   '@target-energysolutions/date-picker': ^3.1.5
   '@target-energysolutions/gis-map': ^2.9.104
-  '@target-energysolutions/hoc-oauth': ^1.3.2
+  '@target-energysolutions/hoc-oauth': ^2.1.2
   '@target-energysolutions/messenger': ^17.1.11
   '@target-energysolutions/mht': 2.22.3-beta.4
   '@target-energysolutions/react-hoc-query': ^1.0.4
