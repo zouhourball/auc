@@ -1,6 +1,6 @@
 import { useCurrentLang, useTranslation } from 'libs/langs'
-import { useState } from 'react'
-import { useQuery } from 'react-query'
+import { useEffect, useState } from 'react'
+import { useInfiniteQuery, useQuery } from 'react-query'
 // import { useQuery as useQueryHook } from 'react-apollo-hooks'
 import { TextField, FontIcon, SelectField } from 'react-md'
 import moment from 'moment'
@@ -27,7 +27,24 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [endTime, setEndTime] = useState(moment())
   const [addressView, setAddressView] = useState(false)
 
-  const { data: getCountryList } = useQuery(['getCountry'], getCountry)
+  // const { data: getCountryList } = useQuery(['getCountry'], getCountry)
+
+  const {
+    data: getCountryList,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery([25], getCountry, {
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (
+        pages.length <=
+        Math.ceil(+lastPage?.pagination?.total / +lastPage?.pagination?.limit)
+      ) {
+        return pages.length
+      }
+    },
+  })
+
   const { data: getCityList } = useQuery(
     ['getCity', auctionDetails?.country],
     getCity,
@@ -57,12 +74,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const renderCountry = () => {
     let arrayName = []
     if (getCountryList) {
-      arrayName = getCountryList?.results?.map((ac) => {
-        return {
-          label: lang === 'ar' ? ac.name_ar : ac.name_en,
-          value: `${ac.id}`,
-        }
-      })
+      arrayName = getCountryList?.pages
+        ?.flatMap((el) => el?.results)
+        ?.map((ac) => {
+          return {
+            label: lang === 'ar' ? ac.name_ar : ac.name_en,
+            value: `${ac.id}`,
+          }
+        })
       return arrayName
     }
   }
@@ -92,6 +111,21 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     participationFee,
     guaranteeFee,
   } = auctionDetails
+
+  const ref = document.getElementsByClassName('country-list')
+  const [test, setTest] = useState(0)
+  useEffect(() => {
+    ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
+
+    return () =>
+      ref[0] && ref[0].removeEventListener('scroll', updateOffsetAndRefetch)
+  }, [test])
+
+  const updateOffsetAndRefetch = () => {
+    if (ref[0].scrollHeight - ref[0].scrollTop <= ref[0].clientHeight) {
+      hasNextPage && fetchNextPage()
+    }
+  }
 
   return (
     <div className="auction-details-form md-grid">
@@ -143,8 +177,10 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">{t('country')}</label>
         <SelectField
+          onClick={() => setTest(1)}
           id="select-field-with-elements-country-spinner"
           placeholder={t('select_country')}
+          listClassName="country-list"
           menuItems={renderCountry()}
           value={country || 1}
           onChange={(country) => onSetFormDetails('country', country)}
