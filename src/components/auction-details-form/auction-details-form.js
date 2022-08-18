@@ -186,10 +186,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(country) => onSetFormDetails('country', country)}
           fullWidth
           position={SelectField.Positions.BELOW}
-          repositionOnResize
-          repositionOnScroll
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-          simplifiedMenu={false}
           className="selectField-withShadow"
         />
       </div>
@@ -203,10 +200,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(city) => onSetFormDetails('city', city)}
           fullWidth
           position={SelectField.Positions.BELOW}
-          repositionOnResize
-          repositionOnScroll
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-          simplifiedMenu={false}
           className="selectField-withShadow"
         />
       </div>
@@ -227,10 +221,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           }
           fullWidth
           position={SelectField.Positions.BELOW}
-          repositionOnResize
-          repositionOnScroll
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-          simplifiedMenu={false}
           className="selectField-withShadow"
         />
       </div>
