@@ -380,12 +380,15 @@ export const getWilayats = async ({ queryKey }) => {
 }
 // get country
 
-export const getCountry = async ({ queryKey }) => {
+export const getCountry = async ({ queryKey, pageParam = 0 }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/countries`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${appUrl}/api/v1/countries?page=${pageParam}&limit=${queryKey[0]}`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }
