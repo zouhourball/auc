@@ -8,16 +8,51 @@ const BrokerHeader = ({
   numForeign = 0,
   searchVal,
   setSearch,
+  tabs,
+  filters,
 }) => {
   const { t } = useTranslation()
+  const renderTabs = () =>
+    tabs?.map((el) => (
+      <div
+        key={el?.key}
+        className={el?.className}
+        onClick={() => el?.onClick()}
+      >
+        {el?.title}
+      </div>
+    ))
 
+  const renderFilters = () =>
+    filters?.map((el) => (
+      <button
+        key={el?.key}
+        className={el?.className}
+        onClick={() => el?.onClick()}
+      >
+        {el?.title} ({el?.num})
+      </button>
+    ))
   return (
     <div className="broker-header">
-      <div className="broker-header-title active">Broker Company</div>
+      {tabs ? (
+        renderTabs()
+      ) : (
+        <div className="broker-header-title active">Broker Company</div>
+      )}
       <div className="broker-header-actions">
         <div className="switch">
-          <button className="switch-toggle active">Omani ({numOmani})</button>
-          <button className="switch-toggle">Foreign ({numForeign})</button>
+          {filters ? (
+            renderFilters()
+          ) : (
+            <>
+              {' '}
+              <button className="switch-toggle active">
+                Omani ({numOmani})
+              </button>
+              <button className="switch-toggle">Foreign ({numForeign})</button>
+            </>
+          )}
         </div>
         <TextField
           className="search-field"

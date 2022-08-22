@@ -17,7 +17,7 @@ export const configs = [
     displayInCsv: true,
   },
   {
-    label: 'Owner',
+    label: 'Company Broker',
     key: 'owner',
     width: '200',
     type: 'text',
@@ -57,6 +57,57 @@ export const configs = [
   {
     label: 'Documents',
     key: 'documents',
+    width: '200',
+    type: 'text',
+    displayInCsv: true,
+  },
+]
+export const newBrokersConfigs = [
+  {
+    label: 'Logo',
+    key: 'logo',
+    width: '200',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Company Name',
+    key: 'companyName',
+    width: '200',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Country',
+    key: 'country',
+    width: '300',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Address',
+    key: 'address',
+    width: '200',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Email',
+    key: 'email',
+    width: '300',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Phone No',
+    key: 'phone',
+    width: '200',
+    type: 'text',
+    displayInCsv: true,
+  },
+  {
+    label: 'Status',
+    key: 'status',
     width: '200',
     type: 'text',
     displayInCsv: true,
