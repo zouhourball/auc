@@ -1,13 +1,42 @@
 @import '../broker-page/style.scss';
 
 .admin-page {
-  padding: 0 4.02vw;
+  padding: 0 4.02vw 4vh;
+
+  .broker-page {
+    padding: 0;
+  }
 
   &-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 0;
+
+    > h1 {
+      color: #7c7c7c;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+    margin-left: auto;
+    gap: 20px;
+
+    .item {
+      color: #7c7c7c;
+      font-size: 18px;
+      font-weight: normal;
+
+      &.active {
+        color: #3d3d3e;
+        font-weight: bold;
+      }
+    }
   }
 
   &-logo {
@@ -118,6 +147,17 @@
 
     .wrapper.white {
       border-bottom: none;
+    }
+
+    .subject {
+      display: flex;
+      align-items: center;
+    }
+
+    .md-avatar--default {
+      margin-right: 8px;
+      background: transparent;
+      color: #f5f5f5;
     }
 
     .status {

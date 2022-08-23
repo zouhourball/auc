@@ -253,14 +253,14 @@ const Admin = (logged, auctionId) => {
   const headerTabs = [
     {
       key: 'broker',
-      className: `${activeHeaderTab === 0 ? 'active' : ''}`,
+      className: `broker-header-title ${activeHeaderTab === 0 ? 'active' : ''}`,
       onClick: () => setActiveHeaderTab(0),
       title: 'Broker Company',
     },
 
     {
       key: 'bidder',
-      className: `${activeHeaderTab === 1 ? 'active' : ''}`,
+      className: `broker-header-title ${activeHeaderTab === 1 ? 'active' : ''}`,
       onClick: () => setActiveHeaderTab(1),
       title: 'Bidders',
     },
@@ -268,22 +268,22 @@ const Admin = (logged, auctionId) => {
   const headerFilters = [
     {
       key: 'citizen',
-      className: `${filter === 0 ? 'active' : ''}`,
+      className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
       title: 'Omani Citizen',
       num: 10,
     },
     {
       key: 'resident',
-      className: `${filter === 0 ? 'active' : ''}`,
-      onClick: () => setFilter(0),
+      className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
+      onClick: () => setFilter(1),
       title: 'Omani Resident',
       num: 10,
     },
     {
       key: 'foreign',
-      className: `${filter === 0 ? 'active' : ''}`,
-      onClick: () => setFilter(0),
+      className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
+      onClick: () => setFilter(2),
       title: 'Foreign',
       num: 10,
     },
@@ -305,24 +305,24 @@ const Admin = (logged, auctionId) => {
         <div className="admin-page-logo" onClick={() => navigate('/admin')}>
           ZEED
         </div>
-        <div>
+        <div className="admin-page-actions">
           <div
-            className={`${currentTab === 0 && 'active'}`}
-            onClick={() => setCurrentTab(0)}
+            className={`item ${currentTab === 2 && 'active'}`}
+            onClick={() => setCurrentTab(2)}
           >
-            Auctions
+            Registered Bidders & Brokers
           </div>
           <div
-            className={`${currentTab === 1 && 'active'}`}
+            className={`item ${currentTab === 1 && 'active'}`}
             onClick={() => setCurrentTab(1)}
           >
             New Registered Broker
           </div>
           <div
-            className={`${currentTab === 2 && 'active'}`}
-            onClick={() => setCurrentTab(2)}
+            className={`item ${currentTab === 0 && 'active'}`}
+            onClick={() => setCurrentTab(0)}
           >
-            Registered Bidders & Brokers
+            Auctions
           </div>
         </div>
         <Button

@@ -1,9 +1,12 @@
 import BrokerHeader from 'components/broker-header'
+import { useState } from 'react'
 import { Avatar, Card, CardActions, CardTitle } from 'react-md'
 
 import './style.scss'
 
 const BrokerPage = () => {
+  const [activeHeaderTab, setActiveHeaderTab] = useState(0)
+  const [filter, setFilter] = useState(0)
   const dummyData = [
     {
       name: 'broker name',
@@ -102,6 +105,37 @@ const BrokerPage = () => {
       img: 'url',
     },
   ]
+  // <>
+  //             {' '}
+  //             <button className="switch-toggle active">
+  //               Omani ({numOmani})
+  //             </button>
+  //             <button className="switch-toggle">Foreign ({numForeign})</button>
+  //           </>
+  const headerTabs = [
+    {
+      key: 'broker',
+      className: `broker-header-title ${activeHeaderTab === 0 ? 'active' : ''}`,
+      onClick: () => setActiveHeaderTab(0),
+      title: 'Broker Company',
+    },
+  ]
+  const headerFilters = [
+    {
+      key: 'omani',
+      className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
+      onClick: () => setFilter(0),
+      title: 'Omani',
+      num: 10,
+    },
+    {
+      key: 'foreign',
+      className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
+      onClick: () => setFilter(1),
+      title: 'Foreign',
+      num: 10,
+    },
+  ]
   const renderCards = () =>
     dummyData?.map((el) => (
       // <div key={el?.name}>
@@ -136,7 +170,7 @@ const BrokerPage = () => {
     ))
   return (
     <div className="broker-page">
-      <BrokerHeader />
+      <BrokerHeader tabs={headerTabs} filters={headerFilters} />
       <div className="broker-page-cards">{renderCards()}</div>
     </div>
   )

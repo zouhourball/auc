@@ -35,25 +35,9 @@ const BrokerHeader = ({
     ))
   return (
     <div className="broker-header">
-      {tabs ? (
-        renderTabs()
-      ) : (
-        <div className="broker-header-title active">Broker Company</div>
-      )}
+      {tabs && renderTabs()}
       <div className="broker-header-actions">
-        <div className="switch">
-          {filters ? (
-            renderFilters()
-          ) : (
-            <>
-              {' '}
-              <button className="switch-toggle active">
-                Omani ({numOmani})
-              </button>
-              <button className="switch-toggle">Foreign ({numForeign})</button>
-            </>
-          )}
-        </div>
+        <div className="switch">{filters && renderFilters()}</div>
         <TextField
           className="search-field"
           type="text"

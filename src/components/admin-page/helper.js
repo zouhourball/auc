@@ -111,6 +111,9 @@ export const newBrokersConfigs = [
     width: '200',
     type: 'text',
     displayInCsv: true,
+    render: (row) => {
+      return <div className={`status ${row.status}`}>{row.status}</div>
+    },
   },
 ]
 export const dummyDataMht = (setDocDialog) => [
