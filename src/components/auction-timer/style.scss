@@ -83,25 +83,25 @@
     .countdown {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       padding: 8px 0;
       border: solid 2px #000;
       border-radius: 13px;
-      gap: 18px;
+      // gap: 18px;
 
       .value {
         color: #3d3d3e;
-        font-size: 40px;
+        font-size: calc(16px + 1.7vw);
       }
 
       .label {
         color: #3d3d3e;
-        font-size: 40px;
+        font-size: calc(16px + 1.7vw);
       }
 
       &-separator {
         color: #3d3d3e;
-        font-size: 40px;
+        font-size: calc(16px + 1.7vw);
       }
     }
   }

@@ -92,13 +92,12 @@ const BiddingCard = ({
     })
   }
   return (
-    <div className={`bidding-card ${className || ''}`}>
-      <div
-        className="mask"
-        onClick={() =>
-          detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
-        }
-      ></div>
+    <div
+      className={`bidding-card ${className || ''}`}
+      onClick={() =>
+        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
+      }
+    >
       <img
         src={`${
           auctionData?.listing?.images?.find((img) => img?.['cover_image'])
@@ -119,7 +118,10 @@ const BiddingCard = ({
             primary
             className="save-btn"
             iconClassName="fa fa-bookmark"
-            onClick={() => unsaveAuction(auctionData?.uuid)}
+            onClick={(e) => {
+              e.stopPropagation()
+              unsaveAuction(auctionData?.uuid)
+            }}
           />
         ) : (
           <Button
@@ -127,7 +129,10 @@ const BiddingCard = ({
             primary
             className="save-btn"
             iconClassName="fa fa-bookmark-o"
-            onClick={() => saveAuction(auctionData?.uuid)}
+            onClick={(e) => {
+              e.stopPropagation()
+              saveAuction(auctionData?.uuid)
+            }}
           />
         )}
       </div>
