@@ -44,7 +44,7 @@ const AuctionsList = ({ logged, user }) => {
     auctionsData?.results?.map((el) => (
       <BiddingCard
         user={user}
-        className="md-cell md-cell--6"
+        className="md-cell md-cell--4"
         key={el?.uuid}
         auctionData={el}
         status={type}
