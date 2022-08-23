@@ -48,7 +48,7 @@ const ParticipatedAuctions = () => {
   const renderCards = () => {
     return myAuctions?.results?.map((el, i) => (
       <BiddingCard
-        className="md-cell md-cell--6"
+        className="md-cell md-cell--4"
         key={i}
         auctionData={el}
         status={tab === 0 ? 'active' : 'active'}
