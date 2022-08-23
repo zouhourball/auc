@@ -6,26 +6,23 @@ import {
   // graphql,
   useQuery as useQueryGraphql,
 } from 'react-apollo'
-
+import { useMemo } from 'react'
 import { Router, Redirect } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-// import { ShellProvider } from '@target-energysolutions/app-shell'
-// import { get as getLodash } from 'lodash-es'
+
 import meQuery from 'libs/queries/me-query.gql'
 import { getFSToken, getFSDlToken } from 'libs/api'
 import store from 'libs/store'
-
 import { LangProvider, useSupportedLangs } from 'libs/langs'
 
 import App from 'components/app'
 import SSO from 'components/sso'
 import GeneralErrorBoundary from 'components/general-error-boundary'
-
 import Public from 'components/public'
 import Admin from 'components/admin-page'
-import { useMemo } from 'react'
+import RegistrationPage from 'components/registration'
 
 const queryClient = new QueryClient()
 
@@ -80,6 +77,7 @@ const Main = () => {
 
   return (
     <Router>
+      <RegistrationPage path={'/registration'} />
       <Public path={'/public/*'} />
       <Private path={'/*'} />
     </Router>

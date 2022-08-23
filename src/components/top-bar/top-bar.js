@@ -246,7 +246,7 @@ const TopBar = ({
               <Button
                 flat
                 className="login-btn new-user"
-                onClick={() => onClickRegisterUrl && onClickRegisterUrl()}
+                onClick={() => navigate('/registration')}
               >
                 {t('register')}
               </Button>

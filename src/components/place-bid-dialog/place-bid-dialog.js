@@ -42,7 +42,7 @@ const PlaceBidDialog = ({
           placeholder={t('add_bidding_amount_placeholder')}
           value={bidAmount}
           onChange={setBidAmount}
-          rightIcon={<span>AED</span>}
+          rightIcon={<span>OMR</span>}
           type="number"
           // error={bidAmount < lastBidAmount + incrementPrice}
           // errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
@@ -50,12 +50,12 @@ const PlaceBidDialog = ({
       </div>
       <div className="amounts">
         <div className="lastBid">
-          <div className="title">{lastBidAmount} AED</div>
+          <div className="title">{lastBidAmount} OMR</div>
           <div className="value">{t('last_bid_amount')}</div>
         </div>
         <div className="sep" />
         <div className="increment">
-          <div className="title"> {incrementPrice} AED</div>
+          <div className="title"> {incrementPrice} OMR</div>
           <div className="value">{t('increment_price')}</div>
         </div>
       </div>

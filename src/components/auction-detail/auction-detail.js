@@ -302,14 +302,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
             <div className="auction-timer-details">
               <div className="auction-timer-info">
                 <div>
-                  <strong>{auctionData?.['starting_price']} AED</strong>
+                  <strong>{auctionData?.['starting_price']} OMR</strong>
                 </div>
                 <div>{t('start_price')}</div>
               </div>
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
-                  <strong> {auctionData?.['incremental_price']} AED</strong>
+                  <strong> {auctionData?.['incremental_price']} OMR</strong>
                 </div>
                 <div>{t('minimum_incr')}</div>
               </div>
