@@ -219,10 +219,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
         </div>
 
         <img
-          className="gallery-image md-cell md-cell--12"
+          className="gallery-image md-cell md-cell--9"
           src={`${currentImg}?token=${downloadToken}&view=true`}
         />
-        <div className="gallery-image-wrapper md-cell md-cell--12">
+        <div className="gallery-image-wrapper md-cell md-cell--3">
           {renderPropertyImages()}
         </div>
       </div>

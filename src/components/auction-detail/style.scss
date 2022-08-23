@@ -1,5 +1,6 @@
 /* stylelint-disable */
 .auction-details {
+  align-items: flex-start;
   padding: 0 4.02vw !important;
 
   &-header {
@@ -110,8 +111,8 @@
 
       &-item {
         display: flex;
-        gap: 8px;
         align-items: center;
+        gap: 8px;
       }
     }
 
@@ -133,6 +134,7 @@
 
     &-wrapper {
       display: flex;
+      flex-direction: column;
       align-items: center;
       padding: 8px;
       overflow: auto;
@@ -141,7 +143,8 @@
 
     &.item {
       flex: 0 0 calc(25% - 12px);
-      width: calc(25% - 12px);
+      width: 100%;
+      height: calc(25% - 12px);
       border-radius: 30px;
     }
   }
