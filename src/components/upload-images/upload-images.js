@@ -270,7 +270,7 @@ const UploadImages = ({
             }}
             className="close-btn"
           >
-            delete
+            cancel
           </FontIcon>
         )}
         {cover && file?.cover && <div className="cover-tag">Cover</div>}
