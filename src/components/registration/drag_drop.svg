@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="24px" viewBox="0 0 23 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>drag_drop</title>
+    <g id="Contract-Management-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="drag_drop" transform="translate(2.000000, 2.000000)" stroke="#5078e1" stroke-width="3">
+            <path d="M0,15.2941176 L0,17.6470588 C0,18.9465524 1.06332372,20 2.375,20 L16.625,20 C17.9366763,20 19,18.9465524 19,17.6470588 L19,15.2941176" id="Path"></path>
+            <polyline id="Path" points="3.5625 5.88235294 9.5 0 15.4375 5.88235294"></polyline>
+            <line x1="9.5" y1="0" x2="9.5" y2="14.1176471" id="Path"></line>
+        </g>
+    </g>
+</svg>
