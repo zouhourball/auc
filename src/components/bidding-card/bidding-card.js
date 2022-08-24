@@ -112,7 +112,7 @@ const BiddingCard = ({
           user?.subject === auctionData.last_bid?.['member_subject'] && (
             <div className="highest-bidder">{t('highest_bidder')}</div>
           )}
-        {auctionData?.['is_bookmarked'] || !saveAuctionTag ? (
+        {auctionData?.['is_bookmarked'] ? (
           <Button
             icon
             primary

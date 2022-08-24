@@ -97,8 +97,17 @@ const RegistrationPage = () => {
               id={'country-code'}
               menuItems={countriesCodes}
               value={countryCode}
-              onChange={(value) => setValues('countryCode', value)}
+              onChange={(value) => {
+                setValues('countryCode', value)
+                // console.log(value, 'valuue')
+              }}
+              // getActiveLabel={(item) =>
+              //   console.log(item?.activeItem, 'valuuuue')
+              // }
+              placeholder={'Country Code'}
+              // itemProps={'flag'}
             />
+
             <TextField
               id={'phone'}
               placeholder="Enter phone number"

@@ -1,22 +1,32 @@
 import { useState, useEffect } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
-import { TextField, Button, FontIcon } from 'react-md'
-import UploadImages from 'components/upload-images'
-import { useTranslation } from 'libs/langs'
+import { TextField, Button, FontIcon, SelectField } from 'react-md'
+import { useQuery, useMutation, useInfiniteQuery } from 'react-query'
+import moment from 'moment'
+import { DatePicker } from '@target-energysolutions/date-picker'
+import { useDispatch } from 'react-redux'
+
+import { addToast } from 'modules/app/actions'
+import { propertyTypeList } from 'components/helpers'
+
+import { useTranslation, useCurrentLang } from 'libs/langs'
 import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import {
+  getAuction,
+  updateAuction,
+  updateImgs,
+  getCountry,
+  getCity,
+} from 'libs/api/auctions-api'
 
-import { dummyData } from './helpers'
+// import { dummyData } from './helpers'
 
-import { useQuery, useMutation } from 'react-query'
-import { getAuction, updateAuction, updateImgs } from 'libs/api/auctions-api'
-import moment from 'moment'
-import { DatePicker } from '@target-energysolutions/date-picker'
+import DrawOnMap from 'components/draw-on-map'
+import UploadImages from 'components/upload-images'
 import { DueDate } from 'components/due-date'
-import { useDispatch } from 'react-redux'
-import { addToast } from 'modules/app/actions'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
 
@@ -24,6 +34,7 @@ import './style.scss'
 
 const MyAuctionDetails = ({ auctionId }) => {
   const { t } = useTranslation()
+  const lang = useCurrentLang()
   const dispatch = useDispatch()
 
   const [keyFeature, setKeyFeature] = useState()
@@ -33,16 +44,18 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [editMode, setEditMode] = useState(false)
   const [images, setImages] = useState([])
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
+  const [addressView, setAddressView] = useState(false)
 
   const [auctionEditData, setAuctionEditData] = useState({
-    title: '',
-    propertyType: '',
-    city: '',
-    startDate: '',
-    endDate: '',
-    startingPrice: '',
-    incrementalPrice: '',
-    description: '',
+    // title: '',
+    // propertyType: '',
+    // country: '',
+    // city: '',
+    // startDate: '',
+    // endDate: '',
+    // startingPrice: '',
+    // incrementalPrice: '',
+    // description: '',
   })
   const [showDatePicker, setShowDatePicker] = useState(false)
 
@@ -51,11 +64,28 @@ const MyAuctionDetails = ({ auctionId }) => {
     ['auctionDetails', auctionId],
     getAuction,
   )
+  const {
+    data: getCountryList,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery([25], getCountry, {
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (
+        pages.length <=
+        Math.ceil(+lastPage?.pagination?.total / +lastPage?.pagination?.limit)
+      ) {
+        return pages.length
+      }
+    },
+  })
+
   useEffect(() => {
     setAuctionEditData({
       title: auctionDetails?.listing?.title,
       propertyType: auctionDetails?.listing?.property?.['property_type_id'],
-      city: auctionDetails?.listing?.property?.city?.['name_en'],
+      city: auctionDetails?.listing?.property?.city?.id,
+      country: auctionDetails?.listing?.property?.country?.id,
       startDate: auctionDetails?.['auction_start_date'],
       endDate: auctionDetails?.['auction_end_date'],
       startingPrice: auctionDetails?.['starting_price'],
@@ -65,7 +95,10 @@ const MyAuctionDetails = ({ auctionId }) => {
     })
     setImages(auctionDetails?.listing?.images)
   }, [auctionDetails])
-
+  const { data: getCityList } = useQuery(
+    ['getCity', auctionDetails?.listing?.property?.country?.id],
+    getCity,
+  )
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
     variables: { auctionUUID: auctionId },
@@ -97,6 +130,47 @@ const MyAuctionDetails = ({ auctionId }) => {
     )
   }
   const downloadToken = store?.getState()?.app?.dlToken
+  const renderCountry = () => {
+    let arrayName = []
+    if (getCountryList) {
+      arrayName = getCountryList?.pages
+        ?.flatMap((el) => el?.results)
+        ?.map((ac) => {
+          return {
+            label: lang === 'ar' ? ac.name_ar : ac.name_en,
+            value: `${ac.id}`,
+          }
+        })
+      return arrayName
+    }
+  }
+  const renderCity = () => {
+    let arrayName = []
+    if (getCityList) {
+      arrayName = getCityList?.results?.map((ac) => {
+        return {
+          label: ac.name_en,
+          value: `${ac.id}`,
+        }
+      })
+      return arrayName
+    }
+  }
+
+  const ref = document.getElementsByClassName('country-list')
+  const [test, setTest] = useState(0)
+  useEffect(() => {
+    ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
+
+    return () =>
+      ref[0] && ref[0].removeEventListener('scroll', updateOffsetAndRefetch)
+  }, [test])
+
+  const updateOffsetAndRefetch = () => {
+    if (ref[0].scrollHeight - ref[0].scrollTop <= ref[0].clientHeight) {
+      hasNextPage && fetchNextPage()
+    }
+  }
 
   // const renderSuggestedKeys = () => {
   //   return auctionEditData?.keyFeatures?.map((key, i) => (
@@ -254,7 +328,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             className="auction-details-form-textField"
             block
           />
-          <TextField
+          {/* <TextField
             id={'property-type'}
             label={t('property_type_label')}
             value={auctionEditData?.propertyType}
@@ -264,16 +338,58 @@ const MyAuctionDetails = ({ auctionId }) => {
             disabled={!editMode}
             className="auction-details-form-textField"
             block
-          />
+          /> */}
+          <div className="md-cell md-cell--6">
+            <label className="auction-details-form-label">
+              {t('property_type')}
+            </label>
+            <SelectField
+              id="select-field-with-elements-country-spinner"
+              // label={t('country')}
+              disabled={!editMode}
+              placeholder={t('property_select')}
+              menuItems={propertyTypeList.map((pr) => {
+                return { label: t(pr.label), value: pr.value }
+              })}
+              value={auctionEditData?.propertyType}
+              onChange={(propertyType) =>
+                onSetFormDetails('propertyType', propertyType)
+              }
+              fullWidth
+              position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+              className="selectField-withShadow"
+            />
+          </div>
           <TextField
             id={'address'}
             label={t('address_label')}
-            value={dummyData?.address}
+            value={auctionEditData?.address?.meta?.['display_name']}
             disabled={!editMode}
             className="auction-details-form-textField"
+            onClick={() => setAddressView(!addressView)}
             block
           />
-          <TextField
+          {addressView && (
+            <DrawOnMap
+              id={'address'}
+              onClose={() => {
+                setAddressView(false)
+              }}
+              visible={addressView}
+              onSetAddress={(newCoordinates) => {
+                setAuctionEditData({
+                  ...auctionEditData,
+                  address: {
+                    general_location_y: newCoordinates?.['lat'],
+                    general_location_x: newCoordinates?.['lon'],
+                    meta: newCoordinates,
+                  },
+                })
+              }}
+            />
+          )}
+          {/* <TextField
             id={'city'}
             label={t('city_label')}
             value={auctionEditData?.city}
@@ -283,15 +399,53 @@ const MyAuctionDetails = ({ auctionId }) => {
             disabled={!editMode}
             className="auction-details-form-textField"
             block
-          />
-          <TextField
-            id={'coundivy'}
+          /> */}
+          <div>
+            <span>{t('city_select')}</span>
+            <SelectField
+              id="select-field-with-elements-country-spinner"
+              onClick={() => setTest(1)}
+              // placeholder={t('city_select')}
+              menuItems={renderCity()}
+              value={auctionEditData?.city}
+              onChange={(city) =>
+                setAuctionEditData({ ...auctionEditData, city })
+              }
+              fullWidth
+              disabled={!editMode}
+              position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+              className="selectField-withShadow"
+            />
+          </div>
+          {/* <TextField
+            id={'auctionEditData'}
             label={t('coundivy_label')}
-            value={dummyData?.coundivy}
+            value={auctionEditData?.country}
             disabled={!editMode}
             className="auction-details-form-textField"
             block
-          />
+          /> */}
+          <div>
+            <span>{t('coundivy_label')}</span>
+            <SelectField
+              id={'auctionEditData'}
+              onClick={() => setTest(1)}
+              // label={t('coundivy_label')}
+              // placeholder={t('select_country')}
+              listClassName="country-list"
+              menuItems={renderCountry()}
+              value={auctionEditData?.country || 1}
+              onChange={(v) =>
+                setAuctionEditData({ ...auctionEditData, country: v })
+              }
+              fullWidth
+              disabled={!editMode}
+              position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+              className="selectField-withShadow"
+            />
+          </div>
           <div>
             <TextField
               id={'start-end-date'}

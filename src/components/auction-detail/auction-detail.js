@@ -213,7 +213,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                 },
               ]}
               longitude={auctionPropertyData?.['general_location_x']}
-              latitude={auctionPropertyData?.['general_location_x']}
+              latitude={auctionPropertyData?.['general_location_y']}
             />
           )}
         </div>

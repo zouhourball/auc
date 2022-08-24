@@ -17,7 +17,7 @@ const AuctionsPublic = ({ logged, user }) => {
     featuredAuctions,
   )
   const { data: upcomingAuctionsData, refetch } = useQuery(
-    [logged ? 'UpcomingAuctions' : 'featuredAuctions', 'Upcoming', 4],
+    [logged ? 'upcomingAuctions' : 'featuredAuctions', 'Upcoming', 5],
     logged ? listAuction : featuredAuctions,
   )
 
