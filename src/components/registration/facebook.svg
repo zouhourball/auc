@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="59" height="59" viewBox="0 0 59 59">
+  <defs>
+    <filter id="Rectangle_80" x="0" y="0" width="77" height="77" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_80-2" data-name="Rectangle 80" width="59" height="59" rx="20" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="facebook" transform="translate(0 0)">
+    <g id="Group_550" data-name="Group 550">
+      <g id="Group_533" data-name="Group 533" transform="translate(0 0)">
+        <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Rectangle_80)">
+          <rect id="Rectangle_80-3" data-name="Rectangle 80" width="59" height="59" rx="25" transform="translate(9 6)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+    <g id="Mask_Group_4" data-name="Mask Group 4" clip-path="url(#clip-path)">
+      <g id="Group_552" data-name="Group 552" transform="translate(0.096)">
+        <path id="Path_134" data-name="Path 134" d="M53.663,0h-46A7.532,7.532,0,0,0,0,7.375v44.25A7.532,7.532,0,0,0,7.666,59h46a7.532,7.532,0,0,0,7.666-7.375V7.375A7.532,7.532,0,0,0,53.663,0Z" fill="#1976d2"/>
+        <path id="Path_135" data-name="Path 135" d="M34.748,21.437H25.166V14.063c0-2.036,1.717-1.844,3.833-1.844h3.833V3H25.166a11.287,11.287,0,0,0-11.5,11.063v7.375H6v9.219h7.666V50.937h11.5V30.656h5.75Z" transform="translate(16.999 8.063)" fill="#fafafa" fill-rule="evenodd"/>
+      </g>
+    </g>
+  </g>
+</svg>
