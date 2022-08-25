@@ -317,78 +317,89 @@ const MyAuctionDetails = ({ auctionId }) => {
       </div>
       <div className="auction-details-info">
         <div className="auction-details-form">
-          <TextField
-            id={'title'}
-            label={t('title_label')}
-            value={auctionEditData?.title}
-            disabled={!editMode}
-            onChange={(v) =>
-              setAuctionEditData({ ...auctionEditData, title: v })
-            }
-            className="auction-details-form-textField"
-            block
-          />
-          {/* <TextField
-            id={'property-type'}
-            label={t('property_type_label')}
-            value={auctionEditData?.propertyType}
-            onChange={(v) =>
-              setAuctionEditData({ ...auctionEditData, propertyType: v })
-            }
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            block
-          /> */}
-          <div className="md-cell md-cell--6">
-            <label className="auction-details-form-label">
-              {t('property_type')}
-            </label>
-            <SelectField
-              id="select-field-with-elements-country-spinner"
-              // label={t('country')}
-              disabled={!editMode}
-              placeholder={t('property_select')}
-              menuItems={propertyTypeList.map((pr) => {
-                return { label: t(pr.label), value: pr.value }
-              })}
-              value={auctionEditData?.propertyType}
-              onChange={(propertyType) =>
-                onSetFormDetails('propertyType', propertyType)
-              }
-              fullWidth
-              position={SelectField.Positions.BELOW}
-              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-              className="selectField-withShadow"
-            />
+          <div className="column">
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('title_label')}
+              </label>
+              <TextField
+                id={'title'}
+                value={auctionEditData?.title}
+                disabled={!editMode}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, title: v })
+                }
+                className="auction-details-form-textField"
+                block
+              />
+            </div>
+            {/* <TextField
+                  id={'property-type'}
+                  label={t('property_type_label')}
+                  value={auctionEditData?.propertyType}
+                  onChange={(v) =>
+                    setAuctionEditData({ ...auctionEditData, propertyType: v })
+                  }
+                  disabled={!editMode}
+                  className="auction-details-form-textField"
+                  block
+                /> */}
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('property_type')}:
+              </label>
+              <SelectField
+                id="select-field-with-elements-country-spinner"
+                // label={t('country')}
+                disabled={!editMode}
+                placeholder={t('property_select')}
+                menuItems={propertyTypeList.map((pr) => {
+                  return { label: t(pr.label), value: pr.value }
+                })}
+                value={auctionEditData?.propertyType}
+                onChange={(propertyType) =>
+                  onSetFormDetails('propertyType', propertyType)
+                }
+                fullWidth
+                position={SelectField.Positions.BELOW}
+                dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+                className="selectField-lined"
+              />
+            </div>
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('address_label')}
+              </label>
+              <TextField
+                id={'address'}
+                value={auctionEditData?.address?.meta?.['display_name']}
+                disabled={!editMode}
+                className="auction-details-form-textField"
+                onClick={() => setAddressView(!addressView)}
+                block
+              />
+
+              {addressView && (
+                <DrawOnMap
+                  id={'address'}
+                  onClose={() => {
+                    setAddressView(false)
+                  }}
+                  visible={addressView}
+                  onSetAddress={(newCoordinates) => {
+                    setAuctionEditData({
+                      ...auctionEditData,
+                      address: {
+                        general_location_y: newCoordinates?.['lat'],
+                        general_location_x: newCoordinates?.['lon'],
+                        meta: newCoordinates,
+                      },
+                    })
+                  }}
+                />
+              )}
+            </div>
           </div>
-          <TextField
-            id={'address'}
-            label={t('address_label')}
-            value={auctionEditData?.address?.meta?.['display_name']}
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            onClick={() => setAddressView(!addressView)}
-            block
-          />
-          {addressView && (
-            <DrawOnMap
-              id={'address'}
-              onClose={() => {
-                setAddressView(false)
-              }}
-              visible={addressView}
-              onSetAddress={(newCoordinates) => {
-                setAuctionEditData({
-                  ...auctionEditData,
-                  address: {
-                    general_location_y: newCoordinates?.['lat'],
-                    general_location_x: newCoordinates?.['lon'],
-                    meta: newCoordinates,
-                  },
-                })
-              }}
-            />
-          )}
           {/* <TextField
             id={'city'}
             label={t('city_label')}
@@ -400,25 +411,28 @@ const MyAuctionDetails = ({ auctionId }) => {
             className="auction-details-form-textField"
             block
           /> */}
-          <div>
-            <span>{t('city_select')}</span>
-            <SelectField
-              id="select-field-with-elements-country-spinner"
-              onClick={() => setTest(1)}
-              // placeholder={t('city_select')}
-              menuItems={renderCity()}
-              value={auctionEditData?.city}
-              onChange={(city) =>
-                setAuctionEditData({ ...auctionEditData, city })
-              }
-              fullWidth
-              disabled={!editMode}
-              position={SelectField.Positions.BELOW}
-              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-              className="selectField-withShadow"
-            />
-          </div>
-          {/* <TextField
+          <div className="column">
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('city_select')}:
+              </label>
+              <SelectField
+                id="select-field-with-elements-country-spinner"
+                onClick={() => setTest(1)}
+                // placeholder={t('city_select')}
+                menuItems={renderCity()}
+                value={auctionEditData?.city}
+                onChange={(city) =>
+                  setAuctionEditData({ ...auctionEditData, city })
+                }
+                fullWidth
+                disabled={!editMode}
+                position={SelectField.Positions.BELOW}
+                dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+                className="selectField-lined"
+              />
+            </div>
+            {/* <TextField
             id={'auctionEditData'}
             label={t('coundivy_label')}
             value={auctionEditData?.country}
@@ -426,142 +440,152 @@ const MyAuctionDetails = ({ auctionId }) => {
             className="auction-details-form-textField"
             block
           /> */}
-          <div>
-            <span>{t('coundivy_label')}</span>
-            <SelectField
-              id={'auctionEditData'}
-              onClick={() => setTest(1)}
-              // label={t('coundivy_label')}
-              // placeholder={t('select_country')}
-              listClassName="country-list"
-              menuItems={renderCountry()}
-              value={auctionEditData?.country || 1}
-              onChange={(v) =>
-                setAuctionEditData({ ...auctionEditData, country: v })
-              }
-              fullWidth
-              disabled={!editMode}
-              position={SelectField.Positions.BELOW}
-              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-              className="selectField-withShadow"
-            />
-          </div>
-          <div>
-            <TextField
-              id={'start-end-date'}
-              label={t('start_end_dates_label')}
-              value={`${moment(auctionEditData?.startDate).format(
-                'DD/MM/YYYY',
-              )} - ${moment(auctionEditData?.endDate).format('DD/MM/YYYY')}`}
-              onChange={(v) =>
-                setAuctionEditData({ ...auctionEditData, startDate: v })
-              }
-              onClick={() => {
-                editMode && setShowDatePicker(true)
-              }}
-              disabled={!editMode}
-              className="auction-details-form-textField"
-              block
-            />
-            {showDatePicker && (
-              // <DatePicker
-              //   singlePick
-              //   translation={{ update: 'select' }}
-              //   onUpdate={(date) => onHandleDate(date, 'startDate')}
-              //   onCancel={() =>
-              //     setShowDatePicker({ ...showDatePicker, startDate: false })
-              //   }
-              //   minValidDate={{ timestamp: new Date().getTime() }}
-              //   startView="year"
-              //   endView="day"
-              // />
-              <DueDate
-                duedate={showDatePicker?.endDate}
-                startDate={showDatePicker?.startDate}
-                applicationStartDate={showDatePicker?.startDate}
-                onDateChange={(start, end) => {
-                  let startD = new Date(
-                    moment(start)
-                      .hour(moment(showDatePicker?.startTime).hour())
-                      .minute(moment(showDatePicker?.startTime).minute())
-                      .valueOf(),
-                  )
-                  let endD = new Date(
-                    moment(end)
-                      .hour(moment(showDatePicker?.endTime).hour())
-                      .minute(moment(showDatePicker?.endTime).minute())
-                      .valueOf(),
-                  )
-                  onSetDate(startD, endD)
-                  setShowDatePicker(!showDatePicker)
-                }}
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('coundivy_label')}
+              </label>
+              <SelectField
+                id={'auctionEditData'}
+                onClick={() => setTest(1)}
+                // label={t('coundivy_label')}
+                // placeholder={t('select_country')}
+                listClassName="country-list"
+                menuItems={renderCountry()}
+                value={auctionEditData?.country || 1}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, country: v })
+                }
+                fullWidth
+                disabled={!editMode}
+                position={SelectField.Positions.BELOW}
+                dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+                className="selectField-lined"
               />
-            )}
+            </div>
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('start_end_dates_label')}
+              </label>
+              <TextField
+                id={'start-end-date'}
+                value={`${moment(auctionEditData?.startDate).format(
+                  'DD/MM/YYYY',
+                )} - ${moment(auctionEditData?.endDate).format('DD/MM/YYYY')}`}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, startDate: v })
+                }
+                onClick={() => {
+                  editMode && setShowDatePicker(true)
+                }}
+                disabled={!editMode}
+                className="auction-details-form-textField"
+                block
+              />
+              {showDatePicker && (
+                // <DatePicker
+                //   singlePick
+                //   translation={{ update: 'select' }}
+                //   onUpdate={(date) => onHandleDate(date, 'startDate')}
+                //   onCancel={() =>
+                //     setShowDatePicker({ ...showDatePicker, startDate: false })
+                //   }
+                //   minValidDate={{ timestamp: new Date().getTime() }}
+                //   startView="year"
+                //   endView="day"
+                // />
+                <div className="date-picker">
+                  <DueDate
+                    duedate={showDatePicker?.endDate}
+                    startDate={showDatePicker?.startDate}
+                    applicationStartDate={showDatePicker?.startDate}
+                    onDateChange={(start, end) => {
+                      let startD = new Date(
+                        moment(start)
+                          .hour(moment(showDatePicker?.startTime).hour())
+                          .minute(moment(showDatePicker?.startTime).minute())
+                          .valueOf(),
+                      )
+                      let endD = new Date(
+                        moment(end)
+                          .hour(moment(showDatePicker?.endTime).hour())
+                          .minute(moment(showDatePicker?.endTime).minute())
+                          .valueOf(),
+                      )
+                      onSetDate(startD, endD)
+                      setShowDatePicker(!showDatePicker)
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
-          <div>
-            <TextField
-              id={'start-end-time'}
-              label={t('start_end_time_label')}
-              value={`${moment(auctionEditData?.startDate).format(
-                'HH:mm',
-              )} - ${moment(auctionEditData?.endDate).format('HH:mm')}`}
-              // onChange={(v) =>
-              //   setAuctionEditData({ ...auctionEditData, endDate: v })
-              // }
-              onClick={() => {
-                editMode && setVisibleStartTimePicker(true)
-              }}
-              disabled={!editMode}
-              className="auction-details-form-textField"
-              block
-            />
-            {visibleStartTimePicker && (
-              <>
-                <DatePicker
-                  startView="time"
-                  endView="time"
-                  singlePick={true}
-                  minuteInterval={5}
-                  timeFormat={null}
-                  onUpdate={({ timestamp }) => {
-                    setAuctionEditData({
-                      ...auctionEditData,
-                      startDate: new Date(
-                        moment(auctionEditData?.startDate)
-                          .hour(moment(timestamp).hour())
-                          .minute(moment(timestamp).minute())
-                          .valueOf(),
-                      ),
-                    })
-                    // setVisibleStartTimePicker(false)
-                  }}
-                  onCancel={() => setVisibleStartTimePicker(false)}
-                  translation={{ date: 'Time' }}
-                />
-                <DatePicker
-                  startView="time"
-                  endView="time"
-                  singlePick={true}
-                  minuteInterval={5}
-                  timeFormat={null}
-                  onUpdate={({ timestamp }) => {
-                    setAuctionEditData({
-                      ...auctionEditData,
-                      endDate: new Date(
-                        moment(auctionEditData?.endDate)
-                          .hour(moment(timestamp).hour())
-                          .minute(moment(timestamp).minute())
-                          .valueOf(),
-                      ),
-                    })
-                    setVisibleStartTimePicker(false)
-                  }}
-                  onCancel={() => setVisibleStartTimePicker(false)}
-                  translation={{ date: 'Time' }}
-                />
-              </>
-            )}
-            {/* {showDatePicker.endDate && (
+          <div className="column">
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('start_end_time_label')}
+              </label>
+              <TextField
+                id={'start-end-time'}
+                value={`${moment(auctionEditData?.startDate).format(
+                  'HH:mm',
+                )} - ${moment(auctionEditData?.endDate).format('HH:mm')}`}
+                // onChange={(v) =>
+                //   setAuctionEditData({ ...auctionEditData, endDate: v })
+                // }
+                onClick={() => {
+                  editMode && setVisibleStartTimePicker(true)
+                }}
+                disabled={!editMode}
+                className="auction-details-form-textField"
+                block
+              />
+              {visibleStartTimePicker && (
+                <div className="date-picker">
+                  <DatePicker
+                    startView="time"
+                    endView="time"
+                    singlePick={true}
+                    minuteInterval={5}
+                    timeFormat={null}
+                    onUpdate={({ timestamp }) => {
+                      setAuctionEditData({
+                        ...auctionEditData,
+                        startDate: new Date(
+                          moment(auctionEditData?.startDate)
+                            .hour(moment(timestamp).hour())
+                            .minute(moment(timestamp).minute())
+                            .valueOf(),
+                        ),
+                      })
+                      // setVisibleStartTimePicker(false)
+                    }}
+                    onCancel={() => setVisibleStartTimePicker(false)}
+                    translation={{ date: 'Time' }}
+                  />
+                  <DatePicker
+                    startView="time"
+                    endView="time"
+                    singlePick={true}
+                    minuteInterval={5}
+                    timeFormat={null}
+                    onUpdate={({ timestamp }) => {
+                      setAuctionEditData({
+                        ...auctionEditData,
+                        endDate: new Date(
+                          moment(auctionEditData?.endDate)
+                            .hour(moment(timestamp).hour())
+                            .minute(moment(timestamp).minute())
+                            .valueOf(),
+                        ),
+                      })
+                      setVisibleStartTimePicker(false)
+                    }}
+                    onCancel={() => setVisibleStartTimePicker(false)}
+                    translation={{ date: 'Time' }}
+                  />
+                </div>
+              )}
+              {/* {showDatePicker.endDate && (
               <DatePicker
                 singlePick
                 translation={{ update: 'select' }}
@@ -574,29 +598,41 @@ const MyAuctionDetails = ({ auctionId }) => {
                 endView="day"
               />
             )} */}
+            </div>
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('starting_price_label')}
+              </label>
+              <TextField
+                id={'starting-price'}
+                value={auctionEditData?.startingPrice}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, startingPrice: v })
+                }
+                disabled={!editMode}
+                className="auction-details-form-textField"
+                block
+              />
+            </div>
+            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+              <label className="auction-details-form-label">
+                {t('incremental_price_label')}
+              </label>
+              <TextField
+                id={'incremental-price'}
+                value={auctionEditData?.incrementalPrice}
+                onChange={(v) =>
+                  setAuctionEditData({
+                    ...auctionEditData,
+                    incrementalPrice: v,
+                  })
+                }
+                disabled={!editMode}
+                className="auction-details-form-textField"
+                block
+              />
+            </div>
           </div>
-          <TextField
-            id={'starting-price'}
-            label={t('starting_price_label')}
-            value={auctionEditData?.startingPrice}
-            onChange={(v) =>
-              setAuctionEditData({ ...auctionEditData, startingPrice: v })
-            }
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            block
-          />
-          <TextField
-            id={'incremental-price'}
-            label={t('incremental_price_label')}
-            value={auctionEditData?.incrementalPrice}
-            onChange={(v) =>
-              setAuctionEditData({ ...auctionEditData, incrementalPrice: v })
-            }
-            disabled={!editMode}
-            className="auction-details-form-textField"
-            block
-          />
         </div>
         <Button onClick={() => onDisableEdit()} icon primary>
           more_vert
@@ -622,7 +658,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 placeholder={t('key_features_placeholder')}
                 value={keyFeature}
                 onChange={(value) => setKeyFeature(value)}
-                className="textField-withShadow"
+                className="auction-details-description-textField"
                 // onClick={() => {
                 //   setSuggestedKeysPanel(true)
                 // }}
