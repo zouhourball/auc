@@ -25,44 +25,6 @@
       display: flex;
     }
 
-    &-form {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      flex-grow: 1;
-      // flex-wrap: wrap;
-      gap: 5px 20px;
-
-      &-textField {
-        display: flex;
-        // flex: 1 0 calc(33% - 10px);
-        align-items: center;
-        padding: 5px 0;
-        gap: 8px;
-
-        &:not(.md-text-field-container--disabled) {
-          box-shadow: 0 1px 0 0 #707070;
-
-          &:focus-within {
-            box-shadow: 0 1px 0 0 #1979ff;
-          }
-        }
-
-        .md-floating-label {
-          position: relative;
-          transform: none;
-          color: #7c7c7c;
-          font-size: 18px;
-          font-weight: 700;
-        }
-
-        .md-text-field {
-          color: #7c7c7c;
-          font-size: 18px;
-          font-weight: 500;
-        }
-      }
-    }
-
     &-description {
       display: flex;
       //  align-items: center;
@@ -98,6 +60,102 @@
           color: #7c7c7c;
           font-size: 18px;
           font-weight: 500;
+        }
+
+        .add-btn {
+          color: #5078e1;
+          font-size: 16px;
+          font-weight: bold;
+
+          .md-icon-text:last-child {
+            padding-left: 6px;
+          }
+        }
+      }
+    }
+
+    &-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      flex-grow: 1;
+      gap: 100px;
+
+      &-label {
+        color: #7c7c7c;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &.underlined {
+          border-bottom: 1px solid #707070;
+        }
+      }
+
+      &-textField {
+        display: flex;
+        position: relative;
+        flex: 1 0 calc(33% - 10px);
+        align-items: center;
+        padding: 5px 0;
+        gap: 8px;
+
+        // &:not(.md-text-field-container--disabled) {
+        //   // box-shadow: 0 1px 0 0 #707070;
+
+        //   &:focus-within {
+        //     // box-shadow: 0 1px 0 0 #1979ff;
+        //   }
+        // }
+
+        .md-floating-label {
+          position: relative;
+          transform: none;
+          color: #7c7c7c;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .md-text-field {
+          color: #7c7c7c;
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+
+      .date-picker {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        top: 30vh;
+      }
+
+      .selectField-lined {
+        flex: 1 0 calc(33% - 10px);
+
+        .md-text-field {
+          color: #7c7c7c;
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .md-icon {
+          display: none;
+        }
+
+        .md-select-field--btn {
+          padding-left: 0;
         }
       }
     }
