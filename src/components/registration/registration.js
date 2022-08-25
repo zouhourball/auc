@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TextField, Button, SelectField, Checkbox, FontIcon } from 'react-md'
 import { countriesCodes } from './helper'
 import { navigate } from '@reach/router'
+import {
+  getCountry,
+  // getCity,
+} from 'libs/api/auctions-api'
+import { useCurrentLang } from 'libs/langs'
+import { useInfiniteQuery } from 'react-query'
 
 import UploadImages from 'components/upload-images'
 import backgroundImage from './background_image.png'
@@ -26,8 +32,53 @@ const RegistrationPage = () => {
     countryId,
     logo,
   } = signupData
+  const lang = useCurrentLang()
+
   const setValues = (key, value) => {
     setSignupData((data) => ({ ...data, [key]: value }))
+  }
+  const {
+    data: getCountryList,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery([25], getCountry, {
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (
+        pages.length <=
+        Math.ceil(+lastPage?.pagination?.total / +lastPage?.pagination?.limit)
+      ) {
+        return pages.length
+      }
+    },
+  })
+  const renderCountry = () => {
+    let arrayName = []
+    if (getCountryList) {
+      arrayName = getCountryList?.pages
+        ?.flatMap((el) => el?.results)
+        ?.map((ac) => {
+          return {
+            label: lang === 'ar' ? ac.name_ar : ac.name_en,
+            value: `${ac.id}`,
+          }
+        })
+      return arrayName
+    }
+  }
+  const ref = document.getElementsByClassName('country-list')
+  const [test, setTest] = useState(0)
+  useEffect(() => {
+    ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
+
+    return () =>
+      ref[0] && ref[0].removeEventListener('scroll', updateOffsetAndRefetch)
+  }, [test])
+
+  const updateOffsetAndRefetch = () => {
+    if (ref[0].scrollHeight - ref[0].scrollTop <= ref[0].clientHeight) {
+      hasNextPage && fetchNextPage()
+    }
   }
   const renderView = () => {
     switch (currentTab) {
@@ -43,19 +94,26 @@ const RegistrationPage = () => {
             />
             <SelectField
               id={'country'}
-              menuItems={[]}
+              menuItems={renderCountry()}
+              listClassName="country-list"
               value={countryId}
-              onChange={(value) => setValues('councountryIdtry', value)}
+              onClick={() => setTest(1)}
+              onChange={(value) => setValues('countryId', value)}
               position={SelectField.Positions.BELOW}
               className="textField selectField"
+              placeholder="Choose Country"
             />
             <SelectField
               id={'country-code'}
               menuItems={countriesCodes}
+              // flag={flag}
+              // getActiveLabel={(data) => setFlag(data?.activeItem?.flag)}
               value={countryCode}
+              defaultValue={'+968'}
               onChange={(value) => setValues('countryCode', value)}
               position={SelectField.Positions.BELOW}
               className="textField selectField"
+              itemLabel="value"
             />
             <TextField
               id={'phone'}
@@ -114,9 +172,11 @@ const RegistrationPage = () => {
               <SelectField
                 id={'country-code'}
                 menuItems={countriesCodes}
+                defaultValue={'+968'}
                 value={countryCode}
                 onChange={(value) => setValues('countryCode', value)}
                 className="country-code"
+                itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
