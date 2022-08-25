@@ -155,8 +155,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             visible={addressView}
             onSetAddress={(newCoordinates) => {
               onSetFormDetails('address', {
-                general_location_x: newCoordinates?.['lat'],
-                general_location_y: newCoordinates?.['lon'],
+                general_location_y: newCoordinates?.['lat'],
+                general_location_x: newCoordinates?.['lon'],
                 meta: newCoordinates,
               })
             }}

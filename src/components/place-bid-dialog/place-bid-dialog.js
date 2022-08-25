@@ -24,7 +24,14 @@ const PlaceBidDialog = ({
         <Button key={1} flat onClick={onClickCancel}>
           {t('cancel')}
         </Button>,
-        <Button key={2} flat primary swapTheming onClick={onclickPlace}>
+        <Button
+          key={2}
+          flat
+          primary
+          disabled={bidAmount < lastBidAmount + incrementPrice}
+          swapTheming={!(bidAmount < lastBidAmount + incrementPrice)}
+          onClick={onclickPlace}
+        >
           {t('place_bid_button')}
         </Button>,
       ]}
@@ -37,15 +44,17 @@ const PlaceBidDialog = ({
       <div className="placeBid">
         <TextField
           className={`placeBid-TextField  ${
-            bidAmount < lastBidAmount + incrementPrice ? 'error' : ''
+            bidAmount && bidAmount < lastBidAmount + incrementPrice
+              ? 'error'
+              : ''
           }`}
           placeholder={t('add_bidding_amount_placeholder')}
           value={bidAmount}
           onChange={setBidAmount}
           rightIcon={<span>OMR</span>}
           type="number"
-          // error={bidAmount < lastBidAmount + incrementPrice}
-          // errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
+          error={bidAmount < lastBidAmount + incrementPrice}
+          errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
         />
       </div>
       <div className="amounts">
