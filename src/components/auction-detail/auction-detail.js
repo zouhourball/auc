@@ -156,6 +156,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   })
   useEffect(() => {
     refetchAuction()
+    // console.log(subNewBid, 'subNewBid')
   }, [subNewBid, timeExtension])
 
   const isActive =
