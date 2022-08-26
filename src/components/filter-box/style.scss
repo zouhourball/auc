@@ -1,0 +1,51 @@
+.filter-box {
+  margin: 8px 0;
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+
+  &-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-weight: bold;
+  }
+
+  &-content {
+    max-height: 250px;
+    padding: 1px 8px;
+    overflow: auto;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      margin: 8px;
+
+      .md-selection-control-container {
+        flex-grow: 1;
+        height: auto;
+      }
+
+      .md-selection-control-label {
+        justify-content: space-between;
+        width: 100%;
+
+        span {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .md-btn--icon {
+        width: 25px;
+        height: 25px;
+        padding: 3px;
+
+        &.md-text--theme-secondary {
+          color: #5078e1;
+        }
+      }
+    }
+  }
+}
