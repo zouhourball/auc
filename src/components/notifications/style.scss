@@ -1,0 +1,31 @@
+//style
+.notifications {
+  &-container {
+    &-content {
+      background: #fff;
+    }
+
+    &-filter {
+      .searchTextField {
+        // width: 250px;
+        padding: 13px 17px;
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+
+        .md-icon {
+          color: #5078e1;
+        }
+
+        .md-text-field-icon-container {
+          align-items: center;
+          justify-content: space-between;
+
+          .md-text-field {
+            color: #5078e1;
+          }
+        }
+      }
+    }
+  }
+}

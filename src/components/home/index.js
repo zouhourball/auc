@@ -21,6 +21,7 @@ import BrokerPage from 'components/broker-page'
 
 import './style.scss'
 import HowItWorks from 'components/how-it-works'
+import Notifications from 'components/notifications'
 
 const queryClient = new QueryClient()
 
@@ -93,6 +94,7 @@ const Home = () => {
           ))}
           <ParticipatedAuctions path={'/my-participation'} />
           <HowItWorks path={'/how-it-works'} />
+          <Notifications path={'/notifications'} />
           {[
             '/detail/:auctionId',
             '/detail/:auctionId/public/:callback',
