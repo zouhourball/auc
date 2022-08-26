@@ -246,6 +246,9 @@ export const getAuction = async ({ queryKey }) => {
   try {
     res = await fetchJSON(`${appUrl}/api/v1/auctions/${queryKey[1]}`, {
       method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
     })
   } catch (e) {
     res = { error: e }

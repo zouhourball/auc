@@ -6,7 +6,11 @@ import store from 'libs/store'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import { get } from 'lodash-es'
-import { useSubscription, useMutation } from 'react-apollo'
+import {
+  useSubscription,
+  useMutation,
+  useQuery as useQueryApollo,
+} from 'react-apollo'
 
 import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
@@ -21,6 +25,7 @@ import {
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 import placeBid from 'libs/queries/auction/place-bid.gql'
+import getBids from 'libs/queries/auction/get-bids.gql'
 
 import { addToast } from 'modules/app/actions'
 
@@ -60,6 +65,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     [logged ? 'auctionProperty' : 'auctionFeaturedProperty', auctionId],
     logged ? auctionProperty : auctionFeaturedProperty,
   )
+  const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
+    context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
+    variables: { auctionUUID: auctionId },
+  })
   const { data: isParticipant } = useQuery(
     ['checkParticipant', auctionId],
     logged && checkParticipant,
@@ -122,6 +131,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     }).then((res) => {
       if (!res.error) {
         refetchAuction()
+        refetchBids()
         setBidAmount('')
         setBidDialog(false)
         dispatch(
@@ -156,9 +166,20 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   })
   useEffect(() => {
     refetchAuction()
-    // console.log(subNewBid, 'subNewBid')
   }, [subNewBid, timeExtension])
-
+  useEffect(() => {
+    if (
+      biddersList?.bids[0]?.sub === user?.subject &&
+      !(auctionData?.['last_bid']?.['member_subject'] === user?.subject)
+    ) {
+      dispatch(
+        addToast(
+          <ToastMsg text={'You have been outbid!'} type="success" />,
+          'hide',
+        ),
+      )
+    }
+  }, [subNewBid, auctionData])
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
@@ -404,6 +425,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                 swapTheming
                 // onClick={() => setDocAction(true)}
                 className="auction-highest-btn"
+                disabled
               >
                 Current Highest Bidder
               </Button>
