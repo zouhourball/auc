@@ -258,6 +258,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             'hide',
           ),
         )
+        onDisableEdit()
       } else {
         dispatch(
           addToast(
@@ -271,28 +272,34 @@ const MyAuctionDetails = ({ auctionId }) => {
       }
     },
   })
-  const updateImages = useMutation(updateImgs)
+  const updateImages = useMutation(updateImgs, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        onDisableEdit()
+      }
+    },
+  })
+  const saveChanges = () => {
+    updateAuctionData.mutate({
+      uuid: auctionId,
+      body: {
+        // ...updateAuctionFormatData(auctionDetails),
+        title: auctionEditData?.title,
+        auction_start_date: new Date(auctionEditData?.startDate),
+        auction_end_date: new Date(auctionEditData?.endDate),
+        incremental_price: +auctionEditData?.incrementalPrice,
+        starting_price: +auctionEditData?.startingPrice,
+        property_type: +auctionEditData?.propertyType,
+        property_description: auctionEditData?.description,
+        features: auctionEditData?.keyFeatures,
+      },
+    })
+    updateImages.mutate({
+      uuid: auctionId,
+      body: images,
+    })
+  }
   const onDisableEdit = () => {
-    if (editMode) {
-      updateAuctionData.mutate({
-        uuid: auctionId,
-        body: {
-          // ...updateAuctionFormatData(auctionDetails),
-          title: auctionEditData?.title,
-          auction_start_date: new Date(auctionEditData?.startDate),
-          auction_end_date: new Date(auctionEditData?.endDate),
-          incremental_price: +auctionEditData?.incrementalPrice,
-          starting_price: +auctionEditData?.startingPrice,
-          property_type: +auctionEditData?.propertyType,
-          property_description: auctionEditData?.description,
-          features: auctionEditData?.keyFeatures,
-        },
-      })
-      updateImages.mutate({
-        uuid: auctionId,
-        body: images,
-      })
-    }
     setEditMode(!editMode)
     setShowDatePicker(false)
   }
@@ -710,6 +717,8 @@ const MyAuctionDetails = ({ auctionId }) => {
                 accept="image/jpeg, image/png, image/jpg"
                 className="custom"
               />
+              <Button onClick={() => saveChanges()}>Save</Button>
+              <Button onClick={() => onDisableEdit()}>Cancel</Button>
             </>
           ) : (
             <>
