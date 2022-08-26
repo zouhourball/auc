@@ -234,7 +234,7 @@ const UploadImages = ({
     return files?.map((file, index) => (
       <div
         key={index}
-        className={'upload-images'}
+        className={`upload-images  ${cover ? 'opacity' : ''}`}
         onClick={() => {
           cover && !selected && chooseCover(file)
         }}

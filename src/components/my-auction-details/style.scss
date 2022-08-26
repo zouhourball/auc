@@ -136,9 +136,10 @@
 
       .date-picker {
         display: flex;
-        gap: 8px;
         position: absolute;
+        z-index: 999;
         top: 30vh;
+        gap: 8px;
       }
 
       .selectField-lined {
@@ -184,6 +185,10 @@
       display: flex;
       justify-content: flex-end;
       padding: 8px 0;
+
+      .md-btn {
+        color: #5078e1;
+      }
     }
 
     &-table {
@@ -222,6 +227,36 @@
 
     &-bidderWrapper {
       margin-bottom: 30px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 12px 0;
+    gap: 12px;
+
+    .saveBtn {
+      width: 120px;
+      height: 50px;
+      border-radius: 14px;
+      background-color: #5078e1;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .cancelBtn {
+      width: 120px;
+      height: 50px;
+      border: solid 2px #527bde;
+      border-radius: 14px;
+      background-color: transparent;
+      color: #5078e1;
+      font-size: 16px;
+      font-weight: bold;
     }
   }
 

@@ -1,9 +1,13 @@
 import headerBg from 'images/how-it-works-header.png'
+import { useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { Button, ExpansionList, ExpansionPanel } from 'react-md'
+import { questions1, questions2 } from './helper'
 
 import './style.scss'
+
 const HowItWorks = () => {
+  const { t } = useTranslation()
   const [selectedTab, setSelectedTab] = useState(true)
   return (
     <div className="how-it-works">
@@ -33,9 +37,18 @@ const HowItWorks = () => {
         <div className="">
           <ExpansionList className="expansion-list">
             {(selectedTab ? questions1 : questions2).map((el) => (
-              <ExpansionPanel key={el.id} label={el.title} footer={null}>
-                <div className="subtitle">{el?.subtitle}</div>
-                <p className="description">{el?.answer}</p>
+              <ExpansionPanel
+                key={el.id}
+                label={t(`${el.title}`)}
+                footer={null}
+              >
+                <p className="description">{t(`${el?.answer}`)}</p>
+                {el.subtitles?.map((sub, index) => (
+                  <div className="subtitle" key={index}>
+                    <h4>{t(`${sub.label}`)} </h4>
+                    <p>{t(`${sub.value}`)} </p>
+                  </div>
+                ))}
               </ExpansionPanel>
             ))}
           </ExpansionList>
@@ -46,62 +59,3 @@ const HowItWorks = () => {
 }
 
 export default HowItWorks
-
-const questions1 = [
-  {
-    id: '1',
-    title: 'Are you a buyer willing to buy?',
-    subtitle: 'Registration',
-    answer:
-      'Before participating in any auction you will have to register to be a bidder. ' +
-      'Bidders will have to provide their full name, email, and phone number. ' +
-      'After registration bidders will directly be considered approved to participate in any auction.',
-  },
-  {
-    id: '2',
-    title: 'Who are certifiers to you?',
-    subtitle: 'Registration',
-    answer:
-      'Before participating in any auction you will have to register to be a bidder. ' +
-      'Bidders will have to provide their full name, email, and phone number. ' +
-      'After registration bidders will directly be considered approved to participate in any auction.',
-  },
-  {
-    id: '3',
-    title: 'How can a bidder lose an auction?',
-    subtitle: 'Registration',
-    answer:
-      'Before participating in any auction you will have to register to be a bidder. ' +
-      'Bidders will have to provide their full name, email, and phone number. ' +
-      'After registration bidders will directly be considered approved to participate in any auction.',
-  },
-]
-const questions2 = [
-  {
-    id: '4',
-    title: 'Are you a property owner willing to sell?',
-    subtitle: 'Registration',
-    answer:
-      'No, registration will be required from property owners to participate in this platform. ' +
-      'Owners will have to contact license brokers to list their auctions. Brokers must be approved ' +
-      'and registered in the platform and will be fully responsible to all the details they will upload in the platform.',
-  },
-  {
-    id: '5',
-    title: 'Who are certifiers to you?',
-    subtitle: 'Registration',
-    answer:
-      'Before participating in any auction you will have to register to be a bidder. ' +
-      'Bidders will have to provide their full name, email, and phone number. ' +
-      'After registration bidders will directly be considered approved to participate in any auction.',
-  },
-  {
-    id: '6',
-    title: 'what is the reserve price amount?',
-    subtitle: 'Registration',
-    answer:
-      'Before participating in any auction you will have to register to be a bidder. ' +
-      'Bidders will have to provide their full name, email, and phone number. ' +
-      'After registration bidders will directly be considered approved to participate in any auction.',
-  },
-]
