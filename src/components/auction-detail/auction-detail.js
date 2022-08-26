@@ -43,6 +43,7 @@ import icon3 from './icons/area.svg'
 
 import './style.scss'
 import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
+import FeesDialog from 'components/fees-dialog/fees-dialog'
 
 const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
@@ -77,6 +78,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
       status,
     })
   }
+
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
@@ -102,6 +104,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
   const [bidAmount, setBidAmount] = useState('')
+  const [feesDialog, setFeesDialog] = useState()
 
   useEffect(() => {
     setCurrentImg(auctionData?.listing?.images[0]?.url)
@@ -476,11 +479,21 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           <div className="fees-commission-content">
             <div className="fees-commission-item">
               <div>{t('buyer')}</div>
-              <div className="value">11%</div>
+              <div className="value">
+                11%
+                <Button onClick={() => setFeesDialog('bayers')}>
+                  <FontIcon>task_alt</FontIcon>
+                </Button>
+              </div>
             </div>
             <div className="fees-commission-item">
               <div>{t('comission')}</div>
-              <div className="value">3%</div>
+              <div className="value">
+                3%
+                <Button onClick={() => setFeesDialog('commission')}>
+                  <FontIcon>task_alt</FontIcon>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -517,6 +530,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           visible={showContactInfo}
           onHide={() => setShowContactInfo()}
         />
+      )}
+
+      {feesDialog && (
+        <FeesDialog type={feesDialog} onHide={() => setFeesDialog('')} />
       )}
     </div>
   )
