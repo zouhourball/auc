@@ -717,8 +717,14 @@ const MyAuctionDetails = ({ auctionId }) => {
                 accept="image/jpeg, image/png, image/jpg"
                 className="custom"
               />
-              <Button onClick={() => saveChanges()}>Save</Button>
-              <Button onClick={() => onDisableEdit()}>Cancel</Button>
+              <div className="actions">
+                <Button className="cancelBtn" onClick={() => onDisableEdit()}>
+                  Cancel
+                </Button>
+                <Button className="saveBtn" onClick={() => saveChanges()}>
+                  Save
+                </Button>
+              </div>
             </>
           ) : (
             <>
