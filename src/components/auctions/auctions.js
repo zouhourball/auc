@@ -72,6 +72,7 @@ const Auctions = () => {
             name: el?.options?.metadata?.filename,
             size: el?.size,
             type: el?.type,
+            cover_image: el?.cover,
           }
         }),
         documents: documents?.images?.map((el) => {
