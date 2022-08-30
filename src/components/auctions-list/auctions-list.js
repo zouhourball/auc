@@ -3,6 +3,7 @@ import { useTranslation } from 'libs/langs'
 
 import BiddingCard from 'components/bidding-card'
 import AuctionsFilter from 'components/auction-filter'
+import CardsWithMap from 'components/cards-with-map'
 
 import './style.scss'
 import { useQuery } from 'react-query'
@@ -11,16 +12,18 @@ import {
   featuredAuctions,
   //  filterAuctions
 } from 'libs/api/auctions-api'
+import { FontIcon } from 'react-md'
 
 const AuctionsList = ({ logged, user }) => {
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const [filterData, setFilterData] = useState({})
+  const [gridView, setGridView] = useState(0)
   const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
 
   const { data: auctionsData, refetch } = useQuery(
-    [logged ? 'upcomingAuctions' : 'featuredAuctions', type, 100],
+    [logged ? 'upcomingAuctions' : 'featuredAuctions', type, 20],
     logged ? listAuction : featuredAuctions,
   )
 
@@ -68,7 +71,25 @@ const AuctionsList = ({ logged, user }) => {
         </div>
       </div>
       <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
-      <div className="md-grid auction-list-cards">{renderCards()}</div>
+      <span>
+        <FontIcon onClick={() => setGridView(0)} primary>
+          task_alt
+        </FontIcon>
+        <FontIcon onClick={() => setGridView(1)} primary>
+          task_alt
+        </FontIcon>
+      </span>
+      {gridView === 0 ? (
+        <div className="md-grid auction-list-cards">{renderCards()}</div>
+      ) : (
+        <CardsWithMap
+          cardsData={auctionsData?.results}
+          live={modules.includes('live-auctions')}
+          type={type}
+          user={user}
+          refetch={refetch}
+        />
+      )}
     </div>
   )
 }

@@ -2,7 +2,6 @@
 
 import { useMutation } from 'react-query'
 import { Button } from 'react-md'
-import { navigate } from '@reach/router'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 
@@ -19,13 +18,12 @@ import { propertyTypeList } from 'components/helpers'
 
 import './style.scss'
 
-const BiddingCard = ({
-  detailsUrl,
+const SideBiddingCard = ({
+  setPin,
   auctionData,
   className,
   status,
   user,
-  saveAuctionTag,
   refetch,
 }) => {
   const dispatch = useDispatch()
@@ -75,10 +73,6 @@ const BiddingCard = ({
   })
   const { t } = useTranslation()
 
-  const renderBtnTitle = () => {
-    if (status === 'Upcoming') return t('view_details')
-    else return t('bid_now')
-  }
   const downloadToken = store?.getState()?.app?.dlToken
 
   const saveAuction = (uuid) => {
@@ -91,12 +85,22 @@ const BiddingCard = ({
       uuid,
     })
   }
+  const pinData = {
+    latitude: auctionData?.listing?.property?.['general_location_y'],
+    longitude: auctionData?.listing?.property?.['general_location_x'],
+    img: `${
+      auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+        ? auctionData?.listing?.images?.find((img) => img?.['cover_image'])?.url
+        : auctionData?.listing?.images?.[0]?.url
+    }?token=${downloadToken}&view=true`,
+    uuid: auctionData?.uuid,
+    city: auctionData?.listing?.property?.city?.['name_en'],
+    country: auctionData?.listing?.property?.country?.['name_en'],
+  }
   return (
     <div
       className={`bidding-card ${className || ''}`}
-      onClick={() =>
-        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
-      }
+      onClick={() => setPin(pinData)}
     >
       <img
         src={`${
@@ -105,37 +109,36 @@ const BiddingCard = ({
                 ?.url
             : auctionData?.listing?.images?.[0]?.url
         }?token=${downloadToken}&view=true`}
-        className="bidding-card-background"
+        // className="bidding-card-background"
       />
       <div className="bidding-card-header">
         {user?.subject &&
           user?.subject === auctionData.last_bid?.['member_subject'] && (
             <div className="highest-bidder">{t('highest_bidder')}</div>
           )}
-        {saveAuctionTag &&
-          (auctionData?.['is_bookmarked'] ? (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              iconClassName="fa fa-bookmark"
-              onClick={(e) => {
-                e.stopPropagation()
-                unsaveAuction(auctionData?.uuid)
-              }}
-            />
-          ) : (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              iconClassName="fa fa-bookmark-o"
-              onClick={(e) => {
-                e.stopPropagation()
-                saveAuction(auctionData?.uuid)
-              }}
-            />
-          ))}
+        {auctionData?.['is_bookmarked'] ? (
+          <Button
+            icon
+            primary
+            className="save-btn"
+            iconClassName="fa fa-bookmark"
+            onClick={(e) => {
+              e.stopPropagation()
+              unsaveAuction(auctionData?.uuid)
+            }}
+          />
+        ) : (
+          <Button
+            icon
+            primary
+            className="save-btn"
+            iconClassName="fa fa-bookmark-o"
+            onClick={(e) => {
+              e.stopPropagation()
+              saveAuction(auctionData?.uuid)
+            }}
+          />
+        )}
       </div>
       <div className="bidding-card-footer">
         {status !== 'Active' && (
@@ -183,21 +186,16 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {!detailsUrl &&
-          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
+        {!(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
           status === 'Active' && (
           <Button
             flat
             primary
             swapTheming
             className="bidding-card-btn"
-            onClick={() =>
-              detailsUrl
-                ? detailsUrl()
-                : navigate(`detail/${auctionData?.uuid}`)
-            }
+            onClick={() => setPin(pinData)}
           >
-            {renderBtnTitle()}
+            {t('view_details')}
           </Button>
         )}
       </div>
@@ -205,36 +203,4 @@ const BiddingCard = ({
   )
 }
 
-export default BiddingCard
-/*
-const secondsToTime = (secs) => {
-  let days = Math.floor(secs / (60 * 60 * 24))
-
-  let divisorForHours = secs % (60 * 60 * 24)
-  let hours = Math.floor(divisorForHours / (60 * 60))
-
-  let divisorForMinutes = divisorForHours % (60 * 60)
-  let minutes = Math.floor(divisorForMinutes / 60)
-
-  let divisorForSeconds = divisorForMinutes % 60
-  let seconds = Math.ceil(divisorForSeconds)
-
-  let obj = {
-    d: days,
-    h: hours,
-    m: minutes,
-    s: seconds,
-  }
-  return obj
-} */
-
-BiddingCard.defaultProps = {
-  auctionData: {
-    auction_start_date: moment().add(-1, 'day').valueOf(),
-    auction_end_date: moment().add(2, 'day').valueOf(),
-    starting_price: 1.2,
-    name: 'Villa',
-    location: 'Al Muscat, Oman',
-    isHighestBid: true,
-  },
-}
+export default SideBiddingCard
