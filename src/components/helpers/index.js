@@ -40,3 +40,8 @@ export const propertyTypeList = [
     value: 10,
   },
 ]
+
+export const brokerCompanyList = [
+  { label: 'broker Company1', value: 1 },
+  { label: 'broker Company2', value: 2 },
+]
