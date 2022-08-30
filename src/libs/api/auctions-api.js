@@ -23,7 +23,26 @@ export const filterAuctions = async ({ queryKey }) => {
   }
   return res
 }
-
+export const filterFeatureAuctions = async ({ queryKey }) => {
+  const params = Object.keys(queryKey[1])
+    .filter((key) => typeof queryKey[1][key] === 'number' || !!queryKey[1][key])
+    .map((key) => `${key}=${queryKey[1][key]}`)
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/featured/filter/auctions${
+        params.length ? `?${params.join('&')}` : ''
+      }`,
+      {
+        method: 'POST',
+        body: JSON.stringify(queryKey[2]),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // FILTER MY AUCTIONS THAT I PARTICIPATED IN
 export const getMyAuctions = async ({ queryKey }) => {
   let res
