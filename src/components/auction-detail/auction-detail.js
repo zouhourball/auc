@@ -116,7 +116,11 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const [feesDialog, setFeesDialog] = useState()
 
   useEffect(() => {
-    setCurrentImg(auctionData?.listing?.images[0]?.url)
+    setCurrentImg(
+      auctionData?.listing?.images?.find((img) => img?.['cover_image'])
+        ? auctionData?.listing?.images?.find((img) => img?.['cover_image'])?.url
+        : auctionData?.listing?.images[0]?.url,
+    )
   }, [auctionData])
   const [placeNewBid] = useMutation(placeBid, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
