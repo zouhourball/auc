@@ -5,9 +5,10 @@ import { navigate } from '@reach/router'
 import {
   getCountry,
   // getCity,
+  registerBidder,
 } from 'libs/api/auctions-api'
 import { useCurrentLang } from 'libs/langs'
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery, useMutation } from 'react-query'
 
 import UploadImages from 'components/upload-images'
 import backgroundImage from './background_image.png'
@@ -20,7 +21,7 @@ import './style.scss'
 
 const RegistrationPage = () => {
   const [currentTab, setCurrentTab] = useState(0)
-  const [signupData, setSignupData] = useState({})
+  const [signupData, setSignupData] = useState({ countryCode: '+968' })
   const {
     fullName,
     email,
@@ -33,7 +34,11 @@ const RegistrationPage = () => {
     logo,
   } = signupData
   const lang = useCurrentLang()
-
+  const registerBidderMutation = useMutation(registerBidder, {
+    onSuccess: (res) => {
+      if (res?.statusText === 'OK') navigate('/public/home')
+    },
+  })
   const setValues = (key, value) => {
     setSignupData((data) => ({ ...data, [key]: value }))
   }
@@ -199,7 +204,19 @@ const RegistrationPage = () => {
         )
     }
   }
-  const signUp = () => {}
+  const signUp = () => {
+    registerBidderMutation.mutate({
+      body: {
+        email: signupData?.email,
+        mobile: `${signupData?.countryCode}${signupData?.phoneNum}`,
+        password: signupData?.password,
+        username: signupData?.fullName,
+        notified_method: 'email',
+        is_verified_code: false,
+        terms_of_service: signupData?.acceptTerms,
+      },
+    })
+  }
   return (
     <div className="registration-page">
       <div className="registration-page-left">

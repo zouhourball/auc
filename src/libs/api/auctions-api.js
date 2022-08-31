@@ -427,3 +427,21 @@ export const getCity = async ({ queryKey }) => {
   }
   return res
 }
+// REGISTER BIDDER
+// ${base64.encode('nz-mdr:DzXZxyDObSpsnR7qLqQ4p1LEVoIiE49e')}
+export const registerBidder = async ({ body }) => {
+  let res
+  try {
+    res = await fetch(`/api/register`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic bnotbWRyOkR6WFp4eURPYlNwc25SN3FMcVE0cDFMRVZvSWlFNDll`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
