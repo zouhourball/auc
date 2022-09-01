@@ -67,7 +67,8 @@
     "DASHBOARD_ID_DSO": false,
     "OVERWRITE_TRANSLATION": false,
     "PRODUCT_APP_URL_AUCTION": false,
-    "PRODUCT_APP_URL_API_WEBSOCKET": false
+    "PRODUCT_APP_URL_API_WEBSOCKET": false,
+    "OAUTH_CLIENT_SECRET": false
   },
   "extends": ["standard", "plugin:react/recommended", "plugin:jest/all"],
   "parser": "@typescript-eslint/parser",
