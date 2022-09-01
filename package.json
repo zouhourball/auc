@@ -60,7 +60,7 @@
     "@target-energysolutions/auth-check": "^0.3.7",
     "@target-energysolutions/date-picker": "^3.1.5",
     "@target-energysolutions/gis-map": "^2.9.104",
-    "@target-energysolutions/hoc-oauth": "^2.1.2",
+    "@target-energysolutions/hoc-oauth": "^1.3.2",
     "@target-energysolutions/messenger": "^17.1.11",
     "@target-energysolutions/mht": "2.22.3-beta.4",
     "@target-energysolutions/react-hoc-query": "^1.0.4",
