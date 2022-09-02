@@ -1,0 +1,44 @@
+.confirm-dialog {
+  justify-content: center;
+
+  .md-dialog {
+    width: 350px;
+    border-radius: 5px;
+  }
+
+  .md-title {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px;
+  }
+
+  &-information {
+    text-align: center;
+
+    .illustration {
+      margin-bottom: 16px;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      margin-bottom: 8px;
+      color: #000;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  &-button {
+    border-radius: 4px;
+
+    &.md-btn {
+      margin-top: 16px;
+      text-transform: none;
+    }
+  }
+}

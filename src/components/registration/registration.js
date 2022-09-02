@@ -20,9 +20,11 @@ import dragIcon from './drag_drop.svg'
 
 import './style.scss'
 import UploadImages from 'components/upload-images'
+import ConfirmDialog from 'components/confirm-dialog'
 
 const RegistrationPage = () => {
   const [currentTab, setCurrentTab] = useState(0)
+  const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
   const [signupData, setSignupData] = useState({ countryCode: '+968' })
   const {
     fullName,
@@ -38,7 +40,7 @@ const RegistrationPage = () => {
   const lang = useCurrentLang()
   const registerBidderMutation = useMutation(registerBidder, {
     onSuccess: (res) => {
-      if (res?.statusText === 'OK') navigate('/public/home')
+      if (res?.statusText === 'OK') setConfirmDialogVisible(true) // navigate('/public/home')
     },
   })
 
@@ -147,7 +149,6 @@ const RegistrationPage = () => {
               className="textField selectField"
               placeholder="Choose Country"
             />
-
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}
@@ -269,6 +270,17 @@ const RegistrationPage = () => {
   }
   return (
     <div className="registration-page">
+      {confirmDialogVisible && (
+        <ConfirmDialog
+          title="Successfully Registered"
+          description="You can now browse through auctions in the platform"
+          visible={confirmDialogVisible}
+          onHide={() => {
+            setConfirmDialogVisible(false)
+            navigate('/public/home')
+          }}
+        />
+      )}
       <div className="registration-page-left">
         <img className="background" src={backgroundImage} />
       </div>

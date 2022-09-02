@@ -433,7 +433,7 @@ export const getCity = async ({ queryKey }) => {
 export const registerBidder = async ({ body }) => {
   let res
   try {
-    res = await fetch(`/api/register`, {
+    res = await fetch(`${OAUTH_HOST}/api/register`, {
       method: 'POST',
       headers: {
         Authorization: `Basic ${btoa(
@@ -475,6 +475,21 @@ export const registerBroker = async ({ body }) => {
       method: 'POST',
       body: JSON.stringify(body),
     })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+export const getFeaturedAuctionRemainingTime = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/featured/auctions/${queryKey[1]}/remaining-time`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }
