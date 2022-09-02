@@ -1,4 +1,5 @@
 import { fetchJSON } from 'libs/fetch'
+// import { encode as btoa } from 'base-64'
 
 const appUrl = `${PRODUCT_APP_URL_API}/auction`
 
@@ -435,9 +436,43 @@ export const registerBidder = async ({ body }) => {
     res = await fetch(`/api/register`, {
       method: 'POST',
       headers: {
-        Authorization: `Basic bnotbWRyOkR6WFp4eURPYlNwc25SN3FMcVE0cDFMRVZvSWlFNDll`,
+        Authorization: `Basic ${btoa(
+          `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
+        )}`,
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+export const genUploadToken = async ({ queryKey }) => {
+  return fetch(
+    `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/gen-upload-token?action=${queryKey[1]}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  ).then(async (response) => {
+    const res = await response.json()
+
+    if (response.status !== 200 && response.status !== 201) {
+      throw res
+    }
+    return res
+  })
+}
+
+export const registerBroker = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${PRODUCT_APP_URL_CONFIGURATOR}/v2/org`, {
+      method: 'POST',
       body: JSON.stringify(body),
     })
   } catch (e) {
