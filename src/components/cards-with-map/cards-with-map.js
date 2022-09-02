@@ -3,14 +3,15 @@ import { MeeraMap } from '@target-energysolutions/gis-map'
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
 
-import SideBiddingCard from 'components/side-bidding-card'
+// import SideBiddingCard from 'components/side-bidding-card'
+import SideAuctionCard from 'components/side-auction-card'
 
 const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
   const [activePin, setPin] = useState({})
 
   const renderCards = () =>
     cardsData?.map((el) => (
-      <SideBiddingCard
+      <SideAuctionCard
         user={user}
         className="md-cell md-cell--2"
         key={el?.uuid}
