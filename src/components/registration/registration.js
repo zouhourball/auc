@@ -21,6 +21,7 @@ import dragIcon from './drag_drop.svg'
 import './style.scss'
 import UploadImages from 'components/upload-images'
 import ConfirmDialog from 'components/confirm-dialog'
+import successRegister from '../../images/successfully-register.png'
 
 const RegistrationPage = () => {
   const [currentTab, setCurrentTab] = useState(0)
@@ -40,14 +41,14 @@ const RegistrationPage = () => {
   const lang = useCurrentLang()
   const registerBidderMutation = useMutation(registerBidder, {
     onSuccess: (res) => {
-      if (res?.statusText === 'OK') setConfirmDialogVisible(true) // navigate('/public/home')
+      if (res?.success === true) setConfirmDialogVisible(true)
     },
   })
 
   const registerBrokerMutation = useMutation(registerBroker, {
     onSuccess: (res) => {
       if (!res.error) {
-        navigate('/public/home')
+        setConfirmDialogVisible(true)
       }
     },
   })
@@ -177,7 +178,7 @@ const RegistrationPage = () => {
               className="textField"
             />
             <TextField
-              id={'email'}
+              id={'pw'}
               placeholder="Enter password"
               value={password}
               onChange={(v) => setValues('password', v)}
@@ -275,6 +276,7 @@ const RegistrationPage = () => {
           title="Successfully Registered"
           description="You can now browse through auctions in the platform"
           visible={confirmDialogVisible}
+          imgCard={successRegister}
           onHide={() => {
             setConfirmDialogVisible(false)
             navigate('/public/home')

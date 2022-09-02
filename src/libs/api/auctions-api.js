@@ -431,22 +431,23 @@ export const getCity = async ({ queryKey }) => {
 // REGISTER BIDDER
 // ${base64.encode('nz-mdr:DzXZxyDObSpsnR7qLqQ4p1LEVoIiE49e')}
 export const registerBidder = async ({ body }) => {
-  let res
-  try {
-    res = await fetch(`${OAUTH_HOST}/api/register`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${btoa(
-          `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
-        )}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
+  return fetch(`${OAUTH_HOST}/api/register`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${btoa(
+        `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
+      )}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  }).then(async (response) => {
+    const res = await response.json()
+
+    if (response.status !== 200 && response.status !== 201) {
+      throw res
+    }
+    return res
+  })
 }
 
 export const genUploadToken = async ({ queryKey }) => {
