@@ -9,7 +9,12 @@ const NotifPanel = ({ notifications }) => {
       {notifications.map((item, index) => {
         return (
           <div key={index} className="notifPanel-item">
-            <img src={item.icon} width="20px" height="20px" />
+            <img
+              className="notifPanel-item-icon"
+              src={item.icon}
+              width="20px"
+              height="20px"
+            />
             <div className="notifPanel-item-data">
               <div className="label">{item.label}</div>
               <div className="date">{item.date}</div>
@@ -20,14 +25,16 @@ const NotifPanel = ({ notifications }) => {
           </div>
         )
       })}
-      <Button
-        flat
-        swapTheming
-        onClick={() => navigate('/auctions/notifications')}
-        className="load-more"
-      >
-        Load mere notifications
-      </Button>
+      <div className="notifPanel-action">
+        <Button
+          flat
+          primary
+          onClick={() => navigate('/auctions/notifications')}
+          className="load-more"
+        >
+          View All
+        </Button>
+      </div>
     </div>
   )
 }
