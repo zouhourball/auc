@@ -1,13 +1,13 @@
 .display-grid {
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: 440px 1fr;
   height: max-content;
   padding: 15px;
 
   .cards {
-    width: 500px;
+    width: 440px;
     max-height: 700px;
-    padding: 8px;
+    padding: 12px 20px;
     overflow: auto;
     border-radius: 12px 0 0 12px;
     background-color: #fff;

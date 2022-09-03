@@ -6,14 +6,14 @@ import { navigate } from '@reach/router'
 
 import './style.scss'
 
-import SideBiddingCard from 'components/side-bidding-card'
+import SideAuctionCard from 'components/side-auction-card'
 
-const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
+const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
   const [activePin, setPin] = useState()
 
   const renderCards = () =>
     cardsData?.map((el) => (
-      <SideBiddingCard
+      <SideAuctionCard
         user={user}
         key={el?.uuid}
         auctionData={el}
@@ -21,6 +21,7 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
         live={live}
         setPin={setPin}
         refetch={() => refetch()}
+        className={`${activePin ? 'active' : ''}`}
       />
     ))
   const renderPins = () =>
