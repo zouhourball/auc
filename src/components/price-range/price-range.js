@@ -39,12 +39,12 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
                 <div
                   ref={props.ref}
                   style={{
-                    height: '5px',
+                    height: '3px',
                     width: '100%',
                     borderRadius: '4px',
                     background: getTrackBackground({
                       values: [+values.min, +values.max],
-                      colors: ['#ccc', '#5e7bf6', '#ccc'],
+                      colors: ['#7c7c7c', '#5078e1', '#7c7c7c'],
                       min: 0,
                       max: 5000,
                     }),
@@ -60,10 +60,9 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
                 {...props}
                 style={{
                   ...props.style,
-                  height: '20px',
-                  width: '20px',
-                  borderRadius: '10px',
-                  backgroundColor: '#FFF',
+                  height: '15px',
+                  width: '15px',
+                  borderRadius: '50%',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -78,10 +77,13 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
                 />
                 <div
                   style={{
-                    height: '18px',
-                    width: '18px',
-                    borderRadius: '9px',
-                    backgroundColor: isDragged ? '#5e7bf6' : '#5e7bf6',
+                    height: '15px',
+                    width: '15px',
+                    borderRadius: '50%',
+                    backgroundColor: isDragged ? '#5e7bf6' : '#fff',
+                    borderColor: '#5e7bf6',
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
                   }}
                 />
               </div>
@@ -91,7 +93,7 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
         <div className="slider-range">
           <span className="min">
             <TextField
-              type="number"
+              type="text"
               className="price-range-textField"
               placeholder="0"
               rightIcon={<span>OMR</span>}
@@ -103,7 +105,7 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
           -
           <span className="max">
             <TextField
-              type="number"
+              type="text"
               className="price-range-textField"
               placeholder="0"
               rightIcon={<span>OMR</span>}
@@ -134,8 +136,8 @@ function ThumbLabel ({ rangeRef = Range | null, values, index }) {
         display: 'block',
         position: 'absolute',
         top: '-20px',
-        color: '#000',
-        fontWeight: 'bold',
+        color: '#7c7c7c',
+        fontWeight: 'normal',
         fontSize: '14px',
         whiteSpace: 'nowrap',
         // ...(labelStyle as React.CSSProperties),

@@ -1,13 +1,26 @@
-//style
 .notifications {
+  &-title {
+    color: #3d3d3e;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .blue-text {
+    color: #5078e1;
+    font-size: 16px;
+  }
+
+  // .md-cell {
+  //   margin: 8px 35px;
+  // }
+
   &-container {
-    &-content {
-      background: #fff;
-    }
+    justify-content: flex-end;
 
     &-filter {
       .searchTextField {
-        // width: 250px;
+        width: 80%;
         padding: 13px 17px;
         border-radius: 12px;
         background-color: #fff;
@@ -25,6 +38,37 @@
             color: #5078e1;
           }
         }
+      }
+
+      .filer-box {
+        width: 80%;
+        border-radius: 12px;
+      }
+
+      .markAllRead-btn {
+        width: 80%;
+        height: 45px;
+        margin: auto;
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        color: #5078e1;
+        font-weight: 600;
+      }
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 0;
+
+      .load-more {
+        height: 50px;
+        border: solid 1px #527bde;
+        border-radius: 6px;
+        background-color: transparent;
+        color: #5078e1;
       }
     }
   }

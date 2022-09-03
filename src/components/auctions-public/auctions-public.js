@@ -8,7 +8,6 @@ import HomeSlider from 'components/home-slider'
 import { useQuery } from 'react-query'
 import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
 import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
-import NotifPanel from 'components/notif-panel'
 
 const AuctionsPublic = ({ logged, user }) => {
   //
@@ -31,7 +30,6 @@ const AuctionsPublic = ({ logged, user }) => {
         user={user}
         refetch={() => refetch()}
       />
-      <NotifPanel />
     </>
   )
 }

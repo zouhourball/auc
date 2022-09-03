@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import { MeeraMap } from '@target-energysolutions/gis-map'
+import '@target-energysolutions/gis-map/styles.css'
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
+
+import './style.scss'
 
 import SideBiddingCard from 'components/side-bidding-card'
 
 const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
-  const [activePin, setPin] = useState({})
+  const [activePin, setPin] = useState()
 
   const renderCards = () =>
     cardsData?.map((el) => (
       <SideBiddingCard
         user={user}
-        className="md-cell md-cell--2"
         key={el?.uuid}
         auctionData={el}
         status={type}
@@ -28,13 +30,12 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
       longitude: el?.listing?.property?.['general_location_x'],
     }))
   return (
-    <div>
+    <div className="display-grid">
       <div className="cards">{renderCards()}</div>
       <div className="map">
         <MeeraMap
           isOnlyShowMeasureAndDraw
           id={`map`}
-          className="map"
           fitBy="symbol-layer-id2"
           zoom={8}
           layers={[

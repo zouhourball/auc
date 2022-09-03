@@ -9,6 +9,32 @@
     font-weight: 500;
     gap: 10px;
 
+    &-filters {
+      display: flex;
+      align-items: center;
+
+      &-display {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .sep {
+          width: 1px;
+          height: 20px;
+          background-color: #c9c9c9;
+        }
+
+        .gridView {
+          color: #b2b2b2;
+          font-size: 30px;
+
+          &.active {
+            color: #5078e1;
+          }
+        }
+      }
+    }
+
     span {
       color: #5078e1;
     }

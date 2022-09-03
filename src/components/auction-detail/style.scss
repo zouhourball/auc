@@ -262,8 +262,17 @@
     font-size: 20px;
     font-weight: 400;
 
+    .commission {
+      display: flex;
+      align-items: center;
+
+      .md-icon {
+        font-size: 24px;
+      }
+    }
+
     .value {
-      font-size: 30px;
+      font-size: 20px;
       font-weight: 500;
     }
   }

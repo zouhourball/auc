@@ -1,0 +1,67 @@
+.notificationCard {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 15px;
+  padding: 15px 30px 15px 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  gap: 12px;
+
+  &-right {
+    position: relative;
+    margin-left: auto;
+
+    .date {
+      color: #3f3f3fcf;
+      font-size: 13px;
+      font-weight: 300;
+    }
+
+    .bluePoint {
+      display: block;
+      position: absolute;
+      top: 7px;
+      right: -12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #5078e1;
+    }
+  }
+
+  .label {
+    color: #3d3d3e;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  // &-item {
+  //   display: flex;
+  //   align-items: center;
+  //   padding: 12px 18px;
+  //   border-bottom: 1px solid #dbdbdb;
+
+  //   &-data {
+  //     position: relative;
+
+  //     &::before {
+  //       content: '';
+  //       display: block;
+  //       position: absolute;
+  //       top: 16px;
+  //       right: -12px;
+  //       width: 6px;
+  //       height: 6px;
+  //       border-radius: 50%;
+  //       background-color: #5078e1;
+  //     }
+  //   }
+  // }
+
+  .load-more {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

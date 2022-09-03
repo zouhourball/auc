@@ -1,5 +1,8 @@
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
+import auctionWon from 'images/auction_won.svg'
+import myActivity from 'images/my_activity_enable.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
 
 import './style.scss'
 
@@ -44,19 +47,19 @@ export default NotifPanel
 NotifPanel.defaultProps = {
   notifications: [
     {
-      icon: 'https://picsum.photos/200',
+      icon: bidPlace,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,
     },
     {
-      icon: 'https://picsum.photos/200',
+      icon: myActivity,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,
     },
     {
-      icon: 'https://picsum.photos/200',
+      icon: auctionWon,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,
