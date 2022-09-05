@@ -12,8 +12,9 @@ export function uploadFileTus (
   onSuccess,
   onProgress,
   auth = true,
+  publicToken,
 ) {
-  const fileToken = store?.getState()?.app?.uplToken
+  const fileToken = publicToken || store?.getState()?.app?.uplToken
   // store?.getState()?.app?.DEFAULT?.getFsToken?.data?.['file_token']
   let token
   if (auth && process.env.NODE_ENV !== 'production') {

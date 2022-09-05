@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { Router, Redirect } from '@reach/router'
 import { useTranslation } from 'libs/langs'
 
@@ -6,6 +8,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { useQuery } from 'react-apollo'
 
 import { meQuery } from 'libs/queries/me-query.gql'
+import meOrganizations from 'libs/queries/me-organizations.gql'
 
 // import Auctions from 'components/auctions'
 import AuctionsPublic from 'components/auctions-public'
@@ -34,6 +37,17 @@ const Home = () => {
       uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
     },
   })
+  const { data: myOrgs, refetch } = useQuery(meOrganizations, {
+    notifyOnNetworkStatusChange: true,
+    context: {
+      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+    },
+  })
+
+  useEffect(() => {
+    refetch()
+  }, [currentUser])
+
   const modules = location.pathname.split('/').filter((v) => v !== '')
 
   const modulesList = [
@@ -55,13 +69,30 @@ const Home = () => {
         { label: t('my_participation'), link: 'my-participation' },
       ],
     },
-    {
-      label: t('auction_asset'),
-      linkToNewTab: 'auction-asset',
-      key: 'auction-asset',
-    },
-    { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
+    // {
+    //   label: t('auction_asset'),
+    //   linkToNewTab: 'auction-asset',
+    //   key: 'auction-asset',
+    // },
+    // { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
+
+  if (myOrgs?.meOrganizations.length > 0) {
+    modulesList.push(
+      {
+        label: t('auction_asset'),
+        linkToNewTab: 'auction-asset',
+        key: 'auction-asset',
+      },
+      { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
+    )
+  } else {
+    modulesList.push({
+      label: t('contact'),
+      linkToNewTab: 'contact-us',
+      key: 'contact-us',
+    })
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
