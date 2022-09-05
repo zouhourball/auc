@@ -15,12 +15,14 @@ import { propertyTypeList } from 'components/helpers'
 import './style.scss'
 import { useEffect, useState } from 'react'
 const SideAuctionCard = ({
+  activePin,
   setPin,
   auctionData,
   className,
   status,
   user,
   refetch,
+  key,
 }) => {
   const dispatch = useDispatch()
   const [countdown, setCountdown] = useState({
@@ -112,7 +114,9 @@ const SideAuctionCard = ({
   }
   return (
     <div
-      className="auction-card"
+      className={`auction-card${
+        activePin?.uuid === auctionData?.uuid ? ' active' : ''
+      }`}
       onClick={() => {
         setPin(pinData)
       }}

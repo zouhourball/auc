@@ -20,8 +20,9 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
         status={type}
         live={live}
         setPin={setPin}
+        activePin={activePin}
         refetch={() => refetch()}
-        className={`${activePin ? 'active' : ''}`}
+        // className={`${activePin ? '' : 'active'}`}
       />
     ))
   const renderPins = () =>
@@ -52,10 +53,14 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
       {activePin && (
         <div className="pin-label">
           <img src={activePin?.img} />
-          <span>
+          <div className="title">Villa</div>
+          <div className="city">
             {activePin?.city}, {activePin?.country}
-          </span>
-          <Button onClick={() => navigate(`detail/${activePin?.uuid}`)}>
+          </div>
+          <Button
+            className="viewBtn"
+            onClick={() => navigate(`detail/${activePin?.uuid}`)}
+          >
             view details
           </Button>
         </div>

@@ -57,4 +57,43 @@
       border-radius: 0 12px 12px 0;
     }
   }
+
+  .pin-label {
+    width: 150px;
+    padding: 9px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+    > img {
+      width: 100%;
+      margin-bottom: 5px;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .title {
+      color: #3d3d3e;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .city {
+      color: #3d3d3e;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .viewBtn {
+      width: 100%;
+      height: 30px;
+      margin-top: 5px;
+      border-radius: 10px;
+      background-color: #5078e1;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
 }

@@ -10,6 +10,10 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
   gap: 12px;
 
+  &.active {
+    border: 1px solid #527bde;
+  }
+
   .auction-image {
     position: relative;
     border-radius: 16px;

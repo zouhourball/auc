@@ -150,6 +150,11 @@ html,
 body,
 .addressBook-root {
   height: 100%;
+  overflow-x: hidden;
+
+  > div[tabindex='-1'][style='outline: none;'] {
+    height: 100%;
+  }
 }
 
 .data-loading {
