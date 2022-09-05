@@ -10,9 +10,10 @@ import AuctionDetail from 'components/auction-detail'
 import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
 import BrokerPage from 'components/broker-page'
+import BrokerProfile from 'components/broker-profile'
+import HowItWorks from 'components/how-it-works'
 
 import './style.scss'
-import HowItWorks from 'components/how-it-works'
 
 const Public = () => {
   const { t } = useTranslation()
@@ -58,6 +59,7 @@ const Public = () => {
             <AuctionsList key={i} path={page} />
           ))}
           <BrokerPage path={'/broker'} />
+          <BrokerProfile path={'/broker/:brokerId'} />
 
           <AuctionDetail path={'/detail/:auctionId'} />
           <HowItWorks path={'/how-it-works'} />

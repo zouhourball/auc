@@ -303,7 +303,7 @@ const Admin = (logged, auctionId) => {
     <div className="admin-page">
       <div className="admin-page-header">
         <div className="admin-page-logo" onClick={() => navigate('/admin')}>
-          ZEED
+          LEILAM
         </div>
         <div className="admin-page-actions">
           <div

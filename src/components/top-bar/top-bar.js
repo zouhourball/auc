@@ -112,7 +112,7 @@ const TopBar = ({
                 logged ? navigate('/auctions/home') : navigate('/public/home')
               }
             >
-              ZEED
+              LEILAM
             </span>
             {/* <img src={ logoWebp} alt="icon" height="40px" /> */}
           </picture>
