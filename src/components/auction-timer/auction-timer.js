@@ -1,30 +1,51 @@
-import { useEffect, useState } from 'react'
-import moment from 'moment'
+import { useState } from 'react'
+import { useQuery } from 'react-query'
 
 import { useTranslation } from 'libs/langs'
+
+import { getFeaturedAuctionRemainingTime } from 'libs/api/auctions-api'
 
 import './style.scss'
 
 const AuctionTimer = ({ auctionData, node, user }) => {
-  const { t } = useTranslation()
-  const [countdown, setCountdown] = useState({
-    d: 0,
-    h: 0,
-    m: 0,
-    s: 0,
-  })
-  useEffect(() => {
-    let interval = setInterval(() => {
-      let newCount = secondsToTime(
-        (+moment.utc(auctionData?.['auction_end_date']) - +new Date()) / 1000,
-      )
-      setCountdown(newCount)
-    }, 1000)
+  let interval
 
-    return () => {
-      clearInterval(interval)
-    }
-  }, [auctionData])
+  const { t } = useTranslation()
+  const [countdown, setCountdown] = useState(null)
+  useQuery(
+    ['getFeaturedAuctionRemainingTime', auctionData?.uuid],
+    getFeaturedAuctionRemainingTime,
+    {
+      onSuccess: (res) => {
+        if (res?.time) {
+          if (res?.time?.remaining) {
+            interval = setInterval(() => {
+              setCountdown((st) => {
+                if (st?.s === 0 && st?.m === 0 && st?.h === 0 && st?.d === 0) {
+                  clearInterval(interval)
+                  return null
+                }
+                return removeSeconde(st || res?.time?.remaining)
+              })
+            }, 1000)
+          }
+        }
+      },
+    },
+  )
+
+  // useEffect(() => {
+  //   let interval = setInterval(() => {
+  //     let newCount = secondsToTime(
+  //       (+moment.utc(auctionData?.['auction_end_date']) - +new Date()) / 1000,
+  //     )
+  //     setCountdown(newCount)
+  //   }, 1000)
+
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [auctionData])
 
   return (
     <div
@@ -36,22 +57,22 @@ const AuctionTimer = ({ auctionData, node, user }) => {
     >
       <div className="countdown">
         <div className="countdown-element">
-          <span className="value">{countdown.d}</span>{' '}
+          <span className="value">{countdown?.d}</span>{' '}
           <span className="label">{t('days')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown.h}</span>{' '}
+          <span className="value">{countdown?.h}</span>{' '}
           <span className="label">{t('hours_auction')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown.m}</span>{' '}
+          <span className="value">{countdown?.m}</span>{' '}
           <span className="label">{t('min_auctions')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown.s}</span>{' '}
+          <span className="value">{countdown?.s}</span>{' '}
           <span className="label">{t('seconds_auction')}</span>
         </div>
       </div>
@@ -90,23 +111,40 @@ const AuctionTimer = ({ auctionData, node, user }) => {
 
 export default AuctionTimer
 
-const secondsToTime = (secs) => {
-  let days = Math.floor(secs / (60 * 60 * 24))
-
-  let divisorForHours = secs % (60 * 60 * 24)
-  let hours = Math.floor(divisorForHours / (60 * 60))
-
-  let divisorForMinutes = divisorForHours % (60 * 60)
-  let minutes = Math.floor(divisorForMinutes / 60)
-
-  let divisorForSeconds = divisorForMinutes % 60
-  let seconds = Math.ceil(divisorForSeconds)
-
-  let obj = {
-    d: days,
-    h: hours,
-    m: minutes,
-    s: seconds,
+const removeSeconde = (time) => {
+  if (time?.s > 0) {
+    return {
+      d: time?.d,
+      h: time?.h,
+      m: time?.m,
+      s: time?.s - 1,
+    }
+  } else {
+    if (time?.m > 0) {
+      return {
+        d: time?.d,
+        h: time?.h,
+        m: time?.m - 1,
+        s: 59,
+      }
+    } else {
+      if (time?.h > 0) {
+        return {
+          d: time?.d,
+          h: time?.h - 1,
+          m: 59,
+          s: 59,
+        }
+      } else {
+        if (time?.d > 0) {
+          return {
+            d: time?.d - 1,
+            h: 23,
+            m: 59,
+            s: 59,
+          }
+        }
+      }
+    }
   }
-  return obj
 }

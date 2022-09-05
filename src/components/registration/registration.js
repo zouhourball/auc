@@ -6,11 +6,12 @@ import {
   getCountry,
   // getCity,
   registerBidder,
+  genUploadToken,
+  registerBroker,
 } from 'libs/api/auctions-api'
 import { useCurrentLang } from 'libs/langs'
-import { useInfiniteQuery, useMutation } from 'react-query'
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 
-import UploadImages from 'components/upload-images'
 import backgroundImage from './background_image.png'
 import appleIcon from './apple_logo.svg'
 import facebookIcon from './facebook.svg'
@@ -18,9 +19,13 @@ import googleIcon from './google.svg'
 import dragIcon from './drag_drop.svg'
 
 import './style.scss'
+import UploadImages from 'components/upload-images'
+import ConfirmDialog from 'components/confirm-dialog'
+import successRegister from '../../images/successfully-register.png'
 
 const RegistrationPage = () => {
   const [currentTab, setCurrentTab] = useState(0)
+  const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
   const [signupData, setSignupData] = useState({ countryCode: '+968' })
   const {
     fullName,
@@ -36,9 +41,46 @@ const RegistrationPage = () => {
   const lang = useCurrentLang()
   const registerBidderMutation = useMutation(registerBidder, {
     onSuccess: (res) => {
-      if (res?.statusText === 'OK') navigate('/public/home')
+      if (res?.success === true) setConfirmDialogVisible(true)
     },
   })
+
+  const registerBrokerMutation = useMutation(registerBroker, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        setConfirmDialogVisible(true)
+      }
+    },
+  })
+
+  const register = () => {
+    registerBrokerMutation.mutate({
+      body: {
+        email: email,
+        password: password,
+        companyName: companyName,
+        contactPerson: companyName,
+        phoneNumber: `${countryCode}${phoneNum}`,
+        country: countryId,
+        companyLogo: {
+          fileName: logo[0]?.options?.metadata?.filename,
+          apiId: logo[0]?.url,
+          apiUrl: logo[0]?.url,
+        },
+      },
+    })
+  }
+
+  const { data: uploadToken } = useQuery(
+    ['genUploadToken', 'upload'],
+    genUploadToken,
+  )
+
+  const { data: downloadToken } = useQuery(
+    ['genUploadToken', 'download'],
+    genUploadToken,
+  )
+
   const setValues = (key, value) => {
     setSignupData((data) => ({ ...data, [key]: value }))
   }
@@ -108,25 +150,26 @@ const RegistrationPage = () => {
               className="textField selectField"
               placeholder="Choose Country"
             />
-            <SelectField
-              id={'country-code'}
-              menuItems={countriesCodes}
-              // flag={flag}
-              // getActiveLabel={(data) => setFlag(data?.activeItem?.flag)}
-              value={countryCode}
-              defaultValue={'+968'}
-              onChange={(value) => setValues('countryCode', value)}
-              position={SelectField.Positions.BELOW}
-              className="textField selectField"
-              itemLabel="value"
-            />
-            <TextField
-              id={'phone'}
-              placeholder="Enter phone number"
-              value={phoneNum}
-              onChange={(v) => setValues('phoneNum', v)}
-              className="textField"
-            />
+            <div className="textField phone-field">
+              <SelectField
+                id={'country-code'}
+                menuItems={countriesCodes}
+                defaultValue={'+968'}
+                value={countryCode}
+                onChange={(value) => setValues('countryCode', value)}
+                className="country-code"
+                itemLabel="value"
+                position={SelectField.Positions.BELOW}
+              />
+              <div className="sep"></div>
+              <TextField
+                id={'phone'}
+                placeholder="Enter phone number"
+                value={phoneNum}
+                onChange={(v) => setValues('phoneNum', v)}
+                className="phone-number"
+              />
+            </div>
             <TextField
               id={'email'}
               placeholder="Enter email"
@@ -134,7 +177,16 @@ const RegistrationPage = () => {
               onChange={(v) => setValues('email', v)}
               className="textField"
             />
+            <TextField
+              id={'pw'}
+              placeholder="Enter password"
+              value={password}
+              onChange={(v) => setValues('password', v)}
+              className="textField"
+            />
             <UploadImages
+              publicToken={uploadToken?.token}
+              publicDownloadToken={downloadToken?.token}
               title={
                 <>
                   <span className="drop-zone-placeholder grey-text font-size-bg">
@@ -219,6 +271,18 @@ const RegistrationPage = () => {
   }
   return (
     <div className="registration-page">
+      {confirmDialogVisible && (
+        <ConfirmDialog
+          title="Successfully Registered"
+          description="You can now browse through auctions in the platform"
+          visible={confirmDialogVisible}
+          imgCard={successRegister}
+          onHide={() => {
+            setConfirmDialogVisible(false)
+            navigate('/public/home')
+          }}
+        />
+      )}
       <div className="registration-page-left">
         <img className="background" src={backgroundImage} />
       </div>
@@ -263,7 +327,10 @@ const RegistrationPage = () => {
                 <span className="blue-text"> Privacy Policy</span>
               </div>
             </div>
-            <Button className="signUp-btn" onClick={() => signUp()}>
+            <Button
+              className="signUp-btn"
+              onClick={() => (currentTab === 1 ? register() : signUp())}
+            >
               Sign Up
             </Button>
             <div className="grey-text font-size-bg">
