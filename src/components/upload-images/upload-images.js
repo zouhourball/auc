@@ -37,13 +37,15 @@ const UploadImages = ({
   onSelectDefault,
   selected,
   cover,
+  publicToken,
+  publicDownloadToken,
 }) => {
   const { t } = useTranslation()
   const [files, setFiles] = useState([])
   const [fileSrc, setFileSrc] = useState('')
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
-  const downloadToken = store?.getState()?.app?.dlToken
+  const downloadToken = publicDownloadToken || store?.getState()?.app?.dlToken
 
   const onDropFiles = (fls) => {
     let newFiles = []
@@ -51,19 +53,26 @@ const UploadImages = ({
     setLoading(true)
     Promise.all(
       fls.map((f) =>
-        uploadFileTus(f, null, (res) => {
-          newFiles = [
-            ...newFiles,
-            {
-              id: res?.url,
-              url: res?.url,
-              size: res?.file?.size?.toString(),
+        uploadFileTus(
+          f,
+          null,
+          (res) => {
+            newFiles = [
+              ...newFiles,
+              {
+                id: res?.url,
+                url: res?.url,
+                size: res?.file?.size?.toString(),
 
-              fileName: res?.file?.name,
-              type: res?.file?.type,
-            },
-          ]
-        }),
+                fileName: res?.file?.name,
+                type: res?.file?.type,
+              },
+            ]
+          },
+          null,
+          false,
+          publicToken,
+        ),
       ),
     ).then((res) => {
       setLoading(false)

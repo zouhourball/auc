@@ -7,7 +7,7 @@ dependencies:
   '@target-energysolutions/auth-check': 0.3.7_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/gis-map': 2.9.104_250825046311308e722f6f77c6a4d405
-  '@target-energysolutions/hoc-oauth': 2.1.2_bdb4aea89f170aaa1ddb585ff4b9f19e
+  '@target-energysolutions/hoc-oauth': 1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/messenger': 17.2.3_98caf3aa5b7bda04ab62d3a034d181a2
   '@target-energysolutions/mht': 2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/react-hoc-query': 1.0.4_7bda62a7d4688a636121e068167982a0
@@ -5043,12 +5043,11 @@ packages:
       react-dom: ^16.2.0
     resolution:
       integrity: sha512-KvHYqUu+yqjXgSKlV+lbeXifoY7LwfYTj3OIXhfTDx830p7vwjzLtvsvqI5pRN2x+dgC1OS07w/PX5a8mkVlcg==
-  /@target-energysolutions/hoc-oauth/2.1.2_bdb4aea89f170aaa1ddb585ff4b9f19e:
+  /@target-energysolutions/hoc-oauth/1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e:
     dependencies:
       client-oauth2: 4.3.3
       fake-progress: 1.0.4
       jsonwebtoken: 8.5.1
-      nanoid: 4.0.0
       prop-types: 15.8.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -5060,7 +5059,7 @@ packages:
       react: ^16.2.0
       react-dom: ^16.2.0
     resolution:
-      integrity: sha512-zs+wSB+MSZ4HzTpjRbiwMPaltLttPV3cFShWI3j57thRjwXkTYPOr77f06vR6CHkXX8bA++uVLy0ot23GL1yig==
+      integrity: sha512-c/bpqyA1DjxM2KF+OUOAz+lrYsphgNNcrZpsH3XaEN9FZIHoRRgKD7JAZGKXFeBDq++68+qvg302jUDFJ+CMEA==
   /@target-energysolutions/material-design/0.6.3_c4837f62d683678630715495e19ab5ba:
     dependencies:
       '@material/dialog': 3.1.0
@@ -9994,7 +9993,7 @@ packages:
   /es6-symbol/3.1.3:
     dependencies:
       d: 1.0.1
-      ext: 1.6.0
+      ext: 1.7.0
     dev: false
     optional: true
     resolution:
@@ -10496,13 +10495,13 @@ packages:
       node: '>= 0.10.0'
     resolution:
       integrity: sha512-zZBcOX9TfehHQhtupq57OF8lFZ3UZi08Y97dwFCkD8p9d/d2Y3M+ykKcwaMDEL+4qyUolgBDX6AblpR3fL212Q==
-  /ext/1.6.0:
+  /ext/1.7.0:
     dependencies:
       type: 2.7.2
     dev: false
     optional: true
     resolution:
-      integrity: sha512-sdBImtzkq2HpkdRLtlLWDa6w4DX22ijZLKx8BMPUuKe1c5lbN6xwQDQCxSfxBQnHZ13ls/FH0MQZx/q/gr6FQg==
+      integrity: sha512-6hxeJYaL110a9b5TEJSj0gojyHQAmA2ch5Os+ySCiA1QGdS697XWY1pzsrSjqA9LDEEgdB/KypIlR59RcLuHYw==
   /extend-shallow/2.0.1:
     dependencies:
       is-extendable: 0.1.1
@@ -14798,13 +14797,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-sFVPaa2J4i0JB/ehKwmTpdlhN+8=
-  /nanoid/4.0.0:
-    dev: false
-    engines:
-      node: ^14 || ^16 || >=18
-    hasBin: true
-    resolution:
-      integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -22502,7 +22494,7 @@ specifiers:
   '@target-energysolutions/auth-check': ^0.3.7
   '@target-energysolutions/date-picker': ^3.1.5
   '@target-energysolutions/gis-map': ^2.9.104
-  '@target-energysolutions/hoc-oauth': ^2.1.2
+  '@target-energysolutions/hoc-oauth': 1.3.2
   '@target-energysolutions/messenger': ^17.1.11
   '@target-energysolutions/mht': 2.22.3-beta.4
   '@target-energysolutions/react-hoc-query': ^1.0.4
