@@ -1,4 +1,4 @@
-dependencies:
+it commdependencies:
   '@apollo/react-hooks': 4.0.0_408a12b1ddf20ec28db17311d2155d67
   '@commitlint/cli': 7.5.2
   '@commitlint/config-conventional': 8.3.4
@@ -7123,7 +7123,7 @@ packages:
       source-map: 0.5.7
     dev: false
     resolution:
-      integrity: sha512-SMSkGoqTbTyUTDeuVuPIWifPdUGkTk1Kf9BWRiXIOIcuyMfsdp2EjeiiFvOzX8NOBvEh/ypKYvUh2rkgAJMCLA==
+      inte,grity: sha512-SMSkGoqTbTyUTDeuVuPIWifPdUGkTk1Kf9BWRiXIOIcuyMfsdp2EjeiiFvOzX8NOBvEh/ypKYvUh2rkgAJMCLA==
   /babel-plugin-istanbul/6.1.1:
     dependencies:
       '@babel/helper-plugin-utils': 7.17.12

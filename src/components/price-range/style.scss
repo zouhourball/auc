@@ -2,7 +2,6 @@
   margin: 8px 0;
   border-radius: 5px;
   background: #fff;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
 
   &-header {
     display: flex;
@@ -16,7 +15,7 @@
   }
 
   &-wrapper {
-    margin-top: 16px;
+    margin: 0 3px;
   }
 
   &-body {
@@ -38,5 +37,14 @@
     .price-range-textField {
       height: 12px;
     }
+  }
+
+  .md-text-field {
+    padding: 12px 12px;
+  }
+
+  .md-text-field-icon {
+    margin-right: 4px;
+    margin-left: 0;
   }
 }

@@ -15,7 +15,7 @@ import CreateAuctionStepper from 'components/create-auction-stepper'
 
 const Auctions = () => {
   const dispatch = useDispatch()
-
+  const orgId = 829
   const [auctionDetails, setAuctionDetails] = useState({})
   const [propertyDetails, setPropertyDetails] = useState({})
   const [documents, setDocuments] = useState({})
@@ -43,6 +43,7 @@ const Auctions = () => {
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
+        configurator_organization_id: orgId,
         title: auctionDetails?.title,
         address: auctionDetails?.address,
         country_id: +auctionDetails?.country,

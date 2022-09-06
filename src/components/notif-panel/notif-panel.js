@@ -1,5 +1,8 @@
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
+import auctionWon from 'images/auction_won.svg'
+import myActivity from 'images/my_activity_enable.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
 
 import './style.scss'
 
@@ -9,7 +12,12 @@ const NotifPanel = ({ notifications }) => {
       {notifications.map((item, index) => {
         return (
           <div key={index} className="notifPanel-item">
-            <img src={item.icon} width="20px" height="20px" />
+            <img
+              className="notifPanel-item-icon"
+              src={item.icon}
+              width="20px"
+              height="20px"
+            />
             <div className="notifPanel-item-data">
               <div className="label">{item.label}</div>
               <div className="date">{item.date}</div>
@@ -20,14 +28,16 @@ const NotifPanel = ({ notifications }) => {
           </div>
         )
       })}
-      <Button
-        flat
-        swapTheming
-        onClick={() => navigate('/auctions/notifications')}
-        className="load-more"
-      >
-        Load mere notifications
-      </Button>
+      <div className="notifPanel-action">
+        <Button
+          flat
+          primary
+          onClick={() => navigate('/auctions/notifications')}
+          className="load-more"
+        >
+          View All
+        </Button>
+      </div>
     </div>
   )
 }
@@ -37,19 +47,19 @@ export default NotifPanel
 NotifPanel.defaultProps = {
   notifications: [
     {
-      icon: 'https://picsum.photos/200',
+      icon: bidPlace,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,
     },
     {
-      icon: 'https://picsum.photos/200',
+      icon: myActivity,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,
     },
     {
-      icon: 'https://picsum.photos/200',
+      icon: auctionWon,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
       withPoint: true,

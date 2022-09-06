@@ -86,15 +86,24 @@ const AuctionsList = ({ logged, user }) => {
           <span>({auctionsData?.results?.length || 0})</span>
         </div>
       </div>
-      <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
-      <span>
-        <FontIcon onClick={() => setGridView(0)} primary>
-          task_alt
-        </FontIcon>
-        <FontIcon onClick={() => setGridView(1)} primary>
-          task_alt
-        </FontIcon>
-      </span>
+      <div className="auction-list-header-filters">
+        <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
+        <div className="auction-list-header-filters-display">
+          <FontIcon
+            className={`gridView ${gridView === 0 ? 'active' : ''}`}
+            onClick={() => setGridView(0)}
+          >
+            view_list
+          </FontIcon>
+          <div className="sep"></div>
+          <FontIcon
+            onClick={() => setGridView(1)}
+            className={`gridView ${gridView === 1 ? 'active' : ''}`}
+          >
+            view_module
+          </FontIcon>
+        </div>
+      </div>
       {gridView === 0 ? (
         <div className="md-grid auction-list-cards">{renderCards()}</div>
       ) : (

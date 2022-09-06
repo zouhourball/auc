@@ -1,3 +1,8 @@
+// import auctionWon from 'images/auction_won.svg'
+// import myActivity from 'images/my_activity_enable.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
+import './style.scss'
+
 const NotificationCard = ({ icon, label, date, withPoint }) => {
   return (
     <div className="notificationCard">
@@ -13,7 +18,7 @@ const NotificationCard = ({ icon, label, date, withPoint }) => {
 
 export default NotificationCard
 NotificationCard.defaultProps = {
-  icon: 'https://picsum.photos/200',
+  icon: bidPlace,
   label: 'You have outbid! Auction LOt #124',
   date: '23 minutes',
 }
