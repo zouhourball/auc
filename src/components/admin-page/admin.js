@@ -1,7 +1,7 @@
 import Mht from '@target-energysolutions/mht'
 import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
-import { get } from 'lodash-es'
+// import { get } from 'lodash-es'
 import { useState } from 'react'
 import { Button, Avatar, Card, CardActions, CardTitle } from 'react-md'
 import { configs, newBrokersConfigs } from './helper'
@@ -9,13 +9,13 @@ import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
-import { getPublicUrl } from 'libs/utils/custom-function'
+// import { getPublicUrl } from 'libs/utils/custom-function'
 
 import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
 
 import BrokerHeader from 'components/broker-header'
 import DocumentsContainer from 'components/docs-dialog'
-import UserInfoBySubject from 'components/user-info-by-subject'
+// import UserInfoBySubject from 'components/user-info-by-subject'
 
 import './style.scss'
 
@@ -47,25 +47,26 @@ const Admin = (logged, auctionId) => {
       title: el?.listing?.title,
       location: `${el?.listing?.property?.country?.['name_en']}, ${el?.listing?.property?.city?.['name_en']}`,
       owner: (
-        <UserInfoBySubject subject={el?.['submitted_by']}>
-          {(res) => (
-            <div className="subject">
-              {' '}
-              <Avatar
-                src={
-                  get(res, 'photo.aPIURL', null)
-                    ? getPublicUrl(res?.photo?.aPIURL)
-                    : null
-                }
-              >
-                {get(res, 'photo.aPIURL', null)
-                  ? null
-                  : get(res, 'fullName.0', '')}
-              </Avatar>
-              {res ? res.fullName : 'N/A'}
-            </div>
-          )}
-        </UserInfoBySubject>
+        // <UserInfoBySubject subject={el?.['submitted_by']}>
+        //   {(res) => (
+        <div className="subject">
+          {' '}
+          <Avatar
+            src={auctionsRequestsData?.['organization_logo']}
+            // src={
+            //   get(res, 'photo.aPIURL', null)
+            //     ? getPublicUrl(res?.photo?.aPIURL)
+            //     : null
+            // }
+          >
+            {auctionsRequestsData?.['organization_logo']}
+          </Avatar>
+          {auctionsRequestsData
+            ? auctionsRequestsData?.['organization_name']
+            : 'N/A'}
+        </div>
+        //   )}
+        // </UserInfoBySubject>
       ),
       bidOpenDate: moment(el?.['auction_start_date']).format('DD MMM YYYY'),
       bidCloseDate: moment(el?.['auction_end_date']).format('DD MMM YYYY'),
