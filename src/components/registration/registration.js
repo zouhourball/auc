@@ -287,7 +287,7 @@ const RegistrationPage = () => {
         <img className="background" src={backgroundImage} />
       </div>
       <div className="registration-page-right">
-        <div className="registration-page-right-title">Welcome to ZEED</div>
+        <div className="registration-page-right-title">Welcome to LEILAM</div>
         <div className="registration-page-right-subtitle">
           Login to view listed properties
         </div>

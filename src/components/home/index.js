@@ -21,10 +21,11 @@ import MyAuctionDetails from 'components/my-auction-details'
 import TopBar from 'components/top-bar'
 import Footer from 'components/footer'
 import BrokerPage from 'components/broker-page'
-
-import './style.scss'
+import BrokerProfile from 'components/broker-profile'
 import HowItWorks from 'components/how-it-works'
 import Notifications from 'components/notifications'
+
+import './style.scss'
 
 const queryClient = new QueryClient()
 
@@ -120,6 +121,11 @@ const Home = () => {
             />
           ))}
           <BrokerPage path={'/broker'} />
+          <BrokerProfile
+            path={'/broker/:brokerId'}
+            user={currentUser?.mev2?.user}
+          />
+
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />
           ))}

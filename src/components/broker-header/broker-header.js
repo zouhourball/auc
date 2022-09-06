@@ -10,6 +10,7 @@ const BrokerHeader = ({
   setSearch,
   tabs,
   filters,
+  searchPlaceholder,
 }) => {
   const { t } = useTranslation()
   const renderTabs = () =>
@@ -48,7 +49,7 @@ const BrokerHeader = ({
             e.stopPropagation()
             setSearch(v)
           }}
-          placeholder="Search..."
+          placeholder={searchPlaceholder || 'Search...'}
           block
         />
       </div>

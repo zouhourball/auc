@@ -30,21 +30,47 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
       id: el?.uuid,
       latitude: el?.listing?.property?.['general_location_y'],
       longitude: el?.listing?.property?.['general_location_x'],
+      popup: {
+        'Well ID': '123456789',
+        OtherInfo: 'Well Other Info',
+      },
     }))
   return (
     <div className="display-grid">
       <div className="cards">{renderCards()}</div>
       <div className="map">
         <MeeraMap
-          isOnlyShowMeasureAndDraw
-          id={`map`}
-          fitBy="symbol-layer-id2"
-          zoom={8}
+          // isOnlyShowMeasureAndDraw
+          // id={`map`}
+          // className="map"
+          // fitBy="symbol-layer-id2"
+          // zoom={8}
+          // layers={[
+          //   {
+          //     type: 'symbol',
+          //     id: 'Symbol-Layer-Id2',
+          //     displayName: 'Plot Layer',
+          //     items: renderPins(),
+          //   },
+          // ]}
+          mapRef={(map) => {
+            // this.map = map
+          }}
+          isMiniMap={true}
+          onSymbolClick={(e) => {
+            // this.handleOnSymbolClick
+            // console.log(e, 'event')
+          }}
+          footer={{
+            visible: true,
+            style: { color: '#fff', background: 'rgba(4,15,27,.7)' },
+          }}
+          isTocVisible={false}
           layers={[
             {
               type: 'symbol',
-              id: 'Symbol-Layer-Id2',
-              displayName: 'Plot Layer',
+              id: 'symbol-layer-id',
+              displayName: 'Edge Workflow',
               items: renderPins(),
             },
           ]}

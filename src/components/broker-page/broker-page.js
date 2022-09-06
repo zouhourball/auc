@@ -1,6 +1,8 @@
-import BrokerHeader from 'components/broker-header'
 import { useState } from 'react'
 import { Avatar, Card, CardActions, CardTitle, FontIcon } from 'react-md'
+import { navigate } from '@reach/router'
+
+import BrokerHeader from 'components/broker-header'
 
 import './style.scss'
 
@@ -146,7 +148,11 @@ const BrokerPage = () => {
       //   {el?.email}
       // </div>
       // eslint-disable-next-line react/jsx-key
-      <Card className="md-block-centered" key={el?.name}>
+      <Card
+        className="md-block-centered"
+        key={el?.name}
+        onClick={() => navigate(`/auctions/broker/${1}`)}
+      >
         <CardTitle
           title={el?.name}
           subtitle={
