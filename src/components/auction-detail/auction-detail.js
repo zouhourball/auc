@@ -29,7 +29,6 @@ import getBids from 'libs/queries/auction/get-bids.gql'
 
 import { addToast } from 'modules/app/actions'
 
-import UserInfoBySubject from 'components/user-info-by-subject'
 import ToastMsg from 'components/toast-msg'
 import DrawOnMap from 'components/draw-on-map'
 import AuctionTimer from 'components/auction-timer'
@@ -49,6 +48,7 @@ import icon3 from './icons/area.svg'
 import './style.scss'
 import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
 import FeesDialog from 'components/fees-dialog/fees-dialog'
+import CompanyInfoById from 'components/company-info-by-id'
 
 const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
@@ -365,9 +365,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
         )}
 
         <div className="owner-card md-cell md-cell--12">
-          <UserInfoBySubject
-            key={auctionData?.listing?.['listed_by_member']}
-            subject={auctionData?.listing?.['listed_by_member']}
+          <CompanyInfoById
+            orgId={auctionData?.['configurator_organization_id']}
           >
             {(res) => {
               // console.log(res, 'res')
@@ -376,19 +375,19 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                   <Avatar
                     className="owner-card-avatar"
                     src={
-                      get(res, 'photo.aPIURL', null)
-                        ? getPublicUrl(res?.photo?.aPIURL)
+                      get(res, 'companyLogo.aPIID', null)
+                        ? getPublicUrl(res?.companyLogo?.aPIID)
                         : null
                     }
                   >
-                    {get(res, 'photo.aPIURL', null)
+                    {get(res, 'companyLogo.aPIID', null)
                       ? null
-                      : get(res, 'fullName.0', '')}
+                      : get(res, 'name.0', '')}
                   </Avatar>
 
                   <div className="owner-card-info">
                     <div>{t('owned_by')}</div>
-                    <div className="name">{res?.fullName}</div>
+                    <div className="name">{res?.name}</div>
                   </div>
                   <Button
                     floating
@@ -396,7 +395,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                     className="owner-card-btn"
                     onClick={() =>
                       setShowContactInfo({
-                        ownerName: res?.fullName,
+                        ownerName: res?.name,
                         contact: res?.email,
                         type: 'email',
                       })
@@ -410,7 +409,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                     className="owner-card-btn"
                     onClick={() =>
                       setShowContactInfo({
-                        ownerName: res?.fullName,
+                        ownerName: res?.name,
                         contact: res?.phoneMobile,
                         type: 'phone',
                       })
@@ -420,7 +419,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                 </>
               )
             }}
-          </UserInfoBySubject>
+          </CompanyInfoById>
         </div>
         <div className="md-cell md-cell--12 btn-cell">
           {

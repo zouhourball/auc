@@ -15,7 +15,7 @@ import CreateAuctionStepper from 'components/create-auction-stepper'
 
 const Auctions = () => {
   const dispatch = useDispatch()
-  const orgId = 829
+  const orgId = 805
   const [auctionDetails, setAuctionDetails] = useState({})
   const [propertyDetails, setPropertyDetails] = useState({})
   const [documents, setDocuments] = useState({})

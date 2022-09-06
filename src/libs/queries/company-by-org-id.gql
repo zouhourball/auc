@@ -2,6 +2,8 @@ query companiesByOrgID($organisationID: String!) {
   companyByOrganisationID(organisationID: $organisationID) {
     name
     id
+    phoneMobile
+    email
     companyLogo {
       aPIID
     }

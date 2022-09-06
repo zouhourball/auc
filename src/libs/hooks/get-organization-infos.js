@@ -5,7 +5,7 @@ import organisationByID from 'libs/queries/organization-by-id.gql'
 
 const getOrganizationInfos = () => {
   // const orgId = useSelector(({ shell }) => shell?.organizationId)
-  const orgId = 0
+  const orgId = 805
 
   const { data: organization } = useQuery(organisationByID, {
     context: {
