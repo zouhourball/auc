@@ -4,6 +4,17 @@ query companiesByOrgID($organisationID: String!) {
     id
     phoneMobile
     email
+    city {
+      cityName
+    }
+    state {
+      name
+    }
+    country {
+      countryName
+    }
+    aboutUs
+    webSite
     companyLogo {
       aPIID
     }

@@ -151,7 +151,7 @@ const BrokerPage = () => {
       <Card
         className="md-block-centered"
         key={el?.name}
-        onClick={() => navigate(`/auctions/broker/${1}`)}
+        onClick={() => navigate(`/auctions/broker/${1625}`)}
       >
         <CardTitle
           title={el?.name}
