@@ -504,22 +504,22 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           <div className="fees-commission-title">{t('fees')}</div>
           <div className="fees-commission-content">
             <div className="fees-commission-item">
-              <div>{t('buyer')}</div>
-              <div className="value">
-                11%
+              <div className="commission">
+                {t('buyer')}
                 <Button onClick={() => setFeesDialog('bayers')}>
-                  <FontIcon>task_alt</FontIcon>
+                  <FontIcon>info</FontIcon>
                 </Button>
               </div>
+              <div className="value">11%</div>
             </div>
             <div className="fees-commission-item">
-              <div>{t('comission')}</div>
-              <div className="value">
-                3%
+              <div className="commission">
+                {t('comission')}
                 <Button onClick={() => setFeesDialog('commission')}>
-                  <FontIcon>task_alt</FontIcon>
+                  <FontIcon>info</FontIcon>
                 </Button>
               </div>
+              <div className="value">3%</div>
             </div>
           </div>
         </div>

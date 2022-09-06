@@ -1,6 +1,6 @@
 import BrokerHeader from 'components/broker-header'
 import { useState } from 'react'
-import { Avatar, Card, CardActions, CardTitle } from 'react-md'
+import { Avatar, Card, CardActions, CardTitle, FontIcon } from 'react-md'
 
 import './style.scss'
 
@@ -152,18 +152,27 @@ const BrokerPage = () => {
           subtitle={
             <div>
               <div className="info">
-                <div className="label">{el?.phone}</div>
+                <div className="label">
+                  <FontIcon>phone_iphone</FontIcon> {el?.phone}
+                </div>
                 <div className="sep"></div>
-                <div className="label">{el?.country}</div>
+                <div className="label">
+                  <FontIcon>flag</FontIcon> {el?.country}
+                </div>
               </div>
-              <div className="label">{el?.address}</div>
+              <div className="label">
+                <FontIcon>location_on</FontIcon> {el?.address}
+              </div>
             </div>
           }
           avatar={<Avatar src={el?.img} role="presentation" />}
         />
         <CardActions>
           <div className="email">
-            Email: <div className="address"> {el?.email}</div>
+            Email:{' '}
+            <div className="address">
+              <FontIcon>email</FontIcon> {el?.email}
+            </div>
           </div>
         </CardActions>
       </Card>

@@ -27,6 +27,7 @@ import {
 
 import './styles.scss'
 import UserInfoBySubject from 'components/user-info-by-subject'
+import NotifPanel from 'components/notif-panel'
 
 const TopBar = ({
   onClickLogo,
@@ -46,12 +47,13 @@ const TopBar = ({
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
+  const [notifPanelVisible, setNotifPanelVisible] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user
     ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
     : null
-
+  const modules = location.pathname.split('/').filter((v) => v !== '')
   const getActiveLabel = ({ activeLabel }) => {
     if (activeLabel === 'اللغة العربية') {
       return 'عربي'
@@ -286,6 +288,21 @@ const TopBar = ({
             className="langSelector"
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
+          {logged && (
+            <Button
+              icon
+              className={cls(
+                `notification-icon`,
+                modules[1] === 'home' && `white`,
+              )}
+              primary={true}
+              onClick={() => setNotifPanelVisible(!notifPanelVisible)}
+            >
+              notifications
+            </Button>
+          )}
+          {notifPanelVisible && <NotifPanel />}
+
           {logged && (
             <div className="top-bar-actions-menu-button">
               <MenuButton

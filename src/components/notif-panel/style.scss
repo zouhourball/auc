@@ -1,4 +1,56 @@
-//style
 .notifPanel {
+  position: absolute;
+  top: 70px;
+  right: 120px;
+  width: max-content;
+  border-radius: 8px;
   background-color: #fff;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid #dbdbdb;
+    gap: 12px;
+
+    &-data {
+      position: relative;
+
+      .label {
+        color: #3d3d3e;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .date {
+        color: #3f3f3fcf;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 16px;
+        right: -12px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #5078e1;
+      }
+    }
+  }
+
+  &-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+  }
+
+  .load-more {
+    font-size: 14px;
+    font-weight: 600;
+  }
 }

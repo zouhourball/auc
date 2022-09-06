@@ -1,3 +1,7 @@
+import auctionWon from 'images/auction_won.svg'
+import myActivity from 'images/my_activity_enable.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
+
 import FilterBox from 'components/filter-box'
 import { Button, FontIcon, TextField } from 'react-md'
 
@@ -16,17 +20,19 @@ const Notifications = () => {
   ]
   const notifications = [
     {
-      icon: 'https://picsum.photos/200',
+      icon: bidPlace,
       label: 'You have outbid! Auction LOt #124',
+      date: '23 minutes',
+      withPoint: true,
+    },
+    {
+      icon: myActivity,
+      label:
+        'You have been successfully registered to participate in auction Lot #123',
       date: '23 minutes',
     },
     {
-      icon: 'https://picsum.photos/200',
-      label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
-    },
-    {
-      icon: 'https://picsum.photos/200',
+      icon: auctionWon,
       label: 'You have outbid! Auction LOt #124',
       date: '23 minutes',
     },
@@ -35,24 +41,27 @@ const Notifications = () => {
   return (
     <div className="notifications">
       <div className="notifications-title">
-        Notifications ({notifications.length})
+        Notifications{' '}
+        <span className="blue-text">({notifications.length})</span>
       </div>
       <div className="notifications-container md-grid">
-        <div className="notifications-container-content md-cell md-cell--9">
+        <div className="notifications-container-content md-cell md-cell--6">
           {notifications.map((item, index) => {
             return (
               <NotificationCard
-                key={index}
-                icon="https://picsum.photos/200"
-                label="You have outbid! Auction LOt #124"
-                date="23 minutes"
+                key={item.index}
+                icon={item.icon}
+                label={item.label}
+                date={item.date}
                 withPoint
               />
             )
           })}
-          <Button flat swapTheming onClick={() => {}} className="load-more">
-            Load mere notifications
-          </Button>
+          <div className="actions">
+            <Button flat swapTheming onClick={() => {}} className="load-more">
+              Load more notifications
+            </Button>
+          </div>
         </div>
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField

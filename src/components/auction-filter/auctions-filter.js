@@ -215,7 +215,7 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         ]}
         position={SelectField.Positions.BELOW}
       /> */}
-      <div className="md-cell md-cell--1">{t('sort')}</div>
+      {/* <div className="md-cell md-cell--1">{t('sort')}</div> */}
       <SelectField
         placeholder={t('auction_ending')}
         className="md-cell md-cell--2 auctions-filter-selectField"

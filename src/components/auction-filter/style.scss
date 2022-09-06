@@ -1,5 +1,8 @@
 .auctions-filter {
+  flex: 1 0 auto;
+  flex-wrap: nowrap;
   align-items: center;
+  margin: 0;
 
   &-textField {
     padding: 12px 16px;
@@ -20,8 +23,33 @@
 
   .price-range {
     &-textField {
-      border: 2px solid rgba(0, 0, 0, 0.18);
+      border: 1px solid #5078e1;
       border-radius: 5px;
+
+      .md-text-field-icon {
+        color: #5078e1;
+      }
     }
+  }
+
+  .md-icon {
+    color: #5078e1;
+  }
+
+  .md-list-item {
+    .md-list-tile {
+      height: 30px;
+      padding-left: 4px;
+    }
+  }
+
+  .md-panel-header {
+    height: 40px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .md-paper--2 {
+    border-radius: 12px;
   }
 }

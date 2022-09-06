@@ -247,6 +247,12 @@
     }
   }
 
+  .notification-icon {
+    &.white {
+      color: #fff;
+    }
+  }
+
   .drawer-btn {
     display: none;
     align-self: center;

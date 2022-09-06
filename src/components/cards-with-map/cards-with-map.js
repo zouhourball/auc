@@ -1,24 +1,28 @@
 import { useState } from 'react'
 import { MeeraMap } from '@target-energysolutions/gis-map'
+import '@target-energysolutions/gis-map/styles.css'
 import { Button } from 'react-md'
 import { navigate } from '@reach/router'
 
-import SideBiddingCard from 'components/side-bidding-card'
+import './style.scss'
 
-const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
-  const [activePin, setPin] = useState({})
+import SideAuctionCard from 'components/side-auction-card'
+
+const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
+  const [activePin, setPin] = useState()
 
   const renderCards = () =>
     cardsData?.map((el) => (
-      <SideBiddingCard
+      <SideAuctionCard
         user={user}
-        className="md-cell md-cell--2"
         key={el?.uuid}
         auctionData={el}
         status={type}
         live={live}
         setPin={setPin}
+        activePin={activePin}
         refetch={() => refetch()}
+        // className={`${activePin ? '' : 'active'}`}
       />
     ))
   const renderPins = () =>
@@ -28,13 +32,12 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
       longitude: el?.listing?.property?.['general_location_x'],
     }))
   return (
-    <div>
+    <div className="display-grid">
       <div className="cards">{renderCards()}</div>
       <div className="map">
         <MeeraMap
           isOnlyShowMeasureAndDraw
           id={`map`}
-          className="map"
           fitBy="symbol-layer-id2"
           zoom={8}
           layers={[
@@ -50,10 +53,14 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch }) => {
       {activePin && (
         <div className="pin-label">
           <img src={activePin?.img} />
-          <span>
+          <div className="title">Villa</div>
+          <div className="city">
             {activePin?.city}, {activePin?.country}
-          </span>
-          <Button onClick={() => navigate(`detail/${activePin?.uuid}`)}>
+          </div>
+          <Button
+            className="viewBtn"
+            onClick={() => navigate(`detail/${activePin?.uuid}`)}
+          >
             view details
           </Button>
         </div>
