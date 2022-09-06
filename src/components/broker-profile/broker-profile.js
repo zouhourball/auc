@@ -31,6 +31,16 @@ const BrokerProfile = ({ brokerId, user }) => {
       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
     },
   })
+  const renderAuctionStatus = () => {
+    switch (filter) {
+      case 0:
+        return 'Active'
+      case 1:
+        return 'Upcoming'
+      case 2:
+        return 'Closed'
+    }
+  }
   const { data: auctionsData, refetch } = useQueryReact(
     [
       'filterFeatureAuctions',
@@ -38,6 +48,7 @@ const BrokerProfile = ({ brokerId, user }) => {
         search_key: filterData?.search,
         city_id: filterData?.location,
         property_type_id: filterData?.type,
+        auction_status: renderAuctionStatus(),
       },
 
       {
@@ -50,6 +61,7 @@ const BrokerProfile = ({ brokerId, user }) => {
     filterFeatureAuctions,
     { refetchOnWindowFocus: false },
   )
+
   const headerFilters = [
     {
       key: 'live',

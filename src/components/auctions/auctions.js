@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from 'react-query'
+import { useQuery as useQueryGraphql } from 'react-apollo'
 import { useDispatch } from 'react-redux'
 import moment from 'moment'
 import { navigate } from '@reach/router'
@@ -9,13 +10,20 @@ import { addToast } from 'modules/app/actions'
 
 import { publishAuction } from 'libs/api/auctions-api'
 
+import meOrganizations from 'libs/queries/me-organizations.gql'
+
 import ToastMsg from 'components/toast-msg'
 
 import CreateAuctionStepper from 'components/create-auction-stepper'
 
 const Auctions = () => {
   const dispatch = useDispatch()
-  const orgId = 805
+  const { data: myOrgs } = useQueryGraphql(meOrganizations, {
+    notifyOnNetworkStatusChange: true,
+    context: {
+      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+    },
+  })
   const [auctionDetails, setAuctionDetails] = useState({})
   const [propertyDetails, setPropertyDetails] = useState({})
   const [documents, setDocuments] = useState({})
@@ -43,7 +51,7 @@ const Auctions = () => {
   const onPublishAuction = () => {
     publishAuctionMutation.mutate({
       body: {
-        configurator_organization_id: orgId,
+        configurator_organization_id: +myOrgs?.meOrganizations[0]?.ID,
         title: auctionDetails?.title,
         address: auctionDetails?.address,
         country_id: +auctionDetails?.country,

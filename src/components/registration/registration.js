@@ -52,7 +52,6 @@ const RegistrationPage = () => {
       }
     },
   })
-
   const register = () => {
     registerBrokerMutation.mutate({
       body: {
