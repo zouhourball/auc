@@ -11,7 +11,12 @@ import moment from 'moment'
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
 import { getPublicUrl } from 'libs/utils/custom-function'
 
-import { auctionsRequest, approveAuction } from 'libs/api/auctions-api'
+import {
+  auctionsRequest,
+  approveAuction,
+  getApprovals,
+  approveRejectBroker,
+} from 'libs/api/auctions-api'
 
 import BrokerHeader from 'components/broker-header'
 import DocumentsContainer from 'components/docs-dialog'
@@ -33,7 +38,10 @@ const Admin = (logged, auctionId) => {
     ['auctionsRequest', '', ''],
     auctionsRequest,
   )
-  const approveMutation = useMutation(approveAuction, {
+
+  const { data: getApprovalsList } = useQuery(['getApprovals'], getApprovals)
+
+  const approveBrokerMutation = useMutation(approveRejectBroker, {
     onSuccess: (res) => {
       if (!res.error) {
         refetch()
@@ -41,6 +49,17 @@ const Admin = (logged, auctionId) => {
     },
   })
 
+  const renderApprovalsData = () =>
+    getApprovalsList?.response?.data?.map((el) => ({
+      id: el?.id,
+      status: el?.status,
+      Logo: <Avatar src={el?.logo}></Avatar>,
+      companyName: el?.name,
+      country: el?.country,
+      address: el?.address,
+      email: el?.email,
+      phone: el?.phone,
+    }))
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
       id: el?.uuid,
@@ -86,18 +105,34 @@ const Admin = (logged, auctionId) => {
         </Button>
       ),
     }))
-  const renderBrokerData = () =>
-    auctionsRequestsData?.results?.map((el) => ({
-      id: el?.uuid,
-      logo: <Avatar src={''}></Avatar>,
-      companyName: 'Test',
-      country: 'Country, City',
-      address: 'Address',
-      email: 'Email@gmail.com',
-      phone: '+968 245 375 65',
-      status: 'Pending',
-    }))
+  // const renderBrokerData = () =>
+  //   auctionsRequestsData?.results?.map((el) => ({
+  //     id: el?.uuid,
+  //     logo: <Avatar src={''}></Avatar>,
+  //     companyName: 'Test',
+  //     country: 'Country, City',
+  //     address: 'Address',
+  //     email: 'Email@gmail.com',
+  //     phone: '+968 245 375 65',
+  //     status: 'Pending',
+  //   }))
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
+  const selectedRowBroker = selectedRowSelector.map(
+    (id) => renderApprovalsData()?.[id],
+  )
+  const approveMutation = useMutation(approveAuction, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetch()
+      }
+    },
+  })
+  const onUpdateBrokerStatus = (apply) => {
+    approveBrokerMutation.mutate({
+      orgId: selectedRowBroker[0]?.id,
+      apply,
+    })
+  }
   const onUpdateStatus = (status) => {
     approveMutation.mutate({
       uuid: selectedRow[0]?.id,
@@ -211,24 +246,24 @@ const Admin = (logged, auctionId) => {
         <Mht
           id={'admin-dashboard'}
           configs={newBrokersConfigs}
-          tableData={renderBrokerData() || []}
+          tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
           withSearch
           // withFooter
           commonActions
           headerTemplate={
-            selectedRow?.length === 1 && (
+            selectedRowBroker?.length === 1 && (
               <div className="admin-page-mht-header">
-                {`${selectedRow.length} Row Selected`}
+                {`${selectedRowBroker.length} Row Selected`}
                 <div>
-                  {selectedRow[0]?.status === 'Pending' && (
+                  {selectedRowBroker[0]?.status === 'New Request' && (
                     <>
                       <Button
                         className="admin-page-actionBtn"
                         primary
                         flat
-                        onClick={() => onUpdateStatus('Approved')}
+                        onClick={() => onUpdateBrokerStatus('approve')}
                       >
                         {t('approve')}
                       </Button>
@@ -236,7 +271,7 @@ const Admin = (logged, auctionId) => {
                         className="admin-page-actionBtn"
                         secondary
                         flat
-                        onClick={() => onUpdateStatus('Rejected')}
+                        onClick={() => onUpdateBrokerStatus('reject')}
                       >
                         {t('reject')}
                       </Button>
