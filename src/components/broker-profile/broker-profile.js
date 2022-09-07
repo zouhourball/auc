@@ -49,10 +49,13 @@ const BrokerProfile = ({ brokerId, user }) => {
         city_id: filterData?.location,
         property_type_id: filterData?.type,
         auction_status: renderAuctionStatus(),
+        // configurator_organization_id: 1634,
       },
 
       {
-        filter: {},
+        filter: {
+          // configurator_organization_id: { $in: [1634] },
+        },
         sort: [],
         limit: 9,
         offset: 0,
