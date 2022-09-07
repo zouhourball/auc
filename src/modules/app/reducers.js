@@ -14,6 +14,7 @@ import {
   setVisibleLoader,
   setFsToken,
   setFsDlToken,
+  setMyOrgs,
 } from './actions'
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   visibleLoader: false,
   uplToken: '',
   dlToken: '',
+  myOrgs: [],
 }
 
 export default handleActions(
@@ -35,6 +37,11 @@ export default handleActions(
     [addToast] (state, { payload }) {
       return update(state, {
         toasts: { $push: [payload] },
+      })
+    },
+    [setMyOrgs] (state = initialState, { payload: { myOrgs } }) {
+      return update(state, {
+        myOrgs: { $set: myOrgs },
       })
     },
     [setFsToken] (state = initialState, { payload: { uplToken } }) {

@@ -11,6 +11,8 @@ const BrokerHeader = ({
   tabs,
   filters,
   searchPlaceholder,
+  filterData,
+  setFilterData,
 }) => {
   const { t } = useTranslation()
   const renderTabs = () =>
@@ -43,11 +45,11 @@ const BrokerHeader = ({
           className="search-field"
           type="text"
           id="search"
-          value={searchVal}
+          value={filterData?.search}
           rightIcon={<FontIcon>{t('search')}</FontIcon>}
           onChange={(v, e) => {
             e.stopPropagation()
-            setSearch(v)
+            setFilterData({ ...filterData, search: v })
           }}
           placeholder={searchPlaceholder || 'Search...'}
           block

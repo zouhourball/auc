@@ -2,7 +2,7 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { useInfiniteQuery, useQuery } from 'react-query'
 // import { useQuery as useQueryHook } from 'react-apollo-hooks'
-import { TextField, FontIcon, SelectField } from 'react-md'
+import { TextField, FontIcon, SelectField, Button } from 'react-md'
 import moment from 'moment'
 // import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
@@ -157,22 +157,39 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
               onSetFormDetails('address', {
                 general_location_y: newCoordinates?.['lat'],
                 general_location_x: newCoordinates?.['lon'],
-                meta: newCoordinates,
+                meta: newCoordinates?.['display_name'],
               })
             }}
           />
         )}
-
-        <TextField
-          id="auctionAddress"
-          placeholder={t('address')}
-          value={address?.meta?.['display_name']}
-          // onChange={(address) => onSetFormDetails('address', address)}
-          onClick={() => setAddressView(!addressView)}
-          className="textField-withShadow"
-          required
-          block
-        />
+        <div className="map">
+          <TextField
+            id="auctionAddress"
+            placeholder={t('address')}
+            value={address?.meta}
+            disabled={!address}
+            onChange={(value) =>
+              onSetFormDetails('address', {
+                general_location_y: address?.['general_location_y'],
+                general_location_x: address?.['general_location_x'],
+                meta: value,
+              })
+            }
+            className="textField-map"
+            required
+            block
+          />
+          <Button
+            icon
+            primary
+            className="save-btn"
+            iconClassName="fa fa-map"
+            onClick={(e) => {
+              e.stopPropagation()
+              setAddressView(!addressView)
+            }}
+          />
+        </div>
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">{t('country')}</label>

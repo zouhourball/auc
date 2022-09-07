@@ -32,7 +32,6 @@ export function fetchGeneric (url, opts, auth = true) {
           'Content-Type': 'application/json',
         }),
       Authorization: `Bearer ${token}`,
-      mode: 'no-cors',
       ...((opts && opts.headers) || {}),
     },
   })

@@ -43,8 +43,8 @@ const AuctionsList = ({ logged, user }) => {
       {
         filter: {
           // auction_start_date: {
-          //   $gte: '2022-02-28T08:00:00Z',
-          //   $lte: '2022-02-28T23:00:00Z',
+          //   $gte: '2022-08-28T08:00:00Z',
+          //   $lte: '2022-09-28T23:00:00Z',
           // },
         },
         sort: [
