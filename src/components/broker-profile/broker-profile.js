@@ -21,9 +21,9 @@ import { propertyTypeList } from 'components/helpers/index'
 
 import './style.scss'
 
-import avatar from './avatar.png'
-// import { useSelector } from 'react-redux'
-// import { get } from 'lodash-es'
+import { get } from 'lodash-es'
+import { getPublicUrl } from 'libs/utils/custom-function'
+import CompanyInfoById from 'components/company-info-by-id'
 
 const BrokerProfile = ({ brokerId, user }) => {
   const [filterData, setFilterData] = useState({})
@@ -115,28 +115,53 @@ const BrokerProfile = ({ brokerId, user }) => {
       </div>
       <div className="broker-profile-body">
         <div className="broker-profile-body-card">
-          <div className="general-info">
-            <div className="infos">
-              <Avatar src={avatar}></Avatar>
-              <div className="title dark">{'name'}</div>
-              <div className="title">{'phone'}</div>
-              <div className="title">{'email'}</div>
-              <div className="title">{'city, country'}</div>
-            </div>
-            <div className="bio">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry s standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it{' '}
-            </div>
-          </div>
-          <div
-            onClick={() => window.open('www.link.com')}
-            className="website-link"
-          >
-            <FontIcon>language</FontIcon>
-            <span>www.link.com</span>
-          </div>
+          <CompanyInfoById orgId={brokerId}>
+            {(res) => {
+              return (
+                <>
+                  <div className="general-info">
+                    <div className="infos">
+                      <Avatar
+                        className="owner-card-avatar"
+                        src={
+                          get(res, 'companyLogo.aPIID', null)
+                            ? getPublicUrl(res?.companyLogo?.aPIID)
+                            : null
+                        }
+                      >
+                        {get(res, 'companyLogo.aPIID', null)
+                          ? null
+                          : get(res, 'name.0', '')}
+                      </Avatar>
+                      {res?.name && (
+                        <div className="title dark">{res?.name}</div>
+                      )}
+                      {res?.phoneMobile && (
+                        <div className="title">{res?.phoneMobile}</div>
+                      )}
+                      {res?.email && <div className="title">{res?.email}</div>}
+                      {res?.city?.cityName && res?.country?.countryName && (
+                        <div className="title">
+                          {res?.city?.cityName}, {res?.country?.countryName}
+                        </div>
+                      )}
+                    </div>
+                    {res?.aboutUs && <div className="bio">{res?.aboutUs}</div>}
+                  </div>
+
+                  {res?.webSite && (
+                    <div
+                      onClick={() => window.open(res?.webSite)}
+                      className="website-link"
+                    >
+                      <FontIcon>language</FontIcon>
+                      <span>{res?.webSite}</span>
+                    </div>
+                  )}
+                </>
+              )
+            }}
+          </CompanyInfoById>
         </div>
         <div className="broker-profile-body-wrapper">
           <div className="filter">
