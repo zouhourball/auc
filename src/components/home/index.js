@@ -26,6 +26,7 @@ import HowItWorks from 'components/how-it-works'
 import Notifications from 'components/notifications'
 
 import './style.scss'
+import store from 'libs/store'
 
 const queryClient = new QueryClient()
 
@@ -48,6 +49,12 @@ const Home = () => {
   useEffect(() => {
     refetch()
   }, [currentUser])
+  useEffect(() => {
+    store.dispatch({
+      type: 'APP_SET_MY_ORGS',
+      payload: { myOrgs: myOrgs?.meOrganizations },
+    })
+  }, [myOrgs])
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
 

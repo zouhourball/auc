@@ -56,3 +56,7 @@ export const setFsToken = createAction('APP_SET_FS_TOKEN', (uplToken) => ({
 export const setFsDlToken = createAction('APP_SET_FS_DL_TOKEN', (dlToken) => ({
   dlToken,
 }))
+
+export const setMyOrgs = createAction('APP_SET_MY_ORGS', (myOrgs) => ({
+  myOrgs,
+}))

@@ -22,6 +22,8 @@ import { propertyTypeList } from 'components/helpers/index'
 import './style.scss'
 
 import avatar from './avatar.png'
+// import { useSelector } from 'react-redux'
+// import { get } from 'lodash-es'
 
 const BrokerProfile = ({ brokerId, user }) => {
   const [filterData, setFilterData] = useState({})
@@ -31,6 +33,9 @@ const BrokerProfile = ({ brokerId, user }) => {
       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
     },
   })
+  // const myOrgs = useSelector(({ app }) => app?.myOrgs)
+
+  // console.log(get(myOrgs, '0.ID', 0), 'myOrgs')
   const renderAuctionStatus = () => {
     switch (filter) {
       case 0:
