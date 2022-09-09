@@ -36,6 +36,7 @@ import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
+import SuccessfulRegistration from 'components/success-registration'
 
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
@@ -55,6 +56,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
+  const [successDialog, setSuccessDialog] = useState(true)
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -536,6 +538,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           visible={termsDialog}
           onHide={() => setTermsDialog(false)}
           auctionId={auctionData?.uuid}
+          setSuccessDialog={setSuccessDialog}
+        />
+      )}
+      {successDialog && (
+        <SuccessfulRegistration
+          visible={successDialog}
+          onHide={() => setSuccessDialog(false)}
         />
       )}
       {bidDialog && (
