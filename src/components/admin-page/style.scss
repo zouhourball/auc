@@ -164,6 +164,7 @@
       padding: 5px 16px;
       border-radius: 16px;
       font-weight: bold;
+      text-align: center;
 
       &.Pending {
         background: #dde4fa;
@@ -178,6 +179,11 @@
       &.Rejected {
         background: #ffd5d4;
         color: #fc0d1b;
+      }
+
+      &.Request {
+        background-color: #dce4f9;
+        color: #5078e1;
       }
     }
   }
