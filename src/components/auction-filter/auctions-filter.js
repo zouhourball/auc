@@ -7,11 +7,14 @@ import {
   TextField,
 } from 'react-md'
 import { useTranslation } from 'libs/langs'
-import { propertyTypeList, brokerCompanyList } from 'components/helpers/index'
+import { propertyTypeList } from 'components/helpers/index'
 import PriceRange from 'components/price-range'
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import './style.scss'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery as useQueryApollo } from 'react-apollo-hooks'
+import { useCallback, useMemo } from 'react'
+import { useQuery } from 'react-query'
+import { allBrokers } from 'libs/api/auctions-api'
 const AuctionsFilter = ({ filterData, setFilterData }) => {
   const { t } = useTranslation()
   const {
@@ -22,15 +25,62 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
     // more,
     auctionEndingSoon,
     // location,
-    brokerCompany,
+    // brokerCompany,
   } = filterData
 
-  const { data: allCountryStateCities } = useQuery(allCountryStateCitiesGql, {
-    context: {
-      uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+  const { data: allCountryStateCities } = useQueryApollo(
+    allCountryStateCitiesGql,
+    {
+      context: {
+        uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+      },
     },
+  )
+
+  const { data: getBrokers } = useQuery(['getBrokers'], allBrokers)
+
+  const onChangeLocation = useCallback((id) => {
+    filterData?.location?.find((l) => l === id)
+      ? setFilterData((v) => {
+        return { ...v, location: v?.location?.filter((ell) => ell !== id) }
+      })
+      : setFilterData({
+        ...filterData,
+        location: [...(filterData.location || []), id],
+      })
   })
 
+  const renderStates = (states) => {
+    return (
+      <div>
+        {states?.map((st) => {
+          return (
+            <Checkbox
+              key={st.node.id}
+              id={`${st.node.id}-auction-location`}
+              name={`${st.node.name}-checkboxes`}
+              label={st.node.name}
+              onChange={() => {
+                onChangeLocation(st.node.id)
+              }}
+              checked={!!filterData?.location?.find((ch) => ch === st.node.id)}
+            />
+          )
+        })}
+      </div>
+    )
+  }
+
+  const renderCountries = useMemo(() => {
+    return allCountryStateCities?.allCountries?.countries.map((el) => {
+      return (
+        <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
+          {renderStates(el?.states?.edges)}
+        </ExpansionPanel>
+      )
+    })
+  }, filterData.location)
+  // console.log(renderCountries())
   return (
     <div className="md-grid auctions-filter">
       <TextField
@@ -47,28 +97,29 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         value={'type'}
         simplifiedMenu={true}
         position={SelectField.Positions.BELOW}
-        closeMenuOnSelect={true}
+        closeMenuOnSelect={false}
         menuItems={propertyTypeList?.map((tp, index) => {
-          return {
-            label: (
-              <Checkbox
-                id={`${tp.value}-auction-type`}
-                name={`${tp.value}-checkboxes`}
-                label={tp.label}
-                // onChange={(v) => {
-                //   filterData?.type?.find(el => { return el === tp.value })
-                //     ? setFilterData({ ...filterData, type: filterData.type.filter(el => el !== tp.value) })
-                //     : setFilterData({ ...filterData, type: [...filterData.type, tp?.value] })
-                // }}
-                onChange={() => {
-                  filterData?.type === tp.value
-                    ? setFilterData({ ...filterData, type: null })
-                    : setFilterData({ ...filterData, type: tp.value })
-                }}
-                checked={filterData?.type === tp.value}
-              />
-            ),
-          }
+          return (
+            <Checkbox
+              key={index}
+              id={`${tp.value}-auction-type`}
+              name={`${tp.value}-checkboxes`}
+              label={tp.label}
+              onChange={(e) => {
+                filterData?.type?.find((el) => el === tp.value)
+                  ? setFilterData({
+                    ...filterData,
+                    type: filterData.type?.filter((el) => el !== tp.value),
+                  })
+                  : setFilterData({
+                    ...filterData,
+                    type: [...(filterData?.type || []), tp.value],
+                  })
+                e.stopPropagation()
+              }}
+              checked={!!filterData?.type?.find((el) => el === tp.value)}
+            />
+          )
         })}
       />
 
@@ -117,41 +168,11 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         placeholder={'location'}
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'location'}
-        // onChange={(v) => setFilterData({ ...filterData, location: v })}
-        menuItems={allCountryStateCities?.allCountries?.countries.flatMap(
-          (el) => {
-            return (
-              <ExpansionList>
-                <ExpansionPanel
-                  key={el.id}
-                  label={el.countryName}
-                  footer={null}
-                >
-                  {el?.states?.edges?.map((st, index) => {
-                    return (
-                      <Checkbox
-                        key={st.node.id}
-                        id={`${st.node.id}-auction-location`}
-                        name={`${st.node.name}-checkboxes`}
-                        label={st.node.name}
-                        onChange={(v) => {
-                          filterData?.location === st.node.id
-                            ? st.node.id &&
-                              setFilterData({ ...filterData, location: null })
-                            : setFilterData({
-                              ...filterData,
-                              location: st.node.id,
-                            })
-                        }}
-                        checked={filterData?.location === st.node.id}
-                      />
-                    )
-                  })}
-                </ExpansionPanel>
-              </ExpansionList>
-            )
-          },
-        )}
+        menuItems={[
+          <ExpansionList key={'LocationExpansionList'}>
+            {renderCountries}
+          </ExpansionList>,
+        ]}
         position={SelectField.Positions.BELOW}
       />
 
@@ -160,35 +181,39 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'Broker Company'}
         // onChange={(v) => setFilterData({ ...filterData, brokerCompany: v })}
-        menuItems={brokerCompanyList?.map((bc, index) => {
+        menuItems={getBrokers?.results?.map((bc, index) => {
           return {
             label: (
               <Checkbox
                 key={index}
-                id={`${bc.value}-auction-type`}
-                name={`${bc.value}-checkboxes`}
-                label={bc.label}
-                onChange={() => {
+                id={`${bc.id}-auction-type`}
+                name={`${bc.id}-checkboxes`}
+                label={bc.name}
+                onChange={(e) => {
                   filterData?.brokerCompany?.find((el) => {
-                    return el === bc.value
+                    return el === bc.id
                   })
                     ? setFilterData({
                       ...filterData,
-                      brokerCompany: brokerCompany.filter(
-                        (el) => el !== bc.value,
+                      brokerCompany: filterData.brokerCompany.filter(
+                        (el) => el !== bc.id,
                       ),
                     })
                     : setFilterData({
                       ...filterData,
-                      brokerCompany: [...brokerCompany, bc?.value],
+                      brokerCompany: [
+                        ...(filterData?.brokerCompany || []),
+                          bc?.id,
+                      ],
                     })
+                  e.stopPropagation()
                 }}
-                checked={filterData?.brokerCompany?.find(
-                  (el) => el === bc.value,
-                )}
+                checked={
+                  !!filterData?.brokerCompany?.find((el) => el === bc.id)
+                }
               />
             ),
-            value: bc.value,
+            value: bc.id,
           }
         })}
         position={SelectField.Positions.BELOW}

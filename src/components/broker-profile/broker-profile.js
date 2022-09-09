@@ -7,7 +7,7 @@ import {
   ExpansionPanel,
 } from 'react-md'
 import { navigate } from '@reach/router'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 
@@ -46,24 +46,54 @@ const BrokerProfile = ({ brokerId, user }) => {
         return 'Closed'
     }
   }
+  // console.log(filterData?.type)
+  // const { data: auctionsData, refetch } = useQueryReact(
+  //   [
+  //     'filterFeatureAuctions',
+  //     {
+  //       search_key: filterData?.search,
+  //       city_id: filterData?.location,
+  //       // property_type_id: filterData?.type,
+  //       auction_status: renderAuctionStatus(),
+  //       // configurator_organization_id: 1634,
+
+  //     },
+
+  //     {
+  //       filter: {
+  //         '$or': [
+  //           { 'configurator_organization_id': 805 },
+  //         ],
+  //         // configurator_organization_id: { '$in': [805] },
+
+  //       },
+  //       sort: [],
+  //       limit: 9,
+  //       offset: 0,
+  //     },
+  //   ],
+  //   filterFeatureAuctions,
+  //   { refetchOnWindowFocus: false },
+  // )
+
   const { data: auctionsData, refetch } = useQueryReact(
     [
       'filterFeatureAuctions',
       {
         search_key: filterData?.search,
-        city_id: filterData?.location,
-        property_type_id: filterData?.type,
         auction_status: renderAuctionStatus(),
-        // configurator_organization_id: 1634,
       },
 
       {
-        filter: {
-          // configurator_organization_id: { $in: [1634] },
-        },
+        filter: {},
         sort: [],
-        limit: 9,
+        limit: 20,
         offset: 0,
+      },
+      {
+        cities: filterData?.location,
+        property_type_ids: filterData?.type,
+        organization_ids: [brokerId],
       },
     ],
     filterFeatureAuctions,
@@ -105,6 +135,47 @@ const BrokerProfile = ({ brokerId, user }) => {
         refetch={() => refetch()}
       />
     ))
+
+  const onChangeLocation = useCallback((id) => {
+    filterData?.location?.find((l) => l === id)
+      ? setFilterData((v) => {
+        return { ...v, location: v?.location?.filter((ell) => ell !== id) }
+      })
+      : setFilterData({
+        ...filterData,
+        location: [...(filterData.location || []), id],
+      })
+  })
+  const renderStates = (states) => {
+    return (
+      <div>
+        {states?.map((st) => {
+          return (
+            <Checkbox
+              key={st.node.id}
+              id={`${st.node.id}-auction-location`}
+              name={`${st.node.name}-checkboxes`}
+              label={st.node.name}
+              onChange={() => {
+                onChangeLocation(st.node.id)
+              }}
+              checked={!!filterData?.location?.find((ch) => ch === st.node.id)}
+            />
+          )
+        })}
+      </div>
+    )
+  }
+
+  const renderCountries = useMemo(() => {
+    return allCountryStateCities?.allCountries?.countries.map((el) => {
+      return (
+        <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
+          {renderStates(el?.states?.edges)}
+        </ExpansionPanel>
+      )
+    })
+  }, filterData.location)
   return (
     <div className="broker-profile">
       <div className="broker-profile-header">
@@ -177,72 +248,42 @@ const BrokerProfile = ({ brokerId, user }) => {
               value={'type'}
               simplifiedMenu={true}
               position={SelectField.Positions.BELOW}
-              closeMenuOnSelect={true}
+              closeMenuOnSelect={false}
               menuItems={propertyTypeList?.map((tp, index) => {
-                return {
-                  label: (
-                    <Checkbox
-                      id={`${tp.value}-auction-type`}
-                      name={`${tp.value}-checkboxes`}
-                      label={tp.label}
-                      // onChange={(v) => {
-                      //   filterData?.type?.find(el => { return el === tp.value })
-                      //     ? setFilterData({ ...filterData, type: filterData.type.filter(el => el !== tp.value) })
-                      //     : setFilterData({ ...filterData, type: [...filterData.type, tp?.value] })
-                      // }}
-                      onChange={() => {
-                        filterData?.type === tp.value
-                          ? setFilterData({ ...filterData, type: null })
-                          : setFilterData({ ...filterData, type: tp.value })
-                      }}
-                      checked={filterData?.type === tp.value}
-                    />
-                  ),
-                }
+                return (
+                  <Checkbox
+                    key={index}
+                    id={`${tp.value}-auction-type`}
+                    name={`${tp.value}-checkboxes`}
+                    label={tp.label}
+                    onChange={(e) => {
+                      filterData?.type?.find((el) => el === tp.value)
+                        ? setFilterData({
+                          ...filterData,
+                          type: filterData.type?.filter(
+                              (el) => el !== tp.value,
+                            ),
+                        })
+                        : setFilterData({
+                          ...filterData,
+                          type: [...(filterData?.type || []), tp.value],
+                        })
+                      e.stopPropagation()
+                    }}
+                    checked={!!filterData?.type?.find((el) => el === tp.value)}
+                  />
+                )
               })}
             />
             <SelectField
               placeholder={'location'}
               className=" md-cell md-cell--2 auctions-filter-selectField"
               value={'location'}
-              // onChange={(v) => setFilterData({ ...filterData, location: v })}
-              menuItems={allCountryStateCities?.allCountries?.countries.flatMap(
-                (el) => {
-                  return (
-                    <ExpansionList>
-                      <ExpansionPanel
-                        key={el.id}
-                        label={el.countryName}
-                        footer={null}
-                      >
-                        {el?.states?.edges?.map((st, index) => {
-                          return (
-                            <Checkbox
-                              key={st.node.id}
-                              id={`${st.node.id}-auction-location`}
-                              name={`${st.node.name}-checkboxes`}
-                              label={st.node.name}
-                              onChange={(v) => {
-                                filterData?.location === st.node.id
-                                  ? st.node.id &&
-                                    setFilterData({
-                                      ...filterData,
-                                      location: null,
-                                    })
-                                  : setFilterData({
-                                    ...filterData,
-                                    location: st.node.id,
-                                  })
-                              }}
-                              checked={filterData?.location === st.node.id}
-                            />
-                          )
-                        })}
-                      </ExpansionPanel>
-                    </ExpansionList>
-                  )
-                },
-              )}
+              menuItems={[
+                <ExpansionList key={'LocationExpansionList'}>
+                  {renderCountries}
+                </ExpansionList>,
+              ]}
               position={SelectField.Positions.BELOW}
             />
             <div className="auction-list-header-filters-display">

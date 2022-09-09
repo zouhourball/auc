@@ -127,7 +127,7 @@ const Home = () => {
               path={page}
             />
           ))}
-          <BrokerPage path={'/broker'} />
+          <BrokerPage path={'/broker'} logged={true} />
           <BrokerProfile
             path={'/broker/:brokerId'}
             user={currentUser?.mev2?.user}
