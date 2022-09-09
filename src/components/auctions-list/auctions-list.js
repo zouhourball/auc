@@ -93,21 +93,23 @@ const AuctionsList = ({ logged, user }) => {
       </div>
       <div className="auction-list-header-filters">
         <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
-        <div className="auction-list-header-filters-display">
-          <FontIcon
-            className={`gridView ${gridView === 0 ? 'active' : ''}`}
-            onClick={() => setGridView(0)}
-          >
-            view_list
-          </FontIcon>
-          <div className="sep"></div>
-          <FontIcon
-            onClick={() => setGridView(1)}
-            className={`gridView ${gridView === 1 ? 'active' : ''}`}
-          >
-            view_module
-          </FontIcon>
-        </div>
+        {modules.includes('live-auctions') && (
+          <div className="auction-list-header-filters-display">
+            <FontIcon
+              className={`gridView ${gridView === 0 ? 'active' : ''}`}
+              onClick={() => setGridView(0)}
+            >
+              view_list
+            </FontIcon>
+            <div className="sep"></div>
+            <FontIcon
+              onClick={() => setGridView(1)}
+              className={`gridView ${gridView === 1 ? 'active' : ''}`}
+            >
+              view_module
+            </FontIcon>
+          </div>
+        )}
       </div>
       {gridView === 0 ? (
         <div className="md-grid auction-list-cards">{renderCards()}</div>

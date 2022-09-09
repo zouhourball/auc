@@ -57,9 +57,10 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
             // this.map = map
           }}
           isMiniMap={true}
-          onSymbolClick={(e) => {
+          onSymbolClick={({ id }) => {
             // this.handleOnSymbolClick
-            // console.log(e, 'event')
+            setPin(cardsData?.find((el) => el?.uuid === id))
+            // console.log(activePin, 'event')
           }}
           footer={{
             visible: true,
