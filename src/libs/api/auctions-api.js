@@ -9,11 +9,20 @@ export const filterAuctions = async ({ queryKey }) => {
   const params = Object.keys(queryKey[1])
     .filter((key) => typeof queryKey[1][key] === 'number' || !!queryKey[1][key])
     .map((key) => `${key}=${queryKey[1][key]}`)
+
+  const arrayParams = Object.keys(queryKey[3])
+    .filter((key) => !!queryKey[3][key])
+    .map((key) => queryKey[3][key].map((el) => `[]${key}=${el}`))
+    .flatMap((el) => el)
   let res
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/filter/auctions${
         params.length ? `?${params.join('&')}` : ''
+      }${
+        arrayParams.length
+          ? `${!params.length ? '?' : '&'}${arrayParams.join('&')}`
+          : ''
       }`,
       {
         method: 'POST',
@@ -29,11 +38,20 @@ export const filterFeatureAuctions = async ({ queryKey }) => {
   const params = Object.keys(queryKey[1])
     .filter((key) => typeof queryKey[1][key] === 'number' || !!queryKey[1][key])
     .map((key) => `${key}=${queryKey[1][key]}`)
+
+  const arrayParams = Object.keys(queryKey[3])
+    .filter((key) => !!queryKey[3][key])
+    .map((key) => queryKey[3][key].map((el) => `[]${key}=${el}`))
+    .flatMap((el) => el)
   let res
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/featured/filter/auctions${
         params.length ? `?${params.join('&')}` : ''
+      }${
+        arrayParams.length
+          ? `${!params.length ? '?' : '&'}${arrayParams.join('&')}`
+          : ''
       }`,
       {
         method: 'POST',
@@ -66,6 +84,30 @@ export const myAuctions = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(`${appUrl}/api/v1/my-auctions`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+export const allBrokers = async () => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/brokers`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+export const allBrokersDetails = async () => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/brokers-details`, {
       method: 'GET',
     })
   } catch (e) {

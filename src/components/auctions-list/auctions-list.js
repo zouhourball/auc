@@ -34,8 +34,7 @@ const AuctionsList = ({ logged, user }) => {
       'getAuctions',
       {
         search_key: filterData?.search,
-        city_id: filterData?.location,
-        property_type_id: filterData?.type,
+        // city_id: filterData?.location,
         price_gte: filterData?.price?.min,
         price_lte: filterData?.price?.max,
       },
@@ -46,6 +45,7 @@ const AuctionsList = ({ logged, user }) => {
           //   $gte: '2022-08-28T08:00:00Z',
           //   $lte: '2022-09-28T23:00:00Z',
           // },
+          // property_type_id: { $in: filterData?.type?.filter(el => el !== undefined) },
         },
         sort: [
           filterData?.auctionEndingSoon === 'aes'
@@ -54,6 +54,11 @@ const AuctionsList = ({ logged, user }) => {
         ],
         limit: 20,
         offset: 0,
+      },
+      {
+        cities: filterData?.location,
+        property_type_ids: filterData?.type,
+        organization_ids: filterData?.brokerCompany,
       },
     ],
     logged ? filterAuctions : filterFeatureAuctions,

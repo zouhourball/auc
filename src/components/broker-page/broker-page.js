@@ -5,108 +5,111 @@ import { navigate } from '@reach/router'
 import BrokerHeader from 'components/broker-header'
 
 import './style.scss'
+import { allBrokersDetails } from 'libs/api/auctions-api'
+import { useQuery } from 'react-query'
 
-const BrokerPage = () => {
+const BrokerPage = ({ logged }) => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
-  const [filter, setFilter] = useState(0)
-  const dummyData = [
-    {
-      name: 'broker name',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 2',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 3',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 2',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 3',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 2',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 3',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name 3',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-    {
-      name: 'broker name',
-      phone: '+21552225',
-      country: 'Oman',
-      address: 'dummy address',
-      email: 'email.com',
-      img: 'url',
-    },
-  ]
+  // const [filter, setFilter] = useState(0)
+  const { data: getBrokers } = useQuery(['getBrokers'], allBrokersDetails)
+  // const dummyData = [
+  //   {
+  //     name: 'broker name',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 2',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 3',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 2',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 3',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 2',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 3',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name 3',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  //   {
+  //     name: 'broker name',
+  //     phone: '+21552225',
+  //     country: 'Oman',
+  //     address: 'dummy address',
+  //     email: 'email.com',
+  //     img: 'url',
+  //   },
+  // ]
   // <>
   //             {' '}
   //             <button className="switch-toggle active">
@@ -123,23 +126,23 @@ const BrokerPage = () => {
     },
   ]
   const headerFilters = [
-    {
-      key: 'omani',
-      className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
-      onClick: () => setFilter(0),
-      title: 'Omani',
-      num: 10,
-    },
-    {
-      key: 'foreign',
-      className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
-      onClick: () => setFilter(1),
-      title: 'Foreign',
-      num: 10,
-    },
+    // {
+    //   key: 'omani',
+    //   className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
+    //   onClick: () => setFilter(0),
+    //   title: 'Omani',
+    //   num: 10,
+    // },
+    // {
+    //   key: 'foreign',
+    //   className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
+    //   onClick: () => setFilter(1),
+    //   title: 'Foreign',
+    //   num: 10,
+    // },
   ]
   const renderCards = () =>
-    dummyData?.map((el) => (
+    getBrokers?.results?.map((el) => (
       // <div key={el?.name}>
       //   <img src={el?.img} />
       //   {el?.phone}
@@ -151,7 +154,9 @@ const BrokerPage = () => {
       <Card
         className="md-block-centered"
         key={el?.name}
-        onClick={() => navigate(`/auctions/broker/${1634}`)}
+        onClick={() =>
+          navigate(`/${logged ? 'auctions' : 'public'}/broker/${el.id}`)
+        }
       >
         <CardTitle
           title={el?.name}
@@ -159,7 +164,7 @@ const BrokerPage = () => {
             <div>
               <div className="info">
                 <div className="label">
-                  <FontIcon>phone_iphone</FontIcon> {el?.phone}
+                  <FontIcon>phone_iphone</FontIcon> {el?.tel}
                 </div>
                 <div className="sep"></div>
                 <div className="label">
@@ -167,11 +172,11 @@ const BrokerPage = () => {
                 </div>
               </div>
               <div className="label">
-                <FontIcon>location_on</FontIcon> {el?.address}
+                <FontIcon>location_on</FontIcon> {el?.adress}
               </div>
             </div>
           }
-          avatar={<Avatar src={el?.img} role="presentation" />}
+          avatar={<Avatar src={el?.logo} role="presentation" />}
         />
         <CardActions>
           <div className="email">
