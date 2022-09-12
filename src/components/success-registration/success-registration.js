@@ -1,11 +1,13 @@
-import { DialogContainer, Button, FontIcon } from 'react-md'
+import { DialogContainer, Button } from 'react-md'
+import success from './success.png'
+import './style.scss'
 
 const SuccessfulRegistration = ({ visible, onHide }) => {
   const actions = [
     <Button
       key={1}
       flat
-      className="disagree"
+      className="doneBtn"
       onClick={() => {
         onHide(false)
       }}
@@ -15,17 +17,18 @@ const SuccessfulRegistration = ({ visible, onHide }) => {
   ]
   return (
     <DialogContainer
-      id="conditions-dialog"
-      className="conditions-dialog"
+      id="successful-dialog"
+      className="successful-dialog"
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
       actions={actions}
     >
-      <FontIcon>info</FontIcon>
-
-      <h1>Successfully Registered</h1>
-      <span>Please wait for an approval to use the platform</span>
+      <img className="successful-dialog-img" src={success} />
+      <div className="successful-dialog-title">Successfully Registered</div>
+      <div className="successful-dialog-msg">
+        Please wait for an approval to use the platform
+      </div>
     </DialogContainer>
   )
 }
