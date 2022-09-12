@@ -17,11 +17,12 @@ import appleIcon from './apple_logo.svg'
 import facebookIcon from './facebook.svg'
 import googleIcon from './google.svg'
 import dragIcon from './drag_drop.svg'
+import successRegister from 'images/successfully-register.png'
 
-import './style.scss'
 import UploadImages from 'components/upload-images'
 import ConfirmDialog from 'components/confirm-dialog'
-import successRegister from '../../images/successfully-register.png'
+
+import './style.scss'
 
 const RegistrationPage = () => {
   const [currentTab, setCurrentTab] = useState(0)
@@ -38,10 +39,15 @@ const RegistrationPage = () => {
     countryId,
     logo,
   } = signupData
+
   const lang = useCurrentLang()
   const registerBidderMutation = useMutation(registerBidder, {
     onSuccess: (res) => {
-      if (res?.success === true) setConfirmDialogVisible(true)
+      if (res?.success) {
+        setConfirmDialogVisible(true)
+      } else {
+        setConfirmDialogVisible({ error: res?.error })
+      }
     },
   })
 
@@ -275,10 +281,10 @@ const RegistrationPage = () => {
           title="Successfully Registered"
           description="You can now browse through auctions in the platform"
           visible={confirmDialogVisible}
+          msg={confirmDialogVisible?.error}
           imgCard={successRegister}
           onHide={() => {
             setConfirmDialogVisible(false)
-            navigate('/public/home')
           }}
         />
       )}

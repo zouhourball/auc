@@ -1,4 +1,5 @@
 import { DialogContainer, Button } from 'react-md'
+import { navigate } from '@reach/router'
 
 import './style.scss'
 const ConfirmDialog = ({
@@ -8,6 +9,7 @@ const ConfirmDialog = ({
   imgCard,
   visible,
   onHide,
+  msg,
 }) => {
   return (
     <DialogContainer
@@ -17,9 +19,15 @@ const ConfirmDialog = ({
       id="confirm-dialog"
     >
       <div className="confirm-dialog-information">
-        {imgCard && <img src={imgCard} className="illustration" />}
-        <div className="title">{title}</div>
-        <div className="description">{description}</div>
+        {msg ? (
+          <div className="title">{msg}</div>
+        ) : (
+          <>
+            {imgCard && <img src={imgCard} className="illustration" />}
+            <div className="title">{title}</div>
+            <div className="description">{description}</div>
+          </>
+        )}
       </div>
       <Button
         swapTheming
@@ -29,6 +37,7 @@ const ConfirmDialog = ({
         onClick={(e) => {
           e.stopPropagation()
           onHide && onHide()
+          !msg && navigate('/public/home')
         }}
       >
         {btnTitle}
