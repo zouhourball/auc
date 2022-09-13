@@ -1,19 +1,22 @@
 import { useState } from 'react'
 import { cls } from 'reactutils'
-import { Checkbox } from 'react-md'
+import { Checkbox, FontIcon, TextField } from 'react-md'
 
 import './style.scss'
-
-const FilterBox = ({ className, items }) => {
-  const [selectedItem, setSelectedItem] = useState(null)
+import { DatePicker } from '@target-energysolutions/date-picker'
+import moment from 'moment'
+const FilterBox = ({ className, items, setFilterData, filterData }) => {
+  const [visibleDatePicker, setVisibleDatePicker] = useState({
+    startDate: false,
+    endDate: false,
+  })
   const onChangeItem = (status, value) => {
     let newSelectedItem
 
     if (status) {
       newSelectedItem = value
     }
-
-    setSelectedItem(newSelectedItem)
+    setFilterData({ ...filterData, selectedItem: newSelectedItem })
   }
 
   const renderItems = () => {
@@ -28,10 +31,20 @@ const FilterBox = ({ className, items }) => {
           onChange={(status) => {
             onChangeItem(status, item?.value)
           }}
-          checked={selectedItem === item?.value}
+          checked={filterData?.selectedItem === item?.value}
         />
       </div>
     ))
+  }
+  const onHandleDate = (date, key) => {
+    setFilterData({
+      ...filterData,
+      dateRange: {
+        ...filterData?.dateRange,
+        [key]: date?.timestamp,
+      },
+    })
+    setVisibleDatePicker({ ...visibleDatePicker, [key]: false })
   }
   return (
     <div className={cls('filter-box', className)}>
@@ -39,6 +52,65 @@ const FilterBox = ({ className, items }) => {
         <div>Filter Date</div>
       </div>
       <div className="filter-box-content">{renderItems()}</div>
+      <div className="filter-box-label">Custom Range</div>
+      <div className="filter-box-date">
+        <TextField
+          id="date-start"
+          placeholder="dd/mm/yy"
+          block
+          required
+          rightIcon={<FontIcon className="dateRangeIcon">date_range</FontIcon>}
+          value={
+            filterData?.dateRange?.startDate &&
+            moment(filterData?.dateRange?.startDate).format('DD/MM/YYYY')
+          }
+          onClick={() =>
+            setVisibleDatePicker({ ...visibleDatePicker, startDate: true })
+          }
+          className="textField"
+        />
+        {visibleDatePicker?.startDate && (
+          <DatePicker
+            singlePick
+            translation={{ update: 'select' }}
+            onUpdate={(date) => onHandleDate(date, 'startDate')}
+            onCancel={() =>
+              setVisibleDatePicker({ ...visibleDatePicker, startDate: false })
+            }
+            minValidDate={{ timestamp: new Date().getTime() }}
+            startView="year"
+            endView="day"
+          />
+        )}
+        <TextField
+          id="date-end"
+          placeholder="dd/mm/yy"
+          block
+          required
+          rightIcon={<FontIcon className="dateRangeIcon">date_range</FontIcon>}
+          value={
+            filterData?.dateRange?.endDate &&
+            moment(filterData?.dateRange?.endDate).format('DD/MM/YYYY')
+          }
+          onClick={() =>
+            setVisibleDatePicker({ ...visibleDatePicker, endDate: true })
+          }
+          className="textField"
+        />
+        {visibleDatePicker?.endDate && (
+          <DatePicker
+            singlePick
+            translation={{ update: 'select' }}
+            onUpdate={(date) => onHandleDate(date, 'endDate')}
+            onCancel={() =>
+              setVisibleDatePicker({ ...visibleDatePicker, endDate: false })
+            }
+            minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
+            startView="year"
+            endView="day"
+          />
+        )}
+      </div>
     </div>
   )
 }
