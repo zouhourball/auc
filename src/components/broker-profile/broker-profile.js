@@ -12,10 +12,10 @@ import { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
-import { getPublicUrl } from 'libs/utils/custom-function'
+// import { getPublicUrl } from 'libs/utils/custom-function'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
-import { filterFeatureAuctions } from 'libs/api/auctions-api'
+import { filterFeatureAuctions, genUploadToken } from 'libs/api/auctions-api'
 
 import BrokerHeader from 'components/broker-header'
 import BiddingCard from 'components/bidding-card'
@@ -100,6 +100,11 @@ const BrokerProfile = ({ brokerId, user }) => {
     ],
     filterFeatureAuctions,
     { refetchOnWindowFocus: false },
+  )
+
+  const { data: downloadToken } = useQueryReact(
+    ['genUploadToken', 'download'],
+    genUploadToken,
   )
 
   const headerFilters = [
@@ -200,7 +205,7 @@ const BrokerProfile = ({ brokerId, user }) => {
                         className="owner-card-avatar"
                         src={
                           get(res, 'companyLogo.aPIID', null)
-                            ? getPublicUrl(res?.companyLogo?.aPIID)
+                            ? `${res?.companyLogo?.aPIID}?token=${downloadToken?.token}&view=true`
                             : null
                         }
                       >
