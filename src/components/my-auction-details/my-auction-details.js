@@ -717,14 +717,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                 accept="image/jpeg, image/png, image/jpg"
                 className="custom"
               />
-              <div className="actions">
-                <Button className="cancelBtn" onClick={() => onDisableEdit()}>
-                  Cancel
-                </Button>
-                <Button className="saveBtn" onClick={() => saveChanges()}>
-                  Save
-                </Button>
-              </div>
             </>
           ) : (
             <>
@@ -753,6 +745,16 @@ const MyAuctionDetails = ({ auctionId }) => {
           {showMore ? 'Less' : 'More'}
         </Button>
       </div>
+      {editMode && (
+        <div className="actions">
+          <Button className="cancelBtn" onClick={() => onDisableEdit()}>
+            Cancel
+          </Button>
+          <Button className="saveBtn" onClick={() => saveChanges()}>
+            Save
+          </Button>
+        </div>
+      )}
       <div className="auction-details-bidderWrapper">
         <div className="auction-details-subTitle">{t('bidders_list')}</div>
         <div className="auction-details-table">

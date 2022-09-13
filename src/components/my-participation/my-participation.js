@@ -52,6 +52,7 @@ const ParticipatedAuctions = () => {
         key={i}
         auctionData={el}
         status={tab === 0 ? 'active' : 'active'}
+        saveAuctionTag
       />
     ))
   }
