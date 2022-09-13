@@ -47,7 +47,6 @@ const TopBar = ({
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
-  const [notifPanelVisible, setNotifPanelVisible] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user
@@ -289,19 +288,34 @@ const TopBar = ({
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
           {logged && (
-            <Button
-              icon
-              className={cls(
-                `notification-icon`,
-                modules[1] === 'home' && `white`,
-              )}
-              primary={true}
-              onClick={() => setNotifPanelVisible(!notifPanelVisible)}
-            >
-              notifications
-            </Button>
+            <div className="top-bar-actions-menu-button">
+              <MenuButton
+                id="menu-button-1"
+                icon
+                menuItems={
+                  <div className="notification-panel">
+                    <NotifPanel />
+                  </div>
+                }
+                listInline
+                centered
+                anchor={{
+                  x: MenuButton.HorizontalAnchors.CENTER,
+                  y: MenuButton.VerticalAnchors.CENTER,
+                }}
+                position={MenuButton.Positions.BOTTOM}
+              >
+                <FontIcon
+                  className={cls(
+                    `notification-icon`,
+                    modules[1] === 'home' && `white`,
+                  )}
+                >
+                  notifications
+                </FontIcon>
+              </MenuButton>
+            </div>
           )}
-          {notifPanelVisible && <NotifPanel />}
 
           {logged && (
             <div className="top-bar-actions-menu-button">

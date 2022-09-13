@@ -11,6 +11,7 @@ import { useState } from 'react'
 
 const Notifications = () => {
   const [search, setSearch] = useState('')
+  const [filterData, setFilterData] = useState(null)
 
   const filterDateList = [
     { name: 'Today', value: 'today' },
@@ -73,10 +74,14 @@ const Notifications = () => {
             onChange={(v) => {
               setSearch(v)
             }}
-            placeholder="Search"
+            placeholder="Search for a notification"
             fullWidth={false}
           />
-          <FilterBox items={filterDateList} />
+          <FilterBox
+            items={filterDateList}
+            setFilterData={setFilterData}
+            filterData={filterData}
+          />
           <Button
             flat
             swapTheming
