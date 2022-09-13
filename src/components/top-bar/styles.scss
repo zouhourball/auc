@@ -9,6 +9,12 @@
     padding: 0;
   }
 
+  &-menu {
+    .notification-panel {
+      margin-top: 30px;
+    }
+  }
+
   &-content {
     display: flex;
     flex-flow: row wrap;
@@ -127,14 +133,14 @@
       button {
         padding: 0;
 
-        i {
-          color: #0a6068;
+        // i {
+        //   color: #0a6068;
 
-          span {
-            font-weight: bold;
-            text-transform: uppercase;
-          }
-        }
+        //   span {
+        //     font-weight: bold;
+        //     text-transform: uppercase;
+        //   }
+        // }
       }
     }
 
@@ -248,6 +254,8 @@
   }
 
   .notification-icon {
+    color: #5078e1;
+
     &.white {
       color: #fff;
     }
