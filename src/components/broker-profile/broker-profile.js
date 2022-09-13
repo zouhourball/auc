@@ -5,29 +5,31 @@ import {
   SelectField,
   ExpansionList,
   ExpansionPanel,
+  Button,
 } from 'react-md'
 import { navigate } from '@reach/router'
 import { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
+import { get } from 'lodash-es'
+import { getPublicUrl } from 'libs/utils/custom-function'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import { filterFeatureAuctions } from 'libs/api/auctions-api'
 
 import BrokerHeader from 'components/broker-header'
 import BiddingCard from 'components/bidding-card'
+import CompanyInfoById from 'components/company-info-by-id'
 
 import { propertyTypeList } from 'components/helpers/index'
 
 import './style.scss'
 
-import { get } from 'lodash-es'
-import { getPublicUrl } from 'libs/utils/custom-function'
-import CompanyInfoById from 'components/company-info-by-id'
-
 const BrokerProfile = ({ brokerId, user }) => {
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
+  const [showMore, setShowMore] = useState(false)
+
   const { data: allCountryStateCities } = useQuery(allCountryStateCitiesGql, {
     context: {
       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
@@ -106,23 +108,24 @@ const BrokerProfile = ({ brokerId, user }) => {
       className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
       title: 'Live',
-      num: 10,
+      num: 0,
     },
     {
       key: 'upcoming',
       className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
       onClick: () => setFilter(1),
       title: 'Upcoming',
-      num: 10,
+      num: 1,
     },
     {
       key: 'closed',
       className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
       onClick: () => setFilter(2),
       title: 'Closed',
-      num: 10,
+      num: 2,
     },
   ]
+
   const renderCards = () =>
     auctionsData?.results?.map((el) => (
       <BiddingCard
@@ -133,6 +136,7 @@ const BrokerProfile = ({ brokerId, user }) => {
         live={filter === 0}
         saveAuctionTag
         refetch={() => refetch()}
+        detailsUrl={() => navigate(`/auctions/detail/${el?.uuid}`)}
       />
     ))
 
@@ -217,7 +221,23 @@ const BrokerProfile = ({ brokerId, user }) => {
                         </div>
                       )}
                     </div>
-                    {res?.aboutUs && <div className="bio">{res?.aboutUs}</div>}
+                    {res?.aboutUs && (
+                      <>
+                        {' '}
+                        <div className={`${!showMore ? 'less' : ''} bio`}>
+                          {res?.aboutUs}
+                        </div>
+                        <Button
+                          iconChildren={
+                            showMore ? 'expand_less' : 'expand_more'
+                          }
+                          iconBefore={showMore}
+                          onClick={() => setShowMore(!showMore)}
+                        >
+                          {showMore ? 'Less' : 'More'}
+                        </Button>
+                      </>
+                    )}
                   </div>
 
                   {res?.webSite && (

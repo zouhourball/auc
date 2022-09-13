@@ -51,6 +51,7 @@ const MyAuctions = () => {
   const renderCards = () =>
     auctionsData?.results?.map((el) => (
       <BiddingCard
+        saveAuctionTag
         className="md-cell md-cell--4"
         key={el?.uuid}
         auctionData={el}
@@ -61,7 +62,7 @@ const MyAuctions = () => {
               navigate(`/auctions/my-auction-details/${el?.uuid}`),
           }
           : {})}
-        {...(tab === 1 ? { saveAuctionTag: false } : {})}
+        // {...(tab === 1 ? { saveAuctionTag: false } : {})}
         refetch={() => refetch()}
       />
     ))

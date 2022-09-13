@@ -61,7 +61,13 @@ const TopBar = ({
       modules?.includes('upcoming-auctions')
     ) {
       setCurrentModule('auctions')
-    } else {
+    } else if (
+      modulesList?.find(
+        (el) =>
+          el?.linkToNewTab === modules[1] ||
+          el?.subMenu?.find((s) => s?.link === modules[1]),
+      )
+    ) {
       setCurrentModule(
         modulesList?.find(
           (el) =>
@@ -69,8 +75,10 @@ const TopBar = ({
             el?.subMenu?.find((s) => s?.link === modules[1]),
         )?.key,
       )
+    } else {
+      setCurrentModule('')
     }
-  }, [])
+  }, [modules])
   const getActiveLabel = ({ activeLabel }) => {
     if (activeLabel === 'اللغة العربية') {
       return 'عربي'
