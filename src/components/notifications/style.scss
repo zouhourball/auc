@@ -64,11 +64,14 @@
       padding: 4px 0;
 
       .load-more {
-        height: 50px;
+        height: auto;
+        padding: 12px 16px;
         border: solid 1px #527bde;
         border-radius: 6px;
         background-color: transparent;
         color: #5078e1;
+        font-size: 14px;
+        font-weight: 600;
       }
     }
   }

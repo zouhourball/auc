@@ -94,8 +94,9 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
       <SelectField
         placeholder={t('type')}
         className="md-cell md-cell--1 auctions-filter-selectField"
+        toggleClassName="is-toggled"
         value={'type'}
-        simplifiedMenu={true}
+        simplifiedMenu={false}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
         menuItems={propertyTypeList?.map((tp, index) => {

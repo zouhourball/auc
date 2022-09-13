@@ -7,6 +7,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .title {
+      color: #3d3d3e;
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
 
   &-action {
@@ -52,43 +58,33 @@
     }
   }
 
-  .title {
-    color: #3d3d3e;
-    font-size: 35px;
-    font-weight: 700;
-  }
-
-  .note {
-    font-size: 16px;
-  }
-
   .auction-timer {
     &.active {
       .countdown {
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
         border: 2px solid #3d3d3e;
         border-radius: 13px;
-        // gap: 18px;
+        gap: 10px;
 
         &-element {
           .value {
             color: #3d3d3e;
-            font-size: calc(16px + 1.7vw);
+            font-size: 22px;
             font-weight: normal;
           }
 
           .label {
             color: #3d3d3e;
-            font-size: calc(16px + 1.7vw);
+            font-size: 22px;
             font-weight: normal;
           }
         }
 
         &-separator {
           color: #3d3d3e;
-          font-size: calc(16px + 1.7vw);
+          font-size: 22px;
           font-weight: normal;
         }
       }
@@ -101,8 +97,21 @@
     background: #fff;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     color: #7c7c7c;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
+
+    .note {
+      color: #7c7c7c;
+      font-size: 14px;
+      font-size: 500;
+    }
+
+    .title {
+      margin-bottom: 4px;
+      color: #3d3d3e;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
     &-details {
       display: flex;
@@ -113,6 +122,10 @@
         display: flex;
         align-items: center;
         gap: 8px;
+
+        > img {
+          height: 18px;
+        }
       }
     }
 
@@ -154,15 +167,22 @@
     height: auto;
     padding: 16px;
     border-radius: 16px;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 700;
   }
 
   .view-map-btn {
-    font-size: 22px;
+    font-size: 16px;
 
     .md-icon-text {
-      font-weight: 600;
+      &:last-child {
+        padding-left: 8px;
+        font-weight: 600;
+      }
+    }
+
+    .md-icon {
+      font-size: 18px;
     }
   }
 }
@@ -187,7 +207,7 @@
   &-info {
     flex-grow: 1;
     color: #7c7c7c;
-    font-size: 28px;
+    font-size: 16px;
     font-weight: 500;
 
     .name {
@@ -206,7 +226,7 @@
   &-title {
     margin-bottom: 16px;
     color: #3d3d3e;
-    font-size: 30px;
+    font-size: 16px;
     font-weight: 500;
   }
 
@@ -220,7 +240,7 @@
     display: flex;
     align-items: center;
     color: #7c7c7c;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     gap: 8px;
   }
@@ -247,7 +267,7 @@
   &-title {
     margin-bottom: 16px;
     color: #3d3d3e;
-    font-size: 30px;
+    font-size: 16px;
     font-weight: 500;
   }
 
@@ -259,7 +279,7 @@
 
   &-item {
     color: #7c7c7c;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
 
     .commission {
@@ -272,7 +292,8 @@
     }
 
     .value {
-      font-size: 20px;
+      color: #3d3d3e;
+      font-size: 18px;
       font-weight: 500;
     }
   }

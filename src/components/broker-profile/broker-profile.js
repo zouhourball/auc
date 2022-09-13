@@ -246,7 +246,7 @@ const BrokerProfile = ({ brokerId, user }) => {
               placeholder={'type'}
               className="md-cell md-cell--1 auctions-filter-selectField"
               value={'type'}
-              simplifiedMenu={true}
+              simplifiedMenu={false}
               position={SelectField.Positions.BELOW}
               closeMenuOnSelect={false}
               menuItems={propertyTypeList?.map((tp, index) => {

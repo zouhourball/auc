@@ -5,6 +5,7 @@
   width: max-content;
   border-radius: 8px;
   background-color: #fff;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
   &-item {
     display: flex;
@@ -27,18 +28,6 @@
         font-size: 13px;
         font-weight: 300;
       }
-
-      &::before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 16px;
-        right: -12px;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: #5078e1;
-      }
     }
   }
 
@@ -50,7 +39,19 @@
   }
 
   .load-more {
+    padding: 6px 16px;
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .notifPoint {
+    display: block;
+    position: absolute;
+    top: -12px;
+    right: -6px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #5078e1;
   }
 }

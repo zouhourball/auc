@@ -215,8 +215,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
-        <div className="auction-details-header md-cell md-cell--12">
+      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <div className="auction-details-header md-cell md-cell--9">
           <div className="title">{t('auction_detail')}</div>
           <Button
             flat
@@ -257,7 +257,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--5 md-grid">
+      <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
             (auctionData?.status !== 'Pending' ? (
