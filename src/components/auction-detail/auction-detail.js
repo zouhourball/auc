@@ -36,7 +36,10 @@ import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
-
+import SuccessfulRegistration from 'components/success-registration'
+import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
+import FeesDialog from 'components/fees-dialog/fees-dialog'
+import CompanyInfoById from 'components/company-info-by-id'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 
 import mailIcon from 'images/mail_gray.svg'
@@ -46,15 +49,13 @@ import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
 
 import './style.scss'
-import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
-import FeesDialog from 'components/fees-dialog/fees-dialog'
-import CompanyInfoById from 'components/company-info-by-id'
 
 const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
+  const [successDialog, setSuccessDialog] = useState(false)
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -93,12 +94,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     .filter((v) => v === 'success' || v === 'error')[0]
   useEffect(() => {
     if (paymentCallback === 'success') {
-      dispatch(
-        addToast(
-          <ToastMsg text={'Payment done successfully '} type="success" />,
-          'hide',
-        ),
-      )
+      setSuccessDialog(true)
+      // dispatch(
+      //   addToast(
+      //     <ToastMsg text={'Payment done successfully '} type="success" />,
+      //     'hide',
+      //   ),
+      // )
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -536,6 +538,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           visible={termsDialog}
           onHide={() => setTermsDialog(false)}
           auctionId={auctionData?.uuid}
+        />
+      )}
+      {successDialog && (
+        <SuccessfulRegistration
+          visible={successDialog}
+          onHide={() => setSuccessDialog(false)}
         />
       )}
       {bidDialog && (

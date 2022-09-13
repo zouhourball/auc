@@ -34,8 +34,7 @@ const AuctionsList = ({ logged, user }) => {
       'getAuctions',
       {
         search_key: filterData?.search,
-        city_id: filterData?.location,
-        property_type_id: filterData?.type,
+        // city_id: filterData?.location,
         price_gte: filterData?.price?.min,
         price_lte: filterData?.price?.max,
       },
@@ -46,6 +45,7 @@ const AuctionsList = ({ logged, user }) => {
           //   $gte: '2022-08-28T08:00:00Z',
           //   $lte: '2022-09-28T23:00:00Z',
           // },
+          // property_type_id: { $in: filterData?.type?.filter(el => el !== undefined) },
         },
         sort: [
           filterData?.auctionEndingSoon === 'aes'
@@ -54,6 +54,11 @@ const AuctionsList = ({ logged, user }) => {
         ],
         limit: 20,
         offset: 0,
+      },
+      {
+        cities: filterData?.location,
+        property_type_ids: filterData?.type,
+        organization_ids: filterData?.brokerCompany,
       },
     ],
     logged ? filterAuctions : filterFeatureAuctions,
@@ -88,21 +93,23 @@ const AuctionsList = ({ logged, user }) => {
       </div>
       <div className="auction-list-header-filters">
         <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
-        <div className="auction-list-header-filters-display">
-          <FontIcon
-            className={`gridView ${gridView === 0 ? 'active' : ''}`}
-            onClick={() => setGridView(0)}
-          >
-            view_list
-          </FontIcon>
-          <div className="sep"></div>
-          <FontIcon
-            onClick={() => setGridView(1)}
-            className={`gridView ${gridView === 1 ? 'active' : ''}`}
-          >
-            view_module
-          </FontIcon>
-        </div>
+        {modules.includes('live-auctions') && (
+          <div className="auction-list-header-filters-display">
+            <FontIcon
+              className={`gridView ${gridView === 0 ? 'active' : ''}`}
+              onClick={() => setGridView(0)}
+            >
+              view_list
+            </FontIcon>
+            <div className="sep"></div>
+            <FontIcon
+              onClick={() => setGridView(1)}
+              className={`gridView ${gridView === 1 ? 'active' : ''}`}
+            >
+              view_module
+            </FontIcon>
+          </div>
+        )}
       </div>
       {gridView === 0 ? (
         <div className="md-grid auction-list-cards">{renderCards()}</div>

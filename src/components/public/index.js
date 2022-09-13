@@ -58,7 +58,7 @@ const Public = () => {
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
             <AuctionsList key={i} path={page} />
           ))}
-          <BrokerPage path={'/broker'} />
+          <BrokerPage path={'/broker'} logged={false} />
           <BrokerProfile path={'/broker/:brokerId'} />
 
           <AuctionDetail path={'/detail/:auctionId'} />
