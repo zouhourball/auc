@@ -1,15 +1,15 @@
 .auction-asset {
-  padding: 40px 4.02vw;
+  padding: 10px 4.02vw 40px;
 
   &-title {
     color: #3d3d3e;
-    font-size: 35px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   &-subTitle {
     color: #7c7c7c;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 500;
   }
 }

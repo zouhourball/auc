@@ -6,6 +6,9 @@ import { cleanUp } from '@target-energysolutions/hoc-oauth'
 
 import { getPublicUrl } from 'libs/utils/custom-function'
 
+import notifWhite from 'images/Notifications White.svg'
+import notifBlue from 'images/Notifications Purple.svg'
+
 import {
   FontIcon,
   SelectField,
@@ -180,7 +183,7 @@ const TopBar = ({
             }}
             position={MenuButton.Positions.BELOW}
           >
-            {t('auctions')}
+            <span className="active-item">{t('auctions')}</span>
           </MenuButton>
           {/* <div>
             <span
@@ -231,7 +234,7 @@ const TopBar = ({
                             setCurrentModule(key)
                           }}
                         >
-                          {label}
+                          <span className="active-item">{label}</span>
                         </Button>
                       </Link>
                     ) : (
@@ -263,7 +266,7 @@ const TopBar = ({
                         }}
                         position={MenuButton.Positions.BELOW}
                       >
-                        {label}
+                        <span className="active-item">{label}</span>
                       </MenuButton>
                     )}
                   </>
@@ -335,14 +338,10 @@ const TopBar = ({
                 }}
                 position={MenuButton.Positions.BOTTOM}
               >
-                <FontIcon
-                  className={cls(
-                    `notification-icon`,
-                    modules[1] === 'home' && `white`,
-                  )}
-                >
-                  notifications
-                </FontIcon>
+                <img
+                  className="top-bar-actions-menu-button-notifIcon"
+                  src={modules[1] === 'home' ? notifWhite : notifBlue}
+                />
               </MenuButton>
             </div>
           )}

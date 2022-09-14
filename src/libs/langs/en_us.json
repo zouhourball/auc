@@ -131,8 +131,8 @@
   "new_user": "new user",
   "sign_in": "sign in",
   "menu": "menu",
-  "auction_market": "REVOLUTIONIZING THE REAL ESTATE AUCTION MARKET",
-  "browse_auctions": "With mazed, you can now browse through thousands of auctions to find",
+  "auction_market": "ACCELERATING ASSET’S MONITIZATION",
+  "browse_auctions": "With LEILAM, you can now browse through thousands of auctions to find your next big purchase",
   "big_purchase": "your next big purchase",
   "explore_more": "Explore more",
   "day": "day",
@@ -189,5 +189,6 @@
   "Office": "Office",
   "Plot": "Plot",
   "Unit": "Unit",
-  "broker": "Broker"
+  "broker": "Broker",
+  "submit": "Submit"
 }

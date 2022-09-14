@@ -13,8 +13,11 @@ import {
   filterAuctions,
   filterFeatureAuctions,
 } from 'libs/api/auctions-api'
-import { FontIcon } from 'react-md'
 // import { filter } from 'lodash-es'
+import gridActive from 'images/Map View Selected.svg'
+import gridInactive from 'images/Map View Grey.svg'
+import listActive from 'images/List View Selected.svg'
+import listInactive from 'images/List View Grey.svg'
 
 const AuctionsList = ({ logged, user }) => {
   const { t } = useTranslation()
@@ -95,7 +98,17 @@ const AuctionsList = ({ logged, user }) => {
         <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
         {modules.includes('live-auctions') && (
           <div className="auction-list-header-filters-display">
-            <FontIcon
+            <img
+              src={gridView === 0 ? listActive : listInactive}
+              onClick={() => setGridView(0)}
+            />
+            <div className="sep"></div>
+            <img
+              src={gridView === 1 ? gridActive : gridInactive}
+              onClick={() => setGridView(1)}
+            />
+
+            {/* <FontIcon
               className={`gridView ${gridView === 0 ? 'active' : ''}`}
               onClick={() => setGridView(0)}
             >
@@ -107,7 +120,7 @@ const AuctionsList = ({ logged, user }) => {
               className={`gridView ${gridView === 1 ? 'active' : ''}`}
             >
               view_module
-            </FontIcon>
+            </FontIcon> */}
           </div>
         )}
       </div>
