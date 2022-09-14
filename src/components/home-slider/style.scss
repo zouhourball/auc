@@ -68,7 +68,7 @@
     &-separateur {
       width: 150px;
       height: 2px;
-      margin: 8px 0;
+      margin: 4px 0;
       background: #fff;
     }
 
@@ -143,6 +143,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin: 0;
       padding: 0;
       border: none;
       gap: 4px;

@@ -105,8 +105,30 @@
       line-height: 1;
       cursor: pointer;
 
+      .md-pointer--hover:hover {
+        color: #5078e1;
+      }
+
+      &.md-btn--hover {
+        background-color: transparent;
+        color: #5078e1;
+      }
+
       &.active {
-        color: blue;
+        .active-item {
+          position: relative;
+          color: #5078e1;
+
+          &::after {
+            content: '';
+            display: block;
+            visibility: visible;
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #527bde;
+          }
+        }
       }
 
       .md-ink-container {
@@ -118,6 +140,23 @@
       &.md-paper--2 {
         border-radius: 12px;
       }
+
+      &-tile {
+        height: 30px;
+
+        .md-text {
+          color: #7c7c7c;
+          font-size: 16px;
+        }
+
+        &--active {
+          background-color: transparent;
+
+          .md-text {
+            color: #5078e1;
+          }
+        }
+      }
     }
   }
 
@@ -127,6 +166,7 @@
     align-items: center;
     margin-left: 10px;
     color: #fff;
+    gap: 8px;
 
     .md-menu-container {
       border-radius: 50%;
@@ -162,6 +202,10 @@
             padding: 16px;
           }
         }
+      }
+
+      &-notifIcon {
+        margin-top: 5px;
       }
     }
   }
@@ -224,10 +268,12 @@
       .md-fake-btn--no-outline {
         .md-text-field {
           span.md-icon-text {
+            color: #3d3d3e;
             font-size: 16px;
           }
 
           .md-icon {
+            color: inherit;
             font-size: 22px;
           }
         }
@@ -319,7 +365,15 @@
       color: #fff;
 
       &.active {
-        color: blue;
+        color: #5078e1;
+
+        &::after {
+          content: '';
+          display: block;
+          width: fit-content;
+          height: 1px;
+          background-color: #1979ff;
+        }
       }
     }
 
@@ -439,17 +493,3 @@
 //     }
 //   }
 // }
-
-.menu-item {
-  display: block;
-
-  .md-fake-btn {
-    padding: 0;
-  }
-
-  &.active {
-    .md-text {
-      color: #b0d39a;
-    }
-  }
-}

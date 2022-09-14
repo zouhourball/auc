@@ -89,7 +89,7 @@
 
   .md-list-item {
     .md-list-tile {
-      height: 30px;
+      height: 22px;
       padding-left: 4px;
     }
   }
@@ -97,7 +97,7 @@
   .md-text {
     padding-left: 12px;
     color: #7c7c7c;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: normal;
 
     .md-selection-control-label {
@@ -117,15 +117,15 @@
   }
 
   .md-panel-header[aria-pressed='false'] {
-    height: 30px;
+    height: 22px;
     padding-right: 16px;
-    padding-left: 6px;
+    padding-left: 4px;
   }
 
   .md-panel-header--expanded {
     height: 30px;
     padding-left: 18px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .md-expansion-panel-list {
@@ -134,7 +134,7 @@
 
       .md-panel-column {
         padding-left: 0;
-        font-size: 10px;
+        font-size: 12px;
         font-weight: 500;
       }
 
@@ -142,7 +142,7 @@
         padding: 0 6px 16px;
 
         .md-selection-control-container {
-          height: 30px;
+          height: 22px;
         }
       }
     }

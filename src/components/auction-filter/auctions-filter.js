@@ -96,31 +96,33 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         className="md-cell md-cell--1 auctions-filter-selectField"
         toggleClassName="is-toggled"
         value={'type'}
-        simplifiedMenu={false}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
         menuItems={propertyTypeList?.map((tp, index) => {
-          return (
-            <Checkbox
-              key={index}
-              id={`${tp.value}-auction-type`}
-              name={`${tp.value}-checkboxes`}
-              label={tp.label}
-              onChange={(e) => {
-                filterData?.type?.find((el) => el === tp.value)
-                  ? setFilterData({
-                    ...filterData,
-                    type: filterData.type?.filter((el) => el !== tp.value),
-                  })
-                  : setFilterData({
-                    ...filterData,
-                    type: [...(filterData?.type || []), tp.value],
-                  })
-                e.stopPropagation()
-              }}
-              checked={!!filterData?.type?.find((el) => el === tp.value)}
-            />
-          )
+          return {
+            label: (
+              <Checkbox
+                key={index}
+                id={`${tp.value}-auction-type`}
+                name={`${tp.value}-checkboxes`}
+                label={tp.label}
+                onChange={(e) => {
+                  filterData?.type?.find((el) => el === tp.value)
+                    ? setFilterData({
+                      ...filterData,
+                      type: filterData.type?.filter((el) => el !== tp.value),
+                    })
+                    : setFilterData({
+                      ...filterData,
+                      type: [...(filterData?.type || []), tp.value],
+                    })
+                  e.stopPropagation()
+                }}
+                checked={!!filterData?.type?.find((el) => el === tp.value)}
+              />
+            ),
+            value: tp.label,
+          }
         })}
       />
 

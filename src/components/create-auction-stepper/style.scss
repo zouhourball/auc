@@ -1,5 +1,6 @@
 .create-auction {
-  margin-top: 20px;
+  width: 85%;
+  margin: 20px auto;
   border-radius: 35px;
   background: #fff;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
@@ -22,17 +23,27 @@
     .action-btn {
       height: auto;
       margin: 0 8px;
-      padding: 20px 40px;
-      border-radius: 18px;
-      font-size: 22px;
+      padding: 15px 30px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: bold;
 
       &[disabled] {
         background-color: #5079e146;
         color: #fff;
       }
 
-      &.md-text--theme-primary {
+      // &.md-text--theme-primary {
+      //   border: 2px solid #5078e1;
+      // }
+      &.cancel {
         border: 2px solid #5078e1;
+        color: #5078e1;
+      }
+
+      &.back {
+        background-color: #e7ebf5;
+        color: #5078e1;
       }
     }
   }
@@ -72,13 +83,17 @@
       width: max-content;
       transform: translateX(-50%);
       color: #7c7c7c;
-      font-size: 22px;
+      font-size: 16px;
       font-weight: 500;
     }
 
     &.active {
       .step-index {
         background: #e7ebf5;
+        color: #5078e1;
+      }
+
+      .step-label {
         color: #5078e1;
       }
     }

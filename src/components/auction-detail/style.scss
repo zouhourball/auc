@@ -1,7 +1,7 @@
 /* stylelint-disable */
 .auction-details {
   align-items: flex-start;
-  padding: 0 4.02vw !important;
+  padding: 0 4.02vw 20px !important;
 
   &-header {
     display: flex;
@@ -140,6 +140,7 @@
 
   .gallery-image {
     max-width: 100%;
+    height: 700px;
     border-radius: 45px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     aspect-ratio: 1 / 1;
@@ -149,9 +150,47 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      height: 700px;
       padding: 8px;
       overflow: auto;
       gap: 16px;
+
+      &::-webkit-scrollbar-track {
+        visibility: visible;
+        height: 100%;
+        border-radius: 3px;
+        opacity: 1;
+        background-color: #d0d0d0;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-webkit-scrollbar {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        right: 15px;
+        width: 5px;
+        height: 90%;
+        transition: all 400ms;
+        opacity: 1;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+        border-radius: 12px;
+        background-color: #7c7c7c;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        background-clip: content-box;
+      }
+
+      &:hover {
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-thumb {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
     }
 
     &.item {
@@ -177,7 +216,7 @@
     .md-icon-text {
       &:last-child {
         padding-left: 8px;
-        font-weight: 600;
+        font-weight: 500;
       }
     }
 
