@@ -17,6 +17,11 @@
     }
   }
 
+  .less {
+    height: 100px;
+    overflow: hidden;
+  }
+
   &-body {
     display: grid;
     grid-template-columns: 270px auto;

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cls } from 'reactutils'
 import { get } from 'lodash-es'
 
@@ -35,7 +35,7 @@ const TopBar = ({
   onClickRegisterUrl,
   modulesList,
   className,
-  currentModule,
+
   onClickModule,
   logged,
   clear,
@@ -46,14 +46,38 @@ const TopBar = ({
   const langs = useSupportedLangs()
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
+  const [currentModule, setCurrentModule] = useState('')
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
-  const [notifPanelVisible, setNotifPanelVisible] = useState(false)
 
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user
     ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
     : null
   const modules = location.pathname.split('/').filter((v) => v !== '')
+  useEffect(() => {
+    if (
+      modules?.includes('live-auctions') ||
+      modules?.includes('upcoming-auctions')
+    ) {
+      setCurrentModule('auctions')
+    } else if (
+      modulesList?.find(
+        (el) =>
+          el?.linkToNewTab === modules[1] ||
+          el?.subMenu?.find((s) => s?.link === modules[1]),
+      )
+    ) {
+      setCurrentModule(
+        modulesList?.find(
+          (el) =>
+            el?.linkToNewTab === modules[1] ||
+            el?.subMenu?.find((s) => s?.link === modules[1]),
+        )?.key,
+      )
+    } else {
+      setCurrentModule('')
+    }
+  }, [modules])
   const getActiveLabel = ({ activeLabel }) => {
     if (activeLabel === 'اللغة العربية') {
       return 'عربي'
@@ -74,6 +98,7 @@ const TopBar = ({
                 primaryText={label}
                 onClick={() => {
                   onClickModule && onClickModule(key)
+
                   link && link()
                   navigate(linkToNewTab)
                 }}
@@ -124,25 +149,27 @@ const TopBar = ({
             id="smart-menu-button-1"
             className={cls(
               'modules-item',
-              // currentModule === key ? 'active' : '',
+              currentModule === 'auctions' ? 'active' : '',
             )}
             flat
             menuItems={[
               <ListItem
                 key={1}
                 primaryText="Live Auctions"
-                onClick={() =>
+                onClick={() => {
                   navigate(`/${logged ? 'auctions' : 'public'}/live-auctions`)
-                }
+                  setCurrentModule('auctions')
+                }}
               />,
               <ListItem
                 key={2}
                 primaryText="Upcoming Auctions"
-                onClick={() =>
+                onClick={() => {
                   navigate(
                     `/${logged ? 'auctions' : 'public'}/upcoming-auctions`,
                   )
-                }
+                  setCurrentModule('auctions')
+                }}
               />,
             ]}
             simplifiedMenu={false}
@@ -201,6 +228,7 @@ const TopBar = ({
                           onClick={() => {
                             onClickModule && onClickModule(key)
                             link && link()
+                            setCurrentModule(key)
                           }}
                         >
                           {label}
@@ -210,20 +238,21 @@ const TopBar = ({
                       <MenuButton
                         className={cls(
                           'modules-item',
-                          // currentModule === key ? 'active' : '',
+                          currentModule === key ? 'active' : '',
                         )}
                         flat
                         menuItems={subMenu?.map((el) => (
                           <ListItem
                             key={1}
                             primaryText={el?.label}
-                            onClick={() =>
+                            onClick={() => {
                               navigate(
                                 logged
                                   ? `/auctions/${el?.link}`
                                   : `/public/${el?.link}`,
                               )
-                            }
+                              setCurrentModule(key)
+                            }}
                           />
                         ))}
                         simplifiedMenu={false}
@@ -289,19 +318,34 @@ const TopBar = ({
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
           {logged && (
-            <Button
-              icon
-              className={cls(
-                `notification-icon`,
-                modules[1] === 'home' && `white`,
-              )}
-              primary={true}
-              onClick={() => setNotifPanelVisible(!notifPanelVisible)}
-            >
-              notifications
-            </Button>
+            <div className="top-bar-actions-menu-button">
+              <MenuButton
+                id="menu-button-1"
+                icon
+                menuItems={
+                  <div className="notification-panel">
+                    <NotifPanel />
+                  </div>
+                }
+                listInline
+                centered
+                anchor={{
+                  x: MenuButton.HorizontalAnchors.CENTER,
+                  y: MenuButton.VerticalAnchors.CENTER,
+                }}
+                position={MenuButton.Positions.BOTTOM}
+              >
+                <FontIcon
+                  className={cls(
+                    `notification-icon`,
+                    modules[1] === 'home' && `white`,
+                  )}
+                >
+                  notifications
+                </FontIcon>
+              </MenuButton>
+            </div>
           )}
-          {notifPanelVisible && <NotifPanel />}
 
           {logged && (
             <div className="top-bar-actions-menu-button">

@@ -1,13 +1,14 @@
 import { cls } from 'reactutils'
 import { useTranslation } from 'libs/langs'
+import { useState } from 'react'
+import { Button } from 'react-md'
+import { navigate } from '@reach/router'
 
 import AuctionDetailsForm from 'components/auction-details-form'
 import DocumentsForm from 'components/documents-form'
 // import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
 import PropertyDetailsForm from 'components/property-details-form'
-import { useState } from 'react'
-import { Button } from 'react-md'
-// import { navigate } from '@reach/router'
+
 // import { v4 as uuidv4 } from 'uuid'
 
 import './style.scss'
@@ -192,11 +193,21 @@ const CreateAuctionStepper = ({
       </div>
       <div className="">{renderCurrentTabContent()}</div>
       <div className="create-auction-footer">
+        {currentStep !== 1 && (
+          <Button
+            flat
+            primary
+            className="action-btn"
+            onClick={() => setCurrentStep(currentStep - 1)}
+          >
+            {t('back')}
+          </Button>
+        )}
         <Button
           flat
           primary
           className="action-btn"
-          onClick={() => setCurrentStep(currentStep - 1)}
+          onClick={() => navigate('/auctions/home')}
         >
           {t('cancel')}
         </Button>
@@ -205,7 +216,7 @@ const CreateAuctionStepper = ({
           primary={!validData()}
           flat
           swapTheming={!validData()}
-          // disabled={validData()}
+          disabled={validData()}
           onClick={() =>
             currentStep > 2
               ? auctionUuid
