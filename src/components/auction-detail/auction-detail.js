@@ -388,7 +388,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                   </Avatar>
 
                   <div className="owner-card-info">
-                    <div>{t('owned_by')}</div>
+                    <div>{t('listed_by')}</div>
                     <div className="name">{res?.name}</div>
                   </div>
                   <Button

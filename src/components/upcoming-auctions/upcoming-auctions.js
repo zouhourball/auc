@@ -36,12 +36,12 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
     ))
   return (
     <div className="upcoming-auctions">
-      <div className="upcoming-auctions-title">{t('auction_market')}</div>
+      <div className="upcoming-auctions-title">{t('accelerate_asset')}</div>
       <div className="upcoming-auctions-separateur" />
       <div className="upcoming-auctions-description">
-        {t('browse_auctions')}
-        <br />
-        {t('big_purchase')}
+        {/* {t('accelerate_asset')} */}
+        {/* <br /> */}
+        {t('with_leilam')}
       </div>
       <div className="upcoming-auctions-header">
         <div className="upcoming-auctions-subTitle">
