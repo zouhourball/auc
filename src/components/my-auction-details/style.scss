@@ -4,6 +4,7 @@
   &-header {
     display: flex;
     align-items: center;
+    margin-bottom: 8px;
     color: #707070;
     font-size: 18px;
     font-weight: 500;
@@ -93,16 +94,6 @@
         justify-content: center;
       }
 
-      .row {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-
-        &.underlined {
-          border-bottom: 1px solid #707070;
-        }
-      }
-
       &-textField {
         display: flex;
         position: relative;
@@ -134,30 +125,49 @@
         }
       }
 
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .selectField-lined {
+          flex: 1 0 calc(33% - 10px);
+
+          .md-text-field {
+            color: #7c7c7c;
+            font-size: 16px;
+            font-weight: 500;
+          }
+
+          .md-icon {
+            display: none;
+          }
+
+          .md-select-field--btn {
+            padding-bottom: 10px;
+            padding-left: 0;
+          }
+        }
+
+        &.underlined {
+          border-bottom: 1px solid #707070;
+
+          .selectField-lined {
+            height: 30px;
+
+            .md-select-field--btn.md-select-field--btn {
+              padding-top: 4px;
+            }
+          }
+        }
+      }
+
       .date-picker {
         display: flex;
         position: absolute;
         z-index: 999;
         top: 30vh;
         gap: 8px;
-      }
-
-      .selectField-lined {
-        flex: 1 0 calc(33% - 10px);
-
-        .md-text-field {
-          color: #7c7c7c;
-          font-size: 16px;
-          font-weight: 500;
-        }
-
-        .md-icon {
-          display: none;
-        }
-
-        .md-select-field--btn {
-          padding-left: 0;
-        }
       }
     }
 

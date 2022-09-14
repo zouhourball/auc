@@ -263,7 +263,7 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
   &-title {
-    margin-bottom: 16px;
+    margin-bottom: 6px;
     color: #3d3d3e;
     font-size: 16px;
     font-weight: 500;
@@ -304,7 +304,7 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
   &-title {
-    margin-bottom: 16px;
+    margin-bottom: 6px;
     color: #3d3d3e;
     font-size: 16px;
     font-weight: 500;
@@ -324,6 +324,7 @@
     .commission {
       display: flex;
       align-items: center;
+      gap: 5px;
 
       .md-icon {
         font-size: 24px;
