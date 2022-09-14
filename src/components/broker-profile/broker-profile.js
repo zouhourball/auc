@@ -38,14 +38,34 @@ const BrokerProfile = ({ brokerId, user }) => {
   // const myOrgs = useSelector(({ app }) => app?.myOrgs)
 
   // console.log(get(myOrgs, '0.ID', 0), 'myOrgs')
-  const renderAuctionStatus = () => {
+  // const renderAuctionStatus = () => {
+  //   switch (filter) {
+  //     case 0:
+  //       return 'Active'
+  //     case 1:
+  //       return 'Upcoming'
+  //     case 2:
+  //       return 'Closed'
+  //   }
+  // }
+  const renderAuctionData = () => {
     switch (filter) {
       case 0:
-        return 'Active'
+        return auctionsData0
       case 1:
-        return 'Upcoming'
+        return auctionsData1
       case 2:
-        return 'Closed'
+        return auctionsData2
+    }
+  }
+  const refetch = () => {
+    switch (filter) {
+      case 0:
+        return refetch0
+      case 1:
+        return refetch1
+      case 2:
+        return refetch2
     }
   }
   // console.log(filterData?.type)
@@ -77,26 +97,54 @@ const BrokerProfile = ({ brokerId, user }) => {
   //   filterFeatureAuctions,
   //   { refetchOnWindowFocus: false },
   // )
-
-  const { data: auctionsData, refetch } = useQueryReact(
+  const allFilters = [
+    {
+      filter: {},
+      sort: [],
+      limit: 20,
+      offset: 0,
+    },
+    {
+      cities: filterData?.location,
+      property_type_ids: filterData?.type,
+      organization_ids: [brokerId],
+    },
+  ]
+  const { data: auctionsData0, refetch: refetch0 } = useQueryReact(
     [
       'filterFeatureAuctions',
       {
         search_key: filterData?.search,
-        auction_status: renderAuctionStatus(),
+        auction_status: 'Active',
       },
 
+      ...allFilters,
+    ],
+    filterFeatureAuctions,
+    { refetchOnWindowFocus: false },
+  )
+  const { data: auctionsData1, refetch: refetch1 } = useQueryReact(
+    [
+      'filterFeatureAuctions',
       {
-        filter: {},
-        sort: [],
-        limit: 20,
-        offset: 0,
+        search_key: filterData?.search,
+        auction_status: 'Upcoming',
       },
+
+      ...allFilters,
+    ],
+    filterFeatureAuctions,
+    { refetchOnWindowFocus: false },
+  )
+  const { data: auctionsData2, refetch: refetch2 } = useQueryReact(
+    [
+      'filterFeatureAuctions',
       {
-        cities: filterData?.location,
-        property_type_ids: filterData?.type,
-        organization_ids: [brokerId],
+        search_key: filterData?.search,
+        auction_status: 'Closed',
       },
+
+      ...allFilters,
     ],
     filterFeatureAuctions,
     { refetchOnWindowFocus: false },
@@ -113,26 +161,26 @@ const BrokerProfile = ({ brokerId, user }) => {
       className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
       title: 'Live',
-      num: 0,
+      num: auctionsData0?.results?.length,
     },
     {
       key: 'upcoming',
       className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
       onClick: () => setFilter(1),
       title: 'Upcoming',
-      num: 1,
+      num: auctionsData1?.results?.length,
     },
     {
       key: 'closed',
       className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
       onClick: () => setFilter(2),
       title: 'Closed',
-      num: 2,
+      num: auctionsData2?.results?.length,
     },
   ]
 
   const renderCards = () =>
-    auctionsData?.results?.map((el) => (
+    renderAuctionData()?.results?.map((el) => (
       <BiddingCard
         user={user}
         key={el?.uuid}

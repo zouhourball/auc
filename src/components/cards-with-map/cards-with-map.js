@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { MeeraMap } from '@target-energysolutions/gis-map'
 import '@target-energysolutions/gis-map/styles.css'
-import { Button } from 'react-md'
+// import { Button } from 'react-md'
+import store from 'libs/store'
 import { navigate } from '@reach/router'
+
+import SideAuctionCard from 'components/side-auction-card'
+import { propertyTypeList } from 'components/helpers'
 
 import './style.scss'
 
-import SideAuctionCard from 'components/side-auction-card'
-
 const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
+  const downloadToken = store?.getState()?.app?.dlToken
+
   const [activePin, setPin] = useState()
 
   const renderCards = () =>
@@ -31,10 +35,21 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
       latitude: el?.listing?.property?.['general_location_y'],
       longitude: el?.listing?.property?.['general_location_x'],
       popup: {
-        'Well ID': '123456789',
-        OtherInfo: 'Well Other Info',
+        image: `${
+          el?.listing?.images?.find((img) => img?.['cover_image'])
+            ? el?.listing?.images?.find((img) => img?.['cover_image'])?.url
+            : el?.listing?.images?.[0]?.url
+        }?token=${downloadToken}&view=true`,
+        propertyType: propertyTypeList.find(
+          (propertyId) =>
+            propertyId?.value === +el?.listing?.property?.['property_type_id'],
+        )?.label,
+        address: `${el?.listing?.property?.city?.['name_en']}, ${el?.listing?.property?.country?.['name_en']}`,
+        action: (id) => navigate(`detail/${el?.uuid}`),
+        actionLabel: 'View Details',
       },
     }))
+
   return (
     <div className="display-grid">
       <div className="cards">{renderCards()}</div>
@@ -71,13 +86,13 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
             {
               type: 'symbol',
               id: 'symbol-layer-id',
-              displayName: 'Edge Workflow',
+              displayName: 'Auctions',
               items: renderPins(),
             },
           ]}
         />
       </div>
-      {activePin && (
+      {/* {activePin && (
         <div className="pin-label">
           <img src={activePin?.img} />
           <div className="title">Villa</div>
@@ -91,7 +106,7 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
             view details
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }
