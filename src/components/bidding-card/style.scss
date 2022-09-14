@@ -39,19 +39,20 @@
   &-header {
     display: flex;
     z-index: 2;
-    margin-top: 40px;
+    margin-top: 25px;
 
     > .save-btn {
-      width: 70px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       margin-right: 20px;
       margin-left: auto;
-      padding: 17px 23px;
-      border-radius: 20px;
+      padding: 10px 12px;
+      border-radius: 12px;
       background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
       .md-icon {
-        font-size: 25px;
+        font-size: 22px;
       }
     }
 
@@ -73,9 +74,14 @@
     margin: 0 8px;
     padding: 12px 20px;
     border-radius: 14px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
+  }
+
+  .data-section-title {
+    font-size: 16px;
+    font-weight: bold;
   }
 
   &-footer {
@@ -109,27 +115,27 @@
         align-items: center;
         justify-content: center;
         width: auto;
-        padding: 8px 0;
-        gap: 8px;
+        padding: 2px 4px;
+        gap: 5px;
         border: none;
 
         &-element {
           .value {
             color: #fff;
-            font-size: 20px;
-            font-weight: normal;
+            font-size: 16px;
+            font-weight: 500;
           }
 
           .label {
             color: #fff;
-            font-size: 20px;
-            font-weight: normal;
+            font-size: 16px;
+            font-weight: 500;
           }
         }
 
         &-separator {
           color: #fff;
-          font-size: 20px;
+          font-size: 16px;
           font-weight: normal;
         }
       }
@@ -145,17 +151,18 @@
     .sep {
       width: 100px;
       height: 1px;
-      margin: 8px 0;
+      margin: 5px 0;
       background: #fff;
     }
 
     .title {
-      font-size: 25px;
+      font-size: 16px;
       font-weight: 500;
     }
 
     .description {
-      font-size: 25px;
+      font-size: 16px;
+      font-weight: 300;
     }
   }
 }

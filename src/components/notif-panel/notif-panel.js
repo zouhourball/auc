@@ -23,7 +23,7 @@ const NotifPanel = ({ notifications }) => {
               <div className="date">{item.date}</div>
             </div>
             <div className="notificationCard-right">
-              {item.withPoint && <div className="bluePoint" />}
+              {item.withPoint && <div className="notifPoint" />}
             </div>
           </div>
         )

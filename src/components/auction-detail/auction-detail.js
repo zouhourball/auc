@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button, FontIcon } from 'react-md'
+import { Avatar, Button } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
@@ -50,6 +50,8 @@ import phoneIcon from 'images/phone_white.svg'
 import icon1 from './icons/bedroom.svg'
 import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
+import tick from 'images/Tick.svg'
+import info from 'images/Info.svg'
 
 import './style.scss'
 
@@ -268,13 +270,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
-        <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
+        <img src={tick} /> {el?.feature?.name}
       </div>
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
-        <div className="auction-details-header md-cell md-cell--12">
+      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <div className="auction-details-header md-cell md-cell--9">
           <div className="title">{t('auction_detail')}</div>
           <Button
             flat
@@ -339,7 +341,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--5 md-grid">
+      <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
             (auctionData?.status !== 'Pending' ? (
@@ -588,19 +590,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           <div className="fees-commission-content">
             <div className="fees-commission-item">
               <div className="commission">
-                {t('buyer')}
-                <Button onClick={() => setFeesDialog('bayers')}>
-                  <FontIcon>info</FontIcon>
-                </Button>
+                <span>{t('buyer')} </span>
+                <img onClick={() => setFeesDialog('bayers')} src={info} />
               </div>
               <div className="value">11%</div>
             </div>
             <div className="fees-commission-item">
               <div className="commission">
-                {t('comission')}
-                <Button onClick={() => setFeesDialog('commission')}>
-                  <FontIcon>info</FontIcon>
-                </Button>
+                <span>{t('comission')}</span>
+                <img onClick={() => setFeesDialog('commission')} src={info} />
               </div>
               <div className="value">3%</div>
             </div>

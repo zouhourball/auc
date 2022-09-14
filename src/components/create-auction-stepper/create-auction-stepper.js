@@ -197,7 +197,7 @@ const CreateAuctionStepper = ({
           <Button
             flat
             primary
-            className="action-btn"
+            className="action-btn back"
             onClick={() => setCurrentStep(currentStep - 1)}
           >
             {t('back')}
@@ -205,14 +205,13 @@ const CreateAuctionStepper = ({
         )}
         <Button
           flat
-          primary
-          className="action-btn"
+          className="action-btn cancel"
           onClick={() => navigate('/auctions/home')}
         >
           {t('cancel')}
         </Button>
         <Button
-          className="action-btn"
+          className="action-btn submit"
           primary={!validData()}
           flat
           swapTheming={!validData()}
@@ -225,7 +224,7 @@ const CreateAuctionStepper = ({
               : setCurrentStep(currentStep + 1)
           }
         >
-          {currentStep < 3 ? t('continue') : t('publish')}
+          {currentStep < 3 ? t('continue') : t('submit')}
         </Button>
       </div>
     </div>

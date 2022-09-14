@@ -99,18 +99,63 @@
       display: inline-block;
       padding: 0 1vw;
       border-radius: 8px;
-      color: #848484;
-      font-size: 18px;
-      font-weight: bold;
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
       line-height: 1;
       cursor: pointer;
 
+      .md-pointer--hover:hover {
+        color: #5078e1;
+      }
+
+      &.md-btn--hover {
+        background-color: transparent;
+        color: #5078e1;
+      }
+
       &.active {
-        color: blue;
+        .active-item {
+          position: relative;
+          color: #5078e1;
+
+          &::after {
+            content: '';
+            display: block;
+            visibility: visible;
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #527bde;
+          }
+        }
       }
 
       .md-ink-container {
         display: none;
+      }
+    }
+
+    .md-list {
+      &.md-paper--2 {
+        border-radius: 12px;
+      }
+
+      &-tile {
+        height: 30px;
+
+        .md-text {
+          color: #7c7c7c;
+          font-size: 16px;
+        }
+
+        &--active {
+          background-color: transparent;
+
+          .md-text {
+            color: #5078e1;
+          }
+        }
       }
     }
   }
@@ -119,8 +164,9 @@
     display: flex;
     flex: 0 0 auto;
     align-items: center;
-    margin-left: 16px;
+    margin-left: 10px;
     color: #fff;
+    gap: 8px;
 
     .md-menu-container {
       border-radius: 50%;
@@ -157,6 +203,10 @@
           }
         }
       }
+
+      &-notifIcon {
+        margin-top: 5px;
+      }
     }
   }
 
@@ -185,7 +235,7 @@
     justify-content: center;
     height: auto;
     margin: 0 8px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: 2px solid transparent;
     border-radius: 14px;
     font-size: 18px;
@@ -217,9 +267,14 @@
     .md-select-field__toggle {
       .md-fake-btn--no-outline {
         .md-text-field {
-          span.md-icon-text,
+          span.md-icon-text {
+            color: #3d3d3e;
+            font-size: 16px;
+          }
+
           .md-icon {
-            color: #596875;
+            color: inherit;
+            font-size: 22px;
           }
         }
       }
@@ -310,7 +365,15 @@
       color: #fff;
 
       &.active {
-        color: blue;
+        color: #5078e1;
+
+        &::after {
+          content: '';
+          display: block;
+          width: fit-content;
+          height: 1px;
+          background-color: #1979ff;
+        }
       }
     }
 
@@ -333,7 +396,22 @@
     place-content: center;
   }
 
+  .md-avatar-content {
+    font-size: 18px;
+  }
+
+  .md-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+
   &-profile-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
     margin-right: 16px;
     padding: 8px;
     border-radius: 50%;
@@ -375,57 +453,43 @@
   }
 }
 
-.mobileMenu {
-  background: rgba($color: #000, $alpha: 0.9);
+// .mobileMenu {
+//   background: rgba($color: #000, $alpha: 0.9);
 
-  .md-btn--toolbar {
-    color: #fff;
-  }
+//   .md-btn--toolbar {
+//     color: #fff;
+//   }
 
-  .md-list {
-    height: auto;
-    padding: 0 40px;
-    background: none;
+//   .md-list {
+//     height: auto;
+//     padding: 0 40px;
+//     background: none;
 
-    .md-text {
-      color: #fff;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  }
+//     .md-text {
+//       color: #fff;
+//       font-size: 18px;
+//       font-weight: bold;
+//     }
+//   }
 
-  .md-divider-border {
-    border-color: #4e4e4e;
+//   .md-divider-border {
+//     border-color: #4e4e4e;
 
-    &:last-child {
-      border: none;
-    }
-  }
+//     &:last-child {
+//       border: none;
+//     }
+//   }
 
-  .btnWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+//   .btnWrapper {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     padding: 20px;
 
-    @media (max-width: 540px) {
-      .login-btn {
-        display: inline-block;
-      }
-    }
-  }
-}
-
-.menu-item {
-  display: block;
-
-  .md-fake-btn {
-    padding: 0;
-  }
-
-  &.active {
-    .md-text {
-      color: #b0d39a;
-    }
-  }
-}
+//     @media (max-width: 540px) {
+//       .login-btn {
+//         display: inline-block;
+//       }
+//     }
+//   }
+// }

@@ -61,7 +61,7 @@ const HomeSlider = ({ auctions, logged }) => {
                 )?.label
               }
             </div>
-            <div>{auction?.listing?.title}</div>
+            <div className="data-section-text">{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
             <div className="data-section-text">
               Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}

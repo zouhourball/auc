@@ -17,14 +17,14 @@
 
   .slick-arrow {
     z-index: 99;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #fff;
     border-radius: 50%;
     background-color: transparent;
     color: #fff;
-    font-size: 34px;
-    line-height: 50px;
+    font-size: 25px;
+    line-height: 30px;
 
     &::before {
       display: none;
@@ -61,18 +61,19 @@
     font-size: 25px;
 
     &-title {
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: bold;
     }
 
     &-separateur {
-      width: 100px;
-      height: 1px;
-      margin: 8px 0;
+      width: 150px;
+      height: 2px;
+      margin: 4px 0;
       background: #fff;
     }
 
     &-text {
-      font-size: 25px;
+      font-size: 20px;
     }
 
     &-button {
@@ -80,11 +81,12 @@
       align-items: center;
       justify-content: center;
       height: auto;
-      margin-top: 10px;
-      padding: 12px 20px;
+      margin-top: 4px;
+      padding: 10px 20px;
       border: 2px solid #0000;
       border-radius: 14px;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: bold;
       text-transform: capitalize;
     }
   }
@@ -92,6 +94,7 @@
   .auction-timer {
     padding: 5px 0;
     background: transparent;
+    font-size: 20px;
     font-weight: 500;
 
     &.active {
@@ -140,27 +143,28 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin: 0;
       padding: 0;
-      gap: 8px;
       border: none;
+      gap: 4px;
 
       &-element {
         .value {
           color: #fff;
-          font-size: 25px;
+          font-size: 20px;
           font-weight: normal;
         }
 
         .label {
           color: #fff;
-          font-size: 25px;
+          font-size: 20px;
           font-weight: normal;
         }
       }
 
       &-separator {
         color: #fff;
-        font-size: 25px;
+        font-size: 20px;
         font-weight: normal;
       }
     }
