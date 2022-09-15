@@ -39,12 +39,15 @@ const Admin = (logged, auctionId) => {
     auctionsRequest,
   )
 
-  const { data: getApprovalsList } = useQuery(['getApprovals'], getApprovals)
+  const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
+    ['getApprovals'],
+    getApprovals,
+  )
 
   const approveBrokerMutation = useMutation(approveRejectBroker, {
     onSuccess: (res) => {
       if (!res.error) {
-        refetch()
+        refetchApprovalList()
       }
     },
   })
