@@ -125,6 +125,22 @@
         }
       }
 
+      .date-picker {
+        display: flex;
+        position: absolute;
+        z-index: 999;
+        top: 35px;
+        gap: 8px;
+
+        .md-background--card {
+          border-radius: 8px;
+        }
+
+        .md-paper--2 {
+          border-radius: 8px;
+        }
+      }
+
       .row {
         display: flex;
         align-items: center;
@@ -132,6 +148,15 @@
 
         .selectField-lined {
           flex: 1 0 calc(33% - 10px);
+
+          .md-paper--1 {
+            box-shadow: none;
+          }
+
+          .md-select-field--btn {
+            height: 30px;
+            padding: 6px 0 6px;
+          }
 
           .md-text-field {
             color: #7c7c7c;
@@ -142,40 +167,35 @@
           .md-icon {
             display: none;
           }
-
-          .md-select-field--btn {
-            padding-bottom: 10px;
-            padding-left: 0;
-          }
         }
+
+        // &.outlined {
+        //   // .md-select-field--btn {
+        //   //   height: 30px;
+        //   //   padding: 6px 0 6px;
+        //   // }
+        // }
 
         &.underlined {
-          border-bottom: 1px solid #707070;
+          position: relative;
 
-          .selectField-lined {
-            height: 30px;
-
-            .md-select-field--btn.md-select-field--btn {
-              padding-top: 4px;
-            }
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 1px;
+            width: 100%;
+            height: 1px;
+            background-color: #3d3d3e;
           }
         }
-      }
-
-      .date-picker {
-        display: flex;
-        position: absolute;
-        z-index: 999;
-        top: 30vh;
-        gap: 8px;
       }
     }
 
     &-subTitle {
-      color: #7c7c7c;
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 40px;
+      color: #3d3d3e;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     &-imagesWrapper {
@@ -203,6 +223,7 @@
 
     &-table {
       width: 100%;
+      margin: 20px 0 10px;
       padding: 20px 30px;
       border-radius: 35px;
       background-color: #fff;
@@ -217,6 +238,9 @@
 
         > div {
           padding: 0 15px;
+          color: #3d3d3e;
+          font-size: 16px;
+          font-weight: bold;
         }
       }
 
