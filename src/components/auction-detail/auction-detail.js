@@ -11,6 +11,7 @@ import {
   useMutation,
   useQuery as useQueryApollo,
 } from 'react-apollo'
+import { navigate } from '@reach/router'
 
 import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
@@ -44,6 +45,7 @@ import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialo
 import FeesDialog from 'components/fees-dialog/fees-dialog'
 import CompanyInfoById from 'components/company-info-by-id'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import { propertyTypeList } from 'components/helpers'
 
 import mailIcon from 'images/mail_gray.svg'
 import phoneIcon from 'images/phone_white.svg'
@@ -377,7 +379,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           <div className="note">
             Posted {moment(auctionData?.['created_date']).fromNow()}
           </div>
-          <div className="title">{auctionData?.listing?.title}</div>
+          <div className="title">
+            {
+              propertyTypeList.find(
+                (el) =>
+                  el?.value === +auctionPropertyData?.['property_type_id'],
+              )?.label
+            }{' '}
+            in {auctionPropertyData?.address}
+          </div>
           <div className="auction-details-card-details">
             <div className="auction-details-card-details-item">
               <img src={icon1} /> {auctionPropertyData?.['count_bedrooms']}{' '}
@@ -540,7 +550,11 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                   className="auction-details-btn"
                   onClick={
                     () =>
-                      isParticipant ? setBidDialog(true) : setTermsDialog(true)
+                      logged
+                        ? isParticipant
+                          ? setBidDialog(true)
+                          : setTermsDialog(true)
+                        : navigate(`/auctions/detail/${auctionData?.uuid}`)
                     // setBidDialog(true)
                   }
                 >
@@ -593,14 +607,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                 <span>{t('buyer')} </span>
                 <img onClick={() => setFeesDialog('bayers')} src={info} />
               </div>
-              <div className="value">11%</div>
+              <div className="value">3%</div>
             </div>
             <div className="fees-commission-item">
               <div className="commission">
-                <span>{t('comission')}</span>
+                <span>{t('deposit')}</span>
                 <img onClick={() => setFeesDialog('commission')} src={info} />
               </div>
-              <div className="value">3%</div>
+              <div className="value">1,000AED</div>
             </div>
           </div>
         </div>

@@ -27,6 +27,7 @@ const BiddingCard = ({
   user,
   saveAuctionTag,
   refetch,
+  logged,
 }) => {
   const dispatch = useDispatch()
 
@@ -95,7 +96,11 @@ const BiddingCard = ({
     <div
       className={`bidding-card ${className || ''}`}
       onClick={() =>
-        detailsUrl ? detailsUrl() : navigate(`detail/${auctionData?.uuid}`)
+        detailsUrl
+          ? detailsUrl()
+          : navigate(
+            `/${logged ? 'auctions' : 'public'}detail/${auctionData?.uuid}`,
+          )
       }
     >
       <img

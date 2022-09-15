@@ -32,6 +32,7 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
         status={renderStatus(el)}
         saveAuctionTag
         refetch={refetch}
+        logged={logged}
       />
     ))
   return (

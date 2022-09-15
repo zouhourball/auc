@@ -9,12 +9,12 @@ export const filterAuctions = async ({ queryKey }) => {
   const params = Object.keys(queryKey[1])
     .filter((key) => typeof queryKey[1][key] === 'number' || !!queryKey[1][key])
     .map((key) => `${key}=${queryKey[1][key]}`)
-
   const arrayParams = Object.keys(queryKey[3])
     .filter((key) => !!queryKey[3][key])
     .map((key) => queryKey[3][key].map((el) => `[]${key}=${el}`))
     .flatMap((el) => el)
   let res
+
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/filter/auctions${

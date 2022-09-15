@@ -12,10 +12,10 @@ import PriceRange from 'components/price-range'
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import './style.scss'
 import { useQuery as useQueryApollo } from 'react-apollo-hooks'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { allBrokers } from 'libs/api/auctions-api'
-const AuctionsFilter = ({ filterData, setFilterData }) => {
+const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   const { t } = useTranslation()
   const {
     search,
@@ -27,7 +27,12 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
     // location,
     // brokerCompany,
   } = filterData
-
+  useEffect(() => {
+    setFilterData({
+      ...filterData,
+      auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
+    })
+  }, [])
   const { data: allCountryStateCities } = useQueryApollo(
     allCountryStateCitiesGql,
     {
@@ -248,9 +253,12 @@ const AuctionsFilter = ({ filterData, setFilterData }) => {
         placeholder={t('auction_ending')}
         className="md-cell md-cell--2 auctions-filter-selectField"
         value={auctionEndingSoon}
+        defaultValue={status === 'Upcoming' ? 'ass' : 'aes'}
         onChange={(v) => setFilterData({ ...filterData, auctionEndingSoon: v })}
         menuItems={[
-          { label: 'Auction Ending Soon', value: 'aes' },
+          status === 'Upcoming'
+            ? { label: 'Auction Starting Soon', value: 'ass' }
+            : { label: 'Auction Ending Soon', value: 'aes' },
           { label: 'Recently Added', value: 'ra' },
         ]}
         position={SelectField.Positions.BELOW}

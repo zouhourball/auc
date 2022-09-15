@@ -26,6 +26,7 @@ const AuctionTimer = ({ auctionData, node, user }) => {
                   return null
                 }
                 return removeSeconde(st || res?.time?.remaining)
+                // return removeSeconde(st || res?.time?.remaining)
               })
             }, 1000)
           }
@@ -33,7 +34,41 @@ const AuctionTimer = ({ auctionData, node, user }) => {
       },
     },
   )
+  // let start = data?.time?.remaining
+  // let time = 0
+  // let elapsed = '0.0'
 
+  // const instance = () => {
+  //   time += 1000
+
+  //   elapsed = Math.floor(time / 1000) / 100
+  //   if (Math.round(elapsed) === elapsed) { elapsed += '.0' }
+
+  //   document.title = elapsed
+
+  //   var diff = (new Date().getTime() - start) - time
+  //   setCountdown(instance, (1000 - diff))
+  // }
+
+  // removeSeconde(instance, 1000)
+
+  // useEffect(() => {
+  //   if (data?.time) {
+  //     if (data?.time?.remaining) {
+  //       interval = setInterval(() => {
+  //         setCountdown((st) => {
+  //           if (st?.s === 0 && st?.m === 0 && st?.h === 0 && st?.d === 0) {
+  //             clearInterval(interval)
+  //             return null
+  //           }
+  //           // return removeSeconde(st || res?.time?.remaining)
+  //         })
+  //       }, 1000)
+  //     }
+  //   }
+
+  //   return () => { removeSeconde(countdown || data?.time?.remaining) }
+  // }, [])
   // useEffect(() => {
   //   let interval = setInterval(() => {
   //     let newCount = secondsToTime(
