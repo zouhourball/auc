@@ -310,7 +310,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
             />
           )}
         </div>
-        <div className=" md-cell md-cell--9">
+        <div className="saving md-cell md-cell--9">
           <img
             className="gallery-image"
             src={`${currentImg}?token=${downloadToken}&view=true`}
@@ -331,7 +331,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
               icon
               primary
               className="save-btn"
-              iconClassName="fa fa-bookmark-o"
+              iconClassName="fa fa-bookmark"
               onClick={(e) => {
                 e.stopPropagation()
                 saveAuction(auctionData?.uuid)
@@ -482,7 +482,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                   </Avatar>
 
                   <div className="owner-card-info">
-                    <div>{t('owned_by')}</div>
+                    <div>{t('listed_by')}</div>
                     <div className="name">{res?.name}</div>
                   </div>
                   <Button

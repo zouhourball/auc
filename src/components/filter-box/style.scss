@@ -21,7 +21,7 @@
     &-item {
       display: flex;
       align-items: center;
-      margin: 8px;
+      margin: 0 8px 4px;
 
       .md-selection-control-container {
         flex-grow: 1;
@@ -68,21 +68,26 @@
 
   &-date {
     display: flex;
-    padding: 10px 8px;
+    padding: 4px 8px 10px;
 
     .dateRangeIcon {
       color: #5078e1;
     }
 
     .textField {
+      position: relative;
       margin: 0 8px;
-      padding: 10px 8px;
+      padding: 5px;
       border: 1px solid #5078e1;
-      border-radius: 12px;
+      border-radius: 8px;
 
       .md-text-field {
-        font-size: 18px;
+        font-size: 12px;
       }
+    }
+
+    .target-date-picker-datepicker {
+      bottom: 229px;
     }
   }
 }
