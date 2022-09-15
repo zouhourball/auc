@@ -189,6 +189,9 @@ const RegistrationPage = () => {
               onChange={(v) => setValues('password', v)}
               className="textField"
             />
+            <div className="company-logo-title">
+              <h3>Company Logo</h3>
+            </div>
             <UploadImages
               publicToken={uploadToken?.token}
               publicDownloadToken={downloadToken?.token}
@@ -292,9 +295,9 @@ const RegistrationPage = () => {
         <img className="background" src={backgroundImage} />
       </div>
       <div className="registration-page-right">
-        <div className="registration-page-right-title">Welcome to LEILAM</div>
+        <div className="registration-page-right-title">New to Auctions</div>
         <div className="registration-page-right-subtitle">
-          Login to view listed properties
+          Sign up to view listed properties
         </div>
         <div className="body">
           <div className="tabs">

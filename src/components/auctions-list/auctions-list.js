@@ -5,7 +5,6 @@ import BiddingCard from 'components/bidding-card'
 import AuctionsFilter from 'components/auction-filter'
 import CardsWithMap from 'components/cards-with-map'
 
-import './style.scss'
 import { useQuery } from 'react-query'
 import {
   // listAuction,
@@ -18,6 +17,8 @@ import gridActive from 'images/Map View Selected.svg'
 import gridInactive from 'images/Map View Grey.svg'
 import listActive from 'images/List View Selected.svg'
 import listInactive from 'images/List View Grey.svg'
+
+import './style.scss'
 
 const AuctionsList = ({ logged, user }) => {
   const { t } = useTranslation()
@@ -40,6 +41,8 @@ const AuctionsList = ({ logged, user }) => {
         // city_id: filterData?.location,
         price_gte: filterData?.price?.min,
         price_lte: filterData?.price?.max,
+        auction_status: type,
+        page: 2,
       },
 
       {
@@ -55,7 +58,7 @@ const AuctionsList = ({ logged, user }) => {
             ? 'auction_start_date'
             : '-auction_start_date',
         ],
-        limit: 20,
+        limit: 9,
         offset: 0,
       },
       {

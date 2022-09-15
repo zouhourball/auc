@@ -49,19 +49,19 @@ NotifPanel.defaultProps = {
     {
       icon: bidPlace,
       label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
+      date: '23 minutes ago',
       withPoint: true,
     },
     {
       icon: myActivity,
       label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
+      date: '23 minutes ago',
       withPoint: true,
     },
     {
       icon: auctionWon,
       label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
+      date: '23 minutes ago',
       withPoint: true,
     },
   ],
