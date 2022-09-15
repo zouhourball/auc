@@ -325,7 +325,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       <div className="auction-details-info">
         <div className="auction-details-form">
           <div className="column">
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('title_label')}
               </label>
@@ -351,9 +351,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                   className="auction-details-form-textField"
                   block
                 /> */}
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
-                {t('property_type')}:
+                {t('property_type_label')}
               </label>
               <SelectField
                 id="select-field-with-elements-country-spinner"
@@ -373,7 +373,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 className="selectField-lined"
               />
             </div>
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('address_label')}
               </label>
@@ -419,7 +419,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             block
           /> */}
           <div className="column">
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('city_select')}:
               </label>
@@ -447,7 +447,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             className="auction-details-form-textField"
             block
           /> */}
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('coundivy_label')}
               </label>
@@ -469,7 +469,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 className="selectField-lined"
               />
             </div>
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('start_end_dates_label')}
               </label>
@@ -527,7 +527,7 @@ const MyAuctionDetails = ({ auctionId }) => {
             </div>
           </div>
           <div className="column">
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('start_end_time_label')}
               </label>
@@ -606,7 +606,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               />
             )} */}
             </div>
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('starting_price_label')}
               </label>
@@ -621,7 +621,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 block
               />
             </div>
-            <div className={`row  ${editMode ? 'underlined' : ''}`}>
+            <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
                 {t('incremental_price_label')}
               </label>
