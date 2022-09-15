@@ -3,7 +3,7 @@
   color: #3d3d3e;
 
   &-title {
-    font-size: 35px;
+    font-size: 20px;
     font-weight: 500;
     text-align: center;
   }
@@ -16,7 +16,8 @@
   }
 
   &-description {
-    font-size: 35px;
+    font-size: 20px;
+    font-weight: 300;
     text-align: center;
   }
 
@@ -27,13 +28,15 @@
   }
 
   &-subTitle {
-    font-size: 30px;
-    font-weight: 700;
+    color: #3d3d3e;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   &-btn {
     height: auto;
-    font-size: 25px;
+    font-size: 16px;
+    font-weight: bold;
   }
 
   &-cards {

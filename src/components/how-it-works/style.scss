@@ -1,21 +1,20 @@
 .how-it-works {
   &-header {
-    display: flex;
     position: relative;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 400px;
 
     &-image-bg {
-      position: absolute;
       width: 100%;
       height: 80%;
       object-fit: cover;
     }
 
     &-title {
-      z-index: 1;
+      position: absolute;
+      top: 50%;
+      width: 100%;
       color: #fff;
       font-size: 35px;
       font-weight: bold;
@@ -25,8 +24,8 @@
 
   &-body {
     display: grid;
-    grid-template-columns: 120px auto;
-    gap: 30px;
+    grid-template-columns: 200px auto;
+    gap: 50px;
     padding: 20px 80px;
 
     .tabs-select {
@@ -39,14 +38,28 @@
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
       > .active {
-        border-left: 3px solid #5078e1;
-        border-radius: 3px;
         color: #5078e1;
-        font-weight: 700;
+        font-size: 22px;
+        font-weight: 500;
+
+        > span {
+          &::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -5px;
+            width: 4px;
+            height: 25px;
+            border-radius: 0 8px 8px 0;
+            background-color: #5078e1;
+          }
+        }
       }
 
       > .inactive {
         color: #7c7c7c;
+        font-size: 22px;
+        font-weight: normal;
       }
     }
 
@@ -60,13 +73,13 @@
 
       .md-panel-column {
         color: #3d3d3e;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
       }
 
       .md-icon {
         color: #3d3d3e;
-        font-size: 25px;
+        font-size: 28px;
       }
 
       .md-panel-header--expanded {
@@ -77,18 +90,18 @@
         padding: 16px 24px 16px;
       }
 
-      .subtitle {
-        color: #3d3d3e;
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 1.5;
-      }
+      .content {
+        &-title {
+          color: #3d3d3e;
+          font-size: 22px;
+          font-weight: 500;
+        }
 
-      .description {
-        color: #7c7c7c;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 1.5;
+        &-description {
+          color: #7c7c7c;
+          font-size: 22px;
+          font-weight: normal;
+        }
       }
     }
 

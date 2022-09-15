@@ -3,42 +3,12 @@
 
 @include react-md-everything;
 
-@font-face {
-  font-family: 'Proxima Nova';
-  font-style: normal;
-  font-weight: 700;
-  src:
-    url('../fonts/ProximaNova/ProximaNova-Bold.woff2') format('woff2'),
-    url('../fonts/ProximaNova/ProximaNova-Bold.woff') format('woff');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Proxima Nova';
-  font-style: normal;
-  font-weight: 900;
-  src:
-    url('../fonts/ProximaNova/ProximaNova-Extrabld.woff2') format('woff2'),
-    url('../fonts/ProximaNova/ProximaNova-Extrabld.woff') format('woff');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Proxima Nova';
-  font-style: normal;
-  font-weight: 400;
-  src:
-    url('../fonts/ProximaNova/ProximaNova-Regular.woff2') format('woff2'),
-    url('../fonts/ProximaNova/ProximaNova-Regular.woff') format('woff');
-  font-display: swap;
-}
-
 body {
   background-color: #f7f7f7 !important;
-  color: #2f3842;
-  font-family: Roboto, sans-serif;
+  color: #3d3d3e;
+  font-family: Roboto, sans-serif !important;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
 
   h1,
   h2,
@@ -66,7 +36,7 @@ body {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
     .md-text-field {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 
@@ -78,7 +48,7 @@ body {
     .md-select-field--btn.md-select-field--btn {
       height: auto;
       padding: 15px 16px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 400;
     }
   }

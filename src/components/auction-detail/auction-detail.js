@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button, FontIcon } from 'react-md'
+import { Avatar, Button } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
@@ -21,7 +21,10 @@ import {
   checkParticipant,
   getFeaturedAuction,
   approveAuction,
+  saveAsFav,
+  unsaveAsFav,
 } from 'libs/api/auctions-api'
+
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
 import placeBid from 'libs/queries/auction/place-bid.gql'
@@ -36,7 +39,7 @@ import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
 import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
-import SuccessfulRegistration from 'components/success-registration'
+// import SuccessfulRegistration from 'components/success-registration'
 import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
 import FeesDialog from 'components/fees-dialog/fees-dialog'
 import CompanyInfoById from 'components/company-info-by-id'
@@ -47,6 +50,8 @@ import phoneIcon from 'images/phone_white.svg'
 import icon1 from './icons/bedroom.svg'
 import icon2 from './icons/bath.svg'
 import icon3 from './icons/area.svg'
+import tick from 'images/Tick.svg'
+import info from 'images/Info.svg'
 
 import './style.scss'
 
@@ -55,7 +60,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
-  const [successDialog, setSuccessDialog] = useState(false)
+  // const [successDialog, setSuccessDialog] = useState(false)
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
@@ -94,13 +99,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     .filter((v) => v === 'success' || v === 'error')[0]
   useEffect(() => {
     if (paymentCallback === 'success') {
-      setSuccessDialog(true)
-      // dispatch(
-      //   addToast(
-      //     <ToastMsg text={'Payment done successfully '} type="success" />,
-      //     'hide',
-      //   ),
-      // )
+      // setSuccessDialog(true)
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+          'hide',
+        ),
+      )
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -198,25 +203,80 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   //   isActive,
   //   'isActive',
   // )
+  const saveAuctionMutation = useMutationQuery(saveAsFav, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Auction saved as favorite'} type="success" />,
+            'hide',
+          ),
+        )
+        refetchAuction()
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Something is wrong'} type="error" />,
+            'hide',
+          ),
+        )
+      }
+    },
+  })
+  const unsaveAuctionMutation = useMutationQuery(unsaveAsFav, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={'Auction is removed from favorites list successfully'}
+              type="success"
+            />,
+            'hide',
+          ),
+        )
+        refetchAuction()
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Something is wrong'} type="error" />,
+            'hide',
+          ),
+        )
+      }
+    },
+  })
+  const saveAuction = (uuid) => {
+    saveAuctionMutation.mutate({
+      uuid,
+    })
+  }
+  const unsaveAuction = (uuid) => {
+    unsaveAuctionMutation.mutate({
+      uuid,
+    })
+  }
   const renderPropertyImages = () =>
     auctionData?.listing?.images?.map((image) => (
-      <img
-        key={image?.uuid}
-        className="gallery-image item"
-        onClick={() => setCurrentImg(image?.url)}
-        src={`${image?.url}?token=${downloadToken}&view=true`}
-      />
+      <>
+        <img
+          key={image?.uuid}
+          className="gallery-image item"
+          onClick={() => setCurrentImg(image?.url)}
+          src={`${image?.url}?token=${downloadToken}&view=true`}
+        />
+      </>
     ))
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
-        <FontIcon primary>task_alt</FontIcon> {el?.feature?.name}
+        <img src={tick} /> {el?.feature?.name}
       </div>
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--7 md-grid">
-        <div className="auction-details-header md-cell md-cell--12">
+      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <div className="auction-details-header md-cell md-cell--9">
           <div className="title">{t('auction_detail')}</div>
           <Button
             flat
@@ -248,16 +308,40 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
             />
           )}
         </div>
-
-        <img
-          className="gallery-image md-cell md-cell--9"
-          src={`${currentImg}?token=${downloadToken}&view=true`}
-        />
+        <div className=" md-cell md-cell--9">
+          <img
+            className="gallery-image"
+            src={`${currentImg}?token=${downloadToken}&view=true`}
+          />
+          {auctionData?.['is_bookmarked'] ? (
+            <Button
+              icon
+              primary
+              className="save-btn"
+              iconClassName="fa fa-bookmark"
+              onClick={(e) => {
+                e.stopPropagation()
+                unsaveAuction(auctionData?.uuid)
+              }}
+            />
+          ) : (
+            <Button
+              icon
+              primary
+              className="save-btn"
+              iconClassName="fa fa-bookmark-o"
+              onClick={(e) => {
+                e.stopPropagation()
+                saveAuction(auctionData?.uuid)
+              }}
+            />
+          )}
+        </div>
         <div className="gallery-image-wrapper md-cell md-cell--3">
           {renderPropertyImages()}
         </div>
       </div>
-      <div className="auction-details-info md-cell md-cell--5 md-grid">
+      <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
             (auctionData?.status !== 'Pending' ? (
@@ -506,19 +590,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           <div className="fees-commission-content">
             <div className="fees-commission-item">
               <div className="commission">
-                {t('buyer')}
-                <Button onClick={() => setFeesDialog('bayers')}>
-                  <FontIcon>info</FontIcon>
-                </Button>
+                <span>{t('buyer')} </span>
+                <img onClick={() => setFeesDialog('bayers')} src={info} />
               </div>
               <div className="value">11%</div>
             </div>
             <div className="fees-commission-item">
               <div className="commission">
-                {t('comission')}
-                <Button onClick={() => setFeesDialog('commission')}>
-                  <FontIcon>info</FontIcon>
-                </Button>
+                <span>{t('comission')}</span>
+                <img onClick={() => setFeesDialog('commission')} src={info} />
               </div>
               <div className="value">3%</div>
             </div>
@@ -540,12 +620,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           auctionId={auctionData?.uuid}
         />
       )}
-      {successDialog && (
+      {/* {successDialog && (
         <SuccessfulRegistration
           visible={successDialog}
           onHide={() => setSuccessDialog(false)}
         />
-      )}
+      )} */}
       {bidDialog && (
         <BidDialog
           visible={bidDialog}

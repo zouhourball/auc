@@ -24,13 +24,13 @@ const HowItWorks = () => {
               className={selectedTab ? 'active' : 'inactive'}
               onClick={() => setSelectedTab(true)}
             >
-              Buying
+              <span>Buying</span>
             </Button>
             <Button
               className={!selectedTab ? 'active' : 'inactive'}
               onClick={() => setSelectedTab(false)}
             >
-              Selling
+              <span>Selling</span>
             </Button>
           </div>
         </div>
@@ -42,11 +42,13 @@ const HowItWorks = () => {
                 label={t(`${el.title}`)}
                 footer={null}
               >
-                <p className="description">{t(`${el?.answer}`)}</p>
+                <div className="content-description">{t(`${el?.answer}`)}</div>
                 {el.subtitles?.map((sub, index) => (
-                  <div className="subtitle" key={index}>
-                    <h4>{t(`${sub.label}`)} </h4>
-                    <p>{t(`${sub.value}`)} </p>
+                  <div className="content" key={index}>
+                    <div className="content-title">{t(`${sub.label}`)} </div>
+                    <div className="content-description">
+                      {t(`${sub.value}`)}
+                    </div>
                   </div>
                 ))}
               </ExpansionPanel>

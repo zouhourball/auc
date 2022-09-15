@@ -23,6 +23,11 @@ import CompanyInfoById from 'components/company-info-by-id'
 
 import { propertyTypeList } from 'components/helpers/index'
 
+// import gridActive from 'images/Map View Selected.svg'
+import gridInactive from 'images/Map View Grey.svg'
+import listActive from 'images/List View Selected.svg'
+// import listInactive from 'images/List View Grey.svg'
+
 import './style.scss'
 
 const BrokerProfile = ({ brokerId, user }) => {
@@ -38,14 +43,34 @@ const BrokerProfile = ({ brokerId, user }) => {
   // const myOrgs = useSelector(({ app }) => app?.myOrgs)
 
   // console.log(get(myOrgs, '0.ID', 0), 'myOrgs')
-  const renderAuctionStatus = () => {
+  // const renderAuctionStatus = () => {
+  //   switch (filter) {
+  //     case 0:
+  //       return 'Active'
+  //     case 1:
+  //       return 'Upcoming'
+  //     case 2:
+  //       return 'Closed'
+  //   }
+  // }
+  const renderAuctionData = () => {
     switch (filter) {
       case 0:
-        return 'Active'
+        return auctionsData0
       case 1:
-        return 'Upcoming'
+        return auctionsData1
       case 2:
-        return 'Closed'
+        return auctionsData2
+    }
+  }
+  const refetch = () => {
+    switch (filter) {
+      case 0:
+        return refetch0
+      case 1:
+        return refetch1
+      case 2:
+        return refetch2
     }
   }
   // console.log(filterData?.type)
@@ -77,26 +102,54 @@ const BrokerProfile = ({ brokerId, user }) => {
   //   filterFeatureAuctions,
   //   { refetchOnWindowFocus: false },
   // )
-
-  const { data: auctionsData, refetch } = useQueryReact(
+  const allFilters = [
+    {
+      filter: {},
+      sort: [],
+      limit: 20,
+      offset: 0,
+    },
+    {
+      cities: filterData?.location,
+      property_type_ids: filterData?.type,
+      organization_ids: [brokerId],
+    },
+  ]
+  const { data: auctionsData0, refetch: refetch0 } = useQueryReact(
     [
       'filterFeatureAuctions',
       {
         search_key: filterData?.search,
-        auction_status: renderAuctionStatus(),
+        auction_status: 'Active',
       },
 
+      ...allFilters,
+    ],
+    filterFeatureAuctions,
+    { refetchOnWindowFocus: false },
+  )
+  const { data: auctionsData1, refetch: refetch1 } = useQueryReact(
+    [
+      'filterFeatureAuctions',
       {
-        filter: {},
-        sort: [],
-        limit: 20,
-        offset: 0,
+        search_key: filterData?.search,
+        auction_status: 'Upcoming',
       },
+
+      ...allFilters,
+    ],
+    filterFeatureAuctions,
+    { refetchOnWindowFocus: false },
+  )
+  const { data: auctionsData2, refetch: refetch2 } = useQueryReact(
+    [
+      'filterFeatureAuctions',
       {
-        cities: filterData?.location,
-        property_type_ids: filterData?.type,
-        organization_ids: [brokerId],
+        search_key: filterData?.search,
+        auction_status: 'Closed',
       },
+
+      ...allFilters,
     ],
     filterFeatureAuctions,
     { refetchOnWindowFocus: false },
@@ -113,26 +166,26 @@ const BrokerProfile = ({ brokerId, user }) => {
       className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
       title: 'Live',
-      num: 0,
+      num: auctionsData0?.results?.length,
     },
     {
       key: 'upcoming',
       className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
       onClick: () => setFilter(1),
       title: 'Upcoming',
-      num: 1,
+      num: auctionsData1?.results?.length,
     },
     {
       key: 'closed',
       className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
       onClick: () => setFilter(2),
       title: 'Closed',
-      num: 2,
+      num: auctionsData2?.results?.length,
     },
   ]
 
   const renderCards = () =>
-    auctionsData?.results?.map((el) => (
+    renderAuctionData()?.results?.map((el) => (
       <BiddingCard
         user={user}
         key={el?.uuid}
@@ -213,15 +266,13 @@ const BrokerProfile = ({ brokerId, user }) => {
                           ? null
                           : get(res, 'name.0', '')}
                       </Avatar>
-                      {res?.name && (
-                        <div className="title dark">{res?.name}</div>
-                      )}
+                      {res?.name && <div className="title">{res?.name}</div>}
                       {res?.phoneMobile && (
-                        <div className="title">{res?.phoneMobile}</div>
+                        <div className="phone">{res?.phoneMobile}</div>
                       )}
-                      {res?.email && <div className="title">{res?.email}</div>}
+                      {res?.email && <div className="phone">{res?.email}</div>}
                       {res?.city?.cityName && res?.country?.countryName && (
-                        <div className="title">
+                        <div className="phone">
                           {res?.city?.cityName}, {res?.country?.countryName}
                         </div>
                       )}
@@ -233,6 +284,7 @@ const BrokerProfile = ({ brokerId, user }) => {
                           {res?.aboutUs}
                         </div>
                         <Button
+                          className="less-btn"
                           iconChildren={
                             showMore ? 'expand_less' : 'expand_more'
                           }
@@ -267,54 +319,83 @@ const BrokerProfile = ({ brokerId, user }) => {
               filters={headerFilters}
               searchPlaceholder={'What are you looking for'}
             />
-            <SelectField
-              placeholder={'type'}
-              className="md-cell md-cell--1 auctions-filter-selectField"
-              value={'type'}
-              simplifiedMenu={true}
-              position={SelectField.Positions.BELOW}
-              closeMenuOnSelect={false}
-              menuItems={propertyTypeList?.map((tp, index) => {
-                return (
-                  <Checkbox
-                    key={index}
-                    id={`${tp.value}-auction-type`}
-                    name={`${tp.value}-checkboxes`}
-                    label={tp.label}
-                    onChange={(e) => {
-                      filterData?.type?.find((el) => el === tp.value)
-                        ? setFilterData({
-                          ...filterData,
-                          type: filterData.type?.filter(
-                              (el) => el !== tp.value,
-                            ),
-                        })
-                        : setFilterData({
-                          ...filterData,
-                          type: [...(filterData?.type || []), tp.value],
-                        })
-                      e.stopPropagation()
-                    }}
-                    checked={!!filterData?.type?.find((el) => el === tp.value)}
-                  />
-                )
-              })}
-            />
-            <SelectField
-              placeholder={'location'}
-              className=" md-cell md-cell--2 auctions-filter-selectField"
-              value={'location'}
-              menuItems={[
-                <ExpansionList key={'LocationExpansionList'}>
-                  {renderCountries}
-                </ExpansionList>,
-              ]}
-              position={SelectField.Positions.BELOW}
-            />
+            <div className="broker-profile-filter md-grid">
+              <SelectField
+                placeholder={'type'}
+                className="md-cell md-cell--1 broker-profile-selectField"
+                value={'type'}
+                position={SelectField.Positions.BELOW}
+                closeMenuOnSelect={false}
+                menuItems={propertyTypeList?.map((tp, index) => {
+                  return {
+                    label: (
+                      <Checkbox
+                        key={index}
+                        id={`${tp.value}-auction-type`}
+                        name={`${tp.value}-checkboxes`}
+                        label={tp.label}
+                        onChange={(e) => {
+                          filterData?.type?.find((el) => el === tp.value)
+                            ? setFilterData({
+                              ...filterData,
+                              type: filterData.type?.filter(
+                                  (el) => el !== tp.value,
+                                ),
+                            })
+                            : setFilterData({
+                              ...filterData,
+                              type: [...(filterData?.type || []), tp.value],
+                            })
+                          e.stopPropagation()
+                        }}
+                        checked={
+                          !!filterData?.type?.find((el) => el === tp.value)
+                        }
+                      />
+                    ),
+                    value: tp.label,
+                  }
+                  //   return (
+                  //     <Checkbox
+                  //       key={index}
+                  //       id={`${tp.value}-auction-type`}
+                  //       name={`${tp.value}-checkboxes`}
+                  //       label={tp.label}
+                  //       onChange={(e) => {
+                  //         filterData?.type?.find((el) => el === tp.value)
+                  //           ? setFilterData({
+                  //             ...filterData,
+                  //             type: filterData.type?.filter(
+                  //                 (el) => el !== tp.value,
+                  //               ),
+                  //           })
+                  //           : setFilterData({
+                  //             ...filterData,
+                  //             type: [...(filterData?.type || []), tp.value],
+                  //           })
+                  //         e.stopPropagation()
+                  //       }}
+                  //       checked={!!filterData?.type?.find((el) => el === tp.value)}
+                  //     />
+                  //   )
+                })}
+              />
+              <SelectField
+                placeholder={'location'}
+                className=" md-cell md-cell--2 broker-profile-selectField"
+                value={'location'}
+                menuItems={[
+                  <ExpansionList key={'LocationExpansionList'}>
+                    {renderCountries}
+                  </ExpansionList>,
+                ]}
+                position={SelectField.Positions.BELOW}
+              />
+            </div>
             <div className="auction-list-header-filters-display">
-              <FontIcon className={`gridView`}>view_list</FontIcon>
+              <img src={listActive} />
               <div className="sep"></div>
-              <FontIcon className={`gridView`}>view_module</FontIcon>
+              <img src={gridInactive} />
             </div>
           </div>
           <div className="cards">{renderCards()}</div>
