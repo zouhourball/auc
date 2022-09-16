@@ -19,6 +19,7 @@ import listActive from 'images/List View Selected.svg'
 import listInactive from 'images/List View Grey.svg'
 
 import './style.scss'
+import { Button } from 'react-md'
 
 const AuctionsList = ({ logged, user }) => {
   const { t } = useTranslation()
@@ -26,13 +27,14 @@ const AuctionsList = ({ logged, user }) => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const [filterData, setFilterData] = useState({})
   const [gridView, setGridView] = useState(0)
+  const [offset, setOffset] = useState(0)
   const type = modules.includes('live-auctions') ? 'Active' : 'Upcoming'
 
   // const { data: auctionsData, refetch } = useQuery(
   //   [logged ? 'upcomingAuctions' : 'featuredAuctions', type, 100],
   //   logged ? listAuction : featuredAuctions,
   // )
-
+  let limit = 9
   const { data: auctionsData, refetch } = useQuery(
     [
       'getAuctions',
@@ -42,7 +44,6 @@ const AuctionsList = ({ logged, user }) => {
         price_gte: filterData?.price?.min,
         price_lte: filterData?.price?.max,
         auction_status: type,
-        page: 2,
       },
 
       {
@@ -54,12 +55,16 @@ const AuctionsList = ({ logged, user }) => {
           // property_type_id: { $in: filterData?.type?.filter(el => el !== undefined) },
         },
         sort: [
-          filterData?.auctionEndingSoon === 'aes'
-            ? 'auction_start_date'
-            : '-auction_start_date',
+          type === 'Upcoming'
+            ? filterData?.auctionEndingSoon === 'ass'
+              ? 'auction_start_date'
+              : '-auction_start_date'
+            : filterData?.auctionEndingSoon === 'aes'
+              ? 'auction_end_date'
+              : '-auction_end_date',
         ],
-        limit: 9,
-        offset: 0,
+        limit,
+        offset,
       },
       {
         cities: filterData?.location,
@@ -81,8 +86,49 @@ const AuctionsList = ({ logged, user }) => {
         live={modules.includes('live-auctions')}
         saveAuctionTag
         refetch={() => refetch()}
+        logged={logged}
       />
     ))
+  let limitOfNumberShowing = 5
+  const renderPaginationButtons = (indexToShowBtn) => {
+    let buttonsArray = []
+    let totalPages = Math.ceil(auctionsData?.pagination?.total / limit)
+    for (let index = 0; index < totalPages; index++) {
+      if (index < limitOfNumberShowing) {
+        buttonsArray.push(
+          <Button
+            className={`${index === offset ? 'active' : ''}`}
+            onClick={() => setOffset(index)}
+          >
+            {index + 1}
+          </Button>,
+        )
+      } else break
+    }
+    if (indexToShowBtn && indexToShowBtn < totalPages) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(indexToShowBtn - 1)}
+        >
+          {indexToShowBtn}
+        </Button>,
+      )
+    }
+    if (totalPages > limitOfNumberShowing) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(totalPages - 1)}
+        >
+          {totalPages}
+        </Button>,
+      )
+    }
+    return buttonsArray
+  }
   return (
     <div className="auction-list">
       <div className="auction-list-header">
@@ -98,7 +144,11 @@ const AuctionsList = ({ logged, user }) => {
         </div>
       </div>
       <div className="auction-list-header-filters">
-        <AuctionsFilter filterData={filterData} setFilterData={setFilterData} />
+        <AuctionsFilter
+          status={type}
+          filterData={filterData}
+          setFilterData={setFilterData}
+        />
         {modules.includes('live-auctions') && (
           <div className="auction-list-header-filters-display">
             <img
@@ -128,7 +178,30 @@ const AuctionsList = ({ logged, user }) => {
         )}
       </div>
       {gridView === 0 ? (
-        <div className="md-grid auction-list-cards">{renderCards()}</div>
+        <>
+          <div className="md-grid auction-list-cards">{renderCards()}</div>
+          {+auctionsData?.pagination?.total > limit && (
+            <div>
+              <Button
+                onClick={() => setOffset((prev) => prev - 1)}
+                disabled={offset === 0}
+              >
+                arrow_left
+              </Button>
+              {offset < limitOfNumberShowing
+                ? renderPaginationButtons()
+                : renderPaginationButtons(offset + 1)}
+              <Button
+                onClick={() => setOffset((prev) => prev + 1)}
+                disabled={
+                  !(+auctionsData?.pagination?.total - (offset + 1) * limit > 0)
+                }
+              >
+                arrow_right
+              </Button>
+            </div>
+          )}
+        </>
       ) : (
         <CardsWithMap
           cardsData={auctionsData?.results}

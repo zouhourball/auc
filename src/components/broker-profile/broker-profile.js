@@ -34,6 +34,7 @@ const BrokerProfile = ({ brokerId, user }) => {
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
   const [showMore, setShowMore] = useState(false)
+  const [offset, setOffset] = useState(0)
 
   const { data: allCountryStateCities } = useQuery(allCountryStateCitiesGql, {
     context: {
@@ -102,12 +103,14 @@ const BrokerProfile = ({ brokerId, user }) => {
   //   filterFeatureAuctions,
   //   { refetchOnWindowFocus: false },
   // )
+  let limit = 9
+
   const allFilters = [
     {
       filter: {},
       sort: [],
-      limit: 20,
-      offset: 0,
+      limit,
+      offset,
     },
     {
       cities: filterData?.location,
@@ -183,7 +186,46 @@ const BrokerProfile = ({ brokerId, user }) => {
       num: auctionsData2?.results?.length,
     },
   ]
-
+  let limitOfNumberShowing = 5
+  const renderPaginationButtons = (indexToShowBtn) => {
+    let buttonsArray = []
+    let totalPages = Math.ceil(renderAuctionData()?.pagination?.total / limit)
+    for (let index = 0; index < totalPages; index++) {
+      if (index < limitOfNumberShowing) {
+        buttonsArray.push(
+          <Button
+            className={`${index === offset ? 'active' : ''}`}
+            onClick={() => setOffset(index)}
+          >
+            {index + 1}
+          </Button>,
+        )
+      } else break
+    }
+    if (indexToShowBtn && indexToShowBtn < totalPages) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(indexToShowBtn - 1)}
+        >
+          {indexToShowBtn}
+        </Button>,
+      )
+    }
+    if (totalPages > limitOfNumberShowing) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(totalPages - 1)}
+        >
+          {totalPages}
+        </Button>,
+      )
+    }
+    return buttonsArray
+  }
   const renderCards = () =>
     renderAuctionData()?.results?.map((el) => (
       <BiddingCard
@@ -399,6 +441,31 @@ const BrokerProfile = ({ brokerId, user }) => {
             </div>
           </div>
           <div className="cards">{renderCards()}</div>
+          {+renderAuctionData()?.pagination?.total > limit && (
+            <div>
+              <Button
+                onClick={() => setOffset((prev) => prev - 1)}
+                disabled={offset === 0}
+              >
+                arrow_left
+              </Button>
+              {offset < limitOfNumberShowing
+                ? renderPaginationButtons()
+                : renderPaginationButtons(offset + 1)}
+              <Button
+                onClick={() => setOffset((prev) => prev + 1)}
+                disabled={
+                  !(
+                    +renderAuctionData()?.pagination?.total -
+                      (offset + 1) * limit >
+                    0
+                  )
+                }
+              >
+                arrow_right
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
