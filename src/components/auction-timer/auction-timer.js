@@ -16,20 +16,19 @@ const AuctionTimer = ({ auctionData, node, user }) => {
     ['getFeaturedAuctionRemainingTime', auctionData?.uuid],
     getFeaturedAuctionRemainingTime,
     {
+      refetchOnWindowFocus: false,
       onSuccess: (res) => {
-        if (res?.time) {
-          if (res?.time?.remaining) {
-            interval = setInterval(() => {
-              setCountdown((st) => {
-                if (st?.s === 0 && st?.m === 0 && st?.h === 0 && st?.d === 0) {
-                  clearInterval(interval)
-                  return null
-                }
-                return removeSeconde(st || res?.time?.remaining)
-                // return removeSeconde(st || res?.time?.remaining)
-              })
-            }, 1000)
-          }
+        if (res?.time?.remaining) {
+          interval = setInterval(() => {
+            setCountdown((st) => {
+              if (st?.s === 0 && st?.m === 0 && st?.h === 0 && st?.d === 0) {
+                clearInterval(interval)
+                return null
+              }
+              return removeSeconde(st || res?.time?.remaining)
+              // return removeSeconde(st || res?.time?.remaining)
+            })
+          }, 1000)
         }
       },
     },
