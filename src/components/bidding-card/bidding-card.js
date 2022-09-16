@@ -99,7 +99,7 @@ const BiddingCard = ({
         detailsUrl
           ? detailsUrl()
           : navigate(
-            `/${logged ? 'auctions' : 'public'}detail/${auctionData?.uuid}`,
+            `/${logged ? 'auctions' : 'public'}/detail/${auctionData?.uuid}`,
           )
       }
     >

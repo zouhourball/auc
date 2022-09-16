@@ -24,7 +24,13 @@ import Public from 'components/public'
 import Admin from 'components/admin-page'
 import RegistrationPage from 'components/registration'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 const Root = ({ store, apolloClient }) => {
   return (

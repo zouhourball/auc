@@ -51,7 +51,7 @@ const TopBar = ({
   const [openMenu, setOpenMenu] = useState(false)
   const [currentModule, setCurrentModule] = useState('')
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
-
+  let notifNumber = 2
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   let avatarLetter = user
     ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
@@ -343,6 +343,7 @@ const TopBar = ({
                   src={modules[1] === 'home' ? notifWhite : notifBlue}
                 />
               </MenuButton>
+              {notifNumber > 0 && <span>{notifNumber}</span>}
             </div>
           )}
 
