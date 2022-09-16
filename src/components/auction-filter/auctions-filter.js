@@ -85,7 +85,6 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       )
     })
   }, filterData.location)
-  // console.log(renderCountries())
   return (
     <div className="md-grid auctions-filter">
       <TextField
@@ -173,7 +172,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         position={SelectField.Positions.BELOW}
       />
       <SelectField
-        placeholder={'location'}
+        placeholder={'Location'}
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'location'}
         menuItems={[
