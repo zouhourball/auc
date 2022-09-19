@@ -6,7 +6,7 @@ dependencies:
   '@target-energysolutions/app-shell': 23.18.4_9b8ffbaaeb70957e9ef9d90d8bbf8ee5
   '@target-energysolutions/auth-check': 0.3.7_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
-  '@target-energysolutions/gis-map': 2.9.104_250825046311308e722f6f77c6a4d405
+  '@target-energysolutions/gis-map': 2.9.105_250825046311308e722f6f77c6a4d405
   '@target-energysolutions/hoc-oauth': 1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/messenger': 17.2.3_98caf3aa5b7bda04ab62d3a034d181a2
   '@target-energysolutions/mht': 2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9
@@ -62,7 +62,7 @@ dependencies:
   react-hoc-timerfuncs: 1.0.5_react@18.0.0
   react-image-crop: 7.0.1_react@18.0.0
   react-md: 1.18.1_react-dom@18.0.0+react@18.0.0
-  react-onclickoutside: 6.12.1_react-dom@18.0.0+react@18.0.0
+  react-onclickoutside: 6.12.2_react-dom@18.0.0+react@18.0.0
   react-pdf: 5.7.2_75f279ef6cf212aa2d915693ede263f0
   react-query: 3.39.0_react-dom@18.0.0+react@18.0.0
   react-range: 1.8.14_react-dom@18.0.0+react@18.0.0
@@ -5022,7 +5022,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-8QzGCwGG7AkwBPLz8knlJWi47X2f0397B2NlA8mKJRIMkaxMtgDaLZkPQmAb1/mPyMJwo0KJkOBzuBdTJfnRYg==
-  /@target-energysolutions/gis-map/2.9.104_250825046311308e722f6f77c6a4d405:
+  /@target-energysolutions/gis-map/2.9.105_250825046311308e722f6f77c6a4d405:
     dependencies:
       '@rollup/plugin-image': 2.1.1
       '@target-energysolutions/hoc-oauth': 1.1.4_bdb4aea89f170aaa1ddb585ff4b9f19e
@@ -5076,7 +5076,7 @@ packages:
       react-md: ^1.7.1
       webpack: '*'
     resolution:
-      integrity: sha512-dT7TfiyO4Appp559LwoUYnPC1aPEjD25XGWf2GwA9xwmO/TAnoEjAbmuewDyI6zJIL8ULgX841rnF6pp9agirA==
+      integrity: sha512-Ap59T+0UPLlhaZ4p1FPxDnEEJTeToyJsCZ3nK5LPL6pNgrJDcdDdGlK+Q7Lx4vQ5lcTUouquSM63VuJytKbijA==
   /@target-energysolutions/global-search/0.1.12_231cf667b1ecfd3b2f46fab34f9c645b:
     dependencies:
       '@material-ui/core': 4.12.4_77eee59412d5eb5eea5ef01c6d864380
@@ -8398,7 +8398,7 @@ packages:
   /component-indexof/0.0.3:
     dev: false
     resolution:
-      integrity: sha1-EdCRMSI5648yyPJa6csAL/6NPCQ=
+      integrity: sha512-puDQKvx/64HZXb4hBwIcvQLaLgux8o1CbWl39s41hrIIZDl1lJiD5jc22gj3RBeGK0ovxALDYpIbyjqDUUl0rw==
   /component-inherit/0.0.3:
     dev: false
     resolution:
@@ -9258,7 +9258,7 @@ packages:
     engines:
       node: '>=0.10'
     resolution:
-      integrity: sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+      integrity: sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==
   /dedent/0.7.0:
     dev: true
     resolution:
@@ -9357,7 +9357,7 @@ packages:
     engines:
       node: '>=0.4.0'
     resolution:
-      integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
+      integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
   /delegates/1.0.0:
     dev: false
     resolution:
@@ -10437,7 +10437,7 @@ packages:
   /eventlistener/0.0.1:
     dev: false
     resolution:
-      integrity: sha1-7Suqu4UiJ68rz4iRUscsY8pTLrg=
+      integrity: sha512-hXZ5N9hmp3n7ovmVgG+2vIO6KcjSU10/d0A1Ixcf0i29dxCwAGTNGrSJCfLmlvmgQD8FYzyp//S8+Hpq4Nd7uA==
   /events/3.3.0:
     dev: true
     engines:
@@ -11669,7 +11669,7 @@ packages:
     engines:
       node: '>=4'
     resolution:
-      integrity: sha1-tdRU3CGZriJWmfNGfloH87lVuv0=
+      integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==
   /has-flag/4.0.0:
     dev: true
     engines:
@@ -14574,11 +14574,11 @@ packages:
     engines:
       node: '>= 0.6'
     resolution:
-      integrity: sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
+      integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
   /mgrs/1.0.0:
     dev: false
     resolution:
-      integrity: sha1-+5FYjnjJACVnI5XLQLJffNatGCk=
+      integrity: sha512-awNbTOqCxK1DBGjalK3xqWIstBZgN6fxsMSiXLs9/spqWkF2pAhb2rrYCFSsr1/tT7PhcDGjZndG8SWYn0byYA==
   /micromatch/3.1.10:
     dependencies:
       arr-diff: 4.0.0
@@ -16974,7 +16974,7 @@ packages:
       integrity: sha512-wapJ3h/w8fRSyPEG0y2WMV+tf9xwvj3nxM6aHVuPEOwKs/t5xLSKZb44ubNTiqq2T6lmEMHEWGMTaU2L6ddaFA==
   /prr/1.0.1:
     resolution:
-      integrity: sha1-0/wRS6BplaRexok/SEzrHXj19HY=
+      integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==
   /pseudomap/1.0.2:
     resolution:
       integrity: sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
@@ -18231,6 +18231,16 @@ packages:
       react-dom: ^15.5.x || ^16.x || ^17.x
     resolution:
       integrity: sha512-a5Q7CkWznBRUWPmocCvE8b6lEYw1s6+opp/60dCunhO+G6E4tDTO2Sd2jKE+leEnnrLAE2Wj5DlDHNqj5wPv1Q==
+  /react-onclickoutside/6.12.2_react-dom@18.0.0+react@18.0.0:
+    dependencies:
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    dev: false
+    peerDependencies:
+      react: ^15.5.x || ^16.x || ^17.x || ^18.x
+      react-dom: ^15.5.x || ^16.x || ^17.x || ^18.x
+    resolution:
+      integrity: sha512-NMXGa223OnsrGVp5dJHkuKxQ4czdLmXSp5jSV9OqiCky9LOpPATn3vLldc+q5fK3gKbEHvr7J1u0yhBh/xYkpA==
   /react-outside-click-handler/1.3.0_react-dom@18.0.0+react@18.0.0:
     dependencies:
       airbnb-prop-types: 2.16.0_react@18.0.0
@@ -19809,7 +19819,7 @@ packages:
       integrity: sha512-JxHc1weCN68wRY0fhCoXpyK55m/XPHafOmK4UWD7m2CI14GMcFypt4w/0+NV5f/ZMby2F6S2wwA7fgynh9gWSw==
   /setimmediate/1.0.5:
     resolution:
-      integrity: sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=
+      integrity: sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==
   /setprototypeof/1.1.0:
     dev: true
     resolution:
@@ -20771,7 +20781,7 @@ packages:
       qs: 6.10.3
       readable-stream: 3.6.0
       semver: 6.3.0
-    deprecated: 'Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>. Thanks to @shadowgate15, @spence-s, and @niftylettuce. Superagent is sponsored by Forward Email at <https://forwardemail.net>.'
+    deprecated: 'Please upgrade to v7.0.2+ of superagent.  We have fixed numerous issues with streams, form-data, attach(), filesystem errors not bubbling up (ENOENT on attach()), and all tests are now passing.  See the releases tab for more information at <https://github.com/visionmedia/superagent/releases>.'
     dev: false
     engines:
       node: '>= 6.4.0'
@@ -21733,7 +21743,7 @@ packages:
       integrity: sha512-Yek7dAy0v3Kl0orwMlvi7TPtiCNrdfHNd7Gcc/pLq4BLXqfAmd0J7OWMizUQnTTJsyjKn02mU7anqwfmUP4J8Q==
   /util-deprecate/1.0.2:
     resolution:
-      integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+      integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
   /util.promisify/1.0.0:
     dependencies:
       define-properties: 1.1.4
@@ -22578,7 +22588,7 @@ specifiers:
   '@target-energysolutions/app-shell': ^23.17.8
   '@target-energysolutions/auth-check': ^0.3.7
   '@target-energysolutions/date-picker': ^3.1.5
-  '@target-energysolutions/gis-map': ^2.9.104
+  '@target-energysolutions/gis-map': ^2.9.105
   '@target-energysolutions/hoc-oauth': ^1.3.2
   '@target-energysolutions/messenger': ^17.1.11
   '@target-energysolutions/mht': 2.22.3-beta.4
@@ -22675,7 +22685,7 @@ specifiers:
   react-hot-loader: ^4.13.0
   react-image-crop: 7.0.1
   react-md: ^1.9.3
-  react-onclickoutside: ^6.10.0
+  react-onclickoutside: ^6.12.2
   react-pdf: ^5.3.0
   react-query: ^3.16.0
   react-range: ^1.8.14

@@ -92,6 +92,17 @@ const BiddingCard = ({
       uuid,
     })
   }
+  const moneyFormat = (labelValue) => {
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e9
+      ? Math.abs(Number(labelValue)) / 1.0e9 + 'B' // Six Zeroes for Millions
+      : Math.abs(Number(labelValue)) >= 1.0e6
+        ? Math.abs(Number(labelValue)) / 1.0e6 + 'M' // Three Zeroes for Thousands
+        : Math.abs(Number(labelValue)) >= 1.0e3
+          ? Math.abs(Number(labelValue)) / 1.0e3 + 'K'
+          : Math.abs(Number(labelValue))
+  }
+
   return (
     <div
       className={`bidding-card ${className || ''}`}
@@ -182,8 +193,9 @@ const BiddingCard = ({
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
             <div className="description">
-              {t('current_ask')}{' '}
-              {auctionData?.['last_bid']?.['bid_amount'] || 0}
+              {t('current_ask')}
+              {' OMR '}
+              {moneyFormat(auctionData?.['last_bid']?.['bid_amount']) || 0}
             </div>
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>

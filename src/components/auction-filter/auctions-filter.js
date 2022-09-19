@@ -12,7 +12,7 @@ import PriceRange from 'components/price-range'
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import './style.scss'
 import { useQuery as useQueryApollo } from 'react-apollo-hooks'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { allBrokers } from 'libs/api/auctions-api'
 const AuctionsFilter = ({ filterData, setFilterData, status }) => {
@@ -27,6 +27,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     // location,
     // brokerCompany,
   } = filterData
+  const [newPrice, setNewPrice] = useState(false)
   useEffect(() => {
     setFilterData({
       ...filterData,
@@ -129,47 +130,56 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
           }
         })}
       />
-
-      <SelectField
-        placeholder={'Price Range'}
+      {newPrice && (
+        <PriceRange
+          key="price-range"
+          onChangeSlider={(v) => {
+            setFilterData({
+              ...filterData,
+              price: { ...price, min: v.min, max: v.max },
+            })
+          }}
+          onFinalChange={() => {
+            setNewPrice(false)
+          }}
+          price={price}
+        />
+      )}
+      <TextField
+        value={
+          !newPrice && price ? `${price?.min} - ${price?.max}` : 'Price Range'
+        }
         className=" md-cell md-cell--2 auctions-filter-selectField"
-        value={price}
-        // onChange={(v) => setFilterData({ ...filterData, price: v })}
-        menuItems={[
-          // <div key='price_range'>
-          //   <div className='price-slider'></div>
-          //   <div className='price-inputs'>
-          //     <TextField
-          //       type='number'
-          //       className='price-range-textField'
-          //       placeholder='0'
-          //       rightIcon={<span>OMR</span>}
-          //       value={price?.min}
-          //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, min: v } })}
-          //       block
-          //     />
-          //     <TextField
-          //       type='number'
-          //       className='price-range-textField'
-          //       placeholder='0'
-          //       rightIcon={<span>OMR</span>}
-          //       value={price?.max}
-          //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, max: v } })}
-          //       block
-          //     />
-          //   </div>
-          // </div>,
-          <PriceRange
-            key="price-range"
-            onChangeSlider={(v) =>
-              setFilterData({
-                ...filterData,
-                price: { ...price, min: v.min, max: v.max },
-              })
-            }
-          />,
-        ]}
-        position={SelectField.Positions.BELOW}
+        onClick={() => setNewPrice(!newPrice)}
+        disabled
+        // value={newPrice}
+        // menuItems={[
+        // <div key='price_range'>
+        //   <div className='price-slider'></div>
+        //   <div className='price-inputs'>
+        //     <TextField
+        //       type='number'
+        //       className='price-range-textField'
+        //       placeholder='0'
+        //       rightIcon={<span>OMR</span>}
+        //       value={price?.min}
+        //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, min: v } })}
+        //       block
+        //     />
+        //     <TextField
+        //       type='number'
+        //       className='price-range-textField'
+        //       placeholder='0'
+        //       rightIcon={<span>OMR</span>}
+        //       value={price?.max}
+        //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, max: v } })}
+        //       block
+        //     />
+        //   </div>
+        // </div>,
+
+        /* ]} */
+        /* position={SelectField.Positions.BELOW} */
       />
       <SelectField
         placeholder={'Location'}
