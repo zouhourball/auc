@@ -1,15 +1,25 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 import { TextField } from 'react-md'
 // import { Slider } from 'material-ui-slider'
 import { Range, getTrackBackground, useThumbOverlap } from 'react-range'
-
+import onClickOutside from 'react-onclickoutside'
 import './style.scss'
 
-const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
+const PriceRange = ({
+  minSalary,
+  maxSalary,
+  onChangeSlider,
+  onFinalChange,
+  price,
+}) => {
   const [values, setValue] = useState({ min: 0, max: 5000 })
   // const { min, max } = values
   const ref = useRef()
+  useEffect(() => {
+    price && setValue(price)
+  }, [])
+  PriceRange.handleClickOutside = () => onFinalChange()
 
   return (
     <div className="salary-range">
@@ -88,6 +98,7 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
                 />
               </div>
             )}
+            // {...values?.min && values?.max ? onFinalChange : {}}
           />
         </div>
         <div className="slider-range">
@@ -119,7 +130,10 @@ const PriceRange = ({ minSalary, maxSalary, onChangeSlider }) => {
     </div>
   )
 }
-export default PriceRange
+const clickOutsideConfig = {
+  handleClickOutside: () => PriceRange.handleClickOutside,
+}
+export default onClickOutside(PriceRange, clickOutsideConfig)
 function ThumbLabel ({ rangeRef = Range | null, values, index }) {
   const [labelValue] = useThumbOverlap(
     rangeRef,
