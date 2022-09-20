@@ -33,15 +33,39 @@
     }
   }
 
-  .price-range {
-    &-textField {
-      border: 1px solid #5078e1;
-      border-radius: 5px;
+  .salary-range {
+    position: absolute;
+    z-index: 1;
+    top: 33px;
+    border-radius: 0 0 12px 12px;
+  }
 
-      .md-text-field-icon {
-        color: #5078e1;
-      }
+  .price-range {
+    padding: 10px 16px;
+
+    > hr {
+      display: none;
     }
+
+    .md-text-field--margin {
+      margin-top: 0;
+    }
+
+    .md-divider--text-field {
+      display: none;
+    }
+
+    .md-text-field-icon-container {
+      align-items: center;
+    }
+
+    .md-text-field-icon--positioned {
+      margin-bottom: 0;
+    }
+  }
+
+  .price {
+    position: relative;
   }
 
   .md-icon {

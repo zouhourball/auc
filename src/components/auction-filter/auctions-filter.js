@@ -130,57 +130,60 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
           }
         })}
       />
-      {newPrice && (
-        <PriceRange
-          key="price-range"
-          onChangeSlider={(v) => {
-            setFilterData({
-              ...filterData,
-              price: { ...price, min: v.min, max: v.max },
-            })
-          }}
-          onFinalChange={() => {
-            setNewPrice(false)
-          }}
-          price={price}
-        />
-      )}
-      <TextField
-        value={
-          !newPrice && price ? `${price?.min} - ${price?.max}` : 'Price Range'
-        }
-        className=" md-cell md-cell--2 auctions-filter-selectField"
-        onClick={() => setNewPrice(!newPrice)}
-        disabled
-        // value={newPrice}
-        // menuItems={[
-        // <div key='price_range'>
-        //   <div className='price-slider'></div>
-        //   <div className='price-inputs'>
-        //     <TextField
-        //       type='number'
-        //       className='price-range-textField'
-        //       placeholder='0'
-        //       rightIcon={<span>OMR</span>}
-        //       value={price?.min}
-        //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, min: v } })}
-        //       block
-        //     />
-        //     <TextField
-        //       type='number'
-        //       className='price-range-textField'
-        //       placeholder='0'
-        //       rightIcon={<span>OMR</span>}
-        //       value={price?.max}
-        //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, max: v } })}
-        //       block
-        //     />
-        //   </div>
-        // </div>,
+      <div className="price md-cell md-cell--2">
+        {newPrice && (
+          <PriceRange
+            key="price-range"
+            onChangeSlider={(v) => {
+              setFilterData({
+                ...filterData,
+                price: { ...price, min: v.min, max: v.max },
+              })
+            }}
+            onFinalChange={() => {
+              setNewPrice(false)
+            }}
+            price={price}
+          />
+        )}
+        <TextField
+          value={
+            !newPrice && price ? `${price?.min} - ${price?.max}` : 'Price Range'
+          }
+          className="auctions-filter-textField price-range"
+          onClick={() => setNewPrice(!newPrice)}
+          disabled
+          rightIcon={<FontIcon>arrow_drop_down</FontIcon>}
+          // value={newPrice}
+          // menuItems={[
+          // <div key='price_range'>
+          //   <div className='price-slider'></div>
+          //   <div className='price-inputs'>
+          //     <TextField
+          //       type='number'
+          //       className='price-range-textField'
+          //       placeholder='0'
+          //       rightIcon={<span>OMR</span>}
+          //       value={price?.min}
+          //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, min: v } })}
+          //       block
+          //     />
+          //     <TextField
+          //       type='number'
+          //       className='price-range-textField'
+          //       placeholder='0'
+          //       rightIcon={<span>OMR</span>}
+          //       value={price?.max}
+          //       onChange={(v) => setFilterData({ ...filterData, price: { ...filterData?.price, max: v } })}
+          //       block
+          //     />
+          //   </div>
+          // </div>,
 
-        /* ]} */
-        /* position={SelectField.Positions.BELOW} */
-      />
+          /* ]} */
+          /* position={SelectField.Positions.BELOW} */
+        />
+      </div>
       <SelectField
         placeholder={'Location'}
         className=" md-cell md-cell--2 auctions-filter-selectField"
