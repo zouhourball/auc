@@ -18,6 +18,15 @@
     margin: 0 3px;
   }
 
+  .md-text-field {
+    padding: 12px 12px;
+  }
+
+  .md-text-field-icon {
+    margin-right: 4px;
+    margin-left: 0;
+  }
+
   &-body {
     padding: 8px 16px;
 
@@ -36,15 +45,12 @@
 
     .price-range-textField {
       height: 12px;
+      border: solid 1px #527bde;
+      border-radius: 7px;
+
+      .md-text-field-icon {
+        color: #527bde;
+      }
     }
-  }
-
-  .md-text-field {
-    padding: 12px 12px;
-  }
-
-  .md-text-field-icon {
-    margin-right: 4px;
-    margin-left: 0;
   }
 }

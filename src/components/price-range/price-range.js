@@ -91,7 +91,7 @@ const PriceRange = ({
                     width: '15px',
                     borderRadius: '50%',
                     backgroundColor: isDragged ? '#5e7bf6' : '#fff',
-                    borderColor: '#5e7bf6',
+                    borderColor: '#527bde',
                     borderWidth: '1px',
                     borderStyle: 'solid',
                   }}
