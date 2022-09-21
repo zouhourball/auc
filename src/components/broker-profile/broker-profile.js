@@ -194,8 +194,11 @@ const BrokerProfile = ({ brokerId, user }) => {
       if (index < limitOfNumberShowing) {
         buttonsArray.push(
           <Button
-            className={`${index === offset ? 'active' : ''}`}
+            className={`table-paginator-btn ${
+              index === offset ? 'active' : ''
+            }`}
             onClick={() => setOffset(index)}
+            flat
           >
             {index + 1}
           </Button>,
@@ -204,10 +207,13 @@ const BrokerProfile = ({ brokerId, user }) => {
     }
     if (indexToShowBtn && indexToShowBtn < totalPages) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn ${
+            indexToShowBtn - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(indexToShowBtn - 1)}
+          flat
         >
           {indexToShowBtn}
         </Button>,
@@ -215,10 +221,13 @@ const BrokerProfile = ({ brokerId, user }) => {
     }
     if (totalPages > limitOfNumberShowing) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn ${
+            totalPages - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(totalPages - 1)}
+          flat
         >
           {totalPages}
         </Button>,
@@ -442,10 +451,12 @@ const BrokerProfile = ({ brokerId, user }) => {
           </div>
           <div className="cards">{renderCards()}</div>
           {+renderAuctionData()?.pagination?.total > limit && (
-            <div>
+            <div className="table-paginator">
               <Button
                 onClick={() => setOffset((prev) => prev - 1)}
                 disabled={offset === 0}
+                icon
+                className="table-paginator-arrowBtn"
               >
                 arrow_left
               </Button>
@@ -454,6 +465,8 @@ const BrokerProfile = ({ brokerId, user }) => {
                 : renderPaginationButtons(offset + 1)}
               <Button
                 onClick={() => setOffset((prev) => prev + 1)}
+                icon
+                className="table-paginator-arrowBtn"
                 disabled={
                   !(
                     +renderAuctionData()?.pagination?.total -
