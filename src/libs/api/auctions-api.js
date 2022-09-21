@@ -542,9 +542,12 @@ export const getFeaturedAuctionRemainingTime = async ({ queryKey }) => {
 export const getApprovals = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals?limit=${queryKey[1]?.limit}&offset=${queryKey[1]?.offset}`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }

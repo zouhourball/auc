@@ -30,6 +30,7 @@ const Admin = (logged, auctionId) => {
   const [currentTab, setCurrentTab] = useState(0)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
+  const [offset, setOffset] = useState(0)
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
@@ -38,9 +39,16 @@ const Admin = (logged, auctionId) => {
     ['auctionsRequest', '', ''],
     auctionsRequest,
   )
+  let limit = 10
 
   const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
-    ['getApprovals'],
+    [
+      'getApprovals',
+      {
+        limit,
+        offset,
+      },
+    ],
     getApprovals,
   )
 
@@ -188,6 +196,47 @@ const Admin = (logged, auctionId) => {
         </CardActions>
       </Card>
     ))
+  let limitOfNumberShowing = 5
+
+  const renderPaginationButtons = (indexToShowBtn) => {
+    let buttonsArray = []
+    let totalPages = Math.ceil(getApprovalsList?.response?.total / limit)
+    for (let index = 0; index < totalPages; index++) {
+      if (index < limitOfNumberShowing) {
+        buttonsArray.push(
+          <Button
+            className={`${index === offset ? 'active' : ''}`}
+            onClick={() => setOffset(index)}
+          >
+            {index + 1}
+          </Button>,
+        )
+      } else break
+    }
+    if (indexToShowBtn && indexToShowBtn < totalPages) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(indexToShowBtn - 1)}
+        >
+          {indexToShowBtn}
+        </Button>,
+      )
+    }
+    if (totalPages > limitOfNumberShowing) {
+      buttonsArray.push(
+        <div>...</div>,
+        <Button
+          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          onClick={() => setOffset(totalPages - 1)}
+        >
+          {totalPages}
+        </Button>,
+      )
+    }
+    return buttonsArray
+  }
   const auctionsView = (
     <>
       <h1>{t('auctions')}</h1>
@@ -199,7 +248,6 @@ const Admin = (logged, auctionId) => {
           withChecked
           singleSelect
           withSearch
-          // withFooter
           commonActions
           headerTemplate={
             selectedRow?.length === 1 && (
@@ -282,6 +330,34 @@ const Admin = (logged, auctionId) => {
                     </>
                   )}
                 </div>
+              </div>
+            )
+          }
+          withFooter
+          footerTemplate={
+            +getApprovalsList?.response?.total > limit && (
+              <div>
+                <Button
+                  onClick={() => setOffset((prev) => prev - 1)}
+                  disabled={offset === 0}
+                >
+                  arrow_left
+                </Button>
+                {offset < limitOfNumberShowing
+                  ? renderPaginationButtons()
+                  : renderPaginationButtons(offset + 1)}
+                <Button
+                  onClick={() => setOffset((prev) => prev + 1)}
+                  disabled={
+                    !(
+                      +getApprovalsList?.response?.total -
+                        (offset + 1) * limit >
+                      0
+                    )
+                  }
+                >
+                  arrow_right
+                </Button>
               </div>
             )
           }

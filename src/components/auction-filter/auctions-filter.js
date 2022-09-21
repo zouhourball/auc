@@ -107,7 +107,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
           return {
             label: (
               <Checkbox
-                key={index}
+                key={`${tp.value}-auction-type-${index}`}
                 id={`${tp.value}-auction-type`}
                 name={`${tp.value}-checkboxes`}
                 label={tp.label}
