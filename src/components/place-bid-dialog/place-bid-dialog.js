@@ -13,7 +13,6 @@ const PlaceBidDialog = ({
   setBidAmount,
 }) => {
   const { t } = useTranslation()
-
   return (
     <DialogContainer
       className="placeBidDialog"
@@ -44,7 +43,7 @@ const PlaceBidDialog = ({
       <div className="placeBid">
         <TextField
           className={`placeBid-TextField  ${
-            bidAmount && bidAmount < lastBidAmount + incrementPrice
+            +bidAmount > 0 && bidAmount < lastBidAmount + incrementPrice
               ? 'error'
               : ''
           }`}
@@ -53,7 +52,7 @@ const PlaceBidDialog = ({
           onChange={setBidAmount}
           rightIcon={<span>OMR</span>}
           type="number"
-          error={bidAmount < lastBidAmount + incrementPrice}
+          error={+bidAmount > 0 && bidAmount < lastBidAmount + incrementPrice}
           errorText={`${t('minimum_amount')}${lastBidAmount + incrementPrice} `}
         />
       </div>

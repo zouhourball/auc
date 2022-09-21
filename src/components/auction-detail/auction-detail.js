@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button } from 'react-md'
+import { Avatar, Button, FontIcon } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 import store from 'libs/store'
 import moment from 'moment'
@@ -108,6 +108,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
           'hide',
         ),
       )
+      window.history.pushState('', '', `/auctions/detail/${auctionId}`)
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -133,6 +134,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
   }, [auctionData])
   const [placeNewBid] = useMutation(placeBid, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
+    onError: (res) => {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Unacceptable Amount'} type="error" />,
+          'hide',
+        ),
+      )
+    },
   })
 
   const onConfirmBid = () => {
@@ -279,6 +288,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
         <div className="auction-details-header md-cell md-cell--9">
+          {admin && (
+            <FontIcon
+              iconClassName="mdi mdi-arrow-left"
+              onClick={() => {
+                navigate('/admin')
+              }}
+            />
+          )}
           <div className="title">{t('auction_detail')}</div>
           <Button
             flat
