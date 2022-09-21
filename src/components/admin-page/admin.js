@@ -2,7 +2,7 @@ import Mht from '@target-energysolutions/mht'
 import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 // import { get } from 'lodash-es'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Button, Avatar, Card, CardActions, CardTitle } from 'react-md'
 import { configs, newBrokersConfigs } from './helper'
 import { navigate } from '@reach/router'
@@ -31,15 +31,26 @@ const Admin = (logged, auctionId) => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
   const [offset, setOffset] = useState(0)
+  useEffect(() => {
+    setOffset(0)
+  }, [currentTab])
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
+  let limit = 10
 
   const { data: auctionsRequestsData, refetch } = useQuery(
-    ['auctionsRequest', '', ''],
+    [
+      'auctionsRequest',
+      '',
+      '',
+      {
+        limit,
+        offset,
+      },
+    ],
     auctionsRequest,
   )
-  let limit = 10
 
   const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
     [
@@ -128,6 +139,12 @@ const Admin = (logged, auctionId) => {
   //     phone: '+968 245 375 65',
   //     status: 'Pending',
   //   }))
+  const getTotalElements = useMemo(() => {
+    if (currentTab === 1) {
+      return getApprovalsList?.response?.total
+    } else if (currentTab === 0) return auctionsRequestsData?.response?.total
+    else return null
+  }, [currentTab])
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
   const selectedRowBroker = selectedRowSelector.map(
     (id) => renderApprovalsData()?.[id],
@@ -200,7 +217,7 @@ const Admin = (logged, auctionId) => {
 
   const renderPaginationButtons = (indexToShowBtn) => {
     let buttonsArray = []
-    let totalPages = Math.ceil(getApprovalsList?.response?.total / limit)
+    let totalPages = Math.ceil(getTotalElements / limit)
     for (let index = 0; index < totalPages; index++) {
       if (index < limitOfNumberShowing) {
         buttonsArray.push(
@@ -287,6 +304,28 @@ const Admin = (logged, auctionId) => {
               </div>
             )
           }
+          withFooter
+          footerTemplate={
+            +getTotalElements > limit && (
+              <div>
+                <Button
+                  onClick={() => setOffset((prev) => prev - 1)}
+                  disabled={offset === 0}
+                >
+                  arrow_left
+                </Button>
+                {offset < limitOfNumberShowing
+                  ? renderPaginationButtons()
+                  : renderPaginationButtons(offset + 1)}
+                <Button
+                  onClick={() => setOffset((prev) => prev + 1)}
+                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
+                >
+                  arrow_right
+                </Button>
+              </div>
+            )
+          }
         />
       </div>
     </>
@@ -335,7 +374,7 @@ const Admin = (logged, auctionId) => {
           }
           withFooter
           footerTemplate={
-            +getApprovalsList?.response?.total > limit && (
+            +getTotalElements > limit && (
               <div>
                 <Button
                   onClick={() => setOffset((prev) => prev - 1)}
@@ -348,13 +387,7 @@ const Admin = (logged, auctionId) => {
                   : renderPaginationButtons(offset + 1)}
                 <Button
                   onClick={() => setOffset((prev) => prev + 1)}
-                  disabled={
-                    !(
-                      +getApprovalsList?.response?.total -
-                        (offset + 1) * limit >
-                      0
-                    )
-                  }
+                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
                 >
                   arrow_right
                 </Button>
