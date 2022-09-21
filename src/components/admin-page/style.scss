@@ -25,12 +25,21 @@
     align-items: center;
     margin-right: 40px;
     margin-left: auto;
-    gap: 20px;
+    gap: 8px;
 
     .item {
+      height: auto;
       color: #7c7c7c;
       font-size: 18px;
       font-weight: normal;
+
+      .md-ink-container {
+        display: none;
+      }
+
+      &.md-btn--hover {
+        background: none;
+      }
 
       &.active {
         color: #3d3d3e;

@@ -205,8 +205,11 @@ const Admin = (logged, auctionId) => {
       if (index < limitOfNumberShowing) {
         buttonsArray.push(
           <Button
-            className={`${index === offset ? 'active' : ''}`}
+            className={`table-paginator-btn ${
+              index === offset ? 'active' : ''
+            }`}
             onClick={() => setOffset(index)}
+            flat
           >
             {index + 1}
           </Button>,
@@ -215,10 +218,13 @@ const Admin = (logged, auctionId) => {
     }
     if (indexToShowBtn && indexToShowBtn < totalPages) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn ${
+            indexToShowBtn - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(indexToShowBtn - 1)}
+          flat
         >
           {indexToShowBtn}
         </Button>,
@@ -226,10 +232,13 @@ const Admin = (logged, auctionId) => {
     }
     if (totalPages > limitOfNumberShowing) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn  ${
+            totalPages - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(totalPages - 1)}
+          flat
         >
           {totalPages}
         </Button>,
@@ -336,10 +345,12 @@ const Admin = (logged, auctionId) => {
           withFooter
           footerTemplate={
             +getApprovalsList?.response?.total > limit && (
-              <div>
+              <div className="table-paginator">
                 <Button
                   onClick={() => setOffset((prev) => prev - 1)}
                   disabled={offset === 0}
+                  icon
+                  className="table-paginator-arrowBtn"
                 >
                   arrow_left
                 </Button>
@@ -348,6 +359,8 @@ const Admin = (logged, auctionId) => {
                   : renderPaginationButtons(offset + 1)}
                 <Button
                   onClick={() => setOffset((prev) => prev + 1)}
+                  icon
+                  className="table-paginator-arrowBtn"
                   disabled={
                     !(
                       +getApprovalsList?.response?.total -
@@ -421,24 +434,27 @@ const Admin = (logged, auctionId) => {
           LEILAM
         </div>
         <div className="admin-page-actions">
-          <div
+          <Button
+            flat
             className={`item ${currentTab === 2 && 'active'}`}
             onClick={() => setCurrentTab(2)}
           >
             Registered Bidders & Brokers
-          </div>
-          <div
+          </Button>
+          <Button
+            flat
             className={`item ${currentTab === 1 && 'active'}`}
             onClick={() => setCurrentTab(1)}
           >
             New Registered Broker
-          </div>
-          <div
+          </Button>
+          <Button
+            flat
             className={`item ${currentTab === 0 && 'active'}`}
             onClick={() => setCurrentTab(0)}
           >
             Auctions
-          </div>
+          </Button>
         </div>
         <Button
           onClick={() => {
