@@ -158,12 +158,24 @@ const RegistrationPage = () => {
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}
-                menuItems={countriesCodes}
+                menuItems={countriesCodes?.map((el) => ({
+                  value: el?.value,
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      {el?.value}
+                    </div>
+                  ),
+                }))}
                 defaultValue={'+968'}
                 value={countryCode}
                 onChange={(value) => setValues('countryCode', value)}
                 className="country-code"
-                itemLabel="value"
+                // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
@@ -236,12 +248,24 @@ const RegistrationPage = () => {
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}
-                menuItems={countriesCodes}
+                menuItems={countriesCodes?.map((el) => ({
+                  value: el?.value,
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      {el?.value}
+                    </div>
+                  ),
+                }))}
                 defaultValue={'+968'}
                 value={countryCode}
                 onChange={(value) => setValues('countryCode', value)}
                 className="country-code"
-                itemLabel="value"
+                // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
