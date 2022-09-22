@@ -5,6 +5,7 @@ import moment from 'moment'
 import { useCurrentLang, useTranslation } from 'libs/langs'
 import { navigate } from '@reach/router'
 
+import { moneyFormat } from 'libs/utils/hooks'
 import store from 'libs/store'
 
 import AuctionTimer from 'components/auction-timer'
@@ -64,7 +65,8 @@ const HomeSlider = ({ auctions, logged }) => {
             <div className="data-section-text">{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
             <div className="data-section-text">
-              Current Ask: {auction?.['last_bid']?.['bid_amount'] || 0}
+              Current Ask: {' OMR '}
+              {moneyFormat(auction?.['last_bid']?.['bid_amount']) || 0}
             </div>
             {+moment.utc(auction?.['auction_start_date']) < +moment() &&
               +moment.utc(auction?.['auction_end_date']) > +moment() && (

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 
 import store from 'libs/store'
 import { useTranslation } from 'libs/langs'
+import { moneyFormat } from 'libs/utils/hooks'
 
 import { saveAsFav, unsaveAsFav } from 'libs/api/auctions-api'
 
@@ -91,16 +92,6 @@ const BiddingCard = ({
     unsaveAuctionMutation.mutate({
       uuid,
     })
-  }
-  const moneyFormat = (labelValue) => {
-    // Nine Zeroes for Billions
-    return Math.abs(Number(labelValue)) >= 1.0e9
-      ? Math.abs(Number(labelValue)) / 1.0e9 + 'B' // Six Zeroes for Millions
-      : Math.abs(Number(labelValue)) >= 1.0e6
-        ? Math.abs(Number(labelValue)) / 1.0e6 + 'M' // Three Zeroes for Thousands
-        : Math.abs(Number(labelValue)) >= 1.0e3
-          ? Math.abs(Number(labelValue)) / 1.0e3 + 'K'
-          : Math.abs(Number(labelValue))
   }
 
   return (

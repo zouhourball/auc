@@ -38,7 +38,8 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
   return (
     <div className="upcoming-auctions">
       <div className="upcoming-auctions-title">
-        {logged ? t('accelerate_asset') : t('auction_market')}
+        {/* {logged ? t('accelerate_asset') : t('auction_market')} */}
+        {t('auction_market')}
       </div>
       <div className="upcoming-auctions-separateur" />
       <div className="upcoming-auctions-description">

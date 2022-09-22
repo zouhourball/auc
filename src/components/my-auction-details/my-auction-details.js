@@ -92,6 +92,9 @@ const MyAuctionDetails = ({ auctionId }) => {
       incrementalPrice: auctionDetails?.['incremental_price'],
       description: auctionDetails?.description,
       keyFeatures: auctionDetails?.listing?.features?.map((el) => el?.feature),
+      address: {
+        meta: { display_name: auctionDetails?.listing?.property?.address },
+      },
     })
     setImages(auctionDetails?.listing?.images)
   }, [auctionDetails])
