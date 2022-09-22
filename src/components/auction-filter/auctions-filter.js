@@ -202,7 +202,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
             id={`${bc.id}-auction-type`}
             name={`${bc.id}-checkboxes`}
             label={bc.name}
-            onChange={(e) => {
+            onChange={(a, e) => {
               filterData?.brokerCompany?.find((el) => {
                 return el === bc.id
               })
