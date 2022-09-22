@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import { Router, Redirect } from '@reach/router'
 import { useTranslation } from 'libs/langs'
+import { useSelector } from 'react-redux'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
@@ -45,7 +46,7 @@ const Home = () => {
       uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
     },
   })
-
+  const meOrgs = useSelector(({ app }) => app?.myOrgs)
   useEffect(() => {
     refetch()
   }, [currentUser])
@@ -84,9 +85,30 @@ const Home = () => {
     // },
     // { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
-
+  const modulesListUser = [
+    { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
+    {
+      label: t('how_it_works'),
+      key: 'how-it-works',
+      linkToNewTab: 'how-it-works',
+    },
+    {
+      label: t('my_activity'),
+      key: 'my-activity',
+      subMenu: [
+        { label: t('saved_auctions'), link: 'saved-auctions' },
+        { label: t('my_participation'), link: 'my-participation' },
+      ],
+    },
+    // {
+    //   label: t('auction_asset'),
+    //   linkToNewTab: 'auction-asset',
+    //   key: 'auction-asset',
+    // },
+    // { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
+  ]
   if (myOrgs?.meOrganizations.length > 0) {
-    modulesList.push(
+    ;(meOrgs?.length < 0 ? modulesListUser : modulesList).push(
       {
         label: t('auction_asset'),
         linkToNewTab: 'auction-asset',
@@ -95,7 +117,7 @@ const Home = () => {
       { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
     )
   } else {
-    modulesList.push({
+    ;(meOrgs?.length < 0 ? modulesListUser : modulesList).push({
       label: t('contact'),
       linkToNewTab: 'contact-us',
       key: 'contact-us',
@@ -106,7 +128,7 @@ const Home = () => {
     <QueryClientProvider client={queryClient}>
       <div className="auction-wrapper">
         <TopBar
-          modulesList={modulesList}
+          modulesList={meOrgs?.length < 0 ? modulesListUser : modulesList}
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
           user={currentUser?.mev2?.user}
@@ -121,6 +143,7 @@ const Home = () => {
           />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
             <AuctionsList
+              meOrgs={meOrgs}
               user={currentUser?.mev2?.user}
               logged
               key={i}
@@ -149,6 +172,7 @@ const Home = () => {
               key={i}
               path={page}
               logged
+              meOrgs={meOrgs}
             />
           ))}
           {/* <AuctionDetail path={'/detail/:auctionId'} /> */}

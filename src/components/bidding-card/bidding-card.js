@@ -28,6 +28,7 @@ const BiddingCard = ({
   saveAuctionTag,
   refetch,
   logged,
+  meOrgs,
 }) => {
   const dispatch = useDispatch()
 
@@ -80,6 +81,7 @@ const BiddingCard = ({
     if (status === 'Upcoming') return t('view_details')
     else return t('bid_now')
   }
+
   const downloadToken = store?.getState()?.app?.dlToken
 
   const saveAuction = (uuid) => {
@@ -188,21 +190,33 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {!detailsUrl &&
+        {meOrgs?.length < 0 ? (
+          !detailsUrl &&
           !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
           status === 'Active' && (
+            <Button
+              flat
+              primary
+              swapTheming
+              className="bidding-card-btn"
+              onClick={() =>
+                detailsUrl
+                  ? detailsUrl()
+                  : navigate(`detail/${auctionData?.uuid}`)
+              }
+            >
+              {renderBtnTitle()}
+            </Button>
+          )
+        ) : (
           <Button
             flat
             primary
             swapTheming
             className="bidding-card-btn"
-            onClick={() =>
-              detailsUrl
-                ? detailsUrl()
-                : navigate(`detail/${auctionData?.uuid}`)
-            }
+            onClick={() => navigate(`detail/${auctionData?.uuid}`)}
           >
-            {renderBtnTitle()}
+            {t('view_details')}{' '}
           </Button>
         )}
       </div>

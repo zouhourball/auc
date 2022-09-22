@@ -199,7 +199,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('select_country')}
           listClassName="country-list"
           menuItems={renderCountry()}
-          value={country || 1}
+          value={country || 2}
           onChange={(country) => onSetFormDetails('country', country)}
           fullWidth
           position={SelectField.Positions.BELOW}
