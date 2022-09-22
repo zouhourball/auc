@@ -1,6 +1,11 @@
 .broker-profile {
   padding: 0 4.02vw 4vh;
 
+  .md-avatar-content {
+    color: gray;
+    font-size: 30px;
+  }
+
   &-header {
     display: flex;
     align-items: center;

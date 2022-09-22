@@ -4,9 +4,11 @@ import { navigate } from '@reach/router'
 
 import BrokerHeader from 'components/broker-header'
 
-import './style.scss'
 import { allBrokersDetails } from 'libs/api/auctions-api'
 import { useQuery } from 'react-query'
+import { getPublicUrl } from 'libs/utils/custom-function'
+
+import './style.scss'
 
 const BrokerPage = ({ logged }) => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
@@ -168,7 +170,7 @@ const BrokerPage = ({ logged }) => {
                 </div>
                 <div className="sep"></div>
                 <div className="label">
-                  <FontIcon>flag</FontIcon> {el?.country}
+                  <FontIcon>flag</FontIcon> {el?.conutry}
                 </div>
               </div>
               <div className="label">
@@ -176,7 +178,11 @@ const BrokerPage = ({ logged }) => {
               </div>
             </div>
           }
-          avatar={<Avatar src={el?.logo} role="presentation" />}
+          avatar={
+            <Avatar src={getPublicUrl(el?.logo)} role="presentation">
+              {!el?.logo && el?.name?.[0]}
+            </Avatar>
+          }
         />
         <CardActions>
           <div className="email">

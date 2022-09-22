@@ -7,6 +7,7 @@ import {
   ExpansionPanel,
   Button,
 } from 'react-md'
+import { getPublicUrl } from 'libs/utils/custom-function'
 import { navigate } from '@reach/router'
 import { useCallback, useMemo, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
@@ -15,7 +16,7 @@ import { get } from 'lodash-es'
 // import { getPublicUrl } from 'libs/utils/custom-function'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
-import { filterFeatureAuctions, genUploadToken } from 'libs/api/auctions-api'
+import { filterFeatureAuctions } from 'libs/api/auctions-api'
 
 import BrokerHeader from 'components/broker-header'
 import BiddingCard from 'components/bidding-card'
@@ -30,7 +31,7 @@ import listActive from 'images/List View Selected.svg'
 
 import './style.scss'
 
-const BrokerProfile = ({ brokerId, user }) => {
+const BrokerProfile = ({ brokerId, user, logged }) => {
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
   const [showMore, setShowMore] = useState(false)
@@ -158,10 +159,10 @@ const BrokerProfile = ({ brokerId, user }) => {
     { refetchOnWindowFocus: false },
   )
 
-  const { data: downloadToken } = useQueryReact(
-    ['genUploadToken', 'download'],
-    genUploadToken,
-  )
+  // const { data: downloadToken } = useQueryReact(
+  //   ['genUploadToken', 'download'],
+  //   genUploadToken,
+  // )
 
   const headerFilters = [
     {
@@ -245,7 +246,11 @@ const BrokerProfile = ({ brokerId, user }) => {
         live={filter === 0}
         saveAuctionTag
         refetch={() => refetch()}
-        detailsUrl={() => navigate(`/auctions/detail/${el?.uuid}`)}
+        detailsUrl={() =>
+          logged
+            ? navigate(`/auctions/detail/${el?.uuid}`)
+            : navigate(`/public/detail/${el?.uuid}`)
+        }
       />
     ))
 
@@ -309,13 +314,11 @@ const BrokerProfile = ({ brokerId, user }) => {
                         className="owner-card-avatar"
                         src={
                           get(res, 'companyLogo.aPIID', null)
-                            ? `${res?.companyLogo?.aPIID}?token=${downloadToken?.token}&view=true`
+                            ? getPublicUrl(res?.companyLogo?.aPIID)
                             : null
                         }
                       >
-                        {get(res, 'companyLogo.aPIID', null)
-                          ? null
-                          : get(res, 'name.0', '')}
+                        {!res?.companyLogo?.aPIID && res?.name?.[0]}
                       </Avatar>
                       {res?.name && <div className="title">{res?.name}</div>}
                       {res?.phoneMobile && (
