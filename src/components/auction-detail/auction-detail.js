@@ -500,7 +500,20 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
                   <div className="owner-card-info">
                     <div>{t('listed_by')}</div>
-                    <div className="name">{res?.name}</div>
+                    <div
+                      className="name"
+                      onClick={() =>
+                        logged
+                          ? navigate(
+                              `/auctions/broker/${auctionData?.['configurator_organization_id']}`,
+                            )
+                          : navigate(
+                              `/public/broker/${auctionData?.['configurator_organization_id']}`,
+                            )
+                      }
+                    >
+                      {res?.name}
+                    </div>
                   </div>
                   <Button
                     floating

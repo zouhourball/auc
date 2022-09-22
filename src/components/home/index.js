@@ -150,10 +150,11 @@ const Home = () => {
               path={page}
             />
           ))}
-          <BrokerPage path={'/broker'} logged={true} />
+          <BrokerPage path={'/broker'} logged />
           <BrokerProfile
             path={'/broker/:brokerId'}
             user={currentUser?.mev2?.user}
+            logged
           />
 
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
