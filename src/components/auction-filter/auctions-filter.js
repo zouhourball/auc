@@ -102,13 +102,14 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         toggleClassName="is-toggled"
         value={'type'}
         position={SelectField.Positions.BELOW}
+        closeMenuOnSelect={false}
         menuItems={propertyTypeList?.map((tp, index) => (
           <Checkbox
             key={`${tp.value}-auction-type-${index}`}
             id={`${tp.value}-auction-type`}
             name={`${tp.value}-checkboxes`}
             label={tp.label}
-            onChange={(e) => {
+            onChange={(a, e) => {
               filterData?.type?.find((el) => el === tp.value)
                 ? setFilterData({
                   ...filterData,
