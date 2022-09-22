@@ -1,12 +1,11 @@
 .display-grid {
   display: grid;
   grid-template-columns: 440px 1fr;
-  height: max-content;
+  height: 100vh;
   padding: 15px;
 
   .cards {
     width: 440px;
-    max-height: 700px;
     padding: 12px 20px;
     overflow: auto;
     border-radius: 12px 0 0 12px;
@@ -52,8 +51,10 @@
 
   .map {
     position: relative;
+    height: 100%;
 
     .target-gis-map-main {
+      height: 100%;
       border-radius: 0 12px 12px 0;
     }
   }

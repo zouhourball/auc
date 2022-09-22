@@ -41,11 +41,14 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
         {logged ? t('accelerate_asset') : t('auction_market')}
       </div>
       <div className="upcoming-auctions-separateur" />
-      <div className="upcoming-auctions-description">
-        {/* {t('accelerate_asset')} */}
-        {/* <br /> */}
-        {t('with_leilam')}
-      </div>
+      <div
+        className="upcoming-auctions-description"
+        dangerouslySetInnerHTML={{
+          __html: t('browse_auctions'),
+        }}
+      />
+      {/* {t('accelerate_asset')} */}
+      {/* <br /> */}
       <div className="upcoming-auctions-header">
         <div className="upcoming-auctions-subTitle">
           {t('upcoming_auctions')}

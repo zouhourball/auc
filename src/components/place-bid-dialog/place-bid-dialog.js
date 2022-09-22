@@ -21,7 +21,7 @@ const PlaceBidDialog = ({
       onHide={onHide}
       focusOnMount={false}
       actions={[
-        <Button key={1} flat onClick={onClickCancel}>
+        <Button key={1} flat onClick={onClickCancel} className="cancel-btn">
           {t('cancel')}
         </Button>,
         <Button
@@ -31,6 +31,7 @@ const PlaceBidDialog = ({
           disabled={bidAmount < lastBidAmount + incrementPrice}
           swapTheming={!(bidAmount < lastBidAmount + incrementPrice)}
           onClick={onclickPlace}
+          className="bid-btn"
         >
           {t('place_bid_button')}
         </Button>,
