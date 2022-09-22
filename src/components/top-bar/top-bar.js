@@ -178,10 +178,10 @@ const TopBar = ({
             simplifiedMenu={false}
             repositionOnScroll={false}
             anchor={{
-              x: MenuButton.HorizontalAnchors.INNER_RIGHT,
+              x: MenuButton.HorizontalAnchors.INNER_LEFT,
               y: MenuButton.VerticalAnchors.BOTTOM,
             }}
-            position={MenuButton.Positions.BELOW}
+            position={MenuButton.Positions.TOP_LEFT}
           >
             <span className="active-item">{t('auctions')}</span>
           </MenuButton>
@@ -261,10 +261,10 @@ const TopBar = ({
                         simplifiedMenu={false}
                         repositionOnScroll={false}
                         anchor={{
-                          x: MenuButton.HorizontalAnchors.INNER_RIGHT,
+                          x: MenuButton.HorizontalAnchors.INNER_LEFT,
                           y: MenuButton.VerticalAnchors.BOTTOM,
                         }}
-                        position={MenuButton.Positions.BELOW}
+                        position={MenuButton.Positions.TOP_LEFT}
                       >
                         <span className="active-item">{label}</span>
                       </MenuButton>

@@ -24,6 +24,10 @@
       box-shadow: none;
     }
 
+    .md-selection-control-container {
+      height: 22px;
+    }
+
     .md-ink-container {
       display: none;
     }
@@ -129,9 +133,9 @@
     }
 
     .md-btn--icon {
-      width: 25px;
-      height: 35px;
-      padding: 10px 0;
+      width: 22px;
+      height: 22px;
+      padding: 2px 0;
     }
 
     .md-icon {

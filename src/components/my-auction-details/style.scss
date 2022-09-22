@@ -57,6 +57,10 @@
           line-height: 23px;
         }
 
+        .md-text-field-multiline-container {
+          flex-grow: 1;
+        }
+
         .md-text-field {
           color: #7c7c7c;
           font-size: 18px;
@@ -234,7 +238,7 @@
 
       &-header {
         display: grid;
-        grid-template-columns: 21% 20% 20% 13% 13% 13%;
+        grid-template-columns: 21% 29% 20% 10% 10% 10%;
 
         > div {
           padding: 0 15px;
@@ -246,7 +250,7 @@
 
       &-row {
         display: grid;
-        grid-template-columns: 21% 20% 20% 13% 13% 13%;
+        grid-template-columns: 21% 29% 20% 10% 10% 10%;
         margin-top: 20px;
         border-radius: 17px;
         background-color: #f8f8f8;
@@ -254,6 +258,7 @@
 
         > div {
           padding: 25px 15px;
+          font-weight: 500;
           word-break: break-word;
         }
       }

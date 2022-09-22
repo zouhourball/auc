@@ -1,7 +1,7 @@
 .placeBidDialog {
   .md-paper {
-    width: 480px;
-    border-radius: 10px;
+    width: max-content;
+    border-radius: 18px;
   }
 
   .header {
@@ -10,13 +10,13 @@
 
     .title {
       color: #3d3d3e;
-      font-size: 30px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .subTitle {
       color: #7c7c7c;
-      font-size: 25px;
+      font-size: 16px;
       font-weight: 500;
     }
   }
@@ -24,6 +24,20 @@
   .md-dialog-footer--inline {
     justify-content: center;
     border-top: none;
+
+    .cancel-btn {
+      flex-grow: 1;
+      border-radius: 18px;
+      background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      color: #7c7c7c;
+    }
+
+    .bid-btn {
+      flex-grow: 1;
+      border-radius: 18px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    }
   }
 
   .placeBid {
@@ -31,8 +45,8 @@
 
     &-TextField {
       .md-text-field-icon-container {
-        padding: 20px 32px;
-        border-radius: 18px;
+        padding: 15px 32px;
+        border-radius: 12px;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
         .md-divider {
@@ -41,6 +55,9 @@
 
         .md-text-field {
           margin-top: 0;
+          color: #7c7c7c;
+          font-size: 16px;
+          font-weight: 500;
         }
 
         .md-text-field-icon--positioned {
@@ -50,7 +67,8 @@
 
       .md-text--error {
         margin-top: 10px;
-        font-weight: bold;
+        font-size: 16px;
+        font-weight: 500;
       }
 
       &.error {
@@ -62,7 +80,7 @@
 
       span {
         color: #5078e1;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 500;
       }
     }
@@ -70,7 +88,7 @@
 
   .sep {
     width: 1px;
-    height: 70px;
+    height: auto;
     background-color: rgba(0, 0, 0, 0.18);
   }
 
@@ -80,28 +98,28 @@
     margin-top: 10px;
     text-align: center;
 
-    .sep {
-      width: 1px;
-      background: #d6d1d1;
-    }
+    // .sep {
+    //   width: 1px;
+    //   background: #d6d1d1;
+    // }
 
     .title {
       color: #3d3d3e;
-      font-size: 30px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: bold;
       line-height: 1;
     }
 
     .value {
       color: #7c7c7c;
-      font-size: 25px;
+      font-size: 16px;
       font-weight: 500;
     }
   }
 
-  .actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
+  // .actions {
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: 10px;
+  // }
 }

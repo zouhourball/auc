@@ -5,8 +5,29 @@
   }
 
   .content {
-    h3 {
-      text-align-last: center;
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      > div {
+        color: #3d3d3e;
+        font-size: 18px;
+        font-weight: bold;
+        justify-self: center;
+      }
+
+      .md-icon {
+        position: absolute;
+        right: 6%;
+        margin-left: auto;
+        color: #3d3d3e;
+        cursor: pointer;
+      }
+    }
+
+    > p {
+      text-align: center;
     }
   }
 }

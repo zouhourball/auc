@@ -17,13 +17,14 @@
 
   .slick-arrow {
     z-index: 99;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #fff;
+    width: 35px;
+    height: 35px;
+    border: 2px solid #fff;
     border-radius: 50%;
     background-color: transparent;
     color: #fff;
-    font-size: 25px;
+    font-size: 30px;
+    font-weight: 500;
     line-height: 30px;
 
     &::before {
@@ -134,7 +135,7 @@
 
       strong {
         color: #3d3d3e;
-        font-size: 30px;
+        font-size: 16px;
         font-weight: 700;
       }
     }

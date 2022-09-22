@@ -1,5 +1,5 @@
 import { useTranslation } from 'libs/langs'
-import { DialogContainer } from 'react-md'
+import { DialogContainer, FontIcon } from 'react-md'
 
 import './style.scss'
 const FeesDialog = ({ type, onHide }) => {
@@ -13,13 +13,19 @@ const FeesDialog = ({ type, onHide }) => {
     >
       {type === 'bayers' && (
         <div className="content">
-          <h3> {t('buyers_premium')} </h3>
+          <div className="content-title">
+            <div> {t('buyers_premium')} </div>
+            <FontIcon onClick={() => onHide()}>close</FontIcon>
+          </div>
           <p>{t('buyers_premium_content')}</p>
         </div>
       )}
       {type === 'commission' && (
         <div className="content">
-          <h3>{t('deposit')} </h3>
+          <div className="content-title">
+            <div>{t('deposit')} </div>
+            <FontIcon onClick={() => onHide()}>close</FontIcon>
+          </div>
           <p> {t('deposit_content')} </p>
         </div>
       )}
