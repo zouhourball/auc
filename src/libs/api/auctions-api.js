@@ -209,7 +209,7 @@ export const auctionsRequest = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}`,
+      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}&limit=${queryKey[3]?.limit}&offset=${queryKey[3]?.offset}`,
       {
         method: 'GET',
       },
@@ -542,9 +542,12 @@ export const getFeaturedAuctionRemainingTime = async ({ queryKey }) => {
 export const getApprovals = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals?limit=${queryKey[1]?.limit}&offset=${queryKey[1]?.offset}&sortBy=status&sortType=desc`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }

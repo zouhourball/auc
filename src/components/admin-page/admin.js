@@ -2,7 +2,7 @@ import Mht from '@target-energysolutions/mht'
 import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 // import { get } from 'lodash-es'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Button, Avatar, Card, CardActions, CardTitle } from 'react-md'
 import { configs, newBrokersConfigs } from './helper'
 import { navigate } from '@reach/router'
@@ -30,17 +30,36 @@ const Admin = (logged, auctionId) => {
   const [currentTab, setCurrentTab] = useState(0)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
+  const [offset, setOffset] = useState(0)
+  useEffect(() => {
+    setOffset(0)
+  }, [currentTab])
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
+  let limit = 10
 
   const { data: auctionsRequestsData, refetch } = useQuery(
-    ['auctionsRequest', '', ''],
+    [
+      'auctionsRequest',
+      '',
+      '',
+      {
+        limit,
+        offset,
+      },
+    ],
     auctionsRequest,
   )
 
   const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
-    ['getApprovals'],
+    [
+      'getApprovals',
+      {
+        limit,
+        offset,
+      },
+    ],
     getApprovals,
   )
 
@@ -120,6 +139,12 @@ const Admin = (logged, auctionId) => {
   //     phone: '+968 245 375 65',
   //     status: 'Pending',
   //   }))
+  const getTotalElements =
+    useMemo(() => {
+      if (currentTab === 1) {
+        return getApprovalsList?.response?.total
+      } else if (currentTab === 0) { return auctionsRequestsData?.pagination?.total } else return auctionsRequestsData?.pagination?.total
+    }, [currentTab]) || auctionsRequestsData?.pagination?.total
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
   const selectedRowBroker = selectedRowSelector.map(
     (id) => renderApprovalsData()?.[id],
@@ -188,6 +213,56 @@ const Admin = (logged, auctionId) => {
         </CardActions>
       </Card>
     ))
+  let limitOfNumberShowing = 5
+
+  const renderPaginationButtons = (indexToShowBtn) => {
+    let buttonsArray = []
+    let totalPages = Math.ceil(getTotalElements / limit)
+    for (let index = 0; index < totalPages; index++) {
+      if (index < limitOfNumberShowing) {
+        buttonsArray.push(
+          <Button
+            className={`table-paginator-btn ${
+              index === offset ? 'active' : ''
+            }`}
+            onClick={() => setOffset(index)}
+            flat
+          >
+            {index + 1}
+          </Button>,
+        )
+      } else break
+    }
+    if (indexToShowBtn && indexToShowBtn < totalPages) {
+      buttonsArray.push(
+        <span>...</span>,
+        <Button
+          className={`table-paginator-btn ${
+            indexToShowBtn - 1 === offset ? 'active' : ''
+          }`}
+          onClick={() => setOffset(indexToShowBtn - 1)}
+          flat
+        >
+          {indexToShowBtn}
+        </Button>,
+      )
+    }
+    if (totalPages > limitOfNumberShowing) {
+      buttonsArray.push(
+        <span>...</span>,
+        <Button
+          className={`table-paginator-btn  ${
+            totalPages - 1 === offset ? 'active' : ''
+          }`}
+          onClick={() => setOffset(totalPages - 1)}
+          flat
+        >
+          {totalPages}
+        </Button>,
+      )
+    }
+    return buttonsArray
+  }
   const auctionsView = (
     <>
       <h1>{t('auctions')}</h1>
@@ -199,7 +274,6 @@ const Admin = (logged, auctionId) => {
           withChecked
           singleSelect
           withSearch
-          // withFooter
           commonActions
           headerTemplate={
             selectedRow?.length === 1 && (
@@ -236,6 +310,28 @@ const Admin = (logged, auctionId) => {
                     </>
                   )}
                 </div>
+              </div>
+            )
+          }
+          withFooter
+          footerTemplate={
+            +getTotalElements > limit && (
+              <div>
+                <Button
+                  onClick={() => setOffset((prev) => prev - 1)}
+                  disabled={offset === 0}
+                >
+                  arrow_left
+                </Button>
+                {offset < limitOfNumberShowing
+                  ? renderPaginationButtons()
+                  : renderPaginationButtons(offset + 1)}
+                <Button
+                  onClick={() => setOffset((prev) => prev + 1)}
+                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
+                >
+                  arrow_right
+                </Button>
               </div>
             )
           }
@@ -282,6 +378,32 @@ const Admin = (logged, auctionId) => {
                     </>
                   )}
                 </div>
+              </div>
+            )
+          }
+          withFooter
+          footerTemplate={
+            +getTotalElements > limit && (
+              <div className="table-paginator">
+                <Button
+                  onClick={() => setOffset((prev) => prev - 1)}
+                  disabled={offset === 0}
+                  icon
+                  className="table-paginator-arrowBtn"
+                >
+                  arrow_left
+                </Button>
+                {offset < limitOfNumberShowing
+                  ? renderPaginationButtons()
+                  : renderPaginationButtons(offset + 1)}
+                <Button
+                  onClick={() => setOffset((prev) => prev + 1)}
+                  icon
+                  className="table-paginator-arrowBtn"
+                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
+                >
+                  arrow_right
+                </Button>
               </div>
             )
           }
@@ -345,24 +467,27 @@ const Admin = (logged, auctionId) => {
           LEILAM
         </div>
         <div className="admin-page-actions">
-          <div
+          <Button
+            flat
             className={`item ${currentTab === 2 && 'active'}`}
             onClick={() => setCurrentTab(2)}
           >
             Registered Bidders & Brokers
-          </div>
-          <div
+          </Button>
+          <Button
+            flat
             className={`item ${currentTab === 1 && 'active'}`}
             onClick={() => setCurrentTab(1)}
           >
             New Registered Broker
-          </div>
-          <div
+          </Button>
+          <Button
+            flat
             className={`item ${currentTab === 0 && 'active'}`}
             onClick={() => setCurrentTab(0)}
           >
             Auctions
-          </div>
+          </Button>
         </div>
         <Button
           onClick={() => {

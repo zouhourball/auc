@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react'
-import { TextField, Button, SelectField, Checkbox, FontIcon } from 'react-md'
+import {
+  TextField,
+  Button,
+  SelectField,
+  Checkbox,
+  FontIcon,
+  CircularProgress,
+} from 'react-md'
 import { countriesCodes } from './helper'
 import { navigate } from '@reach/router'
 import {
@@ -13,9 +20,9 @@ import { useCurrentLang } from 'libs/langs'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 
 import backgroundImage from './background_image.png'
-import appleIcon from './apple_logo.svg'
-import facebookIcon from './facebook.svg'
-import googleIcon from './google.svg'
+// import appleIcon from './apple_logo.svg'
+// import facebookIcon from './facebook.svg'
+// import googleIcon from './google.svg'
 import dragIcon from './drag_drop.svg'
 import successRegister from 'images/successfully-register.png'
 
@@ -38,28 +45,35 @@ const RegistrationPage = () => {
     companyName,
     countryId,
     logo,
+    address,
   } = signupData
 
   const lang = useCurrentLang()
-  const registerBidderMutation = useMutation(registerBidder, {
-    onSuccess: (res) => {
-      if (res?.success) {
-        setConfirmDialogVisible(true)
-      } else {
-        setConfirmDialogVisible({ error: res?.error })
-      }
+  const { mutate: registerBidderMutation, isLoading } = useMutation(
+    registerBidder,
+    {
+      onSuccess: (res) => {
+        if (res?.success) {
+          setConfirmDialogVisible(true)
+        } else {
+          setConfirmDialogVisible({ error: res?.error })
+        }
+      },
     },
-  })
+  )
 
-  const registerBrokerMutation = useMutation(registerBroker, {
-    onSuccess: (res) => {
-      if (!res.error) {
-        setConfirmDialogVisible(true)
-      }
+  const { mutate: registerBrokerMutation, isLoading: loading } = useMutation(
+    registerBroker,
+    {
+      onSuccess: (res) => {
+        if (!res.error) {
+          setConfirmDialogVisible(true)
+        }
+      },
     },
-  })
+  )
   const register = () => {
-    registerBrokerMutation.mutate({
+    registerBrokerMutation({
       body: {
         email: email,
         password: password,
@@ -158,12 +172,24 @@ const RegistrationPage = () => {
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}
-                menuItems={countriesCodes}
+                menuItems={countriesCodes?.map((el) => ({
+                  value: el?.value,
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      {el?.value}
+                    </div>
+                  ),
+                }))}
                 defaultValue={'+968'}
                 value={countryCode}
                 onChange={(value) => setValues('countryCode', value)}
                 className="country-code"
-                itemLabel="value"
+                // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
@@ -176,6 +202,13 @@ const RegistrationPage = () => {
               />
             </div>
             <TextField
+              id={'address'}
+              placeholder="Enter address"
+              value={address}
+              onChange={(v) => setValues('address', v)}
+              className="textField"
+            />
+            <TextField
               id={'email'}
               placeholder="Enter email"
               value={email}
@@ -184,6 +217,7 @@ const RegistrationPage = () => {
             />
             <TextField
               id={'pw'}
+              type="password"
               placeholder="Enter password"
               value={password}
               onChange={(v) => setValues('password', v)}
@@ -236,12 +270,24 @@ const RegistrationPage = () => {
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}
-                menuItems={countriesCodes}
+                menuItems={countriesCodes?.map((el) => ({
+                  value: el?.value,
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      {el?.value}
+                    </div>
+                  ),
+                }))}
                 defaultValue={'+968'}
                 value={countryCode}
                 onChange={(value) => setValues('countryCode', value)}
                 className="country-code"
-                itemLabel="value"
+                // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
@@ -255,6 +301,7 @@ const RegistrationPage = () => {
             </div>
             <TextField
               id={'email'}
+              type="password"
               placeholder="Enter password"
               value={password}
               onChange={(v) => setValues('password', v)}
@@ -265,7 +312,7 @@ const RegistrationPage = () => {
     }
   }
   const signUp = () => {
-    registerBidderMutation.mutate({
+    registerBidderMutation({
       body: {
         email: signupData?.email,
         mobile: `${signupData?.countryCode}${signupData?.phoneNum}`,
@@ -339,7 +386,7 @@ const RegistrationPage = () => {
               className="signUp-btn"
               onClick={() => (currentTab === 1 ? register() : signUp())}
             >
-              Sign Up
+              {isLoading || loading ? <CircularProgress /> : 'Sign Up'}
             </Button>
             <div className="grey-text font-size-bg">
               Continue as a{' '}
@@ -350,7 +397,7 @@ const RegistrationPage = () => {
                 Guest
               </span>
             </div>
-            <div className="social-container">
+            {/* <div className="social-container">
               <img
                 className="social-container-icon"
                 onClick={() => window.open('https://www.facebook.com/')}
@@ -366,7 +413,7 @@ const RegistrationPage = () => {
                 onClick={() => window.open('https://www.facebook.com/')}
                 src={googleIcon}
               />
-            </div>
+            </div> */}
             <div className="grey-text font-size-bg">
               Don t have an account?{' '}
               <span className="blue-text font-size-bg">Log In</span>{' '}

@@ -21,7 +21,7 @@ import listInactive from 'images/List View Grey.svg'
 import './style.scss'
 import { Button } from 'react-md'
 
-const AuctionsList = ({ logged, user }) => {
+const AuctionsList = ({ logged, user, meOrgs }) => {
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
@@ -78,6 +78,7 @@ const AuctionsList = ({ logged, user }) => {
   const renderCards = () =>
     auctionsData?.results?.map((el) => (
       <BiddingCard
+        meOrgs={meOrgs}
         user={user}
         className="md-cell md-cell--4"
         key={el?.uuid}
@@ -97,8 +98,11 @@ const AuctionsList = ({ logged, user }) => {
       if (index < limitOfNumberShowing) {
         buttonsArray.push(
           <Button
-            className={`${index === offset ? 'active' : ''}`}
+            className={`table-paginator-btn ${
+              index === offset ? 'active' : ''
+            }`}
             onClick={() => setOffset(index)}
+            flat
           >
             {index + 1}
           </Button>,
@@ -107,10 +111,13 @@ const AuctionsList = ({ logged, user }) => {
     }
     if (indexToShowBtn && indexToShowBtn < totalPages) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${indexToShowBtn - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn ${
+            indexToShowBtn - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(indexToShowBtn - 1)}
+          flat
         >
           {indexToShowBtn}
         </Button>,
@@ -118,10 +125,13 @@ const AuctionsList = ({ logged, user }) => {
     }
     if (totalPages > limitOfNumberShowing) {
       buttonsArray.push(
-        <div>...</div>,
+        <span>...</span>,
         <Button
-          className={`${totalPages - 1 === offset ? 'active' : ''}`}
+          className={`table-paginator-btn ${
+            totalPages - 1 === offset ? 'active' : ''
+          }`}
           onClick={() => setOffset(totalPages - 1)}
+          flat
         >
           {totalPages}
         </Button>,
@@ -181,10 +191,12 @@ const AuctionsList = ({ logged, user }) => {
         <>
           <div className="md-grid auction-list-cards">{renderCards()}</div>
           {+auctionsData?.pagination?.total > limit && (
-            <div>
+            <div className="table-paginator">
               <Button
                 onClick={() => setOffset((prev) => prev - 1)}
                 disabled={offset === 0}
+                icon
+                className="table-paginator-arrowBtn"
               >
                 arrow_left
               </Button>
@@ -196,6 +208,8 @@ const AuctionsList = ({ logged, user }) => {
                 disabled={
                   !(+auctionsData?.pagination?.total - (offset + 1) * limit > 0)
                 }
+                icon
+                className="table-paginator-arrowBtn"
               >
                 arrow_right
               </Button>
