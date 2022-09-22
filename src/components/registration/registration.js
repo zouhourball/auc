@@ -68,6 +68,8 @@ const RegistrationPage = () => {
       onSuccess: (res) => {
         if (!res.error) {
           setConfirmDialogVisible(true)
+        } else {
+          setConfirmDialogVisible({ error: res?.msg })
         }
       },
     },
