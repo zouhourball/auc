@@ -111,7 +111,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
                 id={`${tp.value}-auction-type`}
                 name={`${tp.value}-checkboxes`}
                 label={tp.label}
-                onChange={(e) => {
+                onChange={(a, e) => {
                   filterData?.type?.find((el) => el === tp.value)
                     ? setFilterData({
                       ...filterData,
@@ -209,7 +209,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
                 id={`${bc.id}-auction-type`}
                 name={`${bc.id}-checkboxes`}
                 label={bc.name}
-                onChange={(e) => {
+                onChange={(a, e) => {
                   filterData?.brokerCompany?.find((el) => {
                     return el === bc.id
                   })
