@@ -1,5 +1,9 @@
 import { Button, DialogContainer, TextField } from 'react-md'
 import { useTranslation } from 'libs/langs'
+import { useDispatch } from 'react-redux'
+import { addToast } from 'modules/app/actions'
+
+import ToastMsg from 'components/toast-msg'
 
 import './style.scss'
 const PlaceBidDialog = ({
@@ -13,6 +17,13 @@ const PlaceBidDialog = ({
   setBidAmount,
 }) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
+
+  const onShowError = () => {
+    dispatch(
+      addToast(<ToastMsg text={'Wrong Bid Amount'} type="error" />, 'hide'),
+    )
+  }
   return (
     <DialogContainer
       className="placeBidDialog"
@@ -27,9 +38,13 @@ const PlaceBidDialog = ({
           key={2}
           flat
           primary
-          disabled={bidAmount < lastBidAmount + incrementPrice}
-          swapTheming={!(bidAmount < lastBidAmount + incrementPrice)}
-          onClick={onclickPlace}
+          // disabled={bidAmount < lastBidAmount + incrementPrice}
+          swapTheming
+          onClick={() =>
+            bidAmount < lastBidAmount + incrementPrice
+              ? onShowError()
+              : onclickPlace()
+          }
           className="bid-btn"
         >
           {t('place_bid_button')}
