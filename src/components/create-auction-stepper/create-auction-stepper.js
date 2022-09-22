@@ -110,7 +110,7 @@ const CreateAuctionStepper = ({
   }
   const {
     address,
-    city,
+    // city,
     country,
     endDate,
     guaranteeFee,
@@ -130,7 +130,7 @@ const CreateAuctionStepper = ({
         return !(
           title &&
           address &&
-          city &&
+          // city &&
           country &&
           guaranteeFee &&
           incrementalPrice &&

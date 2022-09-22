@@ -57,7 +57,7 @@ import info from 'images/Info.svg'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, admin, logged, user }) => {
+const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
@@ -559,7 +559,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive && (
+              isActive &&
+              meOrgs?.length < 0 && (
                 <Button
                   flat
                   primary

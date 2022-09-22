@@ -21,7 +21,7 @@ import listInactive from 'images/List View Grey.svg'
 import './style.scss'
 import { Button } from 'react-md'
 
-const AuctionsList = ({ logged, user }) => {
+const AuctionsList = ({ logged, user, meOrgs }) => {
   const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
@@ -78,6 +78,7 @@ const AuctionsList = ({ logged, user }) => {
   const renderCards = () =>
     auctionsData?.results?.map((el) => (
       <BiddingCard
+        meOrgs={meOrgs}
         user={user}
         className="md-cell md-cell--4"
         key={el?.uuid}
