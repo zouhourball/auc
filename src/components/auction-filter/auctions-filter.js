@@ -103,32 +103,27 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
-        menuItems={propertyTypeList?.map((tp, index) => {
-          return {
-            label: (
-              <Checkbox
-                key={`${tp.value}-auction-type-${index}`}
-                id={`${tp.value}-auction-type`}
-                name={`${tp.value}-checkboxes`}
-                label={tp.label}
-                onChange={(a, e) => {
-                  filterData?.type?.find((el) => el === tp.value)
-                    ? setFilterData({
-                      ...filterData,
-                      type: filterData.type?.filter((el) => el !== tp.value),
-                    })
-                    : setFilterData({
-                      ...filterData,
-                      type: [...(filterData?.type || []), tp.value],
-                    })
-                  e.stopPropagation()
-                }}
-                checked={!!filterData?.type?.find((el) => el === tp.value)}
-              />
-            ),
-            value: tp.label,
-          }
-        })}
+        menuItems={propertyTypeList?.map((tp, index) => (
+          <Checkbox
+            key={`${tp.value}-auction-type-${index}`}
+            id={`${tp.value}-auction-type`}
+            name={`${tp.value}-checkboxes`}
+            label={tp.label}
+            onChange={(a, e) => {
+              filterData?.type?.find((el) => el === tp.value)
+                ? setFilterData({
+                  ...filterData,
+                  type: filterData.type?.filter((el) => el !== tp.value),
+                })
+                : setFilterData({
+                  ...filterData,
+                  type: [...(filterData?.type || []), tp.value],
+                })
+              e.stopPropagation()
+            }}
+            checked={!!filterData?.type?.find((el) => el === tp.value)}
+          />
+        ))}
       />
       <div className="price md-cell md-cell--2">
         {newPrice && (
@@ -201,41 +196,34 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'Broker Company'}
         // onChange={(v) => setFilterData({ ...filterData, brokerCompany: v })}
-        menuItems={getBrokers?.results?.map((bc, index) => {
-          return {
-            label: (
-              <Checkbox
-                key={index}
-                id={`${bc.id}-auction-type`}
-                name={`${bc.id}-checkboxes`}
-                label={bc.name}
-                onChange={(a, e) => {
-                  filterData?.brokerCompany?.find((el) => {
-                    return el === bc.id
-                  })
-                    ? setFilterData({
-                      ...filterData,
-                      brokerCompany: filterData.brokerCompany.filter(
-                        (el) => el !== bc.id,
-                      ),
-                    })
-                    : setFilterData({
-                      ...filterData,
-                      brokerCompany: [
-                        ...(filterData?.brokerCompany || []),
-                          bc?.id,
-                      ],
-                    })
-                  e.stopPropagation()
-                }}
-                checked={
-                  !!filterData?.brokerCompany?.find((el) => el === bc.id)
-                }
-              />
-            ),
-            value: bc.id,
-          }
-        })}
+        menuItems={getBrokers?.results?.map((bc, index) => (
+          <Checkbox
+            key={index}
+            id={`${bc.id}-auction-type`}
+            name={`${bc.id}-checkboxes`}
+            label={bc.name}
+            onChange={(a, e) => {
+              filterData?.brokerCompany?.find((el) => {
+                return el === bc.id
+              })
+                ? setFilterData({
+                  ...filterData,
+                  brokerCompany: filterData.brokerCompany.filter(
+                    (el) => el !== bc.id,
+                  ),
+                })
+                : setFilterData({
+                  ...filterData,
+                  brokerCompany: [
+                    ...(filterData?.brokerCompany || []),
+                      bc?.id,
+                  ],
+                })
+              e.stopPropagation()
+            }}
+            checked={!!filterData?.brokerCompany?.find((el) => el === bc.id)}
+          />
+        ))}
         position={SelectField.Positions.BELOW}
       />
       {/* <SelectField
