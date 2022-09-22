@@ -559,8 +559,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive &&
-              meOrgs?.length < 0 && (
+              isActive && (
                 <Button
                   flat
                   primary
@@ -664,7 +663,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           onHide={() => setBidDialog(false)}
           onClickCancel={() => setBidDialog(false)}
           incrementPrice={auctionData?.['incremental_price'] | 0}
-          lastBidAmount={auctionData?.['last_bid']?.['bid_amount'] || 0}
+          lastBidAmount={
+            auctionData?.['last_bid']?.['bid_amount'] ||
+            auctionData?.['current_price']
+          }
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}
