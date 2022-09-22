@@ -95,7 +95,6 @@ const BiddingCard = ({
       uuid,
     })
   }
-
   return (
     <div
       className={`bidding-card ${className || ''}`}
@@ -193,33 +192,21 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {meOrgs?.length < 0 ? (
-          !detailsUrl &&
-          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
+        {!detailsUrl &&
+          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) && !(auctionData?.['submitted_by'] === user?.subject) &&
           status === 'Active' && (
-            <Button
-              flat
-              primary
-              swapTheming
-              className="bidding-card-btn"
-              onClick={() =>
-                detailsUrl
-                  ? detailsUrl()
-                  : navigate(`detail/${auctionData?.uuid}`)
-              }
-            >
-              {renderBtnTitle()}
-            </Button>
-          )
-        ) : (
           <Button
             flat
             primary
             swapTheming
             className="bidding-card-btn"
-            onClick={() => navigate(`detail/${auctionData?.uuid}`)}
+            onClick={() =>
+              detailsUrl
+                ? detailsUrl()
+                : navigate(`detail/${auctionData?.uuid}`)
+            }
           >
-            {t('view_details')}{' '}
+            {renderBtnTitle()}
           </Button>
         )}
       </div>
