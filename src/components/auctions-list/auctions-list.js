@@ -150,7 +150,7 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
         )}
         <div>
           {t('showing_results')}
-          <span>({auctionsData?.results?.length || 0})</span>
+          <span> ({auctionsData?.results?.length || 0})</span>
         </div>
       </div>
       <div className="auction-list-header-filters">

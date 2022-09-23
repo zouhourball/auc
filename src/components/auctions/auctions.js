@@ -63,6 +63,7 @@ const Auctions = () => {
         property_description: propertyDetails?.description,
         count_bedrooms: +propertyDetails?.bedrooms,
         count_bathrooms: +propertyDetails?.bathrooms,
+        total_area: +propertyDetails?.area,
         general_location_x: +auctionDetails?.address?.['general_location_x'],
         general_location_y: +auctionDetails?.address?.['general_location_y'],
         features: propertyDetails?.keyFeatures?.map((el) => {

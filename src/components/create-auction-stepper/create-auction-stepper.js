@@ -110,7 +110,7 @@ const CreateAuctionStepper = ({
   }
   const {
     address,
-    // city,
+    city,
     country,
     endDate,
     guaranteeFee,
@@ -121,8 +121,14 @@ const CreateAuctionStepper = ({
     startingPrice,
     title,
   } = auctionDetails
-  const { area, bathrooms, bedrooms, description, images, keyFeatures } =
-    propertyDetails
+  const {
+    area,
+    bathrooms,
+    bedrooms,
+    description,
+    images,
+    // , keyFeatures
+  } = propertyDetails
 
   const validData = () => {
     switch (currentStep) {
@@ -130,7 +136,7 @@ const CreateAuctionStepper = ({
         return !(
           title &&
           address &&
-          // city &&
+          city &&
           country &&
           guaranteeFee &&
           incrementalPrice &&
@@ -142,12 +148,8 @@ const CreateAuctionStepper = ({
         )
       case 2:
         return !(
-          area &&
-          bathrooms &&
-          bedrooms &&
-          description &&
-          images?.length > 0 &&
-          keyFeatures?.length > 0
+          (area && bathrooms && bedrooms && description && images?.length > 0)
+          // && keyFeatures?.length > 0
         )
       case 3:
         return !(documents?.images?.length === 4)
