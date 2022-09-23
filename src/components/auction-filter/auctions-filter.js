@@ -12,7 +12,7 @@ import PriceRange from 'components/price-range'
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import './style.scss'
 import { useQuery as useQueryApollo } from 'react-apollo-hooks'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { allBrokers } from 'libs/api/auctions-api'
 const AuctionsFilter = ({ filterData, setFilterData, status }) => {
@@ -77,7 +77,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     )
   }
 
-  const renderCountries = useMemo(() => {
+  const renderCountries = () => {
     return allCountryStateCities?.allCountries?.countries.map((el) => {
       return (
         <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
@@ -85,7 +85,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         </ExpansionPanel>
       )
     })
-  }, filterData.location)
+  }
   return (
     <div className="md-grid auctions-filter">
       <TextField
@@ -185,7 +185,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         value={'location'}
         menuItems={[
           <ExpansionList key={'LocationExpansionList'}>
-            {renderCountries}
+            {renderCountries()}
           </ExpansionList>,
         ]}
         position={SelectField.Positions.BELOW}
