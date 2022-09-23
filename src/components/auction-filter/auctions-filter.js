@@ -85,7 +85,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         </ExpansionPanel>
       )
     })
-  }, filterData.location)
+  }, [filterData.location])
   return (
     <div className="md-grid auctions-filter">
       <TextField
