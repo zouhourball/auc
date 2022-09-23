@@ -283,6 +283,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     },
   })
   const saveChanges = () => {
+    // test status
     updateAuctionData.mutate({
       uuid: auctionId,
       body: {

@@ -343,7 +343,7 @@ export const getAuctionBidHistory = async ({ uuid }) => {
   return res
 }
 
-// UPDATE AUCTION BY UUID
+// UPDATE AUCTION BY UUID ps: not approved
 export const updateAuction = async ({ uuid, body }) => {
   let res
   try {
@@ -351,6 +351,22 @@ export const updateAuction = async ({ uuid, body }) => {
       method: 'PUT',
       body: JSON.stringify(body),
     })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// UPDATE AUCTION BY UUID ps: approved
+export const updateApprovedAuction = async ({ uuid, body }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/approved-auctions/${uuid}/approved`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(body),
+      },
+    )
   } catch (e) {
     res = { error: e }
   }
