@@ -124,13 +124,14 @@
 
   .md-panel-header[aria-pressed='false'] {
     height: 22px;
-    padding-right: 16px;
+    padding-right: 12px;
     padding-left: 4px;
   }
 
   .md-panel-header--expanded {
     height: 30px;
-    padding-left: 18px;
+    padding-right: 16px;
+    padding-left: 4px;
     font-size: 12px;
   }
 
@@ -139,7 +140,7 @@
       margin-top: 0;
 
       .md-panel-column {
-        padding-left: 0;
+        padding-left: 12px;
         font-size: 12px;
         font-weight: 500;
       }
