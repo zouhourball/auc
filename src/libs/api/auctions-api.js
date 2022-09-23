@@ -360,13 +360,10 @@ export const updateAuction = async ({ uuid, body }) => {
 export const updateApprovedAuction = async ({ uuid, body }) => {
   let res
   try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/approved-auctions/${uuid}/approved`,
-      {
-        method: 'PUT',
-        body: JSON.stringify(body),
-      },
-    )
+    res = await fetchJSON(`${appUrl}/api/v1/approved-auctions/${uuid}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
   } catch (e) {
     res = { error: e }
   }

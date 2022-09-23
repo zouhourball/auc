@@ -17,6 +17,7 @@ import subscribeTimeExtension from 'libs/queries/auction/subscription-time-exten
 import {
   getAuction,
   updateAuction,
+  updateApprovedAuction,
   updateImgs,
   getCountry,
   getCity,
@@ -64,6 +65,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     ['auctionDetails', auctionId],
     getAuction,
   )
+
   const {
     data: getCountryList,
     fetchNextPage,
@@ -248,33 +250,38 @@ const MyAuctionDetails = ({ auctionId }) => {
     }
   }
   // update auction details
-  const updateAuctionData = useMutation(updateAuction, {
-    onSuccess: (res) => {
-      if (!res.error) {
-        refetchAuction()
-        dispatch(
-          addToast(
-            <ToastMsg
-              text={'Auction is updated successfully' || 'success'}
-              type="success"
-            />,
-            'hide',
-          ),
-        )
-        onDisableEdit()
-      } else {
-        dispatch(
-          addToast(
-            <ToastMsg
-              text={res.error?.body?.message || 'error'}
-              type="error"
-            />,
-            'hide',
-          ),
-        )
-      }
+  const updateAuctionData = useMutation(
+    auctionDetails?.status === 'Approved'
+      ? updateApprovedAuction
+      : updateAuction,
+    {
+      onSuccess: (res) => {
+        if (!res.error) {
+          refetchAuction()
+          dispatch(
+            addToast(
+              <ToastMsg
+                text={'Auction is updated successfully' || 'success'}
+                type="success"
+              />,
+              'hide',
+            ),
+          )
+          onDisableEdit()
+        } else {
+          dispatch(
+            addToast(
+              <ToastMsg
+                text={res.error?.body?.message || 'error'}
+                type="error"
+              />,
+              'hide',
+            ),
+          )
+        }
+      },
     },
-  })
+  )
   const updateImages = useMutation(updateImgs, {
     onSuccess: (res) => {
       if (!res.error) {
@@ -296,6 +303,9 @@ const MyAuctionDetails = ({ auctionId }) => {
         property_type: +auctionEditData?.propertyType,
         property_description: auctionEditData?.description,
         features: auctionEditData?.keyFeatures,
+        address: auctionEditData?.address?.meta,
+        general_location_x: +auctionDetails?.address?.['general_location_x'],
+        general_location_y: +auctionDetails?.address?.['general_location_y'],
       },
     })
     updateImages.mutate({
@@ -403,7 +413,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                       address: {
                         general_location_y: newCoordinates?.['lat'],
                         general_location_x: newCoordinates?.['lon'],
-                        meta: newCoordinates,
+                        meta: newCoordinates?.['display_name'],
                       },
                     })
                   }}
