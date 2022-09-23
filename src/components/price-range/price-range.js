@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 
 import { TextField } from 'react-md'
 // import { Slider } from 'material-ui-slider'
-import { Range, getTrackBackground, useThumbOverlap } from 'react-range'
+import { Range, getTrackBackground } from 'react-range'
 import onClickOutside from 'react-onclickoutside'
 import './style.scss'
 
@@ -65,6 +65,9 @@ const PriceRange = ({
                 </div>
               </div>
             )}
+            /*
+
+            */
             renderThumb={({ props, index, isDragged }) => (
               <div
                 {...props}
@@ -80,11 +83,25 @@ const PriceRange = ({
                   outline: 'none',
                 }}
               >
-                <ThumbLabel
+                {/* <ThumbLabel
                   rangeRef={ref.current}
                   values={[+values.min, +values.max]}
                   index={index}
-                />
+                /> */}
+                <div
+                  style={{
+                    display: 'block',
+                    position: 'absolute',
+                    top: '-20px',
+                    color: '#7c7c7c',
+                    fontWeight: 'normal',
+                    fontSize: '14px',
+                    whiteSpace: 'nowrap',
+                    // ...(labelStyle as React.CSSProperties),
+                  }}
+                >
+                  {values[Object.keys(values)[index]]}
+                </div>
                 <div
                   style={{
                     height: '15px',
@@ -134,30 +151,31 @@ const clickOutsideConfig = {
   handleClickOutside: () => PriceRange.handleClickOutside,
 }
 export default onClickOutside(PriceRange, clickOutsideConfig)
-function ThumbLabel ({ rangeRef = Range | null, values, index }) {
-  const [labelValue] = useThumbOverlap(
-    rangeRef,
-    values,
-    index,
-    1,
-    ' - ',
-    (value) => `${value}`,
-  )
-  return (
-    <div
-      data-label={index}
-      style={{
-        display: 'block',
-        position: 'absolute',
-        top: '-20px',
-        color: '#7c7c7c',
-        fontWeight: 'normal',
-        fontSize: '14px',
-        whiteSpace: 'nowrap',
-        // ...(labelStyle as React.CSSProperties),
-      }}
-    >
-      {labelValue}
-    </div>
-  )
-}
+// function ThumbLabel ({ rangeRef = Range | null, values, index }) {
+//   const [labelValue] = useThumbOverlap(
+//     rangeRef,
+//     values,
+//     index,
+//     1,
+//     // ' - ',
+//     // (value) => `${value}`,
+//   )
+//   console.log(labelValue, 'labelValue')
+//   return (
+//     <div
+//       data-label={index}
+//       style={{
+//         display: 'block',
+//         position: 'absolute',
+//         top: '-20px',
+//         color: '#7c7c7c',
+//         fontWeight: 'normal',
+//         fontSize: '14px',
+//         whiteSpace: 'nowrap',
+//         // ...(labelStyle as React.CSSProperties),
+//       }}
+//     >
+//       {labelValue}
+//     </div>
+//   )
+// }
