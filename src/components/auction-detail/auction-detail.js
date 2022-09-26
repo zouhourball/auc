@@ -108,7 +108,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
-      window.history.pushState('', '', `/auctions/detail/${auctionId}`)
+      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -477,7 +477,18 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           </>
         )}
 
-        <div className="owner-card md-cell md-cell--12">
+        <div
+          className="owner-card md-cell md-cell--12"
+          onClick={() =>
+            logged
+              ? navigate(
+                  `/auctions/broker/${auctionData?.['configurator_organization_id']}`,
+                )
+              : navigate(
+                  `/public/broker/${auctionData?.['configurator_organization_id']}`,
+                )
+          }
+        >
           <CompanyInfoById
             orgId={auctionData?.['configurator_organization_id']}
           >
@@ -500,20 +511,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
                   <div className="owner-card-info">
                     <div>{t('listed_by')}</div>
-                    <div
-                      className="name"
-                      onClick={() =>
-                        logged
-                          ? navigate(
-                              `/auctions/broker/${auctionData?.['configurator_organization_id']}`,
-                            )
-                          : navigate(
-                              `/public/broker/${auctionData?.['configurator_organization_id']}`,
-                            )
-                      }
-                    >
-                      {res?.name}
-                    </div>
+                    <div className="name">{res?.name}</div>
                   </div>
                   <Button
                     floating
@@ -572,7 +570,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive && !(auctionData?.['submitted_by'] === user?.subject) && (
+              isActive &&
+              !(auctionData?.['submitted_by'] === user?.subject) && (
                 <Button
                   flat
                   primary
