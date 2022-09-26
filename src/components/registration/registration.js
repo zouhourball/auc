@@ -345,7 +345,9 @@ const RegistrationPage = () => {
         <img className="background" src={backgroundImage} />
       </div>
       <div className="registration-page-right">
-        <div className="registration-page-right-title">{t('new_to_auctions')}</div>
+        <div className="registration-page-right-title">
+          {t('new_to_auctions')}
+        </div>
         <div className="registration-page-right-subtitle">
           {t('sign_up_to_view')}
         </div>
@@ -380,7 +382,8 @@ const RegistrationPage = () => {
                 }
               />
               <div>
-                {t('i_accept')} <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
+                {t('i_accept')}{' '}
+                <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
                 {t('and')}
                 <span className="blue-text"> {t('privacy_policy')}</span>
               </div>

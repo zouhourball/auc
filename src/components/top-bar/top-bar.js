@@ -68,7 +68,8 @@ const TopBar = ({
         (el) =>
           el?.linkToNewTab === modules[1] ||
           el?.subMenu?.find((s) => s?.link === modules[1]),
-      )
+      ) &&
+      !(modules.includes('broker') && modules.length > 2)
     ) {
       setCurrentModule(
         modulesList?.find(

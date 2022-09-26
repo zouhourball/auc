@@ -117,7 +117,7 @@ const AuctionTimer = ({ auctionData, node, user }) => {
               <>
                 {' '}
                 <div className="price blueText">
-                  {auctionData?.['last_bid']?.['bid_amount']} {('OMR')}
+                  {auctionData?.['last_bid']?.['bid_amount']} {'OMR'}
                 </div>
                 <div className="label">{t('my_bid')}</div>
               </>

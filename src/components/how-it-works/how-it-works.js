@@ -14,7 +14,8 @@ const HowItWorks = () => {
       <div className="how-it-works-header">
         <img src={headerBg} className="how-it-works-header-image-bg" />
         <div className="how-it-works-header-title">
-          {t('frequently_asked')}        </div>
+          {t('frequently_asked')}{' '}
+        </div>
       </div>
       <div className="how-it-works-body">
         <div className="">

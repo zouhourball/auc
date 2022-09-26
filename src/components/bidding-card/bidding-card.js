@@ -197,13 +197,13 @@ const BiddingCard = ({
         {status === 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {
-                renderType(propertyTypeList.find(
+              {renderType(
+                propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
-                )?.label)
-              }
+                )?.label,
+              )}
             </div>
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>

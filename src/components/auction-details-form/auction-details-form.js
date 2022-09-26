@@ -133,7 +133,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         {t('add_details')}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('auction_title')}</label>
+        <label className="auction-details-form-label">
+          {t('auction_title')}
+        </label>
         <TextField
           id="auctionTitle"
           placeholder={t('enter_title')}
@@ -145,7 +147,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('auction_position')}</label>
+        <label className="auction-details-form-label">
+          {t('auction_position')}
+        </label>
         {addressView && (
           <DrawOnMap
             id={'address'}
