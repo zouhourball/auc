@@ -2,9 +2,9 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  height: 360px;
+  height: 18.75vw;
   overflow: hidden;
-  border-radius: 45px;
+  border-radius: 2.344vw;
   background-color: #fff;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
@@ -71,7 +71,7 @@
 
   &-btn {
     height: auto;
-    margin: 0 8px;
+    margin: 8px 0 0;
     padding: 12px 20px;
     border-radius: 14px;
     font-size: 16px;
@@ -87,10 +87,11 @@
   &-footer {
     display: flex;
     z-index: 2;
+    flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
     margin-top: auto;
-    padding: 40px;
+    padding: 2.083vw;
     color: #fff;
 
     .auction-timer {
@@ -116,8 +117,8 @@
         justify-content: center;
         width: auto;
         padding: 2px 4px;
-        gap: 5px;
         border: none;
+        gap: 5px;
 
         &-element {
           .value {
