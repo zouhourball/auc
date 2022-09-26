@@ -1,5 +1,6 @@
 import { DialogContainer, Button } from 'react-md'
 import { navigate } from '@reach/router'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 const ConfirmDialog = ({
@@ -11,6 +12,8 @@ const ConfirmDialog = ({
   onHide,
   msg,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <DialogContainer
       className="confirm-dialog"
@@ -20,7 +23,15 @@ const ConfirmDialog = ({
     >
       <div className="confirm-dialog-information">
         {msg ? (
-          <div className="title">{msg}</div>
+          <div className="title">
+            {msg === 'OrgAlreadyExists'
+              ? t('org_exists')
+              : msg === 'MobileAlreadyExists'
+                ? t('mobile_exists')
+                : msg === 'EmailAlreadyExists'
+                  ? t('email_exists')
+                  : msg}
+          </div>
         ) : (
           <>
             {imgCard && <img src={imgCard} className="illustration" />}

@@ -68,7 +68,8 @@ const TopBar = ({
         (el) =>
           el?.linkToNewTab === modules[1] ||
           el?.subMenu?.find((s) => s?.link === modules[1]),
-      )
+      ) &&
+      !(modules.includes('broker') && modules.length > 2)
     ) {
       setCurrentModule(
         modulesList?.find(
@@ -158,7 +159,7 @@ const TopBar = ({
             menuItems={[
               <ListItem
                 key={1}
-                primaryText="Live Auctions"
+                primaryText={t('live_auctions')}
                 onClick={() => {
                   navigate(`/${logged ? 'auctions' : 'public'}/live-auctions`)
                   setCurrentModule('auctions')
@@ -166,7 +167,7 @@ const TopBar = ({
               />,
               <ListItem
                 key={2}
-                primaryText="Upcoming Auctions"
+                primaryText={t('upcoming_auctions')}
                 onClick={() => {
                   navigate(
                     `/${logged ? 'auctions' : 'public'}/upcoming-auctions`,
@@ -175,13 +176,13 @@ const TopBar = ({
                 }}
               />,
             ]}
-            simplifiedMenu={false}
+            simplifiedMenu
             repositionOnScroll={false}
             anchor={{
               x: MenuButton.HorizontalAnchors.INNER_LEFT,
               y: MenuButton.VerticalAnchors.BOTTOM,
             }}
-            position={MenuButton.Positions.TOP_LEFT}
+            position={MenuButton.Positions.BELOW}
           >
             <span className="active-item">{t('auctions')}</span>
           </MenuButton>
@@ -258,13 +259,13 @@ const TopBar = ({
                             }}
                           />
                         ))}
-                        simplifiedMenu={false}
+                        simplifiedMenu
                         repositionOnScroll={false}
                         anchor={{
                           x: MenuButton.HorizontalAnchors.INNER_LEFT,
                           y: MenuButton.VerticalAnchors.BOTTOM,
                         }}
-                        position={MenuButton.Positions.TOP_LEFT}
+                        position={MenuButton.Positions.BELOW}
                       >
                         <span className="active-item">{label}</span>
                       </MenuButton>
@@ -282,7 +283,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => navigate('/registration')}
               >
-                {t('register')}
+                {t('new_user')}
               </Button>
               <Button
                 flat

@@ -74,12 +74,17 @@ const PlaceBidDialog = ({
       </div>
       <div className="amounts">
         <div className="lastBid">
-          <div className="title">{lastBidAmount} OMR</div>
+          <div className="title">
+            {lastBidAmount} {t('OMR')}
+          </div>
           <div className="value">{t('last_bid_amount')}</div>
         </div>
         <div className="sep" />
         <div className="increment">
-          <div className="title"> {incrementPrice} OMR</div>
+          <div className="title">
+            {' '}
+            {incrementPrice} {t('OMR')}
+          </div>
           <div className="value">{t('increment_price')}</div>
         </div>
       </div>

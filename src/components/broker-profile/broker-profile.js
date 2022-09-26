@@ -14,6 +14,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
 // import { getPublicUrl } from 'libs/utils/custom-function'
+import { useTranslation } from 'libs/langs'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import { filterFeatureAuctions } from 'libs/api/auctions-api'
@@ -32,6 +33,8 @@ import listActive from 'images/List View Selected.svg'
 import './style.scss'
 
 const BrokerProfile = ({ brokerId, user, logged }) => {
+  const { t } = useTranslation()
+
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
   const [showMore, setShowMore] = useState(false)
@@ -169,21 +172,21 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
       key: 'live',
       className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
-      title: 'Live',
+      title: t('live'),
       num: auctionsData0?.results?.length,
     },
     {
       key: 'upcoming',
       className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
       onClick: () => setFilter(1),
-      title: 'Upcoming',
+      title: t('upcoming'),
       num: auctionsData1?.results?.length,
     },
     {
       key: 'closed',
       className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
       onClick: () => setFilter(2),
-      title: 'Closed',
+      title: t('closed'),
       num: auctionsData2?.results?.length,
     },
   ]
@@ -284,7 +287,30 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
       </div>
     )
   }
-
+  const renderType = (type) => {
+    switch (type) {
+      case 'Home':
+        return t('Home')
+      case 'Villa':
+        return t('Villa')
+      case 'Apartment':
+        return t('Apartment')
+      case 'Hostel':
+        return t('Hostel')
+      case 'Land':
+        return t('Land')
+      case 'Building':
+        return t('Building')
+      case 'Office':
+        return t('Office')
+      case 'Plot':
+        return t('Plot')
+      case 'Unit':
+        return t('Unit')
+      case 'Shope':
+        return t('Shope')
+    }
+  }
   const renderCountries = useMemo(() => {
     return allCountryStateCities?.allCountries?.countries.map((el) => {
       return (
@@ -300,7 +326,7 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
         <FontIcon onClick={() => navigate('/auctions/broker')}>
           arrow_back
         </FontIcon>
-        <div className="title">Broker Profile</div>
+        <div className="title">{t('broker_profile')}</div>
       </div>
       <div className="broker-profile-body">
         <div className="broker-profile-body-card">
@@ -371,11 +397,11 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
               filterData={filterData}
               setFilterData={setFilterData}
               filters={headerFilters}
-              searchPlaceholder={'What are you looking for'}
+              searchPlaceholder={t('what_are_you_looking_for')}
             />
             <div className="broker-profile-filter md-grid">
               <SelectField
-                placeholder={'type'}
+                placeholder={t('type')}
                 className="md-cell md-cell--1 broker-profile-selectField"
                 value={'type'}
                 position={SelectField.Positions.BELOW}
@@ -387,7 +413,7 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                         key={index}
                         id={`${tp.value}-auction-type`}
                         name={`${tp.value}-checkboxes`}
-                        label={tp.label}
+                        label={renderType(tp.label)}
                         onChange={(e) => {
                           filterData?.type?.find((el) => el === tp.value)
                             ? setFilterData({
@@ -435,7 +461,7 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                 })}
               />
               <SelectField
-                placeholder={'location'}
+                placeholder={t('location')}
                 className=" md-cell md-cell--2 broker-profile-selectField"
                 value={'location'}
                 menuItems={[

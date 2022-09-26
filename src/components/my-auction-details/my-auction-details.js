@@ -723,7 +723,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 addTitle={
                   <>
                     <FontIcon>add</FontIcon>
-                    {t('add_images')}
+                    <span>{t('add_images')}</span>
                   </>
                 }
                 titleUpload={images?.length > 0 ? 'add_images' : ''}

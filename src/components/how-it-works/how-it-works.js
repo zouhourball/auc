@@ -14,7 +14,7 @@ const HowItWorks = () => {
       <div className="how-it-works-header">
         <img src={headerBg} className="how-it-works-header-image-bg" />
         <div className="how-it-works-header-title">
-          FREQUENTLY ASKED QUESTIONS
+          {t('frequently_asked')}{' '}
         </div>
       </div>
       <div className="how-it-works-body">
@@ -24,13 +24,13 @@ const HowItWorks = () => {
               className={selectedTab ? 'active' : 'inactive'}
               onClick={() => setSelectedTab(true)}
             >
-              <span>Buying</span>
+              <span>{t('buying')}</span>
             </Button>
             <Button
               className={!selectedTab ? 'active' : 'inactive'}
               onClick={() => setSelectedTab(false)}
             >
-              <span>Selling</span>
+              <span>{t('selling')}</span>
             </Button>
           </div>
         </div>
