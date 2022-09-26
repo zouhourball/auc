@@ -124,7 +124,7 @@ const Admin = (logged, auctionId) => {
             // console.log(el?.listing?.documents, documentsDialog, 'docs')
           }}
         >
-          View
+          {t('view')}
         </Button>
       ),
     }))
@@ -143,7 +143,9 @@ const Admin = (logged, auctionId) => {
     useMemo(() => {
       if (currentTab === 1) {
         return getApprovalsList?.response?.total
-      } else if (currentTab === 0) { return auctionsRequestsData?.pagination?.total } else return auctionsRequestsData?.pagination?.total
+      } else if (currentTab === 0) {
+        return auctionsRequestsData?.pagination?.total
+      } else return auctionsRequestsData?.pagination?.total
     }, [currentTab]) || auctionsRequestsData?.pagination?.total
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
   const selectedRowBroker = selectedRowSelector.map(

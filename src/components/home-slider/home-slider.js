@@ -40,6 +40,29 @@ const HomeSlider = ({ auctions, logged }) => {
       </FontIcon>
     ),
   }
+
+  const renderType = (type) => {
+    switch (type) {
+      case 'Home':
+        return t('Home')
+      case 'Villa':
+        return t('Villa')
+      case 'Apartment':
+        return t('Apartment')
+      case 'Hostel':
+        return t('Hostel')
+      case 'Land':
+        return t('Land')
+      case 'Building':
+        return t('Building')
+      case 'Office':
+        return t('Office')
+      case 'Plot':
+        return t('Plot')
+      case 'Unit':
+        return t('Unit')
+    }
+  }
   return (
     <Slider {...settings} className="home-slider">
       {auctions?.map((auction) => (
@@ -54,18 +77,19 @@ const HomeSlider = ({ auctions, logged }) => {
           />
           <div className="data-section">
             <div className="data-section-title">
-              {
+              {renderType(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auction?.listing?.property?.['property_type_id'],
-                )?.label
-              }
+                )?.label,
+              )}
             </div>
             <div className="data-section-text">{auction?.listing?.title}</div>
             <div className="data-section-separateur" />
             <div className="data-section-text">
-              Current Ask: {' OMR '}
+              {t('current_ask')}
+              {t('OMR')}
               {moneyFormat(auction?.['last_bid']?.['bid_amount']) || 0}
             </div>
             {+moment.utc(auction?.['auction_start_date']) < +moment() &&

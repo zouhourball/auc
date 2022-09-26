@@ -143,7 +143,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         )}
         <TextField
           value={
-            !newPrice && price ? `${price?.min} - ${price?.max}` : 'Price Range'
+            !newPrice && price
+              ? `${price?.min} - ${price?.max}`
+              : t('price_range')
           }
           className="auctions-filter-textField price-range"
           onClick={() => setNewPrice(!newPrice)}
@@ -180,7 +182,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         />
       </div>
       <SelectField
-        placeholder={'Location'}
+        placeholder={t('location')}
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'location'}
         menuItems={[
@@ -192,7 +194,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       />
 
       <SelectField
-        placeholder={'Broker Company'}
+        placeholder={t('broker_company')}
         className=" md-cell md-cell--2 auctions-filter-selectField"
         value={'Broker Company'}
         // onChange={(v) => setFilterData({ ...filterData, brokerCompany: v })}
@@ -257,9 +259,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         onChange={(v) => setFilterData({ ...filterData, auctionEndingSoon: v })}
         menuItems={[
           status === 'Upcoming'
-            ? { label: 'Auction Starting Soon', value: 'ass' }
-            : { label: 'Auction Ending Soon', value: 'aes' },
-          { label: 'Recently Added', value: 'ra' },
+            ? { label: t('auction_starting_soon'), value: 'ass' }
+            : { label: t('auction_ending_soon'), value: 'aes' },
+          { label: t('recently_added'), value: 'ra' },
         ]}
         position={SelectField.Positions.BELOW}
       />
