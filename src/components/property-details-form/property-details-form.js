@@ -199,8 +199,8 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           iconDelete={true}
           titleContent={' '}
           addTitle={
-            <div className="">
-              <FontIcon className="">add</FontIcon>
+            <div className="add-images">
+              <FontIcon>add</FontIcon>
               {t('add_images')}
             </div>
           }
