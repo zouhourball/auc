@@ -209,9 +209,11 @@ const BiddingCard = ({
             <div className="description">{auctionData.location}</div>
             <div className="sep" />
             <div className="description">
-              {t('current_ask')}
-              {t('OMR')}
-              {moneyFormat(auctionData?.['last_bid']?.['bid_amount']) || 0}
+              <span>{t('current_ask')}</span>
+              <span>
+                {moneyFormat(auctionData?.['last_bid']?.['bid_amount']) || 0}
+              </span>
+              <span>{t('OMR')}</span>
             </div>
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
