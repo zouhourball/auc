@@ -31,6 +31,8 @@ const BiddingCard = ({
   logged,
   meOrgs,
 }) => {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch()
 
   const saveAuctionMutation = useMutation(saveAsFav, {
@@ -76,7 +78,29 @@ const BiddingCard = ({
       }
     },
   })
-  const { t } = useTranslation()
+
+  const renderType = (type) => {
+    switch (type) {
+      case 'Home':
+        return t('Home')
+      case 'Villa':
+        return t('Villa')
+      case 'Apartment':
+        return t('Apartment')
+      case 'Hostel':
+        return t('Hostel')
+      case 'Land':
+        return t('Land')
+      case 'Building':
+        return t('Building')
+      case 'Office':
+        return t('Office')
+      case 'Plot':
+        return t('Plot')
+      case 'Unit':
+        return t('Unit')
+    }
+  }
 
   const renderBtnTitle = () => {
     if (status === 'Upcoming') return t('view_details')
@@ -149,13 +173,13 @@ const BiddingCard = ({
         {status !== 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {
+              {renderType(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
-                )?.label
-              }
+                )?.label,
+              )}
             </div>
             <div className="title">
               {auctionData?.listing?.title} in{' '}
@@ -174,11 +198,11 @@ const BiddingCard = ({
           <div className="bidding-card-info">
             <div className="data-section-title">
               {
-                propertyTypeList.find(
+                renderType(propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
-                )?.label
+                )?.label)
               }
             </div>
             <div className="title">{auctionData?.listing?.title}</div>
@@ -186,14 +210,15 @@ const BiddingCard = ({
             <div className="sep" />
             <div className="description">
               {t('current_ask')}
-              {' OMR '}
+              {t('OMR')}
               {moneyFormat(auctionData?.['last_bid']?.['bid_amount']) || 0}
             </div>
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
         {!detailsUrl &&
-          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) && !(auctionData?.['submitted_by'] === user?.subject) &&
+          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
+          !(auctionData?.['submitted_by'] === user?.subject) &&
           status === 'Active' && (
           <Button
             flat

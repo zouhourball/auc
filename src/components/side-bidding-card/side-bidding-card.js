@@ -28,6 +28,29 @@ const SideBiddingCard = ({
 }) => {
   const dispatch = useDispatch()
 
+  const renderType = (type) => {
+    switch (type) {
+      case 'Home':
+        return t('Home')
+      case 'Villa':
+        return t('Villa')
+      case 'Apartment':
+        return t('Apartment')
+      case 'Hostel':
+        return t('Hostel')
+      case 'Land':
+        return t('Land')
+      case 'Building':
+        return t('Building')
+      case 'Office':
+        return t('Office')
+      case 'Plot':
+        return t('Plot')
+      case 'Unit':
+        return t('Unit')
+    }
+  }
+
   const saveAuctionMutation = useMutation(saveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -144,13 +167,13 @@ const SideBiddingCard = ({
         {status !== 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {
+              {renderType(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
-                )?.label
-              }
+                )?.label,
+              )}
             </div>
             <div className="title">
               {auctionData?.listing?.title} in{' '}
@@ -168,13 +191,13 @@ const SideBiddingCard = ({
         {status === 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {
+              {renderType(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
-                )?.label
-              }
+                )?.label,
+              )}
             </div>
             <div className="title">{auctionData?.listing?.title}</div>
             <div className="description">{auctionData.location}</div>

@@ -124,7 +124,7 @@ const Admin = (logged, auctionId) => {
             // console.log(el?.listing?.documents, documentsDialog, 'docs')
           }}
         >
-          View
+          {t('view')}
         </Button>
       ),
     }))

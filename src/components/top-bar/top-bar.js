@@ -158,7 +158,7 @@ const TopBar = ({
             menuItems={[
               <ListItem
                 key={1}
-                primaryText="Live Auctions"
+                primaryText={t('live_auctions')}
                 onClick={() => {
                   navigate(`/${logged ? 'auctions' : 'public'}/live-auctions`)
                   setCurrentModule('auctions')
@@ -166,7 +166,7 @@ const TopBar = ({
               />,
               <ListItem
                 key={2}
-                primaryText="Upcoming Auctions"
+                primaryText={t('upcoming_auctions')}
                 onClick={() => {
                   navigate(
                     `/${logged ? 'auctions' : 'public'}/upcoming-auctions`,
@@ -282,7 +282,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => navigate('/registration')}
               >
-                {t('register')}
+                {t('new_user')}
               </Button>
               <Button
                 flat
