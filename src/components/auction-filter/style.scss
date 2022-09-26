@@ -1,20 +1,60 @@
 .auctions-filter {
   flex: 1 0 auto;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
+  max-width: 100%;
   margin: 0;
+
+  @media (max-width: 1250px) {
+    order: 1;
+    min-width: 100%;
+  }
+
+  .md-icon {
+    color: #5078e1;
+  }
+
+  .md-text {
+    color: #7c7c7c;
+    font-size: 12px;
+    font-weight: normal;
+
+    .md-selection-control-label {
+      padding-left: 0;
+    }
+
+    .md-btn--icon {
+      width: 22px;
+      height: 22px;
+      padding: 2px 0;
+    }
+
+    .md-icon {
+      color: #5078e1;
+    }
+  }
 
   &-textField {
     padding: 12px 16px;
     border-radius: 12px;
     background: #fff;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+    @media (max-width: 1250px) {
+      flex-grow: 1;
+      min-width: fit-content;
+    }
   }
 
   &-selectField {
     border-radius: 12px;
     background: #fff;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+    @media (max-width: 1250px) {
+      flex-grow: 1;
+      min-width: fit-content;
+    }
 
     .md-text-field {
       padding: 12px 16px;
@@ -26,10 +66,19 @@
 
     .md-selection-control-container {
       height: 22px;
+      padding-left: 8px;
+
+      .md-icon {
+        font-size: 15px;
+      }
     }
 
     .md-ink-container {
       display: none;
+    }
+
+    &.md-text-field {
+      font-size: 12px;
     }
 
     &[aria-expanded='true'] {
@@ -40,8 +89,10 @@
   .salary-range {
     position: absolute;
     z-index: 100;
-    top: 33px;
+    top: 27px;
+    width: 100%;
     border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.4);
   }
 
   .price-range {
@@ -70,10 +121,10 @@
 
   .price {
     position: relative;
-  }
 
-  .md-icon {
-    color: #5078e1;
+    @media (max-width: 1250px) {
+      min-width: 200px;
+    }
   }
 
   .md-list {
@@ -101,8 +152,8 @@
       visibility: visible;
       border-radius: 12px;
       background-color: #7c7c7c;
-      background-clip: content-box;
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      background-clip: content-box;
     }
 
     &:hover {
@@ -122,56 +173,44 @@
     }
   }
 
-  .md-text {
-    padding-left: 12px;
-    color: #7c7c7c;
-    font-size: 12px;
-    font-weight: normal;
+  .md-panel-header {
+    align-items: flex-start;
 
-    .md-selection-control-label {
-      padding-left: 0;
+    &[aria-pressed='false'] {
+      height: unset;
+      padding-right: 16px;
+      padding-left: 16px;
     }
 
-    .md-btn--icon {
-      width: 22px;
-      height: 22px;
-      padding: 2px 0;
+    &--expanded {
+      height: unset;
+      padding-right: 16px;
+      padding-left: 16px;
+      font-size: 12px;
     }
-
-    .md-icon {
-      color: #5078e1;
-      font-size: 16px;
-    }
-  }
-
-  .md-panel-header[aria-pressed='false'] {
-    height: 22px;
-    padding-right: 12px;
-    padding-left: 4px;
-  }
-
-  .md-panel-header--expanded {
-    height: 30px;
-    padding-right: 16px;
-    padding-left: 4px;
-    font-size: 12px;
   }
 
   .md-expansion-panel-list {
-    .md-expansion-panel--expanded[aria-expanded='true'] {
-      margin-top: 0;
+    .md-expansion-panel {
+      &--expanded {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
 
-      .md-panel-column {
-        padding-left: 12px;
-        font-size: 12px;
-        font-weight: 500;
+        .md-panel-column {
+          font-size: 12px;
+          font-weight: 500;
+        }
       }
 
       .md-panel-content {
-        padding: 0 6px 16px;
+        padding: 8px 23px 0;
 
         .md-selection-control-container {
-          height: 22px;
+          height: unset;
+        }
+
+        .md-icon {
+          font-size: 15px;
         }
       }
     }
