@@ -16,7 +16,7 @@ import {
   genUploadToken,
   registerBroker,
 } from 'libs/api/auctions-api'
-import { useCurrentLang } from 'libs/langs'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 
 import backgroundImage from './background_image.png'
@@ -32,6 +32,8 @@ import ConfirmDialog from 'components/confirm-dialog'
 import './style.scss'
 
 const RegistrationPage = () => {
+  const { t } = useTranslation()
+
   const [currentTab, setCurrentTab] = useState(0)
   const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
   const [signupData, setSignupData] = useState({ countryCode: '+968' })
@@ -155,7 +157,7 @@ const RegistrationPage = () => {
           <>
             <TextField
               id={'company-name'}
-              placeholder="Enter company name"
+              placeholder={t('enter_company_name')}
               value={companyName}
               onChange={(v) => setValues('companyName', v)}
               className="textField"
@@ -168,8 +170,7 @@ const RegistrationPage = () => {
               onClick={() => setTest(1)}
               onChange={(value) => setValues('countryId', value)}
               position={SelectField.Positions.BELOW}
-              className="textField selectField"
-              placeholder="Choose Country"
+              className={t('choose_country')}
             />
             <div className="textField phone-field">
               <SelectField
@@ -197,7 +198,7 @@ const RegistrationPage = () => {
               <div className="sep"></div>
               <TextField
                 id={'phone'}
-                placeholder="Enter phone number"
+                placeholder={t('enter_phone_number')}
                 value={phoneNum}
                 onChange={(v) => setValues('phoneNum', v)}
                 className="phone-number"
@@ -205,14 +206,14 @@ const RegistrationPage = () => {
             </div>
             <TextField
               id={'address'}
-              placeholder="Enter address"
+              placeholder={t('enter_address')}
               value={address}
               onChange={(v) => setValues('address', v)}
               className="textField"
             />
             <TextField
               id={'email'}
-              placeholder="Enter email"
+              placeholder={t('enter_email')}
               value={email}
               onChange={(v) => setValues('email', v)}
               className="textField"
@@ -220,13 +221,13 @@ const RegistrationPage = () => {
             <TextField
               id={'pw'}
               type="password"
-              placeholder="Enter password"
+              placeholder={t('enter_password')}
               value={password}
               onChange={(v) => setValues('password', v)}
               className="textField"
             />
             <div className="company-logo-title">
-              <h3>Company Logo</h3>
+              <h3>{t('company_logo')}</h3>
             </div>
             <UploadImages
               publicToken={uploadToken?.token}
@@ -234,7 +235,7 @@ const RegistrationPage = () => {
               title={
                 <>
                   <span className="drop-zone-placeholder grey-text font-size-bg">
-                    {'Drop your logo here, or '}
+                    {t('drop')}
                     <span className="blue-text font-size-bg">
                       <b>{'select_file'}</b>
                     </span>
@@ -257,14 +258,14 @@ const RegistrationPage = () => {
           <>
             <TextField
               id={'full-name'}
-              placeholder="Enter full name"
+              placeholder={t('enter_full_name')}
               value={fullName}
               onChange={(v) => setValues('fullName', v)}
               className="textField"
             />
             <TextField
               id={'email'}
-              placeholder="Enter email"
+              placeholder={t('enter_email')}
               value={email}
               onChange={(v) => setValues('email', v)}
               className="textField"
@@ -295,7 +296,7 @@ const RegistrationPage = () => {
               <div className="sep"></div>
               <TextField
                 id={'phone'}
-                placeholder="Enter phone number"
+                placeholder={t('enter_phone_number')}
                 value={phoneNum}
                 onChange={(v) => setValues('phoneNum', v)}
                 className="phone-number"
@@ -304,7 +305,7 @@ const RegistrationPage = () => {
             <TextField
               id={'email'}
               type="password"
-              placeholder="Enter password"
+              placeholder={t('enter_password')}
               value={password}
               onChange={(v) => setValues('password', v)}
               className="textField"
@@ -330,8 +331,8 @@ const RegistrationPage = () => {
     <div className="registration-page">
       {confirmDialogVisible && (
         <ConfirmDialog
-          title="Successfully Registered"
-          description="You can now browse through auctions in the platform"
+          title={t('Successfully_Registered')}
+          description={t('you_can')}
           visible={confirmDialogVisible}
           msg={confirmDialogVisible?.error}
           imgCard={successRegister}
@@ -344,9 +345,9 @@ const RegistrationPage = () => {
         <img className="background" src={backgroundImage} />
       </div>
       <div className="registration-page-right">
-        <div className="registration-page-right-title">New to Auctions</div>
+        <div className="registration-page-right-title">{t('new_to_auctions')}</div>
         <div className="registration-page-right-subtitle">
-          Sign up to view listed properties
+          {t('sign_up_to_view')}
         </div>
         <div className="body">
           <div className="tabs">
@@ -354,14 +355,14 @@ const RegistrationPage = () => {
               onClick={() => setCurrentTab(0)}
               className={`item ${currentTab === 0 ? 'active' : ''}`}
             >
-              Bidders
+              {t('bidders')}
             </span>
             <div className="sep"></div>
             <span
               onClick={() => setCurrentTab(1)}
               className={`item ${currentTab === 1 ? 'active' : ''}`}
             >
-              Brokers
+              {t('brokers')}
             </span>
           </div>
           <div className="view">
@@ -379,24 +380,24 @@ const RegistrationPage = () => {
                 }
               />
               <div>
-                I accept <span className="blue-text">Terms & Conditions</span>{' '}
-                and
-                <span className="blue-text"> Privacy Policy</span>
+                {t('i_accept')} <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
+                {t('and')}
+                <span className="blue-text"> {t('privacy_policy')}</span>
               </div>
             </div>
             <Button
               className="signUp-btn"
               onClick={() => (currentTab === 1 ? register() : signUp())}
             >
-              {isLoading || loading ? <CircularProgress /> : 'Sign Up'}
+              {isLoading || loading ? <CircularProgress /> : t('sign_up')}
             </Button>
             <div className="grey-text font-size-bg">
-              Continue as a{' '}
+              {t('continue_as_a')}{' '}
               <span
                 className="blue-text  font-size-bg"
                 onClick={() => navigate('/public/home')}
               >
-                Guest
+                {t('guest')}
               </span>
             </div>
             {/* <div className="social-container">
@@ -417,8 +418,8 @@ const RegistrationPage = () => {
               />
             </div> */}
             <div className="grey-text font-size-bg">
-              Don t have an account?{' '}
-              <span className="blue-text font-size-bg">Log In</span>{' '}
+              {t('Don_t_have')}{' '}
+              <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
             </div>
           </div>
         </div>

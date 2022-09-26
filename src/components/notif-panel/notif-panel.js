@@ -3,10 +3,13 @@ import { navigate } from '@reach/router'
 import auctionWon from 'images/auction_won.svg'
 import myActivity from 'images/my_activity_enable.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
 const NotifPanel = ({ notifications }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="notifPanel">
       {notifications.map((item, index) => {
@@ -35,7 +38,7 @@ const NotifPanel = ({ notifications }) => {
           onClick={() => navigate('/auctions/notifications')}
           className="load-more"
         >
-          View All
+          {t('view_all')}{' '}
         </Button>
       </div>
     </div>

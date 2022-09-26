@@ -284,6 +284,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         <img src={tick} /> {el?.feature?.name}
       </div>
     ))
+
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
@@ -394,7 +395,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
         <div className="auction-details-card md-cell md-cell--12">
           <div className="note">
-            Posted {moment(auctionData?.['created_date']).fromNow()}
+            {t('posted')} {moment(auctionData?.['created_date']).fromNow()}
           </div>
           <div className="title">
             {
@@ -408,11 +409,11 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           <div className="auction-details-card-details">
             <div className="auction-details-card-details-item">
               <img src={icon1} /> {auctionPropertyData?.['count_bedrooms']}{' '}
-              Bedrooms
+              {t('bedrooms')}
             </div>
             <div className="auction-details-card-details-item">
               <img src={icon2} />
-              {auctionPropertyData?.['count_bathrooms']} Bathrooms
+              {auctionPropertyData?.['count_bathrooms']} {t('bathrooms')}
             </div>
             <div className="auction-details-card-details-item">
               <img src={icon3} />
@@ -444,14 +445,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             <div className="auction-timer-details">
               <div className="auction-timer-info">
                 <div>
-                  <strong>{auctionData?.['starting_price']} OMR</strong>
+                  <strong>{auctionData?.['starting_price']} {t('OMR')}</strong>
                 </div>
                 <div>{t('start_price')}</div>
               </div>
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
-                  <strong> {auctionData?.['incremental_price']} OMR</strong>
+                  <strong> {auctionData?.['incremental_price']} {t('OMR')}</strong>
                 </div>
                 <div>{t('minimum_incr')}</div>
               </div>
@@ -559,7 +560,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 className="auction-highest-btn"
                 disabled
               >
-                Current Highest Bidder
+                {t('current_highest_bidder')}
               </Button>
             ) : admin ? (
               <Button

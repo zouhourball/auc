@@ -25,14 +25,14 @@ const Public = () => {
   const { authorizationUri, clientId, scopes } = OauthHelper.config
 
   const modulesList = [
-    { label: 'Broker', key: 'broker', linkToNewTab: 'broker' },
+    { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
     {
-      label: 'How it works',
+      label: t('how_it_works'),
       key: 'how-it-works',
       linkToNewTab: 'how-it-works',
     },
 
-    { label: 'Contact us', linkToNewTab: 'contact-us', key: 'contact-us' },
+    { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
   return (
     <div className="public-view">

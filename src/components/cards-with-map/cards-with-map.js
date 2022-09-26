@@ -7,10 +7,13 @@ import { navigate } from '@reach/router'
 
 import SideAuctionCard from 'components/side-auction-card'
 import { propertyTypeList } from 'components/helpers'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
 const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
+  const { t } = useTranslation()
+
   const downloadToken = store?.getState()?.app?.dlToken
 
   const [activePin, setPin] = useState()
@@ -48,7 +51,7 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
           'name_en'
         ]]: `${el?.listing?.property?.country?.['name_en']}`,
         action: (id) => navigate(`detail/${el?.uuid}`),
-        actionTxt: 'View Details',
+        actionTxt: t('view_details'),
         // actionTxtColor:,
         actionBg: '#527bde',
       },
