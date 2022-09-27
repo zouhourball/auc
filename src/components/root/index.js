@@ -99,7 +99,9 @@ const Private = withOAuth()(({ ssoCallback }) => {
     },
   })
   const roles = useMemo(() => data?.mev2?.roles, [data])
-  const auctionRole = roles?.includes('public:auction:template:approver')
+  const auctionRole =
+    roles?.includes('public:auction:template:approver') &&
+    roles?.includes('sys:admin')
 
   return (
     <Router>
