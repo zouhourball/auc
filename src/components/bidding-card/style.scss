@@ -2,7 +2,7 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  height: 18.75vw;
+  min-height: 18.75vw;
   overflow: hidden;
   border-radius: 2.344vw;
   background-color: #fff;
@@ -95,6 +95,7 @@
     color: #fff;
 
     .auction-timer {
+      width: fit-content;
       padding: 2px 6px;
       border: 1px solid #fff;
       border-radius: 8px;
@@ -162,8 +163,10 @@
     }
 
     .description {
+      display: inline-flex;
       font-size: 16px;
       font-weight: 300;
+      gap: 5px;
     }
   }
 }
