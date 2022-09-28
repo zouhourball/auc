@@ -192,10 +192,10 @@
   "broker": "Broker",
   "submit": "Submit",
   "org_exists": "This Organization already exists",
-  "mobile_exists": "This Mobile Number is already used",
+  "mobile_exists": "Mobile Already Exits.",
   "email_exists": "This Email already exists",
   "auction_title": "Auction Title",
-  "auction_position": "Address*",
+  "auction_position": "Address",
   "frequently_asked": "FREQUENTLY ASKED QUESTIONS",
   "buying": "Buying",
   "selling": "Selling",
@@ -240,5 +240,6 @@
   "Don_t_have": "Don t have an account?",
   "log_in": "Log In",
   "sign_up": "Sign Up",
-  "enter_company_name": "Enter company name"
+  "enter_company_name": "Enter company name",
+  "state-gov": "State/Governorate"
 }

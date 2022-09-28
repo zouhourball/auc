@@ -189,9 +189,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
     variables: { auctionID: auctionId },
   })
-  useEffect(() => {
-    refetchAuction()
-  }, [subNewBid, timeExtension])
+
   useEffect(() => {
     if (
       biddersList?.bids[0]?.sub === user?.subject &&
@@ -204,7 +202,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         ),
       )
     }
-  }, [subNewBid, auctionData])
+  }, [auctionData])
+  useEffect(() => {
+    refetchAuction()
+  }, [timeExtension, subNewBid])
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
@@ -466,7 +467,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer user={user} auctionData={auctionData} node />
+              <AuctionTimer
+                user={user}
+                auctionData={auctionData}
+                node
+                timeExtension={timeExtension}
+                refetchAuction={refetchAuction}
+              />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>

@@ -1,0 +1,17 @@
+.spinnerCountry,
+.spinnerState,
+.spinnerCity {
+  width: 100%;
+}
+
+.countryStateCity_Wrapper {
+  display: flex;
+  align-content: flex-end;
+  justify-content: stretch;
+  width: 100%;
+
+  .md-cell {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}

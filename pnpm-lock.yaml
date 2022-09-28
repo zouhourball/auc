@@ -14091,7 +14091,7 @@ packages:
       integrity: sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==
   /lodash.isequal/4.5.0:
     resolution:
-      integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+      integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
   /lodash.isinteger/4.0.4:
     dev: false
     resolution:
