@@ -166,11 +166,12 @@ const RegistrationPage = () => {
               id={'country'}
               menuItems={renderCountry()}
               listClassName="country-list"
+              placeholder={t('choose_country')}
               value={countryId}
               onClick={() => setTest(1)}
               onChange={(value) => setValues('countryId', value)}
               position={SelectField.Positions.BELOW}
-              className={t('choose_country')}
+              className={'textField selectField'}
             />
             <div className="textField phone-field">
               <SelectField

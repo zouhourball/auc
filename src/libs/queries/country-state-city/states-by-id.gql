@@ -1,0 +1,6 @@
+query statesByCountryID($countryID: String!) {
+  statesByCountryID(countryID: $countryID) {
+    id
+    name
+  }
+}
