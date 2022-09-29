@@ -10,7 +10,7 @@ import { DatePicker } from '@target-energysolutions/date-picker'
 import { getCountry, getCity } from 'libs/api/auctions-api'
 import DrawOnMap from 'components/draw-on-map'
 // import MapResult from 'components/map-result'
-// import CustomSelectWithSearch from 'components/custom-select-with-search'
+import CustomSelectWithSearch from 'components/custom-select-with-search'
 
 import { DueDate } from 'components/due-date'
 import { propertyTypeList } from 'components/helpers'
@@ -27,7 +27,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [endTime, setEndTime] = useState(moment())
   const [addressView, setAddressView] = useState(false)
-  // const [showListCountry, handleShowListCountry] = useState('')
+  const [showListCountry, handleShowListCountry] = useState('')
+  const [showListCities, handleShowListCities] = useState('')
+  const [textSearch, setTextSearch] = useState('')
 
   // const { data: getCountryList } = useQuery(['getCountry'], getCountry)
 
@@ -35,7 +37,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     data: getCountryList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery([25], getCountry, {
+  } = useInfiniteQuery([25, textSearch], getCountry, {
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (
@@ -48,7 +50,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   })
 
   const { data: getCityList } = useQuery(
-    ['getCity', auctionDetails?.country],
+    ['getCity', auctionDetails?.country, textSearch],
     getCity,
   )
 
@@ -124,8 +126,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   } = auctionDetails
 
   const ref = document.getElementsByClassName('country-list')
-  const [test, setTest] = useState(0)
-  // const [textSearch, setTextSearch] = useState('')
+  const [test] = useState(0)
 
   useEffect(() => {
     ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
@@ -210,7 +211,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">{t('country')}</label>
-        <SelectField
+        {/* <SelectField
           onClick={() => setTest(1)}
           id="select-field-with-elements-country-spinner"
           placeholder={t('select_country')}
@@ -222,33 +223,34 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           position={SelectField.Positions.BELOW}
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
           className="selectField-withShadow"
+        /> */}
+        <CustomSelectWithSearch
+          items={renderCountry()}
+          label={t('country')}
+          hideSecondaryLabel={false}
+          listVisibility={showListCountry}
+          setListVisibility={handleShowListCountry}
+          selectedItem={
+            renderCountry()?.find((el) => el?.value === country)?.label || ''
+          }
+          searchPlaceholder={t('country')}
+          onClickItem={(itemSelected) => {
+            onSetFormDetails('country', itemSelected?.value)
+            setTextSearch('')
+          }}
+          hideAvatar={true}
+          withHeader={true}
+          searchItem={textSearch}
+          setSearchItem={setTextSearch}
+          searchItemPlaceHolder={t('search_country')}
+          singleSelect
+          className="selectField-withShadow"
         />
       </div>
-      {/* <CustomSelectWithSearch
-        items={renderCountry()}
-        label={t('country')}
-        hideSecondaryLabel={false}
-        listVisibility={showListCountry}
-        setListVisibility={handleShowListCountry}
-        selectedItem={
-                renderCountry()?.find(el => el?.value === country)
-                  ?.label || ''
-        }
-        searchPlaceholder={t('country')}
-        onClickItem={itemSelected => {
-          onSetFormDetails('country', itemSelected?.id)
-          setTextSearch('')
-        }}
-        hideAvatar={true}
-        withHeader={true}
-        searchItem={textSearch}
-        setSearchItem={setTextSearch}
-        searchItemPlaceHolder={t('search_country')}
-        singleSelect={true}
-      /> */}
+
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">{t('state-gov')}</label>
-        <SelectField
+        {/* <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={t('state-gov')}
           menuItems={renderCity()}
@@ -257,6 +259,28 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           fullWidth
           position={SelectField.Positions.BELOW}
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          className="selectField-withShadow"
+        /> */}
+        <CustomSelectWithSearch
+          items={renderCity()}
+          label={t('state-gov')}
+          hideSecondaryLabel={false}
+          listVisibility={showListCities}
+          setListVisibility={handleShowListCities}
+          selectedItem={
+            renderCity()?.find((el) => el?.value === city)?.label || ''
+          }
+          searchPlaceholder={t('state-gov')}
+          onClickItem={(itemSelected) => {
+            onSetFormDetails('city', itemSelected?.value)
+            setTextSearch('')
+          }}
+          hideAvatar={true}
+          withHeader={true}
+          searchItem={textSearch}
+          setSearchItem={setTextSearch}
+          searchItemPlaceHolder={t('search_city')}
+          singleSelect
           className="selectField-withShadow"
         />
       </div>
