@@ -16,7 +16,12 @@ import {
   genUploadToken,
   registerBroker,
 } from 'libs/api/auctions-api'
-import { useCurrentLang, useTranslation } from 'libs/langs'
+import {
+  useChangeLanguage,
+  useCurrentLang,
+  useSupportedLangs,
+  useTranslation,
+} from 'libs/langs'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 
 import backgroundImage from './background_image.png'
@@ -33,6 +38,9 @@ import './style.scss'
 
 const RegistrationPage = () => {
   const { t } = useTranslation()
+  const langs = useSupportedLangs()
+  const changeLang = useChangeLanguage()
+  const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
 
   const [currentTab, setCurrentTab] = useState(0)
   const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
@@ -51,6 +59,14 @@ const RegistrationPage = () => {
   } = signupData
 
   const lang = useCurrentLang()
+
+  const getActiveLabel = ({ activeLabel }) => {
+    if (activeLabel === 'اللغة العربية') {
+      return 'عربي'
+    } else {
+      return activeLabel.slice(0, 3)
+    }
+  }
   const { mutate: registerBidderMutation, isLoading } = useMutation(
     registerBidder,
     {
@@ -315,6 +331,7 @@ const RegistrationPage = () => {
         )
     }
   }
+
   const signUp = () => {
     registerBidderMutation({
       body: {
@@ -343,68 +360,98 @@ const RegistrationPage = () => {
         />
       )}
       <div className="registration-page-left">
-        <img className="background" src={backgroundImage} />
+        <div>
+          <img className="background" src={backgroundImage} />
+        </div>
       </div>
-      <div className="registration-page-right">
-        <div className="registration-page-right-title">
-          {t('new_to_auctions')}
-        </div>
-        <div className="registration-page-right-subtitle">
-          {t('sign_up_to_view')}
-        </div>
-        <div className="body">
-          <div className="tabs">
-            <span
-              onClick={() => setCurrentTab(0)}
-              className={`item ${currentTab === 0 ? 'active' : ''}`}
-            >
-              {t('bidders')}
-            </span>
-            <div className="sep"></div>
-            <span
-              onClick={() => setCurrentTab(1)}
-              className={`item ${currentTab === 1 ? 'active' : ''}`}
-            >
-              {t('brokers')}
-            </span>
-          </div>
-          <div className="view">
-            {renderView()}
-            <div className="terms-checkbox">
-              <Checkbox
-                id={'accept-terms'}
-                checked={acceptTerms}
-                onChange={(v) => setValues('acceptTerms', v)}
-                checkedIcon={<FontIcon className="checked">check</FontIcon>}
-                uncheckedIcon={
-                  <FontIcon className="unchecked">
-                    check_box_outline_blank
-                  </FontIcon>
+      <div>
+        <div className="select-language-field">
+          <SelectField
+            id="select-field-3-1"
+            menuItems={langs.map(({ key, label }) => {
+              if (key === 'ar') {
+                return {
+                  label: 'اللغة العربية',
+                  value: key,
                 }
-              />
-              <div>
-                {t('i_accept')}{' '}
-                <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
-                {t('and')}
-                <span className="blue-text"> {t('privacy_policy')}</span>
-              </div>
-            </div>
-            <Button
-              className="signUp-btn"
-              onClick={() => (currentTab === 1 ? register() : signUp())}
-            >
-              {isLoading || loading ? <CircularProgress /> : t('sign_up')}
-            </Button>
-            <div className="grey-text font-size-bg">
-              {t('continue_as_a')}{' '}
+              }
+              return {
+                label: label,
+                value: key,
+              }
+            })}
+            getActiveLabel={getActiveLabel}
+            simplifiedMenu={false}
+            onChange={(v) => {
+              // location.reload()
+              changeLang(v)
+            }}
+            position={SelectField.Positions.BELOW}
+            value={currentLang.key || 'en-US'}
+            className="langSelector"
+            dropdownIcon={<FontIcon>expand_more</FontIcon>}
+          />
+        </div>
+        <div className="registration-page-right">
+          <div className="registration-page-right-title">
+            {t('new_to_auctions')}
+          </div>
+          <div className="registration-page-right-subtitle">
+            {t('sign_up_to_view')}
+          </div>
+          <div className="body">
+            <div className="tabs">
               <span
-                className="blue-text  font-size-bg"
-                onClick={() => navigate('/public/home')}
+                onClick={() => setCurrentTab(0)}
+                className={`item ${currentTab === 0 ? 'active' : ''}`}
               >
-                {t('guest')}
+                {t('bidders')}
+              </span>
+              <div className="sep"></div>
+              <span
+                onClick={() => setCurrentTab(1)}
+                className={`item ${currentTab === 1 ? 'active' : ''}`}
+              >
+                {t('brokers')}
               </span>
             </div>
-            {/* <div className="social-container">
+            <div className="view">
+              {renderView()}
+              <div className="terms-checkbox">
+                <Checkbox
+                  id={'accept-terms'}
+                  checked={acceptTerms}
+                  onChange={(v) => setValues('acceptTerms', v)}
+                  checkedIcon={<FontIcon className="checked">check</FontIcon>}
+                  uncheckedIcon={
+                    <FontIcon className="unchecked">
+                      check_box_outline_blank
+                    </FontIcon>
+                  }
+                />
+                <div>
+                  {t('i_accept')}{' '}
+                  <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
+                  {t('and')}
+                  <span className="blue-text"> {t('privacy_policy')}</span>
+                </div>
+              </div>
+              <Button
+                className="signUp-btn"
+                onClick={() => (currentTab === 1 ? register() : signUp())}
+              >
+                {isLoading || loading ? <CircularProgress /> : t('sign_up')}
+              </Button>
+              <div className="grey-text font-size-bg">
+                {t('continue_as_a')}{' '}
+                <span
+                  className="blue-text  font-size-bg"
+                  onClick={() => navigate('/public/home')}
+                >
+                  {t('guest')}
+                </span>
+              </div>
+              {/* <div className="social-container">
               <img
                 className="social-container-icon"
                 onClick={() => window.open('https://www.facebook.com/')}
@@ -421,9 +468,10 @@ const RegistrationPage = () => {
                 src={googleIcon}
               />
             </div> */}
-            <div className="grey-text font-size-bg">
-              {t('Don_t_have')}{' '}
-              <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
+              <div className="grey-text font-size-bg">
+                {t('Don_t_have')}{' '}
+                <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
+              </div>
             </div>
           </div>
         </div>
