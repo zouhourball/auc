@@ -366,6 +366,7 @@ const RegistrationPage = () => {
       </div>
       <div>
         <div className="select-language-field">
+          <span>Choose language</span>
           <SelectField
             id="select-field-3-1"
             menuItems={langs.map(({ key, label }) => {
