@@ -16,7 +16,12 @@ import {
   genUploadToken,
   registerBroker,
 } from 'libs/api/auctions-api'
-import { useCurrentLang, useTranslation } from 'libs/langs'
+import {
+  useChangeLanguage,
+  useCurrentLang,
+  useSupportedLangs,
+  useTranslation,
+} from 'libs/langs'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
 
 import backgroundImage from './background_image.png'
@@ -33,6 +38,9 @@ import './style.scss'
 
 const RegistrationPage = () => {
   const { t } = useTranslation()
+  const langs = useSupportedLangs()
+  const changeLang = useChangeLanguage()
+  const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
 
   const [currentTab, setCurrentTab] = useState(0)
   const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
@@ -51,6 +59,14 @@ const RegistrationPage = () => {
   } = signupData
 
   const lang = useCurrentLang()
+
+  const getActiveLabel = ({ activeLabel }) => {
+    if (activeLabel === 'اللغة العربية') {
+      return 'عربي'
+    } else {
+      return activeLabel.slice(0, 3)
+    }
+  }
   const { mutate: registerBidderMutation, isLoading } = useMutation(
     registerBidder,
     {
@@ -315,6 +331,7 @@ const RegistrationPage = () => {
         )
     }
   }
+
   const signUp = () => {
     registerBidderMutation({
       body: {
@@ -343,6 +360,33 @@ const RegistrationPage = () => {
         />
       )}
       <div className="registration-page-left">
+        <div style={{ position: 'absolute' }}>
+          <SelectField
+            id="select-field-3-1"
+            menuItems={langs.map(({ key, label }) => {
+              if (key === 'ar') {
+                return {
+                  label: 'اللغة العربية',
+                  value: key,
+                }
+              }
+              return {
+                label: label,
+                value: key,
+              }
+            })}
+            getActiveLabel={getActiveLabel}
+            simplifiedMenu={false}
+            onChange={(v) => {
+              // location.reload()
+              changeLang(v)
+            }}
+            position={SelectField.Positions.BELOW}
+            value={currentLang.key || 'en-US'}
+            className="langSelector"
+            dropdownIcon={<FontIcon>expand_more</FontIcon>}
+          />
+        </div>
         <img className="background" src={backgroundImage} />
       </div>
       <div className="registration-page-right">
