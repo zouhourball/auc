@@ -28,6 +28,7 @@ import Notifications from 'components/notifications'
 
 import './style.scss'
 import store from 'libs/store'
+import ProfilePage from 'components/profile-page'
 
 const queryClient = new QueryClient()
 
@@ -156,7 +157,8 @@ const Home = () => {
             user={currentUser?.mev2?.user}
             logged
           />
-
+          <ProfilePage path={'/profile'} />
+          <ProfilePage path={'/company-profile'} company />
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} />
           ))}
