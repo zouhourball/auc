@@ -1,0 +1,6 @@
+query citiesByStateID($stateID: String!) {
+  citiesByStateID(stateID: $stateID) {
+    id
+    cityName
+  }
+}

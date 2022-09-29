@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button, FontIcon } from 'react-md'
+import { Avatar, Button } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
-import store from 'libs/store'
+// import store from 'libs/store'
 import moment from 'moment'
 import { useDispatch } from 'react-redux'
 import { get } from 'lodash-es'
@@ -34,7 +34,7 @@ import getBids from 'libs/queries/auction/get-bids.gql'
 import { addToast } from 'modules/app/actions'
 
 import ToastMsg from 'components/toast-msg'
-import DrawOnMap from 'components/draw-on-map'
+// import DrawOnMap from 'components/draw-on-map'
 import AuctionTimer from 'components/auction-timer'
 import TermsCondition from 'components/terms-conditions'
 import DocumentsContainer from 'components/docs-dialog'
@@ -56,14 +56,15 @@ import tick from 'images/Tick.svg'
 import info from 'images/Info.svg'
 
 import './style.scss'
+import AuctionDetailsSlider from 'components/auction-details-slider'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  const [addressView, setAddressView] = useState(false)
+  // const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [successDialog, setSuccessDialog] = useState(false)
-  const downloadToken = store?.getState()?.app?.dlToken
+  // const downloadToken = store?.getState()?.app?.dlToken
 
   const [docAction, setDocAction] = useState(false)
   const { data: auctionData, refetch: refetchAuction } = useQuery(
@@ -119,7 +120,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
     } else {
     }
   }, [paymentCallback])
-  const [currentImg, setCurrentImg] = useState('')
+  const [, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
   const [bidAmount, setBidAmount] = useState('')
@@ -189,9 +190,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { data: timeExtension } = useSubscription(subscribeTimeExtension, {
     variables: { auctionID: auctionId },
   })
-  useEffect(() => {
-    refetchAuction()
-  }, [subNewBid, timeExtension])
+
   useEffect(() => {
     if (
       biddersList?.bids[0]?.sub === user?.subject &&
@@ -204,7 +203,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         ),
       )
     }
-  }, [subNewBid, auctionData])
+  }, [auctionData])
+  useEffect(() => {
+    refetchAuction()
+  }, [timeExtension, subNewBid])
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
@@ -267,27 +269,26 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       uuid,
     })
   }
-  const renderPropertyImages = () =>
-    auctionData?.listing?.images?.map((image) => (
-      <>
-        <img
-          key={image?.uuid}
-          className="gallery-image item"
-          onClick={() => setCurrentImg(image?.url)}
-          src={`${image?.url}?token=${downloadToken}&view=true`}
-        />
-      </>
-    ))
+  // const renderPropertyImages = () =>
+  //   auctionData?.listing?.images?.map((image) => (
+  //     <>
+  //       <img
+  //         key={image?.uuid}
+  //         className="gallery-image item"
+  //         onClick={() => setCurrentImg(image?.url)}
+  //         src={`${image?.url}?token=${downloadToken}&view=true`}
+  //       />
+  //     </>
+  //   ))
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
         <img src={tick} /> {el?.feature?.name}
       </div>
     ))
-
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+      {/* <div className="auction-details-gallery md-cell md-cell--8 md-grid">
         <div className="auction-details-header md-cell md-cell--9">
           {admin && (
             <FontIcon
@@ -360,7 +361,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         <div className="gallery-image-wrapper md-cell md-cell--3">
           {renderPropertyImages()}
         </div>
-      </div>
+      </div> */}
+      <AuctionDetailsSlider
+        logged={logged}
+        saveAuction={() => saveAuction(auctionData?.uuid)}
+        unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
+        isBookMarked={auctionData?.['is_bookmarked']}
+        images={auctionData?.listing?.images}
+      />
       <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
@@ -466,7 +474,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         ) : (
           <>
             <div className="md-cell md-cell--12">
-              <AuctionTimer user={user} auctionData={auctionData} node />
+              <AuctionTimer
+                user={user}
+                auctionData={auctionData}
+                node
+                timeExtension={timeExtension}
+                refetchAuction={refetchAuction}
+              />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>

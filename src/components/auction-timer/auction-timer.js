@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 
 import { useTranslation } from 'libs/langs'
@@ -7,7 +7,13 @@ import { getFeaturedAuctionRemainingTime } from 'libs/api/auctions-api'
 
 import './style.scss'
 
-const AuctionTimer = ({ auctionData, node, user }) => {
+const AuctionTimer = ({
+  auctionData,
+  node,
+  user,
+  timeExtension,
+  refetchAuction,
+}) => {
   let interval
 
   const { t } = useTranslation()
@@ -33,6 +39,25 @@ const AuctionTimer = ({ auctionData, node, user }) => {
       },
     },
   )
+  const addSeconde = (time) => ({
+    d: time?.d,
+    h: time?.h,
+    m: time?.m + 1,
+    s: time?.s,
+  })
+  useEffect(() => {
+    // refetch()
+    setCountdown((st) => {
+      if (st?.s === 0 && st?.m === 0 && st?.h === 0 && st?.d === 0) {
+        clearInterval(interval)
+        return null
+      }
+      return addSeconde(st)
+      // return removeSeconde(st || res?.time?.remaining)
+    })
+    refetchAuction && refetchAuction()
+  }, [timeExtension])
+
   // let start = data?.time?.remaining
   // let time = 0
   // let elapsed = '0.0'
@@ -92,22 +117,22 @@ const AuctionTimer = ({ auctionData, node, user }) => {
       <div className="countdown">
         <div className="countdown-element">
           <span className="value">{countdown?.d}</span>{' '}
-          <span className="label">{t('days')}</span>
+          {/* <span className="label">{t('days')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
           <span className="value">{countdown?.h}</span>{' '}
-          <span className="label">{t('hours_auction')}</span>
+          {/* <span className="label">{t('hours_auction')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
           <span className="value">{countdown?.m}</span>{' '}
-          <span className="label">{t('min_auctions')}</span>
+          {/* <span className="label">{t('min_auctions')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
           <span className="value">{countdown?.s}</span>{' '}
-          <span className="label">{t('seconds_auction')}</span>
+          {/* <span className="label">{t('seconds_auction')}</span> */}
         </div>
       </div>
       {node && (

@@ -200,22 +200,22 @@ const SideAuctionCard = ({
         <div className="countdown" style={{ display: 'flex' }}>
           <div className="countdown-element">
             <span className="value">{countdown.d}</span>{' '}
-            <span className="label">{t('days')}</span>
+            {/* <span className="label">{t('days')}</span> */}
           </div>
           <div className="countdown-separator">:</div>
           <div className="countdown-element">
             <span className="value">{countdown.h}</span>{' '}
-            <span className="label">{t('hours_auction')}</span>
+            {/* <span className="label">{t('hours_auction')}</span> */}
           </div>
           <div className="countdown-separator">:</div>
           <div className="countdown-element">
             <span className="value">{countdown.m}</span>{' '}
-            <span className="label">{t('min_auctions')}</span>
+            {/* <span className="label">{t('min_auctions')}</span> */}
           </div>
           <div className="countdown-separator">:</div>
           <div className="countdown-element">
             <span className="value">{countdown.s}</span>{' '}
-            <span className="label">{t('seconds_auction')}</span>
+            {/* <span className="label">{t('seconds_auction')}</span> */}
           </div>
         </div>
       </div>

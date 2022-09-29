@@ -57,9 +57,7 @@ const Home = () => {
       payload: { myOrgs: myOrgs?.meOrganizations },
     })
   }, [myOrgs])
-
   const modules = location.pathname.split('/').filter((v) => v !== '')
-
   const modulesList = [
     { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
     {
@@ -71,13 +69,14 @@ const Home = () => {
       label: t('my_activity'),
       key: 'my-activity',
       subMenu: [
-        {
-          label: t('my_auctions'),
-          link: 'my-auctions',
-        },
         { label: t('saved_auctions'), link: 'saved-auctions' },
         { label: t('my_participation'), link: 'my-participation' },
       ],
+    },
+    {
+      label: t('contact'),
+      linkToNewTab: 'contact-us',
+      key: 'contact-us',
     },
     // {
     //   label: t('auction_asset'),
@@ -94,13 +93,17 @@ const Home = () => {
       linkToNewTab: 'how-it-works',
     },
     {
-      label: t('my_activity'),
-      key: 'my-activity',
-      subMenu: [
-        { label: t('saved_auctions'), link: 'saved-auctions' },
-        { label: t('my_participation'), link: 'my-participation' },
-      ],
+      label: t('my_auctions'),
+      key: 'my-auctions',
+      linkToNewTab: 'my-auctions',
     },
+    {
+      label: t('auction_asset'),
+      linkToNewTab: 'auction-asset',
+      key: 'auction-asset',
+    },
+    { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
+
     // {
     //   label: t('auction_asset'),
     //   linkToNewTab: 'auction-asset',
@@ -108,28 +111,22 @@ const Home = () => {
     // },
     // { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
   ]
-  if (myOrgs?.meOrganizations.length > 0) {
-    ;(meOrgs?.length < 0 ? modulesListUser : modulesList).push(
-      {
-        label: t('auction_asset'),
-        linkToNewTab: 'auction-asset',
-        key: 'auction-asset',
-      },
-      { label: t('contact'), linkToNewTab: 'contact-us', key: 'contact-us' },
-    )
-  } else {
-    ;(meOrgs?.length < 0 ? modulesListUser : modulesList).push({
-      label: t('contact'),
-      linkToNewTab: 'contact-us',
-      key: 'contact-us',
-    })
-  }
+  // if (myOrgs?.meOrganizations.length > 0) {
+  //   modulesListUser
+
+  // } else {
+  //   modulesList.push({
+  //     label: t('contact'),
+  //     linkToNewTab: 'contact-us',
+  //     key: 'contact-us',
+  //   })
+  // }
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="auction-wrapper">
         <TopBar
-          modulesList={meOrgs?.length < 0 ? modulesListUser : modulesList}
+          modulesList={meOrgs?.length > 0 ? modulesListUser : modulesList}
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
           user={currentUser?.mev2?.user}
