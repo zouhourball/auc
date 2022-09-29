@@ -360,7 +360,12 @@ const RegistrationPage = () => {
         />
       )}
       <div className="registration-page-left">
-        <div style={{ position: 'absolute' }}>
+        <div>
+          <img className="background" src={backgroundImage} />
+        </div>
+      </div>
+      <div>
+        <div className="select-language-field">
           <SelectField
             id="select-field-3-1"
             menuItems={langs.map(({ key, label }) => {
@@ -387,68 +392,66 @@ const RegistrationPage = () => {
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
         </div>
-        <img className="background" src={backgroundImage} />
-      </div>
-      <div className="registration-page-right">
-        <div className="registration-page-right-title">
-          {t('new_to_auctions')}
-        </div>
-        <div className="registration-page-right-subtitle">
-          {t('sign_up_to_view')}
-        </div>
-        <div className="body">
-          <div className="tabs">
-            <span
-              onClick={() => setCurrentTab(0)}
-              className={`item ${currentTab === 0 ? 'active' : ''}`}
-            >
-              {t('bidders')}
-            </span>
-            <div className="sep"></div>
-            <span
-              onClick={() => setCurrentTab(1)}
-              className={`item ${currentTab === 1 ? 'active' : ''}`}
-            >
-              {t('brokers')}
-            </span>
+        <div className="registration-page-right">
+          <div className="registration-page-right-title">
+            {t('new_to_auctions')}
           </div>
-          <div className="view">
-            {renderView()}
-            <div className="terms-checkbox">
-              <Checkbox
-                id={'accept-terms'}
-                checked={acceptTerms}
-                onChange={(v) => setValues('acceptTerms', v)}
-                checkedIcon={<FontIcon className="checked">check</FontIcon>}
-                uncheckedIcon={
-                  <FontIcon className="unchecked">
-                    check_box_outline_blank
-                  </FontIcon>
-                }
-              />
-              <div>
-                {t('i_accept')}{' '}
-                <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
-                {t('and')}
-                <span className="blue-text"> {t('privacy_policy')}</span>
-              </div>
-            </div>
-            <Button
-              className="signUp-btn"
-              onClick={() => (currentTab === 1 ? register() : signUp())}
-            >
-              {isLoading || loading ? <CircularProgress /> : t('sign_up')}
-            </Button>
-            <div className="grey-text font-size-bg">
-              {t('continue_as_a')}{' '}
+          <div className="registration-page-right-subtitle">
+            {t('sign_up_to_view')}
+          </div>
+          <div className="body">
+            <div className="tabs">
               <span
-                className="blue-text  font-size-bg"
-                onClick={() => navigate('/public/home')}
+                onClick={() => setCurrentTab(0)}
+                className={`item ${currentTab === 0 ? 'active' : ''}`}
               >
-                {t('guest')}
+                {t('bidders')}
+              </span>
+              <div className="sep"></div>
+              <span
+                onClick={() => setCurrentTab(1)}
+                className={`item ${currentTab === 1 ? 'active' : ''}`}
+              >
+                {t('brokers')}
               </span>
             </div>
-            {/* <div className="social-container">
+            <div className="view">
+              {renderView()}
+              <div className="terms-checkbox">
+                <Checkbox
+                  id={'accept-terms'}
+                  checked={acceptTerms}
+                  onChange={(v) => setValues('acceptTerms', v)}
+                  checkedIcon={<FontIcon className="checked">check</FontIcon>}
+                  uncheckedIcon={
+                    <FontIcon className="unchecked">
+                      check_box_outline_blank
+                    </FontIcon>
+                  }
+                />
+                <div>
+                  {t('i_accept')}{' '}
+                  <span className="blue-text">{t('Terms_&_Conditions')}</span>{' '}
+                  {t('and')}
+                  <span className="blue-text"> {t('privacy_policy')}</span>
+                </div>
+              </div>
+              <Button
+                className="signUp-btn"
+                onClick={() => (currentTab === 1 ? register() : signUp())}
+              >
+                {isLoading || loading ? <CircularProgress /> : t('sign_up')}
+              </Button>
+              <div className="grey-text font-size-bg">
+                {t('continue_as_a')}{' '}
+                <span
+                  className="blue-text  font-size-bg"
+                  onClick={() => navigate('/public/home')}
+                >
+                  {t('guest')}
+                </span>
+              </div>
+              {/* <div className="social-container">
               <img
                 className="social-container-icon"
                 onClick={() => window.open('https://www.facebook.com/')}
@@ -465,9 +468,10 @@ const RegistrationPage = () => {
                 src={googleIcon}
               />
             </div> */}
-            <div className="grey-text font-size-bg">
-              {t('Don_t_have')}{' '}
-              <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
+              <div className="grey-text font-size-bg">
+                {t('Don_t_have')}{' '}
+                <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
+              </div>
             </div>
           </div>
         </div>
