@@ -4,11 +4,15 @@
 
   &_textField {
     height: 50px;
-    padding: 13px 13px;
-    border: 1px solid rgba($color: #000, $alpha: 0.35);
-    border-radius: 4px;
+    padding: 20px 16px;
+    //border: 1px solid rgba($color: #000, $alpha: 0.35);
+    border-radius: 12px;
+    background-color: #fff;
 
     .md-text-field {
+      color: #b2b2b2;
+      font-size: 16px;
+      font-weight: 500;
       line-height: 1.3;
     }
 
@@ -102,7 +106,6 @@
     -moz-animation: fadeInFromNone 0.5s ease-out;
     -o-animation: fadeInFromNone 0.5s ease-out;
     animation: fadeInFromNone 0.5s ease-out;
-    background: #fff;
 
     &_addSection {
       padding: 8px 16px;
@@ -189,11 +192,48 @@
     .list-itemMultiPick {
       position: absolute;
       width: 100%;
-      max-height: 168px;
+      max-height: 275px;
       overflow: auto;
       border-radius: 0 0 4px 4px;
       background: #fff;
       box-shadow: 0 0 10px 0 rgba($color: #000, $alpha: 0.11);
+
+      &::-webkit-scrollbar-track {
+        visibility: visible;
+        height: 100%;
+        border-radius: 3px;
+        opacity: 1;
+        background-color: #d0d0d0;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-webkit-scrollbar {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        right: 15px;
+        width: 5px;
+        height: 90%;
+        transition: all 400ms;
+        opacity: 1;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+        border-radius: 12px;
+        background-color: #7c7c7c;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        background-clip: content-box;
+      }
+
+      &:hover {
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-thumb {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
 
       &-header {
         width: 100%;
@@ -201,12 +241,14 @@
         padding: 16px 16px 0 16px;
 
         &-textField {
-          height: 38px;
-          border-radius: 4px;
-          background: #f5f5f5;
+          height: 40px;
+          padding: 16px;
+          border: solid 1px #b2b2b2;
+          border-radius: 6px;
+          background: #fff;
 
           .md-text-field {
-            background: #f5f5f5;
+            background: #fff;
           }
 
           .md-text-field-icon {
@@ -254,12 +296,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 16px;
-        border-bottom: 1px solid #eee;
+        padding: 8px 16px;
         cursor: pointer;
 
         &-label {
-          font-weight: bold;
+          color: #7c7c7c;
+          font-size: 14px;
+          font-weight: normal;
         }
 
         &:last-child {
@@ -272,7 +315,7 @@
 
         &.selected,
         &-icon {
-          color: #a08557;
+          color: #5078e1;
         }
       }
     }

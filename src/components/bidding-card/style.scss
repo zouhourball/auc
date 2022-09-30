@@ -64,8 +64,12 @@
       border-bottom-right-radius: 25px;
       background-color: #78deb3;
       color: #fff;
-      font-size: 25px;
+      font-size: 16px;
       font-weight: 700;
+
+      &.pending {
+        background-color: #e3ae36;
+      }
     }
   }
 

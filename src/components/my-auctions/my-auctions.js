@@ -10,9 +10,29 @@ import { myAuctions, savedAuctions } from 'libs/api/auctions-api'
 import BiddingCard from 'components/bidding-card'
 
 import './style.scss'
+import { Button } from 'react-md'
 
 const MyAuctions = () => {
+  const { t } = useTranslation()
   const [tab, setTab] = useState(0)
+  const [statusTab, setStatusTab] = useState(0)
+  const tabsData = [
+    { id: 0, label: t('active') },
+    { id: 1, label: t('pending') },
+    { id: 2, label: t('closed') },
+  ]
+  const renderTabName = () => {
+    switch (statusTab) {
+      case 0:
+        return 'Active'
+      case 1:
+        return 'Pending'
+      case 2:
+        return 'Closed'
+      default:
+        return 'Active'
+    }
+  }
   const { data: auctionsData, refetch } = useQuery(
     [
       tab === 1 ? 'savedAuctions' : 'myAuctions',
@@ -22,11 +42,10 @@ const MyAuctions = () => {
         limit: 10,
         offset: 0,
       },
-      '',
+      renderTabName(),
     ],
     tab === 1 ? savedAuctions : myAuctions,
   )
-  const { t } = useTranslation()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
   useEffect(() => {
@@ -66,12 +85,24 @@ const MyAuctions = () => {
         refetch={() => refetch()}
       />
     ))
+  const renderTabs = () =>
+    tabsData?.map((el) => (
+      <Button
+        className={`${statusTab === el?.id ? 'active' : ''}`}
+        key={el.id}
+        onClick={() => setStatusTab(el.id)}
+        primary={statusTab === el.id}
+      >
+        {el.label}
+      </Button>
+    ))
   return (
     <div className="auction-list">
       <div className="auction-list-header">
         {tab === 0 && <div className="title">{t('my_auctions')}</div>}
         {tab === 1 && <div className="title">{t('saved_auctions')}</div>}
       </div>
+      <div className="tabs-list">{renderTabs()}</div>
       <div className="md-grid auction-list-cards">{renderCards()}</div>
     </div>
   )
