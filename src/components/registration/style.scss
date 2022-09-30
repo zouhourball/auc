@@ -12,6 +12,33 @@
     }
   }
 
+  .select-language-field {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    &-label {
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .langSelector {
+      .md-icon-text {
+        padding-right: 6px;
+        color: #5078e1;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .md-icon {
+        color: #5078e1;
+        font-size: 24px;
+      }
+    }
+  }
+
   &-right {
     padding: 100px 150px;
     // height: auto;
@@ -267,12 +294,4 @@
 
 .company-logo-title {
   text-align: left;
-}
-
-.langselector {
-  position: absolute;
-}
-
-.select-language-field {
-  text-align: right;
 }

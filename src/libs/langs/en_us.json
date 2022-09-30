@@ -243,5 +243,6 @@
   "enter_company_name": "Enter company name",
   "state-gov": "State/Governorate",
   "pending": "Pending",
-  "download_certificate": "Download Certificate"
+  "download_certificate": "Download Certificate",
+  "choose_language": "Choose Language"
 }
