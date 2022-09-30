@@ -66,7 +66,7 @@ export const newBrokersConfigs = [
   {
     label: 'Logo',
     key: 'logo',
-    width: '200',
+    width: '100',
     type: 'text',
     displayInCsv: true,
   },
@@ -80,7 +80,7 @@ export const newBrokersConfigs = [
   {
     label: 'Country',
     key: 'country',
-    width: '300',
+    width: '200',
     type: 'text',
     displayInCsv: true,
   },
@@ -94,7 +94,7 @@ export const newBrokersConfigs = [
   {
     label: 'Email',
     key: 'email',
-    width: '300',
+    width: '200',
     type: 'text',
     displayInCsv: true,
   },

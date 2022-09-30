@@ -463,7 +463,7 @@ export const getCountry = async ({ queryKey, pageParam = 0 }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/countries?page=${pageParam}&limit=${queryKey[0]}`,
+      `${appUrl}/api/v1/countries?page=${pageParam}&limit=${queryKey[0]}&search_key=${queryKey[1]}`,
       {
         method: 'GET',
       },
@@ -476,9 +476,12 @@ export const getCountry = async ({ queryKey, pageParam = 0 }) => {
 export const getCity = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/countries/${queryKey[1]}/cities`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${appUrl}/api/v1/countries/${queryKey[1]}/cities?search_key=${queryKey[2]}`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }

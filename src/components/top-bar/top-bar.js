@@ -364,6 +364,9 @@ const TopBar = ({
                         {user?.profile?.fullName}
                       </span>
                     </div>
+                    <Button onClick={() => navigate('/auctions/profile')}>
+                      My Profile
+                    </Button>
                     <div className="top-bar-profile-avatar-actions">
                       {/* <p
                         className="top-bar-profile-avatar-actions-link"

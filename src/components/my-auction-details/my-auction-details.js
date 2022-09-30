@@ -303,7 +303,7 @@ const MyAuctionDetails = ({ auctionId }) => {
         property_type: +auctionEditData?.propertyType,
         property_description: auctionEditData?.description,
         features: auctionEditData?.keyFeatures,
-        address: auctionEditData?.address?.meta,
+        address: auctionEditData?.address?.meta?.['display_name'],
         general_location_x: +auctionDetails?.address?.['general_location_x'],
         general_location_y: +auctionDetails?.address?.['general_location_y'],
       },
@@ -413,7 +413,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                       address: {
                         general_location_y: newCoordinates?.['lat'],
                         general_location_x: newCoordinates?.['lon'],
-                        meta: newCoordinates?.['display_name'],
+                        meta: newCoordinates,
                       },
                     })
                   }}
