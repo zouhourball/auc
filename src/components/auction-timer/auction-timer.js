@@ -13,6 +13,7 @@ const AuctionTimer = ({
   user,
   timeExtension,
   refetchAuction,
+  withAnnotation = false,
 }) => {
   let interval
 
@@ -116,22 +117,30 @@ const AuctionTimer = ({
     >
       <div className="countdown">
         <div className="countdown-element">
-          <span className="value">{countdown?.d}</span>{' '}
+          <span className="value">
+            {countdown?.d} {withAnnotation && 'D'}
+          </span>{' '}
           {/* <span className="label">{t('days')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown?.h}</span>{' '}
+          <span className="value">
+            {countdown?.h} {withAnnotation && 'H'}
+          </span>{' '}
           {/* <span className="label">{t('hours_auction')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown?.m}</span>{' '}
+          <span className="value">
+            {countdown?.m} {withAnnotation && 'M'}
+          </span>{' '}
           {/* <span className="label">{t('min_auctions')}</span> */}
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-element">
-          <span className="value">{countdown?.s}</span>{' '}
+          <span className="value">
+            {countdown?.s} {withAnnotation && 'S'}
+          </span>{' '}
           {/* <span className="label">{t('seconds_auction')}</span> */}
         </div>
       </div>
