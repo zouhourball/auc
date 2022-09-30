@@ -350,7 +350,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               icon
               primary
               className="save-btn"
-              iconClassName="fa fa-bookmark"
+              iconClassName="fa fa-bookmark-o"
               onClick={(e) => {
                 e.stopPropagation()
                 saveAuction(auctionData?.uuid)
@@ -565,6 +565,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             }}
           </CompanyInfoById>
         </div>
+
         <div className="md-cell md-cell--12 btn-cell">
           {
             auctionData?.['last_bid'] &&

@@ -83,13 +83,13 @@ export default class CustomSelectWithSearch extends Component {
     let filteredData = items
 
     filteredData = currentSection
-      ? filteredData.filter((item) => item.type === currentSection)
+      ? filteredData?.filter((item) => item.type === currentSection)
       : filteredData
 
     filteredData = searchItem
-      ? filteredData.filter((item) =>
+      ? filteredData?.filter((item) =>
         item.label.toLowerCase().includes(searchItem.toLowerCase()),
-      )
+        )
       : filteredData
     filteredData = dataToSearch
       ? mentor
@@ -239,7 +239,7 @@ export default class CustomSelectWithSearch extends Component {
       // selectAllButton,
       loading,
       // sections,
-      label,
+      // label,
       setListVisibility,
       withHeader,
       searchItem,
@@ -279,7 +279,8 @@ export default class CustomSelectWithSearch extends Component {
           <div className="customSelect_wrapper_list_items" ref={this.myRef}>
             <TextField
               placeholder={searchPlaceholder}
-              label={label}
+              // label={label}
+              disabled
               className={`customSelect_wrapper_textField ${
                 textFieldClassName || ''
               }`}
@@ -335,9 +336,9 @@ export default class CustomSelectWithSearch extends Component {
                   onTextChange(val)
                 }
               }}
-              onClick={setListVisibility}
+              onClick={() => setListVisibility(!listVisibility)}
               block
-              disabled={withHeader && !singleSelect}
+              // disabled={withHeader && !singleSelect}
             />
             {loading ? (
               <FontIcon primary iconClassName="mdi mdi-spin mdi-loading" />

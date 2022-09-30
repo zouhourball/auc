@@ -123,8 +123,8 @@ const CreateAuctionStepper = ({
   } = auctionDetails
   const {
     area,
-    bathrooms,
-    bedrooms,
+    // bathrooms,
+    // bedrooms,
     description,
     images,
     // , keyFeatures
@@ -148,7 +148,13 @@ const CreateAuctionStepper = ({
         )
       case 2:
         return !(
-          (area && bathrooms && bedrooms && description && images?.length > 0)
+          (
+            area &&
+            // bathrooms &&
+            // bedrooms &&
+            description &&
+            images?.length > 0
+          )
           // && keyFeatures?.length > 0
         )
       case 3:
