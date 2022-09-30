@@ -18,7 +18,7 @@ const MyAuctions = () => {
   const [statusTab, setStatusTab] = useState(0)
   const tabsData = [
     { id: 0, label: t('active') },
-    { id: 1, label: t('upcoming') },
+    { id: 1, label: t('pending') },
     { id: 2, label: t('closed') },
   ]
   const renderTabName = () => {
@@ -26,7 +26,7 @@ const MyAuctions = () => {
       case 0:
         return 'Active'
       case 1:
-        return 'Upcoming'
+        return 'Pending'
       case 2:
         return 'Closed'
       default:
