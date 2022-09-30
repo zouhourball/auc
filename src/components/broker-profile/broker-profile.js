@@ -363,16 +363,18 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                         <div className={`${!showMore ? 'less' : ''} bio`}>
                           {res?.aboutUs}
                         </div>
-                        <Button
-                          className="less-btn"
-                          iconChildren={
-                            showMore ? 'expand_less' : 'expand_more'
-                          }
-                          iconBefore={showMore}
-                          onClick={() => setShowMore(!showMore)}
-                        >
-                          {showMore ? 'Less' : 'More'}
-                        </Button>
+                        <div className="float-left">
+                          <Button
+                            className="less-btn"
+                            iconChildren={
+                              showMore ? 'expand_less' : 'expand_more'
+                            }
+                            iconBefore={showMore}
+                            onClick={() => setShowMore(!showMore)}
+                          >
+                            {showMore ? 'Less' : 'More'}
+                          </Button>
+                        </div>
                       </>
                     )}
                   </div>

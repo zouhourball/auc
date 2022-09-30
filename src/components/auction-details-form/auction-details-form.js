@@ -2,7 +2,7 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { useInfiniteQuery, useQuery } from 'react-query'
 // import { useQuery as useQueryHook } from 'react-apollo-hooks'
-import { TextField, FontIcon, SelectField, Button } from 'react-md'
+import { TextField, SelectField, Button } from 'react-md'
 import moment from 'moment'
 // import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
@@ -14,6 +14,9 @@ import CustomSelectWithSearch from 'components/custom-select-with-search'
 
 import { DueDate } from 'components/due-date'
 import { propertyTypeList } from 'components/helpers'
+import locationIcon from './location_icon.svg'
+import dateIcon from './Date.svg'
+import arrowDown from './Arrow.svg'
 
 import './style.scss'
 
@@ -201,7 +204,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             icon
             primary
             className="save-btn"
-            iconClassName="fa fa-map"
+            iconEl={<img height={20} src={locationIcon} />}
             onClick={(e) => {
               e.stopPropagation()
               setAddressView(!addressView)
@@ -301,7 +304,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           }
           fullWidth
           position={SelectField.Positions.BELOW}
-          dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          dropdownIcon={<img src={arrowDown} height={10} />}
           className="selectField-withShadow"
         />
       </div>
@@ -313,7 +316,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('select_dates')}
           block
           required
-          rightIcon={<FontIcon>date_range</FontIcon>}
+          rightIcon={<img src={dateIcon} height={20} />}
           value={
             startDate
               ? `${moment(startDate)?.format('DD/MM/YYYY')} - ${moment(
@@ -356,7 +359,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           block
           required
           // type="number"
-          rightIcon={<FontIcon>date_range</FontIcon>}
+          rightIcon={<img src={dateIcon} height={20} />}
           value={startDate && `${moment(startDate).format('HH:mm')}`}
           onClick={() => setVisibleStartTimePicker(true)}
           className="textField-withShadow"
@@ -394,7 +397,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           block
           required
           // type="number"
-          rightIcon={<FontIcon>date_range</FontIcon>}
+          rightIcon={<img src={dateIcon} height={20} />}
           value={endDate && `${moment(endDate).format('HH:mm')}`}
           onClick={() => setVisibleEndTimePicker(true)}
           className="textField-withShadow"
