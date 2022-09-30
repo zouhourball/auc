@@ -82,8 +82,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         ?.flatMap((el) => el?.results)
         ?.map((ac) => {
           return {
-            label: lang === 'ar' ? ac.name_ar : ac.name_en,
-            value: `${ac.id}`,
+            label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
+            value: `${ac?.id}`,
           }
         })
       return arrayName
@@ -104,8 +104,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     if (getCityList) {
       arrayName = getCityList?.results?.map((ac) => {
         return {
-          label: ac.name_en,
-          value: `${ac.id}`,
+          label: ac?.['name_en'],
+          value: `${ac?.id}`,
         }
       })
       return arrayName

@@ -210,6 +210,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
+
+  const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
   // console.log(
   //   Date.parse(auctionData?.['created_date']),
   //   Date.now(),
@@ -280,6 +282,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   //       />
   //     </>
   //   ))
+  const downloadCertificate = () => {}
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -445,7 +448,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
-                  <strong>{auctionData?.['lot_number'] || 0}</strong>
+                  <strong>
+                    {auctionData?.['lot_number'] || auctionData?.id}
+                  </strong>
                 </div>
                 <div>{t('lot_number')}</div>
               </div>
@@ -480,6 +485,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 node
                 timeExtension={timeExtension}
                 refetchAuction={refetchAuction}
+                withAnnotation
               />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
@@ -490,7 +496,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>{auctionData?.['lot_number'] || 0}</strong>
+                <strong>
+                  {auctionData?.['lot_number'] || auctionData?.id}
+                </strong>
               </div>
               <div>{t('lot_number')}</div>
             </div>
@@ -568,8 +576,24 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
         <div className="md-cell md-cell--12 btn-cell">
           {
+            isClosed &&
             auctionData?.['last_bid'] &&
             auctionData?.['last_bid']?.['member_subject'] === user?.subject ? (
+              <Button
+                flat
+                primary
+                // swapTheming
+                className="auction-details-btn"
+                onClick={
+                  () => downloadCertificate()
+                  // setBidDialog(true)
+                }
+              >
+                {t('download_certificate')}
+              </Button>
+            ) : auctionData?.['last_bid'] &&
+              auctionData?.['last_bid']?.['member_subject'] ===
+                user?.subject ? (
               <Button
                 primary
                 flat

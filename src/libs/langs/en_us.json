@@ -126,7 +126,7 @@
   "bathrooms_number_placeholder": "Enter number of bathrooms",
   "area_label": "Area (sq.m) *",
   "enter_area_placeholder": "Enter area",
-  "register": "register",
+  "register": "Register",
   "login": "login",
   "new_user": "new user",
   "sign_in": "sign in",
@@ -242,5 +242,6 @@
   "sign_up": "Sign Up",
   "enter_company_name": "Enter company name",
   "state-gov": "State/Governorate",
-  "pending": "Pending"
+  "pending": "Pending",
+  "download_certificate": "Download Certificate"
 }

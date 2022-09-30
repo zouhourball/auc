@@ -88,16 +88,16 @@ export default class CustomSelectWithSearch extends Component {
 
     filteredData = searchItem
       ? filteredData?.filter((item) =>
-        item.label.toLowerCase().includes(searchItem.toLowerCase()),
+          item.label?.toLowerCase().includes(searchItem?.toLowerCase()),
         )
       : filteredData
     filteredData = dataToSearch
       ? mentor
         ? filteredData.filter((item) =>
-          item.name.toLowerCase().includes(dataToSearch.toLowerCase()),
+            item.name?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
         : filteredData.filter((item) =>
-          item.label.toLowerCase().includes(dataToSearch.toLowerCase()),
+            item.label?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
       : filteredData
     // if (selectedItemsArray.length > 0) {
