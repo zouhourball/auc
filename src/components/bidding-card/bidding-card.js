@@ -34,7 +34,6 @@ const BiddingCard = ({
   const { t } = useTranslation()
 
   const dispatch = useDispatch()
-
   const saveAuctionMutation = useMutation(saveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -224,7 +223,8 @@ const BiddingCard = ({
         {!detailsUrl &&
           !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
           !(auctionData?.['submitted_by'] === user?.subject) &&
-          status === 'Active' && (
+          status === 'Active' &&
+          !(meOrgs?.length > 0) && (
           <Button
             flat
             primary
