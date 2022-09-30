@@ -147,7 +147,7 @@ const BiddingCard = ({
         {user?.subject &&
           user?.subject === auctionData?.['member_subject'] &&
           auctionData?.status === 'Pending' && (
-            <div className="highest-bidder">{t('pending')}</div>
+            <div className="highest-bidder pending">{t('pending')}</div>
           )}
         {saveAuctionTag &&
           (auctionData?.['is_bookmarked'] ? (

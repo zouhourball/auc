@@ -212,12 +212,24 @@
           font-weight: normal;
         }
 
+        .float-left {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 4px;
+        }
+
         .less-btn {
           padding: 4px 0;
           color: #5078e1;
+          font-size: 14px;
+          font-weight: normal;
 
           .md-icon-text:last-child {
             padding-left: 0;
+          }
+
+          .md-ink-container {
+            display: none;
           }
         }
       }

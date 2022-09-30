@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button } from 'react-md'
+import { Avatar, Button, FontIcon } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 // import store from 'libs/store'
 import moment from 'moment'
@@ -57,11 +57,12 @@ import info from 'images/Info.svg'
 
 import './style.scss'
 import AuctionDetailsSlider from 'components/auction-details-slider'
+import DrawOnMap from 'components/draw-on-map'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  // const [addressView, setAddressView] = useState(false)
+  const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
@@ -363,7 +364,46 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
       </div> */}
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
-        <div className="auction-details-info-header md-cell md-cell--12"></div>
+        <div className="auction-details-header md-cell md-cell--12">
+          {admin && (
+            <FontIcon
+              iconClassName="mdi mdi-arrow-left"
+              onClick={() => {
+                navigate('/admin')
+              }}
+            />
+          )}
+          <div className="title">{t('auction_detail')}</div>
+          <Button
+            flat
+            primary
+            className="view-map-btn"
+            iconClassName="mdi mdi-map-marker-outline"
+            onClick={() => setAddressView(!addressView)}
+          >
+            {t('view_map')}
+          </Button>
+
+          {addressView && (
+            <DrawOnMap
+              id={'address'}
+              onClose={() => {
+                setAddressView(false)
+              }}
+              readOnly={true}
+              visible={addressView}
+              layers={[
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id',
+                  items: [],
+                },
+              ]}
+              longitude={auctionPropertyData?.['general_location_x']}
+              latitude={auctionPropertyData?.['general_location_y']}
+            />
+          )}
+        </div>
         <AuctionDetailsSlider
           logged={logged}
           saveAuction={() => saveAuction(auctionData?.uuid)}

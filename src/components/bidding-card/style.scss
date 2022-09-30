@@ -66,6 +66,10 @@
       color: #fff;
       font-size: 16px;
       font-weight: 700;
+
+      &.pending {
+        background-color: #e3ae36;
+      }
     }
   }
 
