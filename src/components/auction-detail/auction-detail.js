@@ -288,7 +288,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      {/* <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+      {/*
         <div className="auction-details-header md-cell md-cell--9">
           {admin && (
             <FontIcon
@@ -362,13 +362,16 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           {renderPropertyImages()}
         </div>
       </div> */}
-      <AuctionDetailsSlider
-        logged={logged}
-        saveAuction={() => saveAuction(auctionData?.uuid)}
-        unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
-        isBookMarked={auctionData?.['is_bookmarked']}
-        images={auctionData?.listing?.images}
-      />
+      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <div className="auction-details-info-header md-cell md-cell--12"></div>
+        <AuctionDetailsSlider
+          logged={logged}
+          saveAuction={() => saveAuction(auctionData?.uuid)}
+          unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
+          isBookMarked={auctionData?.['is_bookmarked']}
+          images={auctionData?.listing?.images}
+        />
+      </div>
       <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
