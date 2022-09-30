@@ -283,7 +283,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => navigate('/registration')}
               >
-                {t('new_user')}
+                {t('register')}
               </Button>
               <Button
                 flat
@@ -472,7 +472,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => onClickRegisterUrl && onClickRegisterUrl()}
               >
-                {t('new_user')}
+                {t('register')}
               </Button>
               <Button
                 flat

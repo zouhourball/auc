@@ -225,11 +225,18 @@ const MyAuctionDetails = ({ auctionId }) => {
         className="auction-details-img"
       />
     ))
+  const isClosed = +moment.utc(auctionDetails?.['auction_end_date']) < +moment()
+
   const renderBidders = () =>
-    biddersList?.bids?.map((el) => (
+    biddersList?.bids?.map((el, index) => (
       <UserInfoBySubject key={el?.sub} subject={el?.sub}>
         {(res) => (
-          <div key={el?.sub} className="auction-details-table-row">
+          <div
+            key={el?.sub}
+            className={`auction-details-table-row ${
+              index === 0 && isClosed ? 'highlighted' : ''
+            }`}
+          >
             <div>{res?.fullName}</div>
             <div>{res?.email}</div>
             <div>{res?.phoneMobile}</div>
