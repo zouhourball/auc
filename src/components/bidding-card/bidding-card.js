@@ -176,7 +176,7 @@ const BiddingCard = ({
           <div className="bidding-card-info">
             <div className="data-section-title">
               {renderType(
-                propertyTypeList.find(
+                propertyTypeList().find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],
@@ -200,7 +200,7 @@ const BiddingCard = ({
           <div className="bidding-card-info">
             <div className="data-section-title">
               {renderType(
-                propertyTypeList.find(
+                propertyTypeList().find(
                   (el) =>
                     el?.value ===
                     +auctionData?.listing?.property?.['property_type_id'],

@@ -295,9 +295,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           id="select-field-with-elements-country-spinner"
           // label={t('country')}
           placeholder={t('property_select')}
-          menuItems={propertyTypeList.map((pr) => {
-            return { label: t(pr.label), value: pr.value }
-          })}
+          menuItems={propertyTypeList()}
           value={propertyType}
           onChange={(propertyType) =>
             onSetFormDetails('propertyType', propertyType)

@@ -381,9 +381,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 // label={t('country')}
                 disabled={!editMode}
                 placeholder={t('property_select')}
-                menuItems={propertyTypeList.map((pr) => {
-                  return { label: t(pr.label), value: pr.value }
-                })}
+                menuItems={propertyTypeList()}
                 value={auctionEditData?.propertyType}
                 onChange={(propertyType) =>
                   onSetFormDetails('propertyType', propertyType)

@@ -78,7 +78,7 @@ const HomeSlider = ({ auctions, logged }) => {
           <div className="data-section">
             <div className="data-section-title">
               {renderType(
-                propertyTypeList.find(
+                propertyTypeList().find(
                   (el) =>
                     el?.value ===
                     +auction?.listing?.property?.['property_type_id'],

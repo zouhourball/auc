@@ -244,5 +244,8 @@
   "state-gov": "State/Governorate",
   "pending": "Pending",
   "download_certificate": "Download Certificate",
-  "choose_language": "Choose Language"
+  "choose_language": "Choose Language",
+  "resident": "Resident",
+  "commercial": "Commercial",
+  "land": "Land"
 }
