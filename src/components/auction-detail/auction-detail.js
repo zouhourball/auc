@@ -453,7 +453,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           </div>
           <div className="title">
             {
-              propertyTypeList.find(
+              propertyTypeList().find(
                 (el) =>
                   el?.value === +auctionPropertyData?.['property_type_id'],
               )?.label
@@ -539,9 +539,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>
-                  {auctionData?.['lot_number'] || auctionData?.id}
-                </strong>
+                <strong>{auctionData?.['lot_number']}</strong>
               </div>
               <div>{t('lot_number')}</div>
             </div>
