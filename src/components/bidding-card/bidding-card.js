@@ -220,11 +220,13 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {!detailsUrl &&
+        {((user?.subject &&
+          !detailsUrl &&
           !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
           !(auctionData?.['submitted_by'] === user?.subject) &&
           status === 'Active' &&
-          !(meOrgs?.length > 0) && (
+          !(meOrgs?.length > 0)) ||
+          !user?.subject) && (
           <Button
             flat
             primary
