@@ -110,7 +110,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
-      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
