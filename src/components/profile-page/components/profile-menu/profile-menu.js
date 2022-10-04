@@ -1,26 +1,46 @@
 import { navigate } from '@reach/router'
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
+import UserInfoBySubject from 'components/user-info-by-subject'
 import { useTranslation } from 'libs/langs'
+import { getPublicUrl } from 'libs/utils/custom-function'
+import { get } from 'lodash-es'
 
-import { Button } from 'react-md'
-import avatar from './avatar.jpg'
+import { Avatar, Button } from 'react-md'
+// import avatar from './avatar.jpg'
 import './style.scss'
 
-const ProfileMenu = ({ currentView, setCurrentView, company }) => {
+const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
   const { t } = useTranslation()
 
   return (
     <div className="profile-menu">
-      <img
+      <UserInfoBySubject key={userInfo?.subject} subject={userInfo?.subject}>
+        {(res) => {
+          return (
+            <Avatar
+              src={
+                get(res, 'photo.aPIURL', null)
+                  ? getPublicUrl(res?.photo?.aPIURL)
+                  : null
+              }
+            >
+              {get(res, 'photo.aPIURL', null)
+                ? null
+                : get(res, 'fullName.0', '')}
+            </Avatar>
+          )
+        }}
+      </UserInfoBySubject>
+      {/* <img
         src={avatar}
         width={100}
         height={100}
         style={{ borderRadius: 100 }}
-      />
+      /> */}
       <div>
-        <b>Ahmed Mohammed</b>
+        <b>{userInfo?.fullName}</b>
       </div>
-      <div>ahmed@gmail.com</div>
+      <div>{userInfo?.email}</div>
       <br />
       <br />
       {(!company ? views : viewsCompany)?.map(({ label, value }) => (

@@ -13,12 +13,23 @@ query seeUserProfileBySubject($subject: String!) {
       residentCardNo
       phoneMobile
       phoneHome
+      phoneMobile
       email
       createdDate
       deletedDate
       lastLoginDate
       isActive
       isLocked
+      firstName
+      middleName
+      lastName
+      country {
+        id
+        countryName
+        countryCode
+        phoneCode
+        nationality
+      }
       bkgImg #{
       #id
       #aPIID
