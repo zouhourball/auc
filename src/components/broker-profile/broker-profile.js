@@ -14,7 +14,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
 // import { getPublicUrl } from 'libs/utils/custom-function'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import { filterFeatureAuctions } from 'libs/api/auctions-api'
@@ -34,6 +34,7 @@ import './style.scss'
 
 const BrokerProfile = ({ brokerId, user, logged }) => {
   const { t } = useTranslation()
+  let currentLang = useCurrentLang()
 
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
@@ -324,7 +325,9 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
     <div className="broker-profile">
       <div className="broker-profile-header">
         <FontIcon onClick={() => navigate('/auctions/broker')}>
-          arrow_back
+          {currentLang === 'ar-SA' || currentLang === 'ar'
+            ? 'arrow_forward'
+            : 'arrow_back'}
         </FontIcon>
         <div className="title">{t('broker_profile')}</div>
       </div>
@@ -363,16 +366,18 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                         <div className={`${!showMore ? 'less' : ''} bio`}>
                           {res?.aboutUs}
                         </div>
-                        <Button
-                          className="less-btn"
-                          iconChildren={
-                            showMore ? 'expand_less' : 'expand_more'
-                          }
-                          iconBefore={showMore}
-                          onClick={() => setShowMore(!showMore)}
-                        >
-                          {showMore ? 'Less' : 'More'}
-                        </Button>
+                        <div className="float-left">
+                          <Button
+                            className="less-btn"
+                            iconChildren={
+                              showMore ? 'expand_less' : 'expand_more'
+                            }
+                            iconBefore={showMore}
+                            onClick={() => setShowMore(!showMore)}
+                          >
+                            {showMore ? 'Less' : 'More'}
+                          </Button>
+                        </div>
                       </>
                     )}
                   </div>
@@ -407,34 +412,38 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                 position={SelectField.Positions.BELOW}
                 closeMenuOnSelect={false}
                 menuItems={propertyTypeList?.map((tp, index) => {
-                  return {
-                    label: (
-                      <Checkbox
-                        key={index}
-                        id={`${tp.value}-auction-type`}
-                        name={`${tp.value}-checkboxes`}
-                        label={renderType(tp.label)}
-                        onChange={(e) => {
-                          filterData?.type?.find((el) => el === tp.value)
-                            ? setFilterData({
-                              ...filterData,
-                              type: filterData.type?.filter(
-                                  (el) => el !== tp.value,
-                                ),
-                            })
-                            : setFilterData({
-                              ...filterData,
-                              type: [...(filterData?.type || []), tp.value],
-                            })
-                          e.stopPropagation()
-                        }}
-                        checked={
-                          !!filterData?.type?.find((el) => el === tp.value)
-                        }
-                      />
-                    ),
-                    value: tp.label,
-                  }
+                  return tp?.props?.text ? (
+                    <div>{tp?.props?.text}</div>
+                  ) : (
+                    {
+                      label: (
+                        <Checkbox
+                          key={index}
+                          id={`${tp.value}-auction-type`}
+                          name={`${tp.value}-checkboxes`}
+                          label={renderType(tp.label)}
+                          onChange={(e) => {
+                            filterData?.type?.find((el) => el === tp.value)
+                              ? setFilterData({
+                                ...filterData,
+                                type: filterData.type?.filter(
+                                    (el) => el !== tp.value,
+                                  ),
+                              })
+                              : setFilterData({
+                                ...filterData,
+                                type: [...(filterData?.type || []), tp.value],
+                              })
+                            e.stopPropagation()
+                          }}
+                          checked={
+                            !!filterData?.type?.find((el) => el === tp.value)
+                          }
+                        />
+                      ),
+                      value: tp.label,
+                    }
+                  )
                   //   return (
                   //     <Checkbox
                   //       key={index}

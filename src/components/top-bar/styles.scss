@@ -116,6 +116,7 @@
 
       &.active {
         .active-item {
+          display: block;
           position: relative;
           color: #5078e1;
 
@@ -124,6 +125,7 @@
             display: block;
             visibility: visible;
             position: absolute;
+            left: 0;
             width: 100%;
             height: 1px;
             background-color: #527bde;
@@ -200,6 +202,28 @@
           .top-bar-menu-items {
             width: 300px;
             padding: 16px;
+          }
+        }
+      }
+
+      &.notif-bull {
+        position: relative;
+
+        .notif-bull-number {
+          position: absolute;
+          left: 50%;
+          padding: 0 5px;
+          border: solid 1px #fff;
+          border-radius: 50%;
+          background-color: #fff;
+          color: #5078e1;
+          font-size: 10px;
+          font-weight: bold;
+
+          &.blueNumber {
+            border: solid 1px #5078e1;
+            background-color: #5078e1;
+            color: #fff;
           }
         }
       }

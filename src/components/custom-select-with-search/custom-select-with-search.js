@@ -3,6 +3,7 @@ import { TextField, Avatar, FontIcon, Button } from 'react-md'
 import onClickOutside from 'react-onclickoutside'
 import { get } from 'lodash-es'
 import { cls } from 'reactutils'
+import arrowDown from './Arrow.svg'
 
 // import avatar from 'images/avatar.png'
 import { getPublicUrl, validateEmail } from 'libs/utils/custom-function'
@@ -88,16 +89,16 @@ export default class CustomSelectWithSearch extends Component {
 
     filteredData = searchItem
       ? filteredData?.filter((item) =>
-        item.label.toLowerCase().includes(searchItem.toLowerCase()),
+          item.label?.toLowerCase().includes(searchItem?.toLowerCase()),
         )
       : filteredData
     filteredData = dataToSearch
       ? mentor
         ? filteredData.filter((item) =>
-          item.name.toLowerCase().includes(dataToSearch.toLowerCase()),
+            item.name?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
         : filteredData.filter((item) =>
-          item.label.toLowerCase().includes(dataToSearch.toLowerCase()),
+            item.label?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
       : filteredData
     // if (selectedItemsArray.length > 0) {
@@ -306,23 +307,23 @@ export default class CustomSelectWithSearch extends Component {
                   )}
                   {!rightIcon ? (
                     !listVisibility ? (
-                      <FontIcon
+                      <img
                         onClick={(e) => {
                           e.stopPropagation()
                           setListVisibility(true)
                         }}
-                      >
-                        arrow_drop_down
-                      </FontIcon>
+                        src={arrowDown}
+                        height={10}
+                      />
                     ) : (
-                      <FontIcon
+                      <img
                         onClick={(e) => {
                           e.stopPropagation()
                           setListVisibility(false)
                         }}
-                      >
-                        arrow_drop_up
-                      </FontIcon>
+                        src={arrowDown}
+                        height={10}
+                      />
                     )
                   ) : (
                     rightIcon
@@ -354,7 +355,7 @@ export default class CustomSelectWithSearch extends Component {
                     <TextField
                       id="search"
                       className="list-itemMultiPick-header-textField"
-                      leftIcon={<FontIcon>search</FontIcon>}
+                      rightIcon={<FontIcon>search</FontIcon>}
                       value={searchItem}
                       onChange={setSearchItem}
                       placeholder={searchItemPlaceHolder}

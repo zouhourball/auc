@@ -44,7 +44,10 @@ const RegistrationPage = () => {
 
   const [currentTab, setCurrentTab] = useState(0)
   const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
-  const [signupData, setSignupData] = useState({ countryCode: '+968' })
+  const [signupData, setSignupData] = useState({
+    countryCode: '+968',
+    acceptTerms: false,
+  })
   const {
     fullName,
     email,
@@ -57,7 +60,6 @@ const RegistrationPage = () => {
     logo,
     address,
   } = signupData
-
   const lang = useCurrentLang()
 
   const getActiveLabel = ({ activeLabel }) => {
@@ -106,6 +108,7 @@ const RegistrationPage = () => {
           apiId: logo[0]?.url,
           apiUrl: logo[0]?.url,
         },
+        terms_of_service: acceptTerms,
       },
     })
   }
@@ -127,7 +130,7 @@ const RegistrationPage = () => {
     data: getCountryList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery([25], getCountry, {
+  } = useInfiniteQuery([25, ''], getCountry, {
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (
@@ -366,7 +369,9 @@ const RegistrationPage = () => {
       </div>
       <div>
         <div className="select-language-field">
-          <span>Choose language</span>
+          <span className="select-language-field-label">
+            {t('choose_language')}
+          </span>
           <SelectField
             id="select-field-3-1"
             menuItems={langs.map(({ key, label }) => {
@@ -440,6 +445,7 @@ const RegistrationPage = () => {
               <Button
                 className="signUp-btn"
                 onClick={() => (currentTab === 1 ? register() : signUp())}
+                disabled={!acceptTerms}
               >
                 {isLoading || loading ? <CircularProgress /> : t('sign_up')}
               </Button>

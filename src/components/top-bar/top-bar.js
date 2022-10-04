@@ -283,7 +283,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => navigate('/registration')}
               >
-                {t('new_user')}
+                {t('register')}
               </Button>
               <Button
                 flat
@@ -322,7 +322,7 @@ const TopBar = ({
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
           {logged && (
-            <div className="top-bar-actions-menu-button">
+            <div className="top-bar-actions-menu-button notif-bull">
               <MenuButton
                 id="menu-button-1"
                 icon
@@ -344,7 +344,17 @@ const TopBar = ({
                   src={modules[1] === 'home' ? notifWhite : notifBlue}
                 />
               </MenuButton>
-              {notifNumber > 0 && <span>{notifNumber}</span>}
+              {notifNumber > 0 && (
+                <span
+                  className={cls(
+                    `notif-bull-number`,
+                    clear ? 'whiteNumber' : 'blueNumber',
+                    className,
+                  )}
+                >
+                  {notifNumber}
+                </span>
+              )}
             </div>
           )}
 
@@ -462,7 +472,7 @@ const TopBar = ({
                 className="login-btn new-user"
                 onClick={() => onClickRegisterUrl && onClickRegisterUrl()}
               >
-                {t('new_user')}
+                {t('register')}
               </Button>
               <Button
                 flat

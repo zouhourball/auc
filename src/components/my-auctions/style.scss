@@ -18,5 +18,16 @@
       font-size: 35px;
       font-weight: 700;
     }
+
+    .tabs-list {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .active {
+        color: #5078e1;
+        text-decoration: underline;
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
-import { Avatar, Button } from 'react-md'
+import { Avatar, Button, FontIcon } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 // import store from 'libs/store'
 import moment from 'moment'
@@ -57,11 +57,12 @@ import info from 'images/Info.svg'
 
 import './style.scss'
 import AuctionDetailsSlider from 'components/auction-details-slider'
+import DrawOnMap from 'components/draw-on-map'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
-  // const [addressView, setAddressView] = useState(false)
+  const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
@@ -109,7 +110,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
-      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -210,6 +211,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
+
+  const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
   // console.log(
   //   Date.parse(auctionData?.['created_date']),
   //   Date.now(),
@@ -280,6 +283,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   //       />
   //     </>
   //   ))
+  const downloadCertificate = () => {}
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -288,7 +292,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
     ))
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      {/* <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+      {/*
         <div className="auction-details-header md-cell md-cell--9">
           {admin && (
             <FontIcon
@@ -362,13 +366,55 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           {renderPropertyImages()}
         </div>
       </div> */}
-      <AuctionDetailsSlider
-        logged={logged}
-        saveAuction={() => saveAuction(auctionData?.uuid)}
-        unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
-        isBookMarked={auctionData?.['is_bookmarked']}
-        images={auctionData?.listing?.images}
-      />
+      <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <div className="auction-details-header md-cell md-cell--12">
+          {admin && (
+            <FontIcon
+              iconClassName="mdi mdi-arrow-left"
+              onClick={() => {
+                navigate('/admin')
+              }}
+            />
+          )}
+          <div className="title">{t('auction_detail')}</div>
+          <Button
+            flat
+            primary
+            className="view-map-btn"
+            iconClassName="mdi mdi-map-marker-outline"
+            onClick={() => setAddressView(!addressView)}
+          >
+            {t('view_map')}
+          </Button>
+
+          {addressView && (
+            <DrawOnMap
+              id={'address'}
+              onClose={() => {
+                setAddressView(false)
+              }}
+              readOnly={true}
+              visible={addressView}
+              layers={[
+                {
+                  type: 'symbol',
+                  id: 'Symbol-Layer-Id',
+                  items: [],
+                },
+              ]}
+              longitude={auctionPropertyData?.['general_location_x']}
+              latitude={auctionPropertyData?.['general_location_y']}
+            />
+          )}
+        </div>
+        <AuctionDetailsSlider
+          logged={logged}
+          saveAuction={() => saveAuction(auctionData?.uuid)}
+          unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
+          isBookMarked={auctionData?.['is_bookmarked']}
+          images={auctionData?.listing?.images}
+        />
+      </div>
       <div className="auction-details-info md-cell md-cell--4 md-grid">
         <div className="auction-details-info-header md-cell md-cell--12">
           {admin &&
@@ -445,7 +491,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               <div className="sep" />
               <div className="auction-timer-info">
                 <div>
-                  <strong>{auctionData?.['lot_number'] || 0}</strong>
+                  <strong>
+                    {auctionData?.['lot_number'] || auctionData?.id}
+                  </strong>
                 </div>
                 <div>{t('lot_number')}</div>
               </div>
@@ -480,6 +528,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 node
                 timeExtension={timeExtension}
                 refetchAuction={refetchAuction}
+                withAnnotation
               />
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
@@ -490,7 +539,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>{auctionData?.['lot_number'] || 0}</strong>
+                <strong>{auctionData?.['lot_number']}</strong>
               </div>
               <div>{t('lot_number')}</div>
             </div>
@@ -568,8 +617,24 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
         <div className="md-cell md-cell--12 btn-cell">
           {
+            isClosed &&
             auctionData?.['last_bid'] &&
             auctionData?.['last_bid']?.['member_subject'] === user?.subject ? (
+              <Button
+                flat
+                primary
+                // swapTheming
+                className="auction-details-btn downloadCertificateBtn"
+                onClick={
+                  () => downloadCertificate()
+                  // setBidDialog(true)
+                }
+              >
+                {t('download_certificate')}
+              </Button>
+            ) : auctionData?.['last_bid'] &&
+              auctionData?.['last_bid']?.['member_subject'] ===
+                user?.subject ? (
               <Button
                 primary
                 flat

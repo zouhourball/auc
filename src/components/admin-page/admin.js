@@ -3,7 +3,14 @@ import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 // import { get } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
-import { Button, Avatar, Card, CardActions, CardTitle } from 'react-md'
+import {
+  Button,
+  Avatar,
+  Card,
+  CardActions,
+  CardTitle,
+  FontIcon,
+} from 'react-md'
 import { configs, newBrokersConfigs } from './helper'
 import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
@@ -318,12 +325,12 @@ const Admin = (logged, auctionId) => {
           withFooter
           footerTemplate={
             +getTotalElements > limit && (
-              <div>
+              <div className="pagination-numbers">
                 <Button
                   onClick={() => setOffset((prev) => prev - 1)}
                   disabled={offset === 0}
                 >
-                  arrow_left
+                  <FontIcon>chevron_left</FontIcon>
                 </Button>
                 {offset < limitOfNumberShowing
                   ? renderPaginationButtons()
@@ -332,7 +339,7 @@ const Admin = (logged, auctionId) => {
                   onClick={() => setOffset((prev) => prev + 1)}
                   disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
                 >
-                  arrow_right
+                  <FontIcon>chevron_right</FontIcon>
                 </Button>
               </div>
             )
@@ -393,7 +400,7 @@ const Admin = (logged, auctionId) => {
                   icon
                   className="table-paginator-arrowBtn"
                 >
-                  arrow_left
+                  <FontIcon>chevron_left</FontIcon>
                 </Button>
                 {offset < limitOfNumberShowing
                   ? renderPaginationButtons()
@@ -404,7 +411,7 @@ const Admin = (logged, auctionId) => {
                   className="table-paginator-arrowBtn"
                   disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
                 >
-                  arrow_right
+                  <FontIcon>chevron_right</FontIcon>
                 </Button>
               </div>
             )

@@ -83,9 +83,12 @@ export const getMyAuctions = async ({ queryKey }) => {
 export const myAuctions = async ({ queryKey }) => {
   let res
   try {
-    res = await fetchJSON(`${appUrl}/api/v1/my-auctions`, {
-      method: 'GET',
-    })
+    res = await fetchJSON(
+      `${appUrl}/api/v1/my-auctions?auction_status=${queryKey[2]}`,
+      {
+        method: 'GET',
+      },
+    )
   } catch (e) {
     res = { error: e }
   }
