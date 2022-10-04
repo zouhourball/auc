@@ -116,6 +116,7 @@
 
       &.active {
         .active-item {
+          display: block;
           position: relative;
           color: #5078e1;
 
@@ -124,7 +125,7 @@
             display: block;
             visibility: visible;
             position: absolute;
-            left: 1%;
+            left: 0;
             width: 100%;
             height: 1px;
             background-color: #527bde;

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useQuery } from 'react-apollo'
 // import { useQuery as useQueryReact } from 'react-query'
 import { get as getLodash } from 'lodash-es'
@@ -58,9 +57,9 @@ const Shell = ({ lang }) => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  /*  useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'
-  }, [lang])
+  }, [lang]) */
 
   // const signOut = () => {
   //   cleanUp()
