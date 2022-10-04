@@ -46,12 +46,12 @@ const BrokerHeader = ({
           type="text"
           id="search"
           value={filterData?.search}
-          rightIcon={<FontIcon>{t('search')}</FontIcon>}
+          rightIcon={<FontIcon>search</FontIcon>}
           onChange={(v, e) => {
             e.stopPropagation()
             setFilterData({ ...filterData, search: v })
           }}
-          placeholder={searchPlaceholder || 'Search...'}
+          placeholder={searchPlaceholder || `${t('search')}...`}
           block
         />
       </div>

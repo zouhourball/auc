@@ -2,11 +2,13 @@
   position: relative;
 
   .slick-prev {
+    right: auto;
     left: 4.02vw;
   }
 
   .slick-next {
     right: 4.02vw;
+    left: auto;
   }
 
   .slick-list {
@@ -60,6 +62,8 @@
     left: 4.02vw;
     color: #fff;
     font-size: 25px;
+    text-align: left;
+    direction: ltr;
 
     &-title {
       font-size: 20px;

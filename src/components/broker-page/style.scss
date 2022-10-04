@@ -41,7 +41,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 8px;
-      gap: 18px;
+      gap: 16px;
     }
 
     .label {
@@ -65,6 +65,7 @@
     .email {
       display: flex;
       color: #6d7893;
+      gap: 4px;
 
       .address {
         display: flex;
@@ -72,6 +73,7 @@
         color: #6d7893;
         font-size: 14px;
         font-weight: 500;
+        gap: 4px;
 
         .md-icon {
           color: inherit;
