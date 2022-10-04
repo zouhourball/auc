@@ -466,7 +466,9 @@ export const getCountry = async ({ queryKey, pageParam = 0 }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/countries?page=${pageParam}&limit=${queryKey[0]}&search_key=${queryKey[1]}`,
+      `${appUrl}/api/v1/countries?page=${pageParam}&limit=${
+        queryKey[0]
+      }&search_key=${queryKey[1] || ''}`,
       {
         method: 'GET',
       },
@@ -536,6 +538,54 @@ export const registerBroker = async ({ body }) => {
   try {
     res = await fetchJSON(`${PRODUCT_APP_URL_CONFIGURATOR}/v2/org`, {
       method: 'POST',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const sendVerifiedCode = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_CALLBACK_HOST}/api/v1/send-verified-code`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const checkVerifiedCode = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_CALLBACK_HOST}/api/v1/check-verified-code`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const updatePassword = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_HOST}/update-password`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const updateEmail = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_HOST}/update-email`, {
+      method: 'PUT',
       body: JSON.stringify(body),
     })
   } catch (e) {

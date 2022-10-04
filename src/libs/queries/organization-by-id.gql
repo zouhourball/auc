@@ -3,5 +3,21 @@ query organisationByID($orgId: String) {
     name
     id
     organisationID
+    email
+    phoneMobile
+    webSite
+    link
+    country {
+      id
+      countryName
+      countryCode
+      phoneCode
+    }
+    description
+    aboutUs
+    city {
+      id
+      cityName
+    }
   }
 }

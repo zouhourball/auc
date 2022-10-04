@@ -4,25 +4,64 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { Button, SelectField, TextField } from 'react-md'
 import { useInfiniteQuery } from 'react-query'
+import { useMutation } from 'react-apollo'
+import updateUserProfiles from 'libs/queries/update-profile.gql'
+import updateCompany from 'libs/queries/update-organization.gql'
+import { useDispatch } from 'react-redux'
+import { addToast } from 'modules/app/actions'
+import ToastMsg from 'components/toast-msg'
 
-const PersonalInformation = ({ company }) => {
+const PersonalInformation = ({ company, userInfo, refetch }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
-
+  const dispatch = useDispatch()
   const [edit, setEdit] = useState(true)
-  const [informations, setInformations] = useState({
-    firstName: 'Ahmed',
-    lastName: 'Mohammed',
-    email: 'ahmed@gmail.com',
-    phoneNumber: '9817281',
-    countryCode: '968',
-    country: '',
+  const [information, setInformation] = useState({
+    ...userInfo,
+    phoneMobile: userInfo?.phoneMobile?.replace(
+      '+' + userInfo?.country?.phoneCode,
+      '',
+    ),
   })
+
+  const [updateMutation] = useMutation(
+    !company ? updateUserProfiles : updateCompany,
+    {
+      onCompleted: (res) => {
+        if (res?.updateUserProfiles || res?.updateCompanies) {
+          dispatch(
+            addToast(
+              <ToastMsg text={'Changes done successfully '} type="success" />,
+              'hide',
+            ),
+          )
+        } else {
+          dispatch(
+            addToast(
+              <ToastMsg text={'Changes has failed'} type="error" />,
+              'hide',
+            ),
+          )
+        }
+        refetch()
+      },
+    },
+  )
+
+  useEffect(() => {
+    setInformation({
+      ...userInfo,
+      phoneMobile: userInfo?.phoneMobile?.replace(
+        '+' + userInfo?.country?.phoneCode,
+        '',
+      ),
+    })
+  }, [userInfo])
   const {
     data: getCountryList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery([25], getCountry, {
+  } = useInfiniteQuery([500, ''], getCountry, {
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (
@@ -40,8 +79,8 @@ const PersonalInformation = ({ company }) => {
         ?.flatMap((el) => el?.results)
         ?.map((ac) => {
           return {
-            label: lang === 'ar' ? ac.name_ar : ac.name_en,
-            value: `${ac.id}`,
+            label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
+            value: `${ac?.['name_en']}`,
           }
         })
       return arrayName
@@ -83,9 +122,9 @@ const PersonalInformation = ({ company }) => {
           <TextField
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.firstName}
+            value={information?.firstName}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
                 firstName: v,
               }))
@@ -99,9 +138,9 @@ const PersonalInformation = ({ company }) => {
           <TextField
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.lastName}
+            value={information?.lastName}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
                 lastName: v,
               }))
@@ -115,11 +154,11 @@ const PersonalInformation = ({ company }) => {
           <TextField
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.companyName}
+            value={information?.name}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
-                companyName: v,
+                name: v,
               }))
             }
           />
@@ -131,9 +170,9 @@ const PersonalInformation = ({ company }) => {
           disabled={edit}
           id={'email'}
           placeholder={t('enter_email')}
-          value={informations?.email}
+          value={information?.email}
           onChange={(v) =>
-            setInformations((prev) => ({
+            setInformation((prev) => ({
               ...prev,
               email: v,
             }))
@@ -152,9 +191,12 @@ const PersonalInformation = ({ company }) => {
                 <div
                   className="countries-dropdown"
                   onClick={() =>
-                    setInformations((prev) => ({
+                    setInformation((prev) => ({
                       ...prev,
-                      countryCode: el?.value,
+                      country: {
+                        ...prev?.country,
+                        phoneCode: el?.value,
+                      },
                     }))
                   }
                   key={el?.value}
@@ -165,8 +207,12 @@ const PersonalInformation = ({ company }) => {
               ),
             }))}
             defaultValue={'+968'}
-            value={informations?.countryCode}
-            //   onChange={(value) => setInformations('countryCode', value)}
+            value={
+              information?.country?.phoneCode?.includes('+')
+                ? information?.country?.phoneCode
+                : '+' + information?.country?.phoneCode
+            }
+            //   onChange={(value) => setInformation('countryCode', value)}
             className="country-code"
             // itemLabel="value"
             position={SelectField.Positions.BELOW}
@@ -176,11 +222,11 @@ const PersonalInformation = ({ company }) => {
             disabled={edit}
             id={'phone'}
             placeholder={t('enter_phone_number')}
-            value={informations?.phoneNumber}
+            value={information?.phoneMobile}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
-                phoneNumber: v,
+                phoneMobile: v,
               }))
             }
           />
@@ -192,11 +238,11 @@ const PersonalInformation = ({ company }) => {
           <TextField
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.websiteURL}
+            value={information?.webSite}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
-                websiteURL: v,
+                webSite: v,
               }))
             }
           />
@@ -209,12 +255,16 @@ const PersonalInformation = ({ company }) => {
           id={'country'}
           menuItems={renderCountry()}
           listClassName="country-list"
-          value={informations?.country}
+          value={information?.country?.countryName}
           onClick={() => setTest(1)}
           onChange={(v) =>
-            setInformations((prev) => ({
+            setInformation((prev) => ({
               ...prev,
-              country: v,
+              country: {
+                ...prev?.countryName,
+                countryName: v,
+                nationality: v,
+              },
             }))
           }
           position={SelectField.Positions.BELOW}
@@ -227,11 +277,14 @@ const PersonalInformation = ({ company }) => {
           <TextField
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.address}
+            value={information?.city?.cityName}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
-                address: v,
+                city: {
+                  ...prev?.city,
+                  cityName: v,
+                },
               }))
             }
           />
@@ -244,11 +297,11 @@ const PersonalInformation = ({ company }) => {
             rows={5}
             disabled={edit}
             placeholder={'Write here'}
-            value={informations?.description}
+            value={information?.aboutUs}
             onChange={(v) =>
-              setInformations((prev) => ({
+              setInformation((prev) => ({
                 ...prev,
-                description: v,
+                aboutUs: v,
               }))
             }
           />
@@ -260,7 +313,43 @@ const PersonalInformation = ({ company }) => {
           style={{ display: 'flex', justifyContent: 'flex-end' }}
         >
           <Button flat>Cancel</Button>
-          <Button flat primary>
+          <Button
+            flat
+            primary
+            onClick={() => {
+              let myObject = {}
+              let keys = Object.keys(information) || []
+              keys.forEach((el) => {
+                if (el === 'phoneMobile') {
+                  if (
+                    el === 'phoneMobile' &&
+                    information['country']?.phoneCode &&
+                    information[el]
+                  ) {
+                    myObject['phoneMobile'] =
+                      '+' +
+                      information['country']?.phoneCode +
+                      information['phoneMobile']
+                  }
+                } else if (information[el]) {
+                  myObject[el] = information[el]
+                  if (el === 'firstName' || el !== 'lastName') {
+                    myObject['fullName'] =
+                      information['firstName'] + ' ' + information['lastName']
+                  }
+                }
+              })
+              updateMutation({
+                context: { uri: `${PRODUCT_APP_URL_PROFILE}/graphql` },
+                variables: {
+                  input: {
+                    ...myObject,
+                    videoCv: null,
+                  },
+                },
+              })
+            }}
+          >
             Save
           </Button>
         </div>
