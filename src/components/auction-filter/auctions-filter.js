@@ -103,27 +103,31 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
-        menuItems={propertyTypeList?.map((tp, index) => (
-          <Checkbox
-            key={`${tp.value}-auction-type-${index}`}
-            id={`${tp.value}-auction-type`}
-            name={`${tp.value}-checkboxes`}
-            label={tp.label}
-            onChange={(a, e) => {
-              filterData?.type?.find((el) => el === tp.value)
-                ? setFilterData({
-                  ...filterData,
-                  type: filterData.type?.filter((el) => el !== tp.value),
-                })
-                : setFilterData({
-                  ...filterData,
-                  type: [...(filterData?.type || []), tp.value],
-                })
-              e.stopPropagation()
-            }}
-            checked={!!filterData?.type?.find((el) => el === tp.value)}
-          />
-        ))}
+        menuItems={propertyTypeList?.map((tp, index) => {
+          return tp?.props?.text ? (
+            <div>{tp?.props?.text}</div>
+          ) : (
+            <Checkbox
+              key={`${tp.value}-auction-type-${index}`}
+              id={`${tp.value}-auction-type`}
+              name={`${tp.value}-checkboxes`}
+              label={tp.label}
+              onChange={(a, e) => {
+                filterData?.type?.find((el) => el === tp.value)
+                  ? setFilterData({
+                    ...filterData,
+                    type: filterData.type?.filter((el) => el !== tp.value),
+                  })
+                  : setFilterData({
+                    ...filterData,
+                    type: [...(filterData?.type || []), tp.value],
+                  })
+                e.stopPropagation()
+              }}
+              checked={!!filterData?.type?.find((el) => el === tp.value)}
+            />
+          )
+        })}
       />
       <div className="price md-cell md-cell--2">
         {newPrice && (

@@ -110,7 +110,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
-      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -539,9 +539,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
             <div className="auction-details-card center-text md-cell md-cell--6">
               <div>
-                <strong>
-                  {auctionData?.['lot_number'] || auctionData?.id}
-                </strong>
+                <strong>{auctionData?.['lot_number']}</strong>
               </div>
               <div>{t('lot_number')}</div>
             </div>

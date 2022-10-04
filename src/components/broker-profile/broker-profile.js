@@ -409,34 +409,38 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                 position={SelectField.Positions.BELOW}
                 closeMenuOnSelect={false}
                 menuItems={propertyTypeList?.map((tp, index) => {
-                  return {
-                    label: (
-                      <Checkbox
-                        key={index}
-                        id={`${tp.value}-auction-type`}
-                        name={`${tp.value}-checkboxes`}
-                        label={renderType(tp.label)}
-                        onChange={(e) => {
-                          filterData?.type?.find((el) => el === tp.value)
-                            ? setFilterData({
-                              ...filterData,
-                              type: filterData.type?.filter(
-                                  (el) => el !== tp.value,
-                                ),
-                            })
-                            : setFilterData({
-                              ...filterData,
-                              type: [...(filterData?.type || []), tp.value],
-                            })
-                          e.stopPropagation()
-                        }}
-                        checked={
-                          !!filterData?.type?.find((el) => el === tp.value)
-                        }
-                      />
-                    ),
-                    value: tp.label,
-                  }
+                  return tp?.props?.text ? (
+                    <div>{tp?.props?.text}</div>
+                  ) : (
+                    {
+                      label: (
+                        <Checkbox
+                          key={index}
+                          id={`${tp.value}-auction-type`}
+                          name={`${tp.value}-checkboxes`}
+                          label={renderType(tp.label)}
+                          onChange={(e) => {
+                            filterData?.type?.find((el) => el === tp.value)
+                              ? setFilterData({
+                                ...filterData,
+                                type: filterData.type?.filter(
+                                    (el) => el !== tp.value,
+                                  ),
+                              })
+                              : setFilterData({
+                                ...filterData,
+                                type: [...(filterData?.type || []), tp.value],
+                              })
+                            e.stopPropagation()
+                          }}
+                          checked={
+                            !!filterData?.type?.find((el) => el === tp.value)
+                          }
+                        />
+                      ),
+                      value: tp.label,
+                    }
+                  )
                   //   return (
                   //     <Checkbox
                   //       key={index}
