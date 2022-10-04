@@ -181,7 +181,7 @@ const SideAuctionCard = ({
       <div className="auction-info">
         <div className="title">
           {renderType(
-            propertyTypeList().find(
+            propertyTypeList.find(
               (el) =>
                 el?.value ===
                 +auctionData?.listing?.property?.['property_type_id'],

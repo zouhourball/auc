@@ -1,8 +1,4 @@
-import { Subheader } from 'react-md'
-import { useTranslation } from 'libs/langs'
-
-export const propertyTypeList = () => {
-  const { t } = useTranslation()
+export const propertyTypeList =
   // type PropertyCategory uint
   // const (
   // NoCategory             PropertyCategory = 0
@@ -44,10 +40,10 @@ export const propertyTypeList = () => {
   // Resort                      = 26
   // Park                        = 27
   // )
-  return [
-    <Subheader
-      key={t('resident')}
-      primaryText={t('resident')}
+  [
+    <div
+      key={'resident'}
+      text={'resident'}
       className="md-divider-border md-divider-border--bottom"
     />,
     {
@@ -70,9 +66,13 @@ export const propertyTypeList = () => {
       label: 'Building',
       value: 6,
     },
-    <Subheader
-      key={t('commercial')}
-      primaryText={t('commercial')}
+    {
+      label: 'Land',
+      value: 5,
+    },
+    <div
+      key={'commercial'}
+      text={'commercial'}
       className="md-divider-border md-divider-border--bottom"
     />,
     {
@@ -108,59 +108,140 @@ export const propertyTypeList = () => {
       value: 18,
     },
     {
-      label: 'Hotel',
-      value: 21,
+      label: 'Villa',
+      value: 2,
+    },
+
+    {
+      label: 'Full Floor',
+      value: 19,
+    },
+
+    {
+      label: 'Supermarket',
+      value: 20,
+    },
+    {
+      label: 'Land',
+      value: 5,
+    },
+
+    <div
+      key={'residential_commercial'}
+      text={'residential_commercial'}
+      className="md-divider-border md-divider-border--bottom"
+    />,
+    {
+      label: 'Building',
+      value: 6,
+    },
+    {
+      label: 'Land',
+      value: 5,
+    },
+    {
+      label: 'Shop',
+      value: 7,
     },
     {
       label: 'Full Floor',
       value: 19,
     },
     {
-      label: 'Factory',
-      value: 24,
+      label: 'Apartment',
+      value: 3,
+    },
+    {
+      label: 'Hostel',
+      value: 4,
+    },
+    {
+      label: 'Hotel',
+      value: 21,
     },
     {
       label: 'Staff Housing',
       value: 22,
     },
     {
-      label: 'Supermarket',
-      value: 20,
+      label: 'Mixed Use',
+      value: 23,
     },
 
-    <Subheader
-      key={t('land')}
-      primaryText={t('land')}
+    <div
+      key={'industrial'}
+      text={'industrial'}
       className="md-divider-border md-divider-border--bottom"
     />,
     {
-      label: 'Residential',
-      value: 1,
+      label: 'Factory',
+      value: 24,
     },
     {
-      label: 'Commercial',
-      value: 2,
-    },
-    {
-      label: 'Residential Commercial',
-      value: 3,
-    },
-
-    {
-      label: 'Industrial',
-      value: 4,
-    },
-    {
-      label: 'Farm',
+      label: 'Land',
       value: 5,
     },
-
+    {
+      label: 'Shop',
+      value: 7,
+    },
+    <div
+      key={'tourist'}
+      text={'tourist'}
+      className="md-divider-border md-divider-border--bottom"
+    />,
+    {
+      label: 'Hotel',
+      value: 21,
+    },
+    {
+      label: 'Resort',
+      value: 26,
+    },
     {
       label: 'Mixed Use',
       value: 23,
     },
+    {
+      label: 'Land',
+      value: 5,
+    },
+    {
+      label: 'Park',
+      value: 27,
+    },
+
+    {
+      label: 'Plot',
+      value: 9,
+    },
+    <div
+      key={'government'}
+      text={'government'}
+      className="md-divider-border md-divider-border--bottom"
+    />,
+
+    {
+      label: 'Plot',
+      value: 9,
+    },
+    {
+      label: 'Apartment',
+      value: 3,
+    },
+    {
+      label: 'Building',
+      value: 6,
+    },
+    {
+      label: 'Unit',
+      value: 10,
+    },
+    {
+      label: 'Land',
+      value: 5,
+    },
   ]
-}
 
 export const brokerCompanyList = [
   { label: 'broker Company1', value: 1 },

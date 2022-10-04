@@ -103,9 +103,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
-        menuItems={propertyTypeList()?.map((tp, index) => {
-          return tp?.key ? (
-            <div>{tp?.key}</div>
+        menuItems={propertyTypeList?.map((tp, index) => {
+          return tp?.props?.text ? (
+            <div>{tp?.props?.text}</div>
           ) : (
             <Checkbox
               key={`${tp.value}-auction-type-${index}`}
