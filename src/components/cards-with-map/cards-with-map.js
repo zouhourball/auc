@@ -43,7 +43,7 @@ const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
             ? el?.listing?.images?.find((img) => img?.['cover_image'])?.url
             : el?.listing?.images?.[0]?.url
         }?token=${downloadToken}&view=true`,
-        [propertyTypeList().find(
+        [propertyTypeList.find(
           (propertyId) =>
             propertyId?.value === +el?.listing?.property?.['property_type_id'],
         )?.label]: '',

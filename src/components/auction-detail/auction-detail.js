@@ -453,7 +453,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           </div>
           <div className="title">
             {
-              propertyTypeList().find(
+              propertyTypeList.find(
                 (el) =>
                   el?.value === +auctionPropertyData?.['property_type_id'],
               )?.label

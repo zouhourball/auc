@@ -408,9 +408,9 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                 value={'type'}
                 position={SelectField.Positions.BELOW}
                 closeMenuOnSelect={false}
-                menuItems={propertyTypeList()?.map((tp, index) => {
-                  return tp?.key ? (
-                    <div>{tp?.key}</div>
+                menuItems={propertyTypeList?.map((tp, index) => {
+                  return tp?.props?.text ? (
+                    <div>{tp?.props?.text}</div>
                   ) : (
                     {
                       label: (
