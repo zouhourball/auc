@@ -31,7 +31,7 @@ module.exports = merge(baseConfig, {
               importLoaders: 1,
             },
           },
-          // 'postcss-loader',
+          'postcss-loader',
         ],
       },
       {
@@ -44,7 +44,7 @@ module.exports = merge(baseConfig, {
               importLoaders: 2,
             },
           },
-          //   'postcss-loader',
+          'postcss-loader',
           'sass-loader',
         ],
       },
