@@ -53,9 +53,9 @@ const TopBar = ({
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
   let notifNumber = 2
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
-  let avatarLetter = user
-    ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
-    : null
+  // let avatarLetter = user
+  //   ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
+  //   : null
   const modules = location.pathname.split('/').filter((v) => v !== '')
   useEffect(() => {
     if (
@@ -356,14 +356,14 @@ const TopBar = ({
                 icon
                 menuItems={
                   <div className="top-bar-menu-items">
-                    <div className="d-flex top-bar-profile-avatar-infos">
+                    {/* <div className="d-flex top-bar-profile-avatar-infos">
                       <span className="top-bar-profile-avatar">
                         {avatarLetter}
                       </span>
                       <span className="top-bar-profile-avatar-name">
                         {user?.profile?.fullName}
                       </span>
-                    </div>
+                    </div> */}
                     <Button onClick={() => navigate('/auctions/profile')}>
                       My Profile
                     </Button>

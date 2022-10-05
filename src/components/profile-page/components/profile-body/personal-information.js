@@ -4,6 +4,7 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { Button, SelectField, TextField } from 'react-md'
 import { useInfiniteQuery } from 'react-query'
+import './style.scss'
 
 const PersonalInformation = ({ company }) => {
   const { t } = useTranslation()
@@ -63,25 +64,20 @@ const PersonalInformation = ({ company }) => {
   }
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
-      <div
-        className="md-cell md-cell--12"
-        style={{
-          borderBottom: '1px solid gray',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="personal-information-header md-cell md-cell--12">
         <h2>Personal Information</h2>
         <Button icon primary={!edit} onClick={() => setEdit((prev) => !prev)}>
-          menu
+          more_vert
         </Button>
       </div>
 
       {!company && (
         <div className="md-cell md-cell--6">
-          <b>First Name*</b>
+          <div className="label">First Name*</div>
           <TextField
+            className="textField"
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={informations?.firstName}
             onChange={(v) =>
@@ -95,9 +91,11 @@ const PersonalInformation = ({ company }) => {
       )}
       {!company && (
         <div className="md-cell md-cell--6">
-          <b>Last Name*</b>
+          <div className="label">Last Name*</div>
           <TextField
+            className="textField"
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={informations?.lastName}
             onChange={(v) =>
@@ -111,8 +109,10 @@ const PersonalInformation = ({ company }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Company Name*</b>
+          <div className="label">Company Name*</div>
           <TextField
+            className="textField"
+            block
             disabled={edit}
             placeholder={'Write here'}
             value={informations?.companyName}
@@ -126,8 +126,10 @@ const PersonalInformation = ({ company }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <b>Email Address*</b>
+        <div className="label">Email Address*</div>
         <TextField
+          className="textField"
+          block
           disabled={edit}
           id={'email'}
           placeholder={t('enter_email')}
@@ -141,7 +143,7 @@ const PersonalInformation = ({ company }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <b>Phone Number*</b>
+        <div className="label">Phone Number*</div>
         <div style={{ display: 'flex' }}>
           <SelectField
             disabled={edit}
@@ -167,14 +169,16 @@ const PersonalInformation = ({ company }) => {
             defaultValue={'+968'}
             value={informations?.countryCode}
             //   onChange={(value) => setInformations('countryCode', value)}
-            className="country-code"
+            className="selectField country-code"
             // itemLabel="value"
             position={SelectField.Positions.BELOW}
           />
           <div className="sep"></div>
           <TextField
+            className="phoneField"
             disabled={edit}
             id={'phone'}
+            block
             placeholder={t('enter_phone_number')}
             value={informations?.phoneNumber}
             onChange={(v) =>
@@ -188,9 +192,11 @@ const PersonalInformation = ({ company }) => {
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Website URL*</b>
+          <div className="label">Website URL*</div>
           <TextField
+            className="textField"
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={informations?.websiteURL}
             onChange={(v) =>
@@ -203,7 +209,7 @@ const PersonalInformation = ({ company }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <b>Country*</b>
+        <div className="label">Country*</div>
         <SelectField
           disabled={edit}
           id={'country'}
@@ -218,14 +224,16 @@ const PersonalInformation = ({ company }) => {
             }))
           }
           position={SelectField.Positions.BELOW}
-          className="country-code"
+          className="selectField country-code"
         />
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Address*</b>
+          <div className="label">Address*</div>
           <TextField
+            className="textField"
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={informations?.address}
             onChange={(v) =>
@@ -239,10 +247,12 @@ const PersonalInformation = ({ company }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Company Description*</b>
+          <div className="label">Company Description*</div>
           <TextField
+            className="textField"
             rows={5}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={informations?.description}
             onChange={(v) =>

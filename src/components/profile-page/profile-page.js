@@ -10,14 +10,15 @@ const ProfilePage = ({ company }) => {
   )
   return (
     <div className="md-grid profile-page">
-      <div className="md-cell md-cell--4">
+      <div className="profile-page-left md-cell md-cell--3">
         <ProfileMenu
           company={company}
           currentView={currentView}
           setCurrentView={setCurrentView}
         />
+        <div className="vertical-sep"></div>
       </div>
-      <div className="md-cell md-cell--8">
+      <div className="profile-page-right md-cell md-cell--9">
         <ProfileBody
           currentView={currentView}
           setCurrentView={setCurrentView}
