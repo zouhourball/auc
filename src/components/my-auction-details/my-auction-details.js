@@ -59,6 +59,8 @@ const MyAuctionDetails = ({ auctionId }) => {
     // description: '',
   })
   const [showDatePicker, setShowDatePicker] = useState(false)
+  const [page, setPage] = useState(0)
+  const [size] = useState(4)
 
   // get auction details api
   const { data: auctionDetails, refetch: refetchAuction } = useQuery(
@@ -106,7 +108,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   )
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
-    variables: { auctionUUID: auctionId },
+    variables: { auctionUUID: auctionId, page, size },
   })
   const { data: subNewBid } = useSubscription(subscribeNewBid, {
     variables: { auctionID: auctionId },
@@ -226,15 +228,14 @@ const MyAuctionDetails = ({ auctionId }) => {
       />
     ))
   const isClosed = +moment.utc(auctionDetails?.['auction_end_date']) < +moment()
-
   const renderBidders = () =>
-    biddersList?.bids?.map((el, index) => (
-      <UserInfoBySubject key={el?.sub} subject={el?.sub}>
+    biddersList?.bids?.items?.map((el, index) => (
+      <UserInfoBySubject key={el?.id} subject={el?.sub}>
         {(res) => (
           <div
-            key={el?.sub}
+            key={el?.id}
             className={`auction-details-table-row ${
-              index === 0 && isClosed ? 'highlighted' : ''
+              page === 0 && index === 0 && isClosed ? 'highlighted' : ''
             }`}
           >
             <div>{res?.fullName}</div>
@@ -323,6 +324,52 @@ const MyAuctionDetails = ({ auctionId }) => {
   const onDisableEdit = () => {
     setEditMode(!editMode)
     setShowDatePicker(false)
+  }
+  const renderPaginationButtons = (indexToShowBtn) => {
+    let buttonsArray = []
+    let totalPages = Math.ceil(+biddersList?.bids?.total / size)
+    for (let index = 0; index < totalPages; index++) {
+      if (index < 3) {
+        buttonsArray.push(
+          <Button
+            className={`table-paginator-btn ${index === page ? 'active' : ''}`}
+            onClick={() => setPage(index)}
+            flat
+          >
+            {index + 1}
+          </Button>,
+        )
+      } else break
+    }
+    if (indexToShowBtn && indexToShowBtn < totalPages) {
+      buttonsArray.push(
+        <span>...</span>,
+        <Button
+          className={`table-paginator-btn ${
+            indexToShowBtn - 1 === page ? 'active' : ''
+          }`}
+          onClick={() => setPage(indexToShowBtn - 1)}
+          flat
+        >
+          {indexToShowBtn}
+        </Button>,
+      )
+    }
+    if (totalPages > 3) {
+      buttonsArray.push(
+        <span>...</span>,
+        <Button
+          className={`table-paginator-btn ${
+            totalPages - 1 === page ? 'active' : ''
+          }`}
+          onClick={() => setPage(totalPages - 1)}
+          flat
+        >
+          {totalPages}
+        </Button>,
+      )
+    }
+    return buttonsArray
   }
   // const onHandleDate = (date, key) => {
   //   setAuctionEditData({
@@ -793,6 +840,29 @@ const MyAuctionDetails = ({ auctionId }) => {
           </div>
           {renderBidders()}
         </div>
+        {+biddersList?.bids?.total > size && (
+          <div className="table-paginator">
+            <Button
+              onClick={() => setPage((prev) => prev - 1)}
+              disabled={page === 0}
+              icon
+              className="table-paginator-arrowBtn"
+            >
+              arrow_left
+            </Button>
+            {page < 3
+              ? renderPaginationButtons()
+              : renderPaginationButtons(page + 1)}
+            <Button
+              onClick={() => setPage((prev) => prev + 1)}
+              icon
+              className="table-paginator-arrowBtn"
+              disabled={!(+biddersList?.bids?.total - (page + 1) * size > 0)}
+            >
+              arrow_right
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -41,28 +41,6 @@ const HomeSlider = ({ auctions, logged }) => {
     ),
   }
 
-  const renderType = (type) => {
-    switch (type) {
-      case 'Home':
-        return t('Home')
-      case 'Villa':
-        return t('Villa')
-      case 'Apartment':
-        return t('Apartment')
-      case 'Hostel':
-        return t('Hostel')
-      case 'Land':
-        return t('Land')
-      case 'Building':
-        return t('Building')
-      case 'Office':
-        return t('Office')
-      case 'Plot':
-        return t('Plot')
-      case 'Unit':
-        return t('Unit')
-    }
-  }
   return (
     <Slider {...settings} className="home-slider">
       {auctions?.map((auction) => (
@@ -77,7 +55,7 @@ const HomeSlider = ({ auctions, logged }) => {
           />
           <div className="data-section">
             <div className="data-section-title">
-              {renderType(
+              {t(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===

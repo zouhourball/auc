@@ -64,28 +64,6 @@ const SideAuctionCard = ({
     },
   })
 
-  const renderType = (type) => {
-    switch (type) {
-      case 'Home':
-        return t('Home')
-      case 'Villa':
-        return t('Villa')
-      case 'Apartment':
-        return t('Apartment')
-      case 'Hostel':
-        return t('Hostel')
-      case 'Land':
-        return t('Land')
-      case 'Building':
-        return t('Building')
-      case 'Office':
-        return t('Office')
-      case 'Plot':
-        return t('Plot')
-      case 'Unit':
-        return t('Unit')
-    }
-  }
   const unsaveAuctionMutation = useMutation(unsaveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -180,7 +158,7 @@ const SideAuctionCard = ({
       </div>
       <div className="auction-info">
         <div className="title">
-          {renderType(
+          {t(
             propertyTypeList.find(
               (el) =>
                 el?.value ===
