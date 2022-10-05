@@ -624,7 +624,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 flat
                 primary
                 // swapTheming
-                className="auction-details-btn"
+                className="auction-details-btn downloadCertificateBtn"
                 onClick={
                   () => downloadCertificate()
                   // setBidDialog(true)

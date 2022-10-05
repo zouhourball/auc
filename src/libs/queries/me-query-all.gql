@@ -1,0 +1,467 @@
+query meQueryProfile {
+  me {
+    percentageCompleted
+    userProfile {
+      userID
+      fullName
+      firstName
+      lastName
+      isSearchable
+      title
+      aboutMe
+      nationality
+      dateOfBirth
+      gender
+      residentCardNo
+      phoneMobile
+      phoneHome
+      email
+      createdDate
+      deletedDate
+      lastLoginDate
+      isActive
+      streetAddress
+      isLocked
+      bkgImg #{
+      # id
+      # aPIID
+      # aPIURL
+      # aPISize
+      # aPIBucket
+      # aPIObject
+      # aPIFilename
+      #}
+      userProfileVideoCvs {
+        userProfileVideoCvs {
+          isDefault
+          videoCv {
+            aPIID
+            aPIURL
+            aPIFilename
+            aPISize
+            id
+            aPIContentType
+          }
+        }
+      }
+
+      userSettings {
+        userSettings {
+          id
+          settingValue
+          setting {
+            id
+            settingKey
+          }
+        }
+      }
+      photo {
+        id
+        aPIID
+        aPIURL
+        aPISize
+        aPIBucket
+        aPIObject
+        aPIFilename
+      }
+      country {
+        id
+        countryName
+        countryCode
+        phoneCode
+      }
+      city {
+        id
+        cityName
+      }
+      state {
+        id
+        name
+      }
+      experiences(orderBy: "dateFrom", desc: true) {
+        experiences {
+          industry {
+            id
+            name
+          }
+          id
+          jobTitle
+          jobDescription
+          companyName
+          companyLogo
+          dateFrom
+          dateTo
+          isCurrent
+          country {
+            id
+            countryName
+            countryCode
+            phoneCode
+          }
+          city {
+            id
+            cityName
+          }
+          state {
+            id
+            name
+          }
+        }
+      }
+      medicalInfos {
+        medicalInfos {
+          id
+          bloodGroup
+          height
+          heightUnit
+          weight
+          weightUnit
+          medicalCondition
+        }
+      }
+      onlineProfiles {
+        onlineProfiles {
+          id
+          facebook
+          twitter
+          createdDate
+          linkedin
+        }
+      }
+      trainings {
+        trainings {
+          id
+          trainingName
+          instituteName
+          trainingDate
+          trainingDescription
+          trainingSubject
+          startDate
+          endDate
+        }
+      }
+      userAwards {
+        userAwards {
+          awardTitle
+          id
+          awardsIssuedDate
+          awardsIssuedBy
+        }
+      }
+      userLanguages {
+        userLanguages {
+          language {
+            languageName
+            id
+          }
+          id
+          skillLevel {
+            levelTitle
+            id
+          }
+        }
+      }
+
+      userCareerAspirations {
+        userCareerAspirations {
+          id
+          industry {
+            id
+            name
+            industryAr
+            classification
+            code
+          }
+          employmentType {
+            id
+            employmentType
+          }
+          frequencyOfTrips
+          preferedCountry {
+            id
+            countryName
+            countryCode
+          }
+          preferedCity {
+            id
+            cityName
+          }
+          preferedState {
+            id
+            name
+          }
+          salaryCurrency {
+            id
+            currencyName
+            currencyCode
+          }
+          salaryRangeMin
+          salaryRangeMax
+          contractType {
+            id
+            contractTypeTitle
+          }
+        }
+      }
+      userCertifications {
+        userCertifications {
+          id
+          certificationTitle
+          certificationIssuedDate
+          certificationIssuedBy
+        }
+      }
+      userDocuments {
+        userDocuments {
+          id
+          documentType
+          document {
+            id
+            aPIID
+            aPIURL
+            aPISize
+            aPISize
+            aPIObject
+            aPIFilename
+            aPIContentType
+          }
+        }
+      }
+      userEducations {
+        userEducations {
+          specialization {
+            id
+            minorSubject
+          }
+          id
+          degreeLevel {
+            degreeName
+            id
+          }
+          degreeTitle
+          universityName
+          startDate
+          endDate
+          gpa
+          country {
+            id
+            countryName
+            countryCode
+            phoneCode
+          }
+          city {
+            id
+            cityName
+          }
+          state {
+            id
+            name
+          }
+        }
+      }
+      userInterests {
+        userInterests {
+          id
+          interest {
+            id
+            interestName
+            interestImg
+          }
+        }
+      }
+      userProjects {
+        userProjects {
+          id
+          projectTitle
+          projectDescription
+
+          coverImg {
+            id
+            aPIID
+            aPIURL
+            aPISize
+            aPISize
+            aPIBucket
+            aPIObject
+            aPIFilename
+            aPIContentType
+          }
+          companyName
+          startDate
+          endDate
+          projectURL
+          isPrivate
+          country {
+            id
+            countryName
+            countryCode
+            phoneCode
+          }
+          city {
+            id
+            cityName
+          }
+          state {
+            id
+            name
+          }
+          projectAttachements {
+            projectAttachements {
+              id
+              project {
+                id
+              }
+              attachement {
+                id
+                aPIURL
+                aPIFilename
+                aPIID
+                aPIContentType
+              }
+            }
+          }
+        }
+      }
+      userProjectUsedSkills {
+        userProjectUsedSkills {
+          id
+          project {
+            id
+          }
+          skill {
+            id
+            skillName
+          }
+        }
+      }
+      userSkills {
+        userSkills {
+          id
+          skill {
+            id
+            skillName
+          }
+          skillLevelID
+          skillEndorsementsEndorsedSkill {
+            skillEndorsements {
+              id
+              endorsedBy {
+                subject
+                fullName
+                photo {
+                  id
+                  aPIID
+                  aPIURL
+                  aPISize
+                  aPIBucket
+                  aPIObject
+                  aPIFilename
+                  aPIContentType
+                }
+              }
+              endorsed
+            }
+          }
+        }
+      }
+      userGainedSkills {
+        totalCount
+        userGainedSkills {
+          id
+          gainedSkillTitle
+          gainingAuthorityName
+          gainingAuthorityLogo {
+            id
+            aPIID
+            aPIURL
+            aPISize
+            aPIFilename
+            aPISubject
+            aPISubject
+            aPIContentType
+          }
+        }
+      }
+      userRecommandations {
+        userRecommandations {
+          description
+          status
+          id
+          recommendedBy {
+            userID
+            title
+            fullName
+            aboutMe
+            email
+
+            photo {
+              aPIID
+              aPIURL
+              aPISize
+            }
+          }
+        }
+      }
+      userSections {
+        userSections {
+          id
+          section {
+            id
+            sectionKey
+          }
+          sectionValue
+        }
+      }
+      volunteerWorks {
+        volunteerWorks {
+          id
+          title
+          description
+          link
+          startDate
+          endDate
+          workCover {
+            id
+            aPIID
+            aPIURL
+            aPISize
+            aPIBucket
+            aPIObject
+            aPIFilename
+            aPIContentType
+          }
+          country {
+            id
+            countryName
+            countryCode
+            phoneCode
+          }
+          city {
+            id
+            cityName
+          }
+          state {
+            id
+            name
+          }
+          isPrivate
+        }
+      }
+      userSignatures {
+        userSignatures {
+          id
+          title
+          img {
+            aPIID
+          }
+          text
+          font
+        }
+      }
+      careerLevel {
+        id
+        name
+      }
+    }
+  }
+}

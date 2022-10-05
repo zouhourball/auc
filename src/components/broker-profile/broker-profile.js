@@ -14,7 +14,7 @@ import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
 // import { getPublicUrl } from 'libs/utils/custom-function'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import { filterFeatureAuctions } from 'libs/api/auctions-api'
@@ -34,6 +34,7 @@ import './style.scss'
 
 const BrokerProfile = ({ brokerId, user, logged }) => {
   const { t } = useTranslation()
+  let currentLang = useCurrentLang()
 
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
@@ -324,7 +325,9 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
     <div className="broker-profile">
       <div className="broker-profile-header">
         <FontIcon onClick={() => navigate('/auctions/broker')}>
-          arrow_back
+          {currentLang === 'ar-SA' || currentLang === 'ar'
+            ? 'arrow_forward'
+            : 'arrow_back'}
         </FontIcon>
         <div className="title">{t('broker_profile')}</div>
       </div>

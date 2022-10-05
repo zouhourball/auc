@@ -1,0 +1,6 @@
+mutation updateCompanies($input: [UpdateCompanyInput!]!) {
+  updateCompanies(input: $input) {
+    id
+    name
+  }
+}

@@ -9,6 +9,7 @@ query meQuery {
         title
         pictureURL
         email
+        phoneMobile
       }
     }
     primaryRole

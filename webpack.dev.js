@@ -48,6 +48,7 @@ module.exports = merge(baseConfig, {
               sourceMap: true,
             },
           },
+          'postcss-loader',
         ],
       },
       {
@@ -66,6 +67,7 @@ module.exports = merge(baseConfig, {
               importLoaders: 1,
             },
           },
+          'postcss-loader',
           {
             loader: 'sass-loader',
             options: {

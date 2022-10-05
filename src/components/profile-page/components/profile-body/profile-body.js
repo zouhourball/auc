@@ -4,19 +4,19 @@ import Security from './security'
 import './style.scss'
 import Support from './support'
 
-const ProfileBody = ({ currentView, setCurrentView }) => {
+const ProfileBody = ({ currentView, userInfo, refetch }) => {
   const renderView = () => {
     switch (currentView) {
       case 'PersonalInformation':
-        return <PersonalInformation />
+        return <PersonalInformation refetch={refetch} userInfo={userInfo} />
       case 'Payment':
         return <Payment />
       case 'Security':
-        return <Security />
+        return <Security userInfo={userInfo} />
       case 'Support':
         return <Support />
       case 'PersonalInformationCompany':
-        return <PersonalInformation company={true} />
+        return <PersonalInformation company={true} userInfo={userInfo} />
       default:
         break
     }

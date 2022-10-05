@@ -1,23 +1,45 @@
 import { navigate } from '@reach/router'
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
+import UserInfoBySubject from 'components/user-info-by-subject'
 import { useTranslation } from 'libs/langs'
+import { getPublicUrl } from 'libs/utils/custom-function'
+import { get } from 'lodash-es'
 
-import { Button } from 'react-md'
-import avatar from './avatar.jpg'
+import { Avatar, Button } from 'react-md'
+// import avatar from './avatar.jpg'
 import './style.scss'
 
-const ProfileMenu = ({ currentView, setCurrentView, company }) => {
+const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
   const { t } = useTranslation()
 
   return (
     <div className="profile-menu">
-      <img
+      {/* <img
         className="profile-menu-avatar"
         src={avatar}
         width={80}
         height={80}
         style={{ borderRadius: '50%' }}
-      />
+      /> */}
+      <UserInfoBySubject key={userInfo?.subject} subject={userInfo?.subject}>
+        {(res) => {
+          return (
+            <Avatar
+              className="profile-menu-avatar"
+              src={
+                get(res, 'photo.aPIURL', null)
+                  ? getPublicUrl(res?.photo?.aPIURL)
+                  : null
+              }
+            >
+              {get(res, 'photo.aPIURL', null)
+                ? null
+                : get(res, 'fullName.0', '')}
+            </Avatar>
+          )
+        }}
+      </UserInfoBySubject>
+
       <div className="profile-menu-fullName">Ahmed Mohammed</div>
       <div className="profile-menu-email">ahmed@gmail.com</div>
       <br />
