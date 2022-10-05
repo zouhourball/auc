@@ -367,6 +367,10 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
       </div> */}
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
+        <Button onClick={() => window.history.go(-1)}>
+          <FontIcon>arrow_left</FontIcon>
+          Back to Live Auctions
+        </Button>
         <div className="auction-details-header md-cell md-cell--12">
           {admin && (
             <FontIcon
@@ -492,10 +496,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               <div className="auction-timer-info">
                 <div>
                   <strong>
-                    {auctionData?.['lot_number'] || auctionData?.id}
+                    {moment(auctionData?.['auction_end_date']).format(
+                      'DD MMM, YYYY',
+                    )}
                   </strong>
                 </div>
-                <div>{t('lot_number')}</div>
+                <div>{t('end_date')}</div>
               </div>
             </div>
             <div className="auction-timer-details">
