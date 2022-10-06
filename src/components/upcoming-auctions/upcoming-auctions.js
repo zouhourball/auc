@@ -4,6 +4,7 @@ import moment from 'moment'
 import BiddingCard from 'components/bidding-card'
 import { useTranslation } from 'libs/langs'
 import { navigate } from '@reach/router'
+import listActive from 'images/List View Selected.svg'
 
 import './styles.scss'
 
@@ -23,18 +24,27 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
   }
 
   const renderCards = () =>
-    cards?.map((el) => (
-      <BiddingCard
-        user={user}
-        className={'md-cell md-cell--4'}
-        key={el?.uuid}
-        auctionData={el}
-        status={renderStatus(el)}
-        saveAuctionTag
-        refetch={refetch}
-        logged={logged}
-      />
-    ))
+    cards?.map((el) => {
+      return cards?.length > 0 ? (
+        <BiddingCard
+          user={user}
+          className={'md-cell md-cell--4'}
+          key={el?.uuid}
+          auctionData={el}
+          status={renderStatus(el)}
+          saveAuctionTag
+          refetch={refetch}
+          logged={logged}
+        />
+      ) : (
+        <div>
+          <img src={listActive} />
+          <div>
+            <b>No Upcoming Auctions</b>
+          </div>
+        </div>
+      )
+    })
   return (
     <div className="upcoming-auctions">
       <div className="upcoming-auctions-title">
