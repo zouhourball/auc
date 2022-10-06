@@ -148,7 +148,7 @@ const Security = ({ userInfo }) => {
 export default Security
 
 const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [email, setEmail] = useState('')
   const [oldEmail, setOldEmail] = useState('')
@@ -168,6 +168,73 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
       dialogClassName="change-email-dialog"
       focusOnMount={false}
       onHide={onHide}
+      actions={[
+        <>
+          {step === 3 && (
+            <div className="emailChanged">
+              <Button className="confirmBtn" primary onClick={onHide}>
+                Done
+              </Button>
+            </div>
+          )}
+          {step < 2 && (
+            <span>
+              <Button className="cancelBtn" onClick={onHide}>
+                Cancel
+              </Button>
+            </span>
+          )}{' '}
+          {step === 2 && (
+            <span>
+              <Button
+                className="cancelBtn"
+                onClick={() => setStep((prev) => prev - 1)}
+              >
+                Back
+              </Button>
+            </span>
+          )}
+        </>,
+        <>
+          {step < 2 && (
+            <span>
+              <Button
+                primary
+                className="confirmBtn"
+                onClick={() => {
+                  if (emailData === oldEmail && step === 0) {
+                    setStep((prev) => prev + 1)
+                  } else {
+                    //
+                  }
+                  if (step === 1) {
+                    updateEmailMutation({
+                      body: {
+                        oldEmail: oldEmail,
+                        email,
+                      },
+                    })
+                    setStep((prev) => prev + 1)
+                  }
+                }}
+              >
+                Next
+              </Button>
+            </span>
+          )}
+          {step === 2 && (
+            <span>
+              <Button
+                className="confirmBtn"
+                primary
+                onClick={() => setStep((prev) => prev + 1)}
+              >
+                Confirm
+              </Button>
+            </span>
+          )}
+        </>,
+      ]}
     >
       <div className="change-email-dialog-container">
         {step !== 3 && <h2>Change Email</h2>}
@@ -242,65 +309,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
             <div className="grey-label" style={{ textAlign: 'center' }}>
               Your email has been changed successfully
             </div>
-
-            <Button className="confirmBtn" primary onClick={onHide}>
-              Done
-            </Button>
           </div>
-        )}
-        {step < 2 && (
-          <span>
-            <Button className="cancelBtn" onClick={onHide}>
-              Cancel
-            </Button>
-          </span>
-        )}{' '}
-        {step === 2 && (
-          <span>
-            <Button
-              className="cancelBtn"
-              onClick={() => setStep((prev) => prev - 1)}
-            >
-              Back
-            </Button>
-          </span>
-        )}
-        {step < 2 && (
-          <span>
-            <Button
-              primary
-              className="confirmBtn"
-              onClick={() => {
-                if (emailData === oldEmail && step === 0) {
-                  setStep((prev) => prev + 1)
-                } else {
-                  //
-                }
-                if (step === 1) {
-                  updateEmailMutation({
-                    body: {
-                      oldEmail: oldEmail,
-                      email,
-                    },
-                  })
-                  setStep((prev) => prev + 1)
-                }
-              }}
-            >
-              Next
-            </Button>
-          </span>
-        )}
-        {step === 2 && (
-          <span>
-            <Button
-              className="confirmBtn"
-              primary
-              onClick={() => setStep((prev) => prev + 1)}
-            >
-              Confirm
-            </Button>
-          </span>
         )}
       </div>
     </DialogContainer>
@@ -308,7 +317,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
 }
 
 const ChangeNumberDialog = ({ visible, onHide }) => {
-  const [step, setStep] = useState('')
+  const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [key, setKey] = useState('')
   const [phoneNumber, setPhoneNumber] = useState({
@@ -343,6 +352,73 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
       dialogClassName="change-email-dialog"
       focusOnMount={false}
       onHide={onHide}
+      actions={[
+        <>
+          {step < 2 && (
+            <span>
+              <Button className="cancelBtn" onClick={onHide}>
+                Cancel
+              </Button>
+            </span>
+          )}
+          {step === 2 && (
+            <span>
+              <Button
+                className="cancelBtn"
+                onClick={() => setStep((prev) => prev - 1)}
+              >
+                Back
+              </Button>
+            </span>
+          )}
+        </>,
+        <>
+          {step < 2 && (
+            <span>
+              <Button
+                primary
+                className="confirmBtn"
+                onClick={() => {
+                  if (step === 1) {
+                    changePhoneNumberOTP({
+                      body: {
+                        phone: phoneNumber?.newCode + phoneNumber?.new,
+                      },
+                    })
+                  } else {
+                    setStep((prev) => prev + 1)
+                  }
+                }}
+              >
+                Next
+              </Button>
+            </span>
+          )}
+          {step === 2 && (
+            <span>
+              <Button
+                className="confirmBtn"
+                primary
+                onClick={() => {
+                  checkOtp({
+                    body: {
+                      code: otp,
+                      key: key,
+                    },
+                  })
+                }}
+              >
+                Confirm
+              </Button>
+            </span>
+          )}
+          {step === 3 && (
+            <Button className="confirmBtn" primary onClick={onHide}>
+              Done
+            </Button>
+          )}
+        </>,
+      ]}
     >
       <div className="change-email-dialog-container">
         {step !== 3 && <h2>Change Phone Number</h2>}
@@ -491,68 +567,9 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
             <h2>Email Changed</h2>
             <div>Your phone number has been changed successfully</div>
             <br />
-            <Button className="confirmBtn" primary onClick={onHide}>
-              Done
-            </Button>
           </div>
         )}
         <br />
-        {step < 2 && (
-          <span>
-            <Button className="cancelBtn" onClick={onHide}>
-              Cancel
-            </Button>
-          </span>
-        )}
-        {step === 2 && (
-          <span>
-            <Button
-              className="cancelBtn"
-              onClick={() => setStep((prev) => prev - 1)}
-            >
-              Back
-            </Button>
-          </span>
-        )}
-        {step < 2 && (
-          <span>
-            <Button
-              primary
-              className="confirmBtn"
-              onClick={() => {
-                if (step === 1) {
-                  changePhoneNumberOTP({
-                    body: {
-                      phone: phoneNumber?.newCode + phoneNumber?.new,
-                    },
-                  })
-                } else {
-                  setStep((prev) => prev + 1)
-                }
-              }}
-            >
-              Next
-            </Button>
-          </span>
-        )}
-        {step === 2 && (
-          <span>
-            <Button
-              className="confirmBtn"
-              primary
-              onClick={() => {
-                checkOtp({
-                  body: {
-                    code: otp,
-                    key: key,
-                  },
-                })
-              }}
-            >
-              Confirm
-            </Button>
-          </span>
-        )}
       </div>
     </DialogContainer>
   )
@@ -580,6 +597,47 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
       dialogClassName="change-email-dialog"
       focusOnMount={false}
       onHide={onHide}
+      actions={[
+        <>
+          {step === 0 && (
+            <>
+              <span>
+                <Button className="cancelBtn" onClick={onHide}>
+                  Cancel
+                </Button>
+              </span>
+              <span>
+                <Button
+                  className="confirmBtn"
+                  primary
+                  onClick={() => {
+                    if (password?.new === password?.newConfirm) {
+                      updatePasswordMutation({
+                        body: {
+                          old_password: password?.current,
+                          password: password?.new,
+                          subject: subject,
+                        },
+                      })
+                    } else {
+                      alert('Unmatched password')
+                    }
+                  }}
+                >
+                  Change
+                </Button>
+              </span>
+            </>
+          )}
+        </>,
+        <>
+          {step === 1 && (
+            <Button className="confirmBtn" primary onClick={onHide}>
+              Done
+            </Button>
+          )}
+        </>,
+      ]}
     >
       <div className="change-email-dialog-container">
         {step === 0 && (
@@ -643,41 +701,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
             <h2>Password Changed</h2>
             <div>Your password has been changed successfully</div>
             <br />
-            <Button className="confirmBtn" primary onClick={onHide}>
-              Done
-            </Button>
           </div>
-        )}
-        <br />
-        {step === 0 && (
-          <>
-            <span>
-              <Button className="cancelBtn" onClick={onHide}>
-                Cancel
-              </Button>
-            </span>
-            <span>
-              <Button
-                className="confirmBtn"
-                primary
-                onClick={() => {
-                  if (password?.new === password?.newConfirm) {
-                    updatePasswordMutation({
-                      body: {
-                        old_password: password?.current,
-                        password: password?.new,
-                        subject: subject,
-                      },
-                    })
-                  } else {
-                    alert('Unmatched password')
-                  }
-                }}
-              >
-                Change
-              </Button>
-            </span>
-          </>
         )}
       </div>
     </DialogContainer>
@@ -694,6 +718,56 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
       dialogClassName="change-email-dialog"
       focusOnMount={false}
       onHide={onHide}
+      actions={[
+        <>
+          {step < 2 && (
+            <span>
+              <Button
+                className="confirmBtn"
+                primary
+                onClick={() => setStep((prev) => prev + 1)}
+              >
+                Next
+              </Button>
+            </span>
+          )}
+          {step === 2 && (
+            <span>
+              <Button
+                className="confirmBtn"
+                primary
+                onClick={() => setStep((prev) => prev + 1)}
+              >
+                Confirm
+              </Button>
+            </span>
+          )}
+          {step === 3 && (
+            <Button className="confirmBtn" primary onClick={onHide}>
+              Done
+            </Button>
+          )}
+        </>,
+        <>
+          {(step === 0 || step === 2) && (
+            <span>
+              <Button className="cancelBtn" onClick={onHide}>
+                Cancel
+              </Button>
+            </span>
+          )}
+          {step === 1 && (
+            <span>
+              <Button
+                className="cancelBtn"
+                onClick={() => setStep((prev) => prev - 1)}
+              >
+                Back
+              </Button>
+            </span>
+          )}
+        </>,
+      ]}
     >
       <div className="change-email-dialog-container">
         {step !== 3 && <h2>Forgot Password</h2>}
@@ -726,9 +800,7 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
             />
             <div>{"Didn't receive a code?"}</div>
             <span>
-              <Button className="confirmBtn" primary>
-                Resend
-              </Button>
+              <Button primary>Resend</Button>
             </span>
           </>
         )}
@@ -750,51 +822,7 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
             />
             <h2>Password Changed</h2>
             <div>Your password has been changed successfully</div>
-            <br />
-            <Button className="confirmBtn" primary onClick={onHide}>
-              Done
-            </Button>
           </>
-        )}
-        <br />
-        {(step === 0 || step === 2) && (
-          <span>
-            <Button className="cancelBtn" onClick={onHide}>
-              Cancel
-            </Button>
-          </span>
-        )}
-        {step === 1 && (
-          <span>
-            <Button
-              className="cancelBtn"
-              onClick={() => setStep((prev) => prev - 1)}
-            >
-              Back
-            </Button>
-          </span>
-        )}
-        {step < 2 && (
-          <span>
-            <Button
-              className="confirmBtn"
-              primary
-              onClick={() => setStep((prev) => prev + 1)}
-            >
-              Next
-            </Button>
-          </span>
-        )}
-        {step === 2 && (
-          <span>
-            <Button
-              className="confirmBtn"
-              primary
-              onClick={() => setStep((prev) => prev + 1)}
-            >
-              Confirm
-            </Button>
-          </span>
         )}
       </div>
     </DialogContainer>
