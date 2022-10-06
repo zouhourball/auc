@@ -47,7 +47,7 @@ const ProfilePage = ({ company }) => {
   )
   return (
     <div className="md-grid profile-page">
-      <div className="md-cell md-cell--4">
+      <div className="profile-page-left md-cell md-cell--2">
         <ProfileMenu
           userInfo={
             !company
@@ -62,8 +62,9 @@ const ProfilePage = ({ company }) => {
           currentView={currentView}
           setCurrentView={setCurrentView}
         />
+        <div className="vertical-sep"></div>
       </div>
-      <div className="md-cell md-cell--8">
+      <div className="profile-page-right md-cell md-cell--8">
         <ProfileBody
           userInfo={
             !company
@@ -81,6 +82,7 @@ const ProfilePage = ({ company }) => {
           }}
         />
       </div>
+      <div className="md-cell md-cell--2"></div>
     </div>
   )
 }

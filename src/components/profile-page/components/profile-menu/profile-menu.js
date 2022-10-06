@@ -14,10 +14,18 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
 
   return (
     <div className="profile-menu">
+      {/* <img
+        className="profile-menu-avatar"
+        src={avatar}
+        width={80}
+        height={80}
+        style={{ borderRadius: '50%' }}
+      /> */}
       <UserInfoBySubject key={userInfo?.subject} subject={userInfo?.subject}>
         {(res) => {
           return (
             <Avatar
+              className="profile-menu-avatar"
               src={
                 get(res, 'photo.aPIURL', null)
                   ? getPublicUrl(res?.photo?.aPIURL)
@@ -31,29 +39,25 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
           )
         }}
       </UserInfoBySubject>
-      {/* <img
-        src={avatar}
-        width={100}
-        height={100}
-        style={{ borderRadius: 100 }}
-      /> */}
-      <div>
-        <b>{userInfo?.fullName}</b>
-      </div>
-      <div>{userInfo?.email}</div>
-      <br />
+
+      <div className="profile-menu-fullName">Ahmed Mohammed</div>
+      <div className="profile-menu-email">ahmed@gmail.com</div>
       <br />
       {(!company ? views : viewsCompany)?.map(({ label, value }) => (
         <Button
+          className={`profile-menu-infoBtn ${
+            currentView === value ? 'active' : ''
+          }`}
           key={value}
           onClick={() => setCurrentView(value)}
-          primary={currentView === value}
+          // primary={currentView === value}
         >
           {label}
         </Button>
       ))}
       <Button
         key={'signOut'}
+        className="profile-menu-infoBtn"
         onClick={() => {
           cleanUp()
           navigate('/public/home')
