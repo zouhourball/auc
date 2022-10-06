@@ -288,30 +288,7 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
       </div>
     )
   }
-  const renderType = (type) => {
-    switch (type) {
-      case 'Home':
-        return t('Home')
-      case 'Villa':
-        return t('Villa')
-      case 'Apartment':
-        return t('Apartment')
-      case 'Hostel':
-        return t('Hostel')
-      case 'Land':
-        return t('Land')
-      case 'Building':
-        return t('Building')
-      case 'Office':
-        return t('Office')
-      case 'Plot':
-        return t('Plot')
-      case 'Unit':
-        return t('Unit')
-      case 'Shope':
-        return t('Shope')
-    }
-  }
+
   const renderCountries = useMemo(() => {
     return allCountryStateCities?.allCountries?.countries.map((el) => {
       return (
@@ -421,7 +398,7 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                           key={index}
                           id={`${tp.value}-auction-type`}
                           name={`${tp.value}-checkboxes`}
-                          label={renderType(tp.label)}
+                          label={t(tp.label)}
                           onChange={(e) => {
                             filterData?.type?.find((el) => el === tp.value)
                               ? setFilterData({

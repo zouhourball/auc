@@ -194,7 +194,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
   useEffect(() => {
     if (
-      biddersList?.bids[0]?.sub === user?.subject &&
+      biddersList?.bids?.items[0]?.sub === user?.subject &&
       !(auctionData?.['last_bid']?.['member_subject'] === user?.subject)
     ) {
       dispatch(

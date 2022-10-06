@@ -1,9 +1,11 @@
-query getBids($auctionUUID: String!) {
-  bids(auctionUUID: $auctionUUID, page: 0, limit: 4) {
-    id
-    amount
-    sub
-    auctionID
-    date
+query getBids($auctionUUID: String!, $page: Int = 0, $size: Int = 4) {
+  bids(auctionUUID: $auctionUUID, page: $page, limit: $size) {
+    items {
+      id
+      amount
+      sub
+      date
+    }
+    total
   }
 }

@@ -56,7 +56,9 @@ export function LangProvider ({ children }) {
     changeLang(lang)
   }, [])
   React.useEffect(() => {
-    if (defaultLang() === 'en-US') {
+    if (defaultLang() === 'ar') {
+      document.dir = 'rtl'
+    } else {
       document.dir = 'ltr'
     }
   }, [])
