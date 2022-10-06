@@ -78,29 +78,6 @@ const BiddingCard = ({
     },
   })
 
-  const renderType = (type) => {
-    switch (type) {
-      case 'Home':
-        return t('Home')
-      case 'Villa':
-        return t('Villa')
-      case 'Apartment':
-        return t('Apartment')
-      case 'Hostel':
-        return t('Hostel')
-      case 'Land':
-        return t('Land')
-      case 'Building':
-        return t('Building')
-      case 'Office':
-        return t('Office')
-      case 'Plot':
-        return t('Plot')
-      case 'Unit':
-        return t('Unit')
-    }
-  }
-
   const renderBtnTitle = () => {
     if (status === 'Upcoming') return t('view_details')
     else return t('bid_now')
@@ -175,7 +152,7 @@ const BiddingCard = ({
         {status !== 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {renderType(
+              {t(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===
@@ -199,7 +176,7 @@ const BiddingCard = ({
         {status === 'Active' && (
           <div className="bidding-card-info">
             <div className="data-section-title">
-              {renderType(
+              {t(
                 propertyTypeList.find(
                   (el) =>
                     el?.value ===

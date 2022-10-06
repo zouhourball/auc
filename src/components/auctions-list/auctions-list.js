@@ -76,20 +76,30 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
     { refetchOnWindowFocus: false },
   )
   const renderCards = () =>
-    auctionsData?.results?.map((el) => (
-      <BiddingCard
-        meOrgs={meOrgs}
-        user={user}
-        className="md-cell md-cell--4"
-        key={el?.uuid}
-        auctionData={el}
-        status={type}
-        live={modules.includes('live-auctions')}
-        saveAuctionTag
-        refetch={() => refetch()}
-        logged={logged}
-      />
-    ))
+    auctionsData?.results?.length > 0 ? (
+      auctionsData?.results?.map((el) => (
+        <BiddingCard
+          meOrgs={meOrgs}
+          user={user}
+          className="md-cell md-cell--4"
+          key={el?.uuid}
+          auctionData={el}
+          status={type}
+          live={modules.includes('live-auctions')}
+          saveAuctionTag
+          refetch={() => refetch()}
+          logged={logged}
+        />
+      ))
+    ) : (
+      <div>
+        <img src={listActive} />
+        <div>
+          <b>No Results Found</b>
+        </div>
+        <div>{"We couldn't find what you're looking for!"}</div>
+      </div>
+    )
   let limitOfNumberShowing = 5
   const renderPaginationButtons = (indexToShowBtn) => {
     let buttonsArray = []
