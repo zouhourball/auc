@@ -47,7 +47,7 @@ const ProfilePage = ({ company }) => {
   )
   return (
     <div className="md-grid profile-page">
-      <div className="profile-page-left md-cell md-cell--3">
+      <div className="profile-page-left md-cell md-cell--2">
         <ProfileMenu
           userInfo={
             !company
@@ -64,7 +64,7 @@ const ProfilePage = ({ company }) => {
         />
         <div className="vertical-sep"></div>
       </div>
-      <div className="profile-page-right md-cell md-cell--9">
+      <div className="profile-page-right md-cell md-cell--8">
         <ProfileBody
           userInfo={
             !company
@@ -82,6 +82,7 @@ const ProfilePage = ({ company }) => {
           }}
         />
       </div>
+      <div className="md-cell md-cell--2"></div>
     </div>
   )
 }

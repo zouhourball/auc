@@ -9,7 +9,7 @@ import {
 
 import { useTranslation } from 'libs/langs'
 import OtpInput from 'react-otp-input'
-import avatar from '../profile-menu/avatar.jpg'
+import success from '../profile-menu/Success.svg'
 import { countriesCodes } from 'components/registration/helper'
 import {
   checkVerifiedCode,
@@ -42,26 +42,21 @@ const Security = ({ userInfo }) => {
 
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
-      <div
-        className="md-cell md-cell--12"
-        style={{
-          borderBottom: '1px solid gray',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="personal-information-header md-cell md-cell--12">
         <h2>Security</h2>
       </div>
 
       <div className="md-cell md-cell--6">
-        <b>Email*</b>
-        <span>
+        <div className="change">
+          <div className="label">Email*</div>
           <Button primary onClick={() => setDialogType('email')}>
             Change
           </Button>
-        </span>
+        </div>
         <TextField
           disabled
+          className="textField"
+          block
           placeholder={t('enter_email')}
           value={informations?.email}
           onChange={(v) =>
@@ -73,36 +68,42 @@ const Security = ({ userInfo }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <b>Password*</b>
-        <span>
+        <div className="change">
+          <div className="label">Password*</div>
           <Button primary onClick={() => setDialogType('password')}>
             Change
           </Button>
-        </span>
-        <TextField
-          disabled
-          placeholder={t('enter_email')}
-          value={informations?.password}
-          onChange={(v) =>
-            setInformations((prev) => ({
-              ...informations,
-              password: v,
-            }))
-          }
-        />
-        <Button primary onClick={() => setDialogType('forgot')}>
-          Forgot Password?
-        </Button>
+        </div>
+        <div className="passwordField">
+          <TextField
+            disabled
+            block
+            fullWidth={false}
+            placeholder={t('enter_email')}
+            value={informations?.password}
+            onChange={(v) =>
+              setInformations((prev) => ({
+                ...informations,
+                password: v,
+              }))
+            }
+          />
+          <Button primary onClick={() => setDialogType('forgot')}>
+            Forgot Password?
+          </Button>
+        </div>
       </div>
       <div className="md-cell md-cell--6">
-        <b>Phone Number*</b>
-        <span>
+        <div className="change">
+          <div className="label">Phone Number*</div>
           <Button primary onClick={() => setDialogType('phone')}>
             Change
           </Button>
-        </span>
+        </div>
         <TextField
           disabled
+          className="textField"
+          block
           id={'phone'}
           placeholder={t('enter_phone_number')}
           value={informations?.phoneMobile}
@@ -147,7 +148,7 @@ const Security = ({ userInfo }) => {
 export default Security
 
 const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [otp, setOtp] = useState('')
   const [email, setEmail] = useState('')
   const [oldEmail, setOldEmail] = useState('')
@@ -172,70 +173,103 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         {step !== 3 && <h2>Change Email</h2>}
         {step < 2 && (
           <>
-            <b>Current Email</b>
+            <div className="grey-label">Current Email</div>
             <TextField
               placeholder="Enter current email"
               value={oldEmail}
+              block
+              className="emailField"
               onChange={setOldEmail}
             />
           </>
         )}
         {step === 1 && (
           <>
-            <b>New Email</b>
+            <div className="grey-label">New Email</div>
             <TextField
               placeholder="Enter new email"
               value={email}
+              block
+              className="emailField"
               onChange={setEmail}
             />
           </>
         )}
         {step === 2 && (
           <>
-            <b>{'An OTP has been sent to "Mohammed@gmail.com"'}</b>
+            <div className="opt-text">
+              {'An OTP has been sent to "Mohammed@gmail.com"'}
+            </div>
             <OtpInput
               value={otp}
               onChange={setOtp}
               numInputs={4}
-              separator={<span>-</span>}
+              className="otp-input"
+              containerStyle={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              inputStyle={{
+                width: '4em',
+                height: '4em',
+                borderRadius: 18,
+                backgroundColor: '#fff',
+                borderColor: '#fff',
+                boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
+              }}
             />
-            <b>{"Didn't receive a code?"}</b>
-            <span>
-              <Button primary>Resend</Button>
-            </span>
+            <div className="opt-text">
+              {"Didn't receive a code?"}{' '}
+              <span>
+                <Button primary>Resend</Button>
+              </span>{' '}
+            </div>
           </>
         )}
         {step === 3 && (
-          <>
+          <div className="emailChanged">
             <img
-              src={avatar}
-              width={100}
-              height={100}
-              style={{ borderRadius: 100 }}
+              src={success}
+              width={50}
+              height={50}
+              className="success-image"
+              style={{
+                borderRadius: '50%',
+              }}
             />
             <h2>Email Changed</h2>
-            <b>Your email has been changed successfully</b>
-            <br />
-            <Button primary onClick={onHide}>
+            <div className="grey-label" style={{ textAlign: 'center' }}>
+              Your email has been changed successfully
+            </div>
+
+            <Button className="confirmBtn" primary onClick={onHide}>
               Done
             </Button>
-          </>
+          </div>
         )}
-        <br />
         {step < 2 && (
           <span>
-            <Button onClick={onHide}>Cancel</Button>
+            <Button className="cancelBtn" onClick={onHide}>
+              Cancel
+            </Button>
           </span>
-        )}
+        )}{' '}
         {step === 2 && (
           <span>
-            <Button onClick={() => setStep((prev) => prev - 1)}>Back</Button>
+            <Button
+              className="cancelBtn"
+              onClick={() => setStep((prev) => prev - 1)}
+            >
+              Back
+            </Button>
           </span>
         )}
         {step < 2 && (
           <span>
             <Button
               primary
+              className="confirmBtn"
               onClick={() => {
                 if (emailData === oldEmail && step === 0) {
                   setStep((prev) => prev + 1)
@@ -259,7 +293,11 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         )}
         {step === 2 && (
           <span>
-            <Button primary onClick={() => setStep((prev) => prev + 1)}>
+            <Button
+              className="confirmBtn"
+              primary
+              onClick={() => setStep((prev) => prev + 1)}
+            >
               Confirm
             </Button>
           </span>
@@ -270,7 +308,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
 }
 
 const ChangeNumberDialog = ({ visible, onHide }) => {
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState('')
   const [otp, setOtp] = useState('')
   const [key, setKey] = useState('')
   const [phoneNumber, setPhoneNumber] = useState({
@@ -310,10 +348,11 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         {step !== 3 && <h2>Change Phone Number</h2>}
         {step < 2 && (
           <>
-            <b>Current Phone Number</b>
-            <div style={{ display: 'flex' }}>
+            <div className="gray-label">Current Phone Number</div>
+            <div style={{ display: 'flex' }} className="selectField">
               <SelectField
                 id={'country-code'}
+                block
                 menuItems={countriesCodes?.map((el) => ({
                   value: el?.value,
                   label: (
@@ -338,13 +377,13 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                     currentCode: value,
                   }))
                 }
-                className="country-code"
                 // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
               <TextField
                 id={'phone'}
+                block
                 placeholder="Current Phone Number"
                 value={phoneNumber?.current}
                 onChange={(v) =>
@@ -359,7 +398,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         )}
         {step === 1 && (
           <>
-            <b>New Phone Number</b>
+            <div>New Phone Number</div>
             <div style={{ display: 'flex' }}>
               <SelectField
                 id={'country-code'}
@@ -408,21 +447,22 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         )}
         {step === 2 && (
           <>
-            <b>
+            <div>
               {'An OTP has been sent to "' +
                 phoneNumber?.newCode +
                 phoneNumber?.new +
                 '"'}
-            </b>
+            </div>
             <OtpInput
               value={otp}
               onChange={setOtp}
               numInputs={4}
               separator={<span>-</span>}
             />
-            <b>{"Didn't receive a code?"}</b>
+            <div>{"Didn't receive a code?"}</div>
             <span>
               <Button
+                className="confirmBtn"
                 primary
                 onClick={() => {
                   changePhoneNumberOTP({
@@ -438,36 +478,47 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
           </>
         )}
         {step === 3 && (
-          <>
+          <div className="emailChanged">
             <img
-              src={avatar}
-              width={100}
-              height={100}
-              style={{ borderRadius: 100 }}
+              src={success}
+              width={50}
+              height={50}
+              className="success-image"
+              style={{
+                borderRadius: '50%',
+              }}
             />
             <h2>Email Changed</h2>
-            <b>Your phone number has been changed successfully</b>
+            <div>Your phone number has been changed successfully</div>
             <br />
-            <Button primary onClick={onHide}>
+            <Button className="confirmBtn" primary onClick={onHide}>
               Done
             </Button>
-          </>
+          </div>
         )}
         <br />
         {step < 2 && (
           <span>
-            <Button onClick={onHide}>Cancel</Button>
+            <Button className="cancelBtn" onClick={onHide}>
+              Cancel
+            </Button>
           </span>
         )}
         {step === 2 && (
           <span>
-            <Button onClick={() => setStep((prev) => prev - 1)}>Back</Button>
+            <Button
+              className="cancelBtn"
+              onClick={() => setStep((prev) => prev - 1)}
+            >
+              Back
+            </Button>
           </span>
         )}
         {step < 2 && (
           <span>
             <Button
               primary
+              className="confirmBtn"
               onClick={() => {
                 if (step === 1) {
                   changePhoneNumberOTP({
@@ -487,6 +538,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         {step === 2 && (
           <span>
             <Button
+              className="confirmBtn"
               primary
               onClick={() => {
                 checkOtp({
@@ -533,10 +585,12 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
         {step === 0 && (
           <>
             <h2>Change Password</h2>
-            <b>Current Password</b>
+            <div className="grey-label">Current Password</div>
             <TextField
               placeholder="Enter current password"
               type="password"
+              block
+              className="textField"
               value={password?.current}
               onChange={(v) =>
                 setPassword((prev) => ({
@@ -545,10 +599,12 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                 }))
               }
             />
-            <b>New Password</b>
+            <div className="grey-label">New Password</div>
             <TextField
               placeholder="Enter new password"
               type="password"
+              block
+              className="textField"
               value={password?.new}
               onChange={(v) =>
                 setPassword((prev) => ({
@@ -557,10 +613,12 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                 }))
               }
             />
-            <b>Re-enter Password</b>
+            <div className="grey-label">Re-enter Password</div>
             <TextField
               placeholder="Re-enter new password"
               type="password"
+              block
+              className="textField"
               value={password?.newConfirm}
               onChange={(v) =>
                 setPassword((prev) => ({
@@ -572,29 +630,35 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
           </>
         )}
         {step === 1 && (
-          <>
+          <div className="emailChanged">
             <img
-              src={avatar}
-              width={100}
-              height={100}
-              style={{ borderRadius: 100 }}
+              src={success}
+              width={50}
+              height={50}
+              className="success-image"
+              style={{
+                borderRadius: '50%',
+              }}
             />
             <h2>Password Changed</h2>
-            <b>Your password has been changed successfully</b>
+            <div>Your password has been changed successfully</div>
             <br />
-            <Button primary onClick={onHide}>
+            <Button className="confirmBtn" primary onClick={onHide}>
               Done
             </Button>
-          </>
+          </div>
         )}
         <br />
         {step === 0 && (
           <>
             <span>
-              <Button onClick={onHide}>Cancel</Button>
+              <Button className="cancelBtn" onClick={onHide}>
+                Cancel
+              </Button>
             </span>
             <span>
               <Button
+                className="confirmBtn"
                 primary
                 onClick={() => {
                   if (password?.new === password?.newConfirm) {
@@ -634,54 +698,60 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
       <div className="change-email-dialog-container">
         {step !== 3 && <h2>Forgot Password</h2>}
         {step === 0 && (
-          <>
+          <div className="checkbox-group">
             <Checkbox
+              type="radio"
+              className={`checkbox-container ${type === true ? 'active' : ''}`}
               checked={type}
               label="Email"
               onClick={() => setType((prev) => !prev)}
             />
             <Checkbox
+              type="radio"
+              className={`checkbox-container ${!type === true ? 'active' : ''}`}
               checked={!type}
               label="Phone Number"
               onClick={() => setType((prev) => !prev)}
             />
-          </>
+          </div>
         )}
         {step === 1 && (
           <>
-            <b>{'An OTP has been sent to "Mohammed@gmail.com"'}</b>
+            <div>{'An OTP has been sent to "Mohammed@gmail.com"'}</div>
             <OtpInput
               value={otp}
               onChange={setOtp}
               numInputs={4}
               separator={<span>-</span>}
             />
-            <b>{"Didn't receive a code?"}</b>
+            <div>{"Didn't receive a code?"}</div>
             <span>
-              <Button primary>Resend</Button>
+              <Button className="confirmBtn" primary>
+                Resend
+              </Button>
             </span>
           </>
         )}
         {step === 2 && (
           <>
-            <b>New Password</b>
+            <div>New Password</div>
             <TextField placeholder="Enter new password" type="password" />
-            <b>Re-enter Password</b>
+            <div>Re-enter Password</div>
             <TextField placeholder="Re-enter new password" type="password" />
           </>
         )}
         {step === 3 && (
           <>
             <img
-              src={avatar}
+              src={success}
               width={100}
               height={100}
               style={{ borderRadius: 100 }}
             />
             <h2>Password Changed</h2>
-            <b>Your password has been changed successfully</b>
+            <div>Your password has been changed successfully</div>
             <br />
-            <Button primary onClick={onHide}>
+            <Button className="confirmBtn" primary onClick={onHide}>
               Done
             </Button>
           </>
@@ -689,24 +759,39 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
         <br />
         {(step === 0 || step === 2) && (
           <span>
-            <Button onClick={onHide}>Cancel</Button>
+            <Button className="cancelBtn" onClick={onHide}>
+              Cancel
+            </Button>
           </span>
         )}
         {step === 1 && (
           <span>
-            <Button onClick={() => setStep((prev) => prev - 1)}>Back</Button>
+            <Button
+              className="cancelBtn"
+              onClick={() => setStep((prev) => prev - 1)}
+            >
+              Back
+            </Button>
           </span>
         )}
         {step < 2 && (
           <span>
-            <Button primary onClick={() => setStep((prev) => prev + 1)}>
+            <Button
+              className="confirmBtn"
+              primary
+              onClick={() => setStep((prev) => prev + 1)}
+            >
               Next
             </Button>
           </span>
         )}
         {step === 2 && (
           <span>
-            <Button primary onClick={() => setStep((prev) => prev + 1)}>
+            <Button
+              className="confirmBtn"
+              primary
+              onClick={() => setStep((prev) => prev + 1)}
+            >
               Confirm
             </Button>
           </span>

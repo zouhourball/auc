@@ -1,4 +1,31 @@
 .profile-body {
+  .payment {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e3e3e3;
+
+    &-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 7px;
+      background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(157, 157, 157, 0.16);
+
+      > div {
+        color: #7c7c7c;
+        font-size: 14px;
+        font-weight: normal;
+      }
+
+      .md-btn {
+        font-size: 14px;
+      }
+    }
+  }
+
   .personal-information {
     &-header {
       display: flex;
@@ -12,34 +39,135 @@
       }
     }
 
-    .label {
-      color: #3d3d3e;
-      font-size: 14px;
-      font-weight: 500;
-    }
+    &-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
 
-    .textField {
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: #fff;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      .md-btn {
+        height: 43px;
+        border-radius: 14px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        font-size: 14px;
+        font-weight: bold;
 
-      .md-divider {
-        &::after {
-          display: none;
+        &.save-btn {
+          background-color: #5078e1;
+          color: #fff;
+        }
+
+        &.cancel-btn {
+          background-color: #fff;
+          color: #7c7c7c;
         }
       }
     }
 
-    .selectField {
-      border-radius: 12px;
-      background-color: #fff;
+    .label {
+      color: #3d3d3e;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
 
-      .md-select-field--btn.md-select-field--btn {
-        height: auto;
-        padding: 15px 16px;
-        font-size: 16px;
+    .textField {
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+      &.active {
+        border: solid 1px #b2b2b2;
+        box-shadow: none;
+      }
+
+      &.grey {
+        background-color: #ebebeb;
+        box-shadow: 0 3px 6px 0 rgba(157, 157, 157, 0.16);
+
+        .md-text-field {
+          color: #3d3d3e;
+        }
+      }
+
+      .md-password-btn.md-text-field-inline-indicator {
+        top: 8px;
+        right: 10px;
+      }
+    }
+
+    .emailField {
+      margin-bottom: 12px;
+      padding: 18px 16px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .change {
+      display: flex;
+      align-items: center;
+
+      .md-btn {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .passwordField {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+      .md-text-field-container {
+        padding: 11px 0;
+
+        &.md-full-width {
+          width: 50%;
+        }
+      }
+
+      .md-btn {
+        font-size: 11px;
+      }
+    }
+
+    .selectField {
+      border-radius: 7px;
+      background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+      &.active {
+        border: solid 1px #b2b2b2;
+        box-shadow: none;
+      }
+
+      &.country {
+        width: 100%;
+      }
+
+      .md-select-field--btn {
+        //height: auto;
+        padding: 6px 16px;
+        font-size: 13px;
         font-weight: 400;
+
+        .md-icon-text {
+          color: #7c7c7c;
+          font-weight: 500;
+
+          &:first-child {
+            padding-right: 6px;
+          }
+        }
+      }
+
+      .md-text-field-container--input-block {
+        padding: 6px 10px;
       }
 
       .md-list {
@@ -82,8 +210,130 @@
       }
     }
   }
-  //   .payment {
-  //   }
+
+  .opt-text {
+    color: #7c7c7c;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .md-dialog-container {
+    .md-background--card {
+      width: 320px;
+      border-radius: 30px;
+    }
+
+    .md-dialog-content--padded {
+      padding: 24px 30px;
+    }
+
+    h2 {
+      color: #3d3d3e;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .grey-label {
+      margin-bottom: 12px;
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .opt-text {
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    span {
+      margin: auto;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .emailChanged {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .confirmBtn {
+    width: 120px;
+    height: 50px;
+    border-radius: 14px;
+    background-color: #5078e1;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+
+    &.sendBtn {
+      width: auto;
+      height: 33px;
+      padding: 7px;
+      border-radius: 7px;
+      box-shadow: 0 3px 6px 0 rgba(157, 157, 157, 0.16);
+      font-size: 14px;
+    }
+  }
+
+  .cancelBtn {
+    width: 120px;
+    height: 50px;
+    margin-right: 8px;
+    border-radius: 14px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    color: #7c7c7c;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .otp-input {
+    margin: 12px 0;
+    border-radius: 18px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  }
+
+  .success-image {
+    text-align: center;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+
+    .checkbox-container {
+      .md-text {
+        color: #7c7c7c;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      &.active {
+        .md-text {
+          color: #5078e1;
+        }
+
+        .md-icon {
+          color: #5078e1;
+        }
+      }
+    }
+  }
+
+  // .backBtn {
+  // }
 
   //   .security {
   //   }

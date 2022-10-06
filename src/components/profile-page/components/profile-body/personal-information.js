@@ -116,7 +116,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <div className="md-cell md-cell--6">
           <div className="label">First Name*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
             placeholder={'Write here'}
@@ -134,7 +134,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <div className="md-cell md-cell--6">
           <div className="label">Last Name*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
             placeholder={'Write here'}
@@ -152,7 +152,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <div className="md-cell md-cell--6">
           <div className="label">Company Name*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             block
             disabled={edit}
             placeholder={'Write here'}
@@ -169,7 +169,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       <div className="md-cell md-cell--6">
         <div className="label">Email Address*</div>
         <TextField
-          className="textField"
+          className={`textField ${edit ? 'disabled' : 'active'}`}
           block
           disabled={edit}
           id={'email'}
@@ -185,7 +185,10 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       </div>
       <div className="md-cell md-cell--6">
         <div className="label">Phone Number*</div>
-        <div style={{ display: 'flex' }}>
+        <div
+          className={`selectField ${edit ? 'disabled' : 'active'}`}
+          style={{ display: 'flex' }}
+        >
           <SelectField
             disabled={edit}
             id={'country-code'}
@@ -217,7 +220,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
                 : '+' + information?.country?.phoneCode
             }
             //   onChange={(value) => setInformation('countryCode', value)}
-            className="selectField country-code"
+            className="country-code"
             // itemLabel="value"
             position={SelectField.Positions.BELOW}
           />
@@ -242,7 +245,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <div className="md-cell md-cell--6">
           <div className="label">Website URL*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
             placeholder={'Write here'}
@@ -276,14 +279,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
             }))
           }
           position={SelectField.Positions.BELOW}
-          className="selectField country-code"
+          className={`selectField country ${edit ? 'disabled' : 'active'}`}
         />
       </div>
       {company && (
         <div className="md-cell md-cell--6">
           <div className="label">Address*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
             placeholder={'Write here'}
@@ -304,7 +307,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <div className="md-cell md-cell--6">
           <div className="label">Company Description*</div>
           <TextField
-            className="textField"
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             rows={5}
             disabled={edit}
             block
@@ -320,14 +323,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       {!edit && (
-        <div
-          className="md-cell md-cell--12"
-          style={{ display: 'flex', justifyContent: 'flex-end' }}
-        >
-          <Button flat>Cancel</Button>
+        <div className="personal-information-footer md-cell md-cell--12">
+          <Button className="cancel-btn" flat>
+            Cancel
+          </Button>
           <Button
             flat
             primary
+            className="save-btn"
             onClick={() => {
               let myObject = {}
               let keys = Object.keys(information) || []
