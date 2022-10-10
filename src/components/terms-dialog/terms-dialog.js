@@ -39,7 +39,7 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       onClick={() => {
         isPublic
           ? navigate(`auctions/detail/${auctionId}`)
-          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionId}`)
+          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=http://localhost:8000/auctions/detail/${auctionId}`)
       }}
       // redirectToPay()
     >
