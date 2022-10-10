@@ -425,7 +425,10 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         {step < 2 && (
           <>
             <div className="gray-label">Current Phone Number</div>
-            <div style={{ display: 'flex' }} className="selectField">
+            <div
+              style={{ display: 'flex', marginBottom: 8 }}
+              className="selectField"
+            >
               <SelectField
                 id={'country-code'}
                 block
@@ -474,8 +477,8 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         )}
         {step === 1 && (
           <>
-            <div>New Phone Number</div>
-            <div style={{ display: 'flex' }}>
+            <div className="gray-label">New Phone Number</div>
+            <div style={{ display: 'flex' }} className="selectField">
               <SelectField
                 id={'country-code'}
                 menuItems={countriesCodes?.map((el) => ({
@@ -495,6 +498,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                   ),
                 }))}
                 defaultValue={'+968'}
+                block
                 value={phoneNumber?.newCode}
                 onChange={(value) =>
                   setPhoneNumber((prev) => ({
@@ -510,6 +514,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
               <TextField
                 id={'phone'}
                 placeholder="New Phone Number"
+                block
                 value={phoneNumber?.new}
                 onChange={(v) =>
                   setPhoneNumber((prev) => ({
@@ -523,7 +528,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         )}
         {step === 2 && (
           <>
-            <div>
+            <div className="opt-text">
               {'An OTP has been sent to "' +
                 phoneNumber?.newCode +
                 phoneNumber?.new +
@@ -533,24 +538,40 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
               value={otp}
               onChange={setOtp}
               numInputs={4}
+              className="otp-input"
+              containerStyle={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              inputStyle={{
+                width: '4em',
+                height: '4em',
+                borderRadius: 18,
+                backgroundColor: '#fff',
+                borderColor: '#fff',
+                boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
+              }}
               separator={<span>-</span>}
             />
-            <div>{"Didn't receive a code?"}</div>
-            <span>
-              <Button
-                className="confirmBtn"
-                primary
-                onClick={() => {
-                  changePhoneNumberOTP({
-                    body: {
-                      phone: phoneNumber?.newCode + phoneNumber?.new,
-                    },
-                  })
-                }}
-              >
-                Resend
-              </Button>
-            </span>
+            <div>
+              {"Didn't receive a code?"}
+              <span>
+                <Button
+                  className="confirmBtn"
+                  primary
+                  onClick={() => {
+                    changePhoneNumberOTP({
+                      body: {
+                        phone: phoneNumber?.newCode + phoneNumber?.new,
+                      },
+                    })
+                  }}
+                >
+                  Resend
+                </Button>
+              </span>
+            </div>
           </>
         )}
         {step === 3 && (
@@ -566,10 +587,8 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
             />
             <h2>Email Changed</h2>
             <div>Your phone number has been changed successfully</div>
-            <br />
           </div>
         )}
-        <br />
       </div>
     </DialogContainer>
   )
@@ -700,7 +719,6 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
             />
             <h2>Password Changed</h2>
             <div>Your password has been changed successfully</div>
-            <br />
           </div>
         )}
       </div>
@@ -719,6 +737,25 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
       focusOnMount={false}
       onHide={onHide}
       actions={[
+        <>
+          {(step === 0 || step === 2) && (
+            <span>
+              <Button className="cancelBtn" onClick={onHide}>
+                Cancel
+              </Button>
+            </span>
+          )}
+          {step === 1 && (
+            <span>
+              <Button
+                className="cancelBtn"
+                onClick={() => setStep((prev) => prev - 1)}
+              >
+                Back
+              </Button>
+            </span>
+          )}
+        </>,
         <>
           {step < 2 && (
             <span>
@@ -748,25 +785,6 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
             </Button>
           )}
         </>,
-        <>
-          {(step === 0 || step === 2) && (
-            <span>
-              <Button className="cancelBtn" onClick={onHide}>
-                Cancel
-              </Button>
-            </span>
-          )}
-          {step === 1 && (
-            <span>
-              <Button
-                className="cancelBtn"
-                onClick={() => setStep((prev) => prev - 1)}
-              >
-                Back
-              </Button>
-            </span>
-          )}
-        </>,
       ]}
     >
       <div className="change-email-dialog-container">
@@ -791,38 +809,71 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
         )}
         {step === 1 && (
           <>
-            <div>{'An OTP has been sent to "Mohammed@gmail.com"'}</div>
+            <div className="opt-text">
+              {'An OTP has been sent to "Mohammed@gmail.com"'}
+            </div>
             <OtpInput
               value={otp}
               onChange={setOtp}
               numInputs={4}
+              className="otp-input"
+              containerStyle={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              inputStyle={{
+                width: '4em',
+                height: '4em',
+                borderRadius: 18,
+                backgroundColor: '#fff',
+                borderColor: '#fff',
+                boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
+              }}
               separator={<span>-</span>}
             />
-            <div>{"Didn't receive a code?"}</div>
-            <span>
-              <Button primary>Resend</Button>
-            </span>
+            <div>
+              {"Didn't receive a code?"}{' '}
+              <span>
+                <Button primary>Resend</Button>
+              </span>
+            </div>
           </>
         )}
         {step === 2 && (
           <>
             <div>New Password</div>
-            <TextField placeholder="Enter new password" type="password" />
+            <TextField
+              className="textField"
+              block
+              placeholder="Enter new password"
+              type="password"
+            />
             <div>Re-enter Password</div>
-            <TextField placeholder="Re-enter new password" type="password" />
+            <TextField
+              placeholder="Re-enter new password"
+              className="textField"
+              block
+              type="password"
+            />
           </>
         )}
         {step === 3 && (
-          <>
+          <div className="emailChanged">
             <img
               src={success}
-              width={100}
-              height={100}
-              style={{ borderRadius: 100 }}
+              width={50}
+              height={50}
+              className="success-image"
+              style={{
+                borderRadius: '50%',
+              }}
             />
             <h2>Password Changed</h2>
-            <div>Your password has been changed successfully</div>
-          </>
+            <div className="grey-label" style={{ textAlign: 'center' }}>
+              Your password has been changed successfully
+            </div>
+          </div>
         )}
       </div>
     </DialogContainer>

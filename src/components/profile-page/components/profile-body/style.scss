@@ -257,6 +257,12 @@
       align-items: center;
       justify-content: center;
     }
+
+    .md-dialog-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .emailChanged {
@@ -300,9 +306,9 @@
 
   .otp-input {
     margin: 12px 0;
-    border-radius: 18px;
-    background-color: #fff;
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    // border-radius: 18px;
+    // background-color: #fff;
+    // box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
   }
 
   .success-image {
