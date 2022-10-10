@@ -375,7 +375,7 @@ const TopBar = ({
                       </span>
                     </div> */}
                     <Button onClick={() => navigate('/auctions/profile')}>
-                      My Profile
+                      {t('my_profile')}
                     </Button>
                     <div className="top-bar-profile-avatar-actions">
                       {/* <p
