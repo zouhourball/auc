@@ -13,21 +13,16 @@ const Support = () => {
 
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
-      <div
-        className="md-cell md-cell--12"
-        style={{
-          borderBottom: '1px solid gray',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="personal-information-header md-cell md-cell--12">
         <h2>Support</h2>
       </div>
 
       <div className="md-cell md-cell--6">
-        <b>Support Number</b>
+        <div className="label">Support Number</div>
         <TextField
           disabled
+          block
+          className="textField grey"
           placeholder={t('enter_email')}
           value={informations?.supportNumber}
           onChange={(v) =>
@@ -39,8 +34,10 @@ const Support = () => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <b>Support Email</b>
+        <div className="label">Support Email</div>
         <TextField
+          block
+          className="textField grey"
           disabled
           placeholder={t('enter_email')}
           value={informations?.supportEmail}
@@ -52,28 +49,28 @@ const Support = () => {
           }
         />
       </div>
-      <div className="md-cell md-cell--6">
-        <b>Need Some Help?</b>
-        <TextField
-          rows={5}
-          id={'phone'}
-          placeholder={t('enter_phone_number')}
-          value={informations?.phoneNumber}
-          onChange={(v) =>
-            setInformations((prev) => ({
-              ...informations,
-              phoneNumber: v,
-            }))
-          }
-        />
-      </div>
-      <div
-        className="md-cell md-cell--8"
-        style={{ display: 'flex', justifyContent: 'flex-end' }}
-      >
-        <Button flat primary>
-          Send
-        </Button>
+      <div className="md-cell md-cell--12">
+        <div className="label">Need Some Help?</div>
+        <div className="textField">
+          <TextField
+            rows={5}
+            block
+            id={'phone'}
+            placeholder={t('enter_phone_number')}
+            value={informations?.phoneNumber}
+            onChange={(v) =>
+              setInformations((prev) => ({
+                ...informations,
+                phoneNumber: v,
+              }))
+            }
+          />
+          <div className="md-cell md-cell--12 personal-information-footer">
+            <Button className="confirmBtn sendBtn" flat primary>
+              Send
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )

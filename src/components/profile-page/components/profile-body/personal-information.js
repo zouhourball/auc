@@ -4,12 +4,15 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { Button, SelectField, TextField } from 'react-md'
 import { useInfiniteQuery } from 'react-query'
+
 import { useMutation } from 'react-apollo'
 import updateUserProfiles from 'libs/queries/update-profile.gql'
 import updateCompany from 'libs/queries/update-organization.gql'
 import { useDispatch } from 'react-redux'
 import { addToast } from 'modules/app/actions'
 import ToastMsg from 'components/toast-msg'
+
+import './style.scss'
 
 const PersonalInformation = ({ company, userInfo, refetch }) => {
   const { t } = useTranslation()
@@ -102,25 +105,20 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
   }
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
-      <div
-        className="md-cell md-cell--12"
-        style={{
-          borderBottom: '1px solid gray',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="personal-information-header md-cell md-cell--12">
         <h2>Personal Information</h2>
         <Button icon primary={!edit} onClick={() => setEdit((prev) => !prev)}>
-          menu
+          more_vert
         </Button>
       </div>
 
       {!company && (
         <div className="md-cell md-cell--6">
-          <b>First Name*</b>
+          <div className="label">First Name*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={information?.firstName}
             onChange={(v) =>
@@ -134,9 +132,11 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {!company && (
         <div className="md-cell md-cell--6">
-          <b>Last Name*</b>
+          <div className="label">Last Name*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={information?.lastName}
             onChange={(v) =>
@@ -150,8 +150,10 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Company Name*</b>
+          <div className="label">Company Name*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
+            block
             disabled={edit}
             placeholder={'Write here'}
             value={information?.name}
@@ -165,8 +167,10 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <b>Email Address*</b>
+        <div className="label">Email Address*</div>
         <TextField
+          className={`textField ${edit ? 'disabled' : 'active'}`}
+          block
           disabled={edit}
           id={'email'}
           placeholder={t('enter_email')}
@@ -180,8 +184,11 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <b>Phone Number*</b>
-        <div style={{ display: 'flex' }}>
+        <div className="label">Phone Number*</div>
+        <div
+          className={`selectField ${edit ? 'disabled' : 'active'}`}
+          style={{ display: 'flex' }}
+        >
           <SelectField
             disabled={edit}
             id={'country-code'}
@@ -219,8 +226,10 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           />
           <div className="sep"></div>
           <TextField
+            className="phoneField"
             disabled={edit}
             id={'phone'}
+            block
             placeholder={t('enter_phone_number')}
             value={information?.phoneMobile}
             onChange={(v) =>
@@ -234,9 +243,11 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Website URL*</b>
+          <div className="label">Website URL*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={information?.webSite}
             onChange={(v) =>
@@ -249,7 +260,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <b>Country*</b>
+        <div className="label">Country*</div>
         <SelectField
           disabled={edit}
           id={'country'}
@@ -268,14 +279,16 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
             }))
           }
           position={SelectField.Positions.BELOW}
-          className="country-code"
+          className={`selectField country ${edit ? 'disabled' : 'active'}`}
         />
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Address*</b>
+          <div className="label">Address*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={information?.city?.cityName}
             onChange={(v) =>
@@ -292,10 +305,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <b>Company Description*</b>
+          <div className="label">Company Description*</div>
           <TextField
+            className={`textField ${edit ? 'disabled' : 'active'}`}
             rows={5}
             disabled={edit}
+            block
             placeholder={'Write here'}
             value={information?.aboutUs}
             onChange={(v) =>
@@ -308,14 +323,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       {!edit && (
-        <div
-          className="md-cell md-cell--12"
-          style={{ display: 'flex', justifyContent: 'flex-end' }}
-        >
-          <Button flat>Cancel</Button>
+        <div className="personal-information-footer md-cell md-cell--12">
+          <Button className="cancel-btn" flat>
+            Cancel
+          </Button>
           <Button
             flat
             primary
+            className="save-btn"
             onClick={() => {
               let myObject = {}
               let keys = Object.keys(information) || []

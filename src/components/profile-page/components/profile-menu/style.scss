@@ -1,7 +1,52 @@
 .profile-menu {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
-  padding: 10px 20px;
-  border-right: 1px solid gray;
+  padding: 10px 0;
+  //border-right: 2px solid #e3e3e3;
+
+  &-avatar {
+    width: 82px;
+    height: 82px;
+
+    .md-avatar-img {
+      width: 100%;
+    }
+  }
+
+  &-fullName {
+    color: #3d3d3e;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &-email {
+    color: #3d3d3e;
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  &-infoBtn {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+
+    &.active {
+      color: #5078e1;
+
+      ::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0;
+        width: 2px;
+        height: 20px;
+        background-color: #5078e1;
+      }
+    }
+  }
 }

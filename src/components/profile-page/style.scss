@@ -1,3 +1,14 @@
 .profile-page {
   display: flex;
+  padding: 60px 4.02vw;
+
+  &-left {
+    border-right: 3px solid #e3e3e3;
+
+    // .vertical-sep{
+    //   height: 300px;
+    //   width: 2px;
+    //   background-color: #e3e3e3;
+    // }
+  }
 }

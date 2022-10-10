@@ -200,8 +200,15 @@
           border-radius: 8px;
 
           .top-bar-menu-items {
-            width: 300px;
-            padding: 16px;
+            width: max-content;
+            padding: 16px 20px;
+
+            .md-text {
+              color: #7c7c7c;
+              font-size: 16px;
+              font-weight: 500;
+              line-height: 1.5;
+            }
           }
         }
       }
@@ -463,8 +470,10 @@
 
       &-sign-out {
         margin: 0;
-        padding: 8px 0;
-        color: red;
+        color: #78deb3;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
         cursor: pointer;
       }
     }
