@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'libs/langs'
+import { Button } from 'react-md'
 
 import BiddingCard from 'components/bidding-card'
 import AuctionsFilter from 'components/auction-filter'
@@ -20,7 +21,6 @@ import listInactive from 'images/List View Grey.svg'
 import noResult from 'images/no_result_found.svg'
 
 import './style.scss'
-import { Button } from 'react-md'
 
 const AuctionsList = ({ logged, user, meOrgs }) => {
   const { t } = useTranslation()
@@ -36,6 +36,7 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
   //   logged ? listAuction : featuredAuctions,
   // )
   let limit = 9
+
   const { data: auctionsData, refetch } = useQuery(
     [
       'getAuctions',
