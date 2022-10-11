@@ -1,4 +1,7 @@
 .auction-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 0 4.02vw;
 
   &-header {
@@ -18,8 +21,8 @@
       &-display {
         display: flex;
         align-items: center;
-        gap: 8px;
         order: 0;
+        gap: 8px;
 
         .sep {
           width: 1px;
@@ -47,5 +50,30 @@
     //   font-size: 35px;
     //   font-weight: 700;
     // }
+  }
+
+  &-cards {
+    &.empty {
+      display: grid;
+      flex-grow: 1;
+      place-items: center;
+
+      .empty-content {
+        margin: 0 auto;
+        text-align: center;
+
+        &-title {
+          color: #7c7c7c;
+          font-size: 14px;
+          font-weight: bold;
+        }
+
+        &-text {
+          color: #7c7c7c;
+          font-size: 12px;
+          font-weight: normal;
+        }
+      }
+    }
   }
 }

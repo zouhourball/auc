@@ -93,7 +93,7 @@ const MyAuctions = () => {
         onClick={() => setStatusTab(el.id)}
         primary={statusTab === el.id}
       >
-        {el.label}
+        <span>{el.label}</span>
       </Button>
     ))
   return (

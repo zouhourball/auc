@@ -4,7 +4,7 @@ import moment from 'moment'
 import BiddingCard from 'components/bidding-card'
 import { useTranslation } from 'libs/langs'
 import { navigate } from '@reach/router'
-import listActive from 'images/List View Selected.svg'
+import bidderIcon from 'images/my_activity_disable.svg'
 
 import './styles.scss'
 
@@ -37,11 +37,9 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
           logged={logged}
         />
       ) : (
-        <div>
-          <img src={listActive} />
-          <div>
-            <b>No Upcoming Auctions</b>
-          </div>
+        <div className="empty-content">
+          <img className="empty-content-logo" height={35} src={bidderIcon} />
+          <div className="empty-content-title">No Upcoming Auctions</div>
         </div>
       )
     })
@@ -75,7 +73,13 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
           {t('explore_more')}
         </Button>
       </div>
-      <div className="upcoming-auctions-cards md-grid">{renderCards()}</div>
+      <div
+        className={`upcoming-auctions-cards md-grid ${
+          cards?.length === 0 ? 'empty' : ''
+        }`}
+      >
+        {renderCards()}
+      </div>
     </div>
   )
 }
