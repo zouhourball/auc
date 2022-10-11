@@ -23,6 +23,10 @@
   height: 100vh;
   overflow: auto;
 
+  > div[tabindex='-1'][style='outline: none;'] {
+    flex-grow: 1;
+  }
+
   .footer {
     margin-top: auto;
   }

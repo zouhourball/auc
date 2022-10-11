@@ -1,4 +1,7 @@
 .upcoming-auctions {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 40px 4.02vw;
   color: #3d3d3e;
 
@@ -42,5 +45,22 @@
   &-cards {
     margin: 0 -8px;
     padding: 0;
+
+    &.empty {
+      display: grid;
+      flex-grow: 1;
+      place-content: center;
+
+      .empty-content {
+        text-align: center;
+
+        &-title {
+          margin-top: 8px;
+          color: #7c7c7c;
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
   }
 }

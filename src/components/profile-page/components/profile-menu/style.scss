@@ -28,7 +28,6 @@
   }
 
   &-infoBtn {
-    position: relative;
     width: 100%;
     padding: 0;
     font-size: 16px;
@@ -38,14 +37,19 @@
     &.active {
       color: #5078e1;
 
-      ::after {
-        content: '';
-        display: block;
-        position: absolute;
-        right: 0;
-        width: 2px;
-        height: 20px;
-        background-color: #5078e1;
+      span {
+        position: relative;
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 2px;
+          right: 0;
+          width: 2px;
+          height: 100%;
+          background-color: #5078e1;
+        }
       }
     }
   }
