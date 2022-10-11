@@ -44,7 +44,7 @@ const AuctionDetailsSlider = ({
             icon
             primary
             className="save-btn"
-            iconClassName="fa fa-bookmark"
+            iconClassName="mdi mdi-bookmark"
             onClick={(e) => {
               e.stopPropagation()
               unsaveAuction()
@@ -55,7 +55,7 @@ const AuctionDetailsSlider = ({
             icon
             primary
             className="save-btn"
-            iconClassName="fa fa-bookmark-o"
+            iconClassName="mdi mdi-bookmark-outline"
             onClick={(e) => {
               e.stopPropagation()
               saveAuction()
