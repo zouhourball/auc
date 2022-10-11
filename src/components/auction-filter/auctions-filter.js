@@ -6,17 +6,21 @@ import {
   SelectField,
   TextField,
 } from 'react-md'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 import { propertyTypeList } from 'components/helpers/index'
 import PriceRange from 'components/price-range'
-import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
-import './style.scss'
-import { useQuery as useQueryApollo } from 'react-apollo-hooks'
+// import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
+// import { useQuery as useQueryApollo } from 'react-apollo-hooks'
 import { useCallback, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { allBrokers } from 'libs/api/auctions-api'
+import { allBrokers, allLocations } from 'libs/api/auctions-api'
+
+import './style.scss'
+
 const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   const { t } = useTranslation()
+  const lang = useCurrentLang()
+
   const {
     search,
     price,
@@ -27,6 +31,10 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     // location,
     // brokerCompany,
   } = filterData
+  const { data: allCountryStateCities } = useQuery(
+    ['allLocations'],
+    allLocations,
+  )
   const [newPrice, setNewPrice] = useState(false)
   useEffect(() => {
     setFilterData({
@@ -34,14 +42,14 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
     })
   }, [])
-  const { data: allCountryStateCities } = useQueryApollo(
-    allCountryStateCitiesGql,
-    {
-      context: {
-        uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
-      },
-    },
-  )
+  // const { data: allCountryStateCities } = useQueryApollo(
+  //   allCountryStateCitiesGql,
+  //   {
+  //     context: {
+  //       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+  //     },
+  //   },
+  // )
 
   const { data: getBrokers } = useQuery(['getBrokers'], allBrokers)
 
@@ -62,14 +70,14 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         {states?.map((st) => {
           return (
             <Checkbox
-              key={st.node.id}
-              id={`${st.node.id}-auction-location`}
-              name={`${st.node.name}-checkboxes`}
-              label={st.node.name}
+              key={st.id}
+              id={`${st.id}-auction-location`}
+              name={`${st.name_en}-checkboxes`}
+              label={lang === 'ar' ? st.name_ar : st.name_en}
               onChange={() => {
-                onChangeLocation(st.node.id)
+                onChangeLocation(st.id)
               }}
-              checked={!!filterData?.location?.find((ch) => ch === st.node.id)}
+              checked={!!filterData?.location?.find((ch) => ch === st.id)}
             />
           )
         })}
@@ -78,10 +86,21 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   }
 
   const renderCountries = () => {
-    return allCountryStateCities?.allCountries?.countries.map((el) => {
+    // return allCountryStateCities?.allCountries?.countries.map((el) => {
+    //   return (
+    //     <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
+    //       {renderStates(el?.states?.edges)}
+    //     </ExpansionPanel>
+    //   )
+    // })
+    return allCountryStateCities?.results.map((el) => {
       return (
-        <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
-          {renderStates(el?.states?.edges)}
+        <ExpansionPanel
+          key={el.id}
+          label={lang === 'ar' ? el.name_ar : el.name_en}
+          footer={null}
+        >
+          {renderStates(el?.cities)}
         </ExpansionPanel>
       )
     })
