@@ -121,7 +121,7 @@ const SideBiddingCard = ({
             icon
             primary
             className="save-btn"
-            iconClassName="fa fa-bookmark"
+            iconClassName="mdi mdi-bookmark"
             onClick={(e) => {
               e.stopPropagation()
               unsaveAuction(auctionData?.uuid)
@@ -132,7 +132,7 @@ const SideBiddingCard = ({
             icon
             primary
             className="save-btn"
-            iconClassName="fa fa-bookmark-o"
+            iconClassName="mdi mdi-bookmark-outline"
             onClick={(e) => {
               e.stopPropagation()
               saveAuction(auctionData?.uuid)

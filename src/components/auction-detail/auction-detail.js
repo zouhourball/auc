@@ -97,7 +97,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       status,
     })
   }
-
+  // console.log(location.pathname, 'pathname')
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
@@ -110,7 +110,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
-      window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      // window.addEventListener('unload', (event) => {
+      //   window.history.forward()
+      //   console.log('I am the 3rd one.')
+      // })
+      history.replaceState(null, null, `/auctions/detail/${auctionId}`)
+      // window.addEventListener('popstate', function (event) {
+      //   history.pushState(null, null, `/auctions/detail/${auctionId}`)
+      // })
     } else if (paymentCallback === 'error') {
       dispatch(
         addToast(
@@ -118,6 +126,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           'hide',
         ),
       )
+      history.replaceState(null, null, `/auctions/detail/${auctionId}`)
     } else {
     }
   }, [paymentCallback])
@@ -207,7 +216,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   }, [auctionData])
   useEffect(() => {
     refetchAuction()
+    // console.log(timeExtension, 'timeExtension1')
   }, [timeExtension, subNewBid])
+  // console.log(timeExtension, 'timeExtension2')
   const isActive =
     +moment.utc(auctionData?.['auction_start_date']) < +moment() &&
     +moment.utc(auctionData?.['auction_end_date']) > +moment()

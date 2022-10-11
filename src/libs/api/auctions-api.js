@@ -11,8 +11,9 @@ export const filterAuctions = async ({ queryKey }) => {
     .map((key) => `${key}=${queryKey[1][key]}`)
   const arrayParams = Object.keys(queryKey[3])
     .filter((key) => !!queryKey[3][key])
-    .map((key) => queryKey[3][key].map((el) => `[]${key}=${el}`))
+    .map((key) => `${key}=${queryKey[3][key].map((el) => el)}`)
     .flatMap((el) => el)
+
   let res
 
   try {
@@ -41,7 +42,7 @@ export const filterFeatureAuctions = async ({ queryKey }) => {
 
   const arrayParams = Object.keys(queryKey[3])
     .filter((key) => !!queryKey[3][key])
-    .map((key) => queryKey[3][key].map((el) => `[]${key}=${el}`))
+    .map((key) => `${key}=${queryKey[3][key].map((el) => el)}`)
     .flatMap((el) => el)
   let res
   try {
@@ -345,7 +346,18 @@ export const getAuctionBidHistory = async ({ uuid }) => {
   }
   return res
 }
-
+// GET ALL LOCATIONS
+export const allLocations = async () => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/locations`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 // UPDATE AUCTION BY UUID ps: not approved
 export const updateAuction = async ({ uuid, body }) => {
   let res
