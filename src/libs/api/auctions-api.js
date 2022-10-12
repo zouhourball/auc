@@ -95,7 +95,51 @@ export const myAuctions = async ({ queryKey }) => {
   }
   return res
 }
-
+// GET NOTIFICATIONS
+export const getNotifications = async ({ queryKey, pageParam = 0 }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications?page=${pageParam}&size=${queryKey[1]}&sort=createdAt,desc&&products=meeraspace.fluxble`,
+      {
+        method: 'GET',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// COUNT NOTIFICATIONS
+export const countNotifications = async () => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications/count`,
+      {
+        method: 'GET',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// MARK READ NOTIFICATIONS
+export const markAsReadNotifications = async ({ id }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications/${id}`,
+      {
+        method: 'PUT',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 export const allBrokers = async () => {
   let res
   try {

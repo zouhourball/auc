@@ -1,53 +1,71 @@
-import auctionWon from 'images/auction_won.svg'
-import myActivity from 'images/my_activity_enable.svg'
-import bidPlace from 'images/bid_place_successfully.svg'
-
-import FilterBox from 'components/filter-box'
 import { Button, FontIcon, TextField } from 'react-md'
+import { useState } from 'react'
+import { useInfiniteQuery } from 'react-query'
+
+import { getNotifications } from 'libs/api/auctions-api'
 
 import NotificationCard from 'components/notification-card'
+import FilterBox from 'components/filter-box'
+
+// import auctionWon from 'images/auction_won.svg'
+// import myActivity from 'images/my_activity_enable.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
+
 import './style.scss'
-import { useState } from 'react'
 
 const Notifications = () => {
   const [search, setSearch] = useState('')
   const [filterData, setFilterData] = useState(null)
+  const size = 7
 
+  const {
+    data: listNotifications,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(['', size], getNotifications, {
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (pages.length <= Math.ceil(+lastPage?.totalPages / +lastPage?.size)) {
+        return pages.length
+      }
+    },
+  })
   const filterDateList = [
     { name: 'Today', value: 'today' },
     { name: 'Yesterday', value: 'yesterday' },
     { name: 'Last 7 Days', value: 'last_7_days' },
     { name: 'Last 30 Days', value: 'last_30_days' },
   ]
-  const notifications = [
-    {
-      icon: bidPlace,
-      label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
-      withPoint: true,
-    },
-    {
-      icon: myActivity,
-      label:
-        'You have been successfully registered to participate in auction Lot #123',
-      date: '23 minutes',
-    },
-    {
-      icon: auctionWon,
-      label: 'You have outbid! Auction LOt #124',
-      date: '23 minutes',
-    },
-  ]
+  const notifications = listNotifications?.pages?.flatMap(
+    (notifList) =>
+      notifList?.content?.map((el) => ({
+        icon: bidPlace,
+        label: 'You have outbid! Auction LOt #124',
+        date: '23 minutes',
+        withPoint: true,
+      })),
+    // {
+    //   icon: myActivity,
+    //   label:
+    //     'You have been successfully registered to participate in auction Lot #123',
+    //   date: '23 minutes',
+    // },
+    // {
+    //   icon: auctionWon,
+    //   label: 'You have outbid! Auction LOt #124',
+    //   date: '23 minutes',
+    // },
+  )
 
   return (
     <div className="notifications">
       <div className="notifications-title">
         Notifications{' '}
-        <span className="blue-text">({notifications.length})</span>
+        <span className="blue-text">({notifications?.length})</span>
       </div>
       <div className="notifications-container md-grid">
         <div className="notifications-container-content md-cell md-cell--6">
-          {notifications.map((item, index) => {
+          {notifications?.map((item, index) => {
             return (
               <NotificationCard
                 key={item.index}
@@ -58,11 +76,20 @@ const Notifications = () => {
               />
             )
           })}
-          <div className="actions">
-            <Button flat swapTheming onClick={() => {}} className="load-more">
-              Load more notifications
-            </Button>
-          </div>
+          {hasNextPage && (
+            <div className="actions">
+              <Button
+                flat
+                swapTheming
+                onClick={() => {
+                  fetchNextPage()
+                }}
+                className="load-more"
+              >
+                Load more notifications
+              </Button>
+            </div>
+          )}
         </div>
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField

@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { cls } from 'reactutils'
 import { get } from 'lodash-es'
+import { useQuery, useMutation } from 'react-query'
+
+import {
+  countNotifications,
+  getNotifications,
+  markAsReadNotifications,
+} from 'libs/api/auctions-api'
 
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
 
 import { getPublicUrl } from 'libs/utils/custom-function'
-
-import notifWhite from 'images/Notifications White.svg'
-import notifBlue from 'images/Notifications Purple.svg'
 
 import {
   FontIcon,
@@ -28,9 +32,13 @@ import {
   useCurrentLang,
 } from 'libs/langs'
 
-import './styles.scss'
+import notifWhite from 'images/Notifications White.svg'
+import notifBlue from 'images/Notifications Purple.svg'
+
 import UserInfoBySubject from 'components/user-info-by-subject'
 import NotifPanel from 'components/notif-panel'
+
+import './styles.scss'
 
 const TopBar = ({
   onClickLogo,
@@ -51,12 +59,19 @@ const TopBar = ({
   const [openMenu, setOpenMenu] = useState(false)
   const [currentModule, setCurrentModule] = useState('')
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
-  let notifNumber = 2
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   // let avatarLetter = user
   //   ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
   //   : null
   const modules = location.pathname.split('/').filter((v) => v !== '')
+  const { data: notifNumber } = useQuery(['getCount'], countNotifications)
+  const { data: notifications } = useQuery(
+    ['getNotifications', 3],
+    getNotifications,
+  )
+
+  const { mutate: markRead } = useMutation(markAsReadNotifications)
+
   useEffect(() => {
     if (
       modules?.includes('live-auctions') ||
@@ -328,7 +343,10 @@ const TopBar = ({
                 icon
                 menuItems={
                   <div className="notification-panel">
-                    <NotifPanel />
+                    <NotifPanel
+                      notifications={notifications?.content}
+                      markRead={(id) => markRead({ id })}
+                    />
                   </div>
                 }
                 listInline

@@ -4,29 +4,36 @@ import auctionWon from 'images/auction_won.svg'
 import myActivity from 'images/my_activity_enable.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
 import { useTranslation } from 'libs/langs'
+import moment from 'moment'
 
 import './style.scss'
 
-const NotifPanel = ({ notifications }) => {
+const NotifPanel = ({ notifications, markRead }) => {
   const { t } = useTranslation()
 
   return (
     <div className="notifPanel">
       {notifications.map((item, index) => {
         return (
-          <div key={index} className="notifPanel-item">
+          <div
+            key={index}
+            className="notifPanel-item"
+            onClick={() => markRead(item?.id)}
+          >
             <img
               className="notifPanel-item-icon"
-              src={item.icon}
+              src={bidPlace}
               width="20px"
               height="20px"
             />
             <div className="notifPanel-item-data">
-              <div className="label">{item.label}</div>
-              <div className="date">{item.date}</div>
+              <div className="label">{item.title}</div>
+              <div className="date">
+                {moment(item.createdAt).format('DD MM YYYY')}
+              </div>
             </div>
             <div className="notificationCard-right">
-              {item.withPoint && <div className="notifPoint" />}
+              {!item.viewed && <div className="notifPoint" />}
             </div>
           </div>
         )
