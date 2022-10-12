@@ -4,8 +4,9 @@ import UserInfoBySubject from 'components/user-info-by-subject'
 import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { get } from 'lodash-es'
+import { useState } from 'react'
 
-import { Avatar, Button } from 'react-md'
+import { Avatar, Button, DialogContainer } from 'react-md'
 
 import companyEnabled from 'images/company_enable.svg'
 import companyDisabled from 'images/company_disable.svg'
@@ -19,10 +20,13 @@ import payementDisabled from 'images/payment_disable.svg'
 // import signOutDisabled from 'images/sign_out_disable.svg'
 
 // import avatar from './avatar.jpg'
+import success from './Success.svg'
+
 import './style.scss'
 
 const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
   const { t } = useTranslation()
+  const [visible, setVisible] = useState(false)
 
   return (
     <div className="profile-menu">
@@ -45,8 +49,8 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
         }}
       </UserInfoBySubject>
 
-      <div className="profile-menu-fullName">Ahmed Mohammed</div>
-      <div className="profile-menu-email">ahmed@gmail.com</div>
+      <div className="profile-menu-fullName">{userInfo?.fullName}</div>
+      <div className="profile-menu-email">{userInfo?.email}</div>
       <br />
       {(!company ? views : viewsCompany)?.map(
         ({ label, value, iconDisabled, iconEnabled }) => (
@@ -70,13 +74,45 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
       <Button
         key={'signOut'}
         className="profile-menu-infoBtn"
-        onClick={() => {
-          cleanUp()
-          navigate('/public/home')
-        }}
+        onClick={() => setVisible(true)}
       >
         {t('sign_out')}
       </Button>
+      {visible && (
+        <DialogContainer
+          visible={visible}
+          dialogClassName="change-email-dialog"
+          focusOnMount={false}
+          onHide={() => setVisible(false)}
+          actions={[
+            <Button key={'2'} onClick={() => setVisible(false)}>
+              Cancel
+            </Button>,
+            <Button
+              key={'3'}
+              onClick={() => {
+                cleanUp()
+                navigate('/public/home')
+              }}
+            >
+              Confirm
+            </Button>,
+          ]}
+        >
+          <div>
+            <img
+              src={success}
+              width={50}
+              height={50}
+              className="success-image"
+              style={{
+                borderRadius: '50%',
+              }}
+            />
+            <h2>Are you sure you want to sign out?</h2>
+          </div>
+        </DialogContainer>
+      )}
     </div>
   )
 }

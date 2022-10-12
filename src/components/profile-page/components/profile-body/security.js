@@ -13,9 +13,18 @@ import success from '../profile-menu/Success.svg'
 import { countriesCodes } from 'components/registration/helper'
 import {
   checkVerifiedCode,
+  // checkVerifiedCode,
+  checkVerifiedCodeAny,
+  forgotPasswordSendCode,
+  sendOTP,
   sendVerifiedCode,
-  updateEmail,
+  // sendOTPForResetPassword,
+  // sendVerifiedCode,
+  // updateEmail,
   updatePassword,
+  updateUserEmail,
+  // updateUserMobile,
+  verifyEmails,
 } from 'libs/api/auctions-api'
 import { useMutation } from 'react-query'
 
@@ -119,7 +128,7 @@ const Security = ({ userInfo }) => {
         <ChangeEmailDialog
           visible={dialogType === 'email'}
           onHide={() => setDialogType('')}
-          emailData={informations?.email}
+          emailData={userInfo?.email}
         />
       )}
       {dialogType === 'phone' && (
@@ -139,6 +148,7 @@ const Security = ({ userInfo }) => {
         <ForgotPasswordDialog
           visible={dialogType === 'forgot'}
           onHide={() => setDialogType('')}
+          user={userInfo}
         />
       )}
     </div>
@@ -153,12 +163,48 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
   const [email, setEmail] = useState('')
   const [oldEmail, setOldEmail] = useState('')
 
-  const { mutate: updateEmailMutation } = useMutation(updateEmail, {
+  // const { mutate: updateEmailMutation } = useMutation(updateEmail, {
+  //   onSuccess: (res) => {
+  //     if (res?.success) {
+  //       setStep((prev) => prev + 1)
+  //     } else {
+  //       alert(res?.error)
+  //     }
+  //   },
+  // })
+  const { mutate: verifyEmailsMutation } = useMutation(verifyEmails, {
+    onSuccess: (res) => {
+      if (res?.data?.['0']?.exist) {
+        setStep((prev) => prev + 1)
+      } else {
+        // alert(res?.message)
+      }
+    },
+  })
+  // const { mutate: checkOtpMutation } = useMutation(checkVerifiedCodeAny, {
+  //   onSuccess: (res) => {
+  //     if (res?.code === 'ok') {
+  //       setStep((prev) => prev + 1)
+  //     } else {
+  //       // alert(res?.message)
+  //     }
+  //   },
+  // })
+  const { mutate: sendOtpMutation } = useMutation(sendOTP, {
     onSuccess: (res) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        alert(res?.error)
+        // alert(res?.error)
+      }
+    },
+  })
+  const { mutate: updateEmailMutation } = useMutation(updateUserEmail, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        setStep((prev) => prev + 1)
+      } else {
+        // alert(res?.message)
       }
     },
   })
@@ -172,7 +218,14 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         <>
           {step === 3 && (
             <div className="emailChanged">
-              <Button className="confirmBtn" primary onClick={onHide}>
+              <Button
+                className="confirmBtn"
+                primary
+                onClick={() => {
+                  onHide()
+                  location.reload()
+                }}
+              >
                 Done
               </Button>
             </div>
@@ -202,19 +255,19 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                 primary
                 className="confirmBtn"
                 onClick={() => {
-                  if (emailData === oldEmail && step === 0) {
-                    setStep((prev) => prev + 1)
-                  } else {
-                    //
-                  }
-                  if (step === 1) {
-                    updateEmailMutation({
+                  if (step === 0) {
+                    verifyEmailsMutation({
+                      body: [{ email: oldEmail }],
+                    })
+                  } else if (step === 1) {
+                    sendOtpMutation({
                       body: {
-                        oldEmail: oldEmail,
-                        email,
+                        expiry: 300,
+                        force: false,
+                        method: 'email',
+                        email: email,
                       },
                     })
-                    setStep((prev) => prev + 1)
                   }
                 }}
               >
@@ -227,7 +280,16 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
               <Button
                 className="confirmBtn"
                 primary
-                onClick={() => setStep((prev) => prev + 1)}
+                onClick={() =>
+                  updateEmailMutation({
+                    body: {
+                      oldEmail: oldEmail,
+                      email: email,
+                      code: otp,
+                      method: 'otp',
+                    },
+                  })
+                }
               >
                 Confirm
               </Button>
@@ -265,7 +327,8 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         {step === 2 && (
           <>
             <div className="opt-text">
-              {'An OTP has been sent to "Mohammed@gmail.com"'}
+              {'An OTP has been sent to '}
+              {email}
             </div>
             <OtpInput
               value={otp}
@@ -332,7 +395,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         setKey(res?.data?.key)
         setStep((prev) => prev + 1)
       } else {
-        alert(res?.message)
+        // alert(res?.message)
       }
     },
   })
@@ -341,7 +404,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
       if (res?.code === 'ok') {
         setStep((prev) => prev + 1)
       } else {
-        alert(res?.message)
+        // alert(res?.message)
       }
     },
   })
@@ -404,6 +467,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                     body: {
                       code: otp,
                       key: key,
+                      phone: phoneNumber?.newCode + phoneNumber?.new,
                     },
                   })
                 }}
@@ -604,7 +668,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        alert(res?.error)
+        // alert(res?.error)
       }
     },
   })
@@ -639,7 +703,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                         },
                       })
                     } else {
-                      alert('Unmatched password')
+                      // alert('Unmatched password')
                     }
                   }}
                 >
@@ -726,10 +790,39 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
   )
 }
 
-const ForgotPasswordDialog = ({ visible, onHide }) => {
+const ForgotPasswordDialog = ({ visible, onHide, user }) => {
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState(0)
   const [type, setType] = useState(true)
+  const [password1, setPassword1] = useState('')
+  const [password2, setPassword2] = useState('')
+  const { mutate: sendOtpMutation } = useMutation(forgotPasswordSendCode, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        setStep((prev) => prev + 1)
+      } else {
+        // alert(res?.error)
+      }
+    },
+  })
+  const { mutate: checkOtpMutation } = useMutation(checkVerifiedCodeAny, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        setStep((prev) => prev + 1)
+      } else {
+        // alert(res?.message)
+      }
+    },
+  })
+  const { mutate: updatePasswordMutation } = useMutation(updatePassword, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        setStep((prev) => prev + 1)
+      } else {
+        // alert(res?.error)
+      }
+    },
+  })
   return (
     <DialogContainer
       visible={visible}
@@ -762,7 +855,47 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
               <Button
                 className="confirmBtn"
                 primary
-                onClick={() => setStep((prev) => prev + 1)}
+                onClick={() => {
+                  if (step === 0) {
+                    sendOtpMutation(
+                      type
+                        ? {
+                          body: {
+                            expiry: 300,
+                            force: true,
+                            method: 'email',
+                            email: user?.email,
+                          },
+                        }
+                        : {
+                          body: {
+                            expiry: 300,
+                            force: true,
+                            method: 'mobile',
+                            mobile: user?.phoneMobile,
+                          },
+                        },
+                    )
+                  } else {
+                    checkOtpMutation(
+                      type
+                        ? {
+                          body: {
+                            email: user?.email,
+                            code: otp,
+                            method: 'email',
+                          },
+                        }
+                        : {
+                          body: {
+                            mobile: user?.phoneMobile,
+                            code: otp,
+                            method: 'mobile',
+                          },
+                        },
+                    )
+                  }
+                }}
               >
                 Next
               </Button>
@@ -773,7 +906,29 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
               <Button
                 className="confirmBtn"
                 primary
-                onClick={() => setStep((prev) => prev + 1)}
+                onClick={() => {
+                  if (password1 === password2) {
+                    updatePasswordMutation(
+                      type
+                        ? {
+                          body: {
+                            subject: user?.subject,
+                            code: otp,
+                            method: 'email',
+                            password: password1,
+                          },
+                        }
+                        : {
+                          body: {
+                            subject: user?.subject,
+                            code: otp,
+                            method: 'mobile',
+                            password: password1,
+                          },
+                        },
+                    )
+                  }
+                }}
               >
                 Confirm
               </Button>
@@ -810,7 +965,8 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
         {step === 1 && (
           <>
             <div className="opt-text">
-              {'An OTP has been sent to "Mohammed@gmail.com"'}
+              {'An OTP has been sent to '}
+              {type ? user?.email : user?.phoneMobile}
             </div>
             <OtpInput
               value={otp}
@@ -848,6 +1004,8 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
               block
               placeholder="Enter new password"
               type="password"
+              value={password1}
+              onChange={(text) => setPassword1(text)}
             />
             <div>Re-enter Password</div>
             <TextField
@@ -855,6 +1013,8 @@ const ForgotPasswordDialog = ({ visible, onHide }) => {
               className="textField"
               block
               type="password"
+              value={password2}
+              onChange={(text) => setPassword2(text)}
             />
           </>
         )}
