@@ -46,7 +46,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
             ),
           )
         }
-        refetch()
+        refetch && refetch()
       },
     },
   )
@@ -83,7 +83,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         ?.map((ac) => {
           return {
             label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
-            value: `${ac?.['name_en']}`,
+            value: `${ac?.['id']}`,
           }
         })
       return arrayName
@@ -266,15 +266,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           id={'country'}
           menuItems={renderCountry()}
           listClassName="country-list"
-          value={information?.country?.countryName}
+          value={information?.country?.id}
           onClick={() => setTest(1)}
           onChange={(v) =>
             setInformation((prev) => ({
               ...prev,
               country: {
-                ...prev?.countryName,
-                countryName: v,
-                nationality: v,
+                ...prev?.country,
+                id: v,
               },
             }))
           }
@@ -346,6 +345,8 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
                       information['country']?.phoneCode +
                       information['phoneMobile']
                   }
+                } else if (el === 'country') {
+                  myObject['countryID'] = information['country']?.id
                 } else if (information[el]) {
                   myObject[el] = information[el]
                   if (el === 'firstName' || el !== 'lastName') {

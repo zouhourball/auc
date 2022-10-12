@@ -613,10 +613,10 @@ export const sendVerifiedCode = async ({ body }) => {
   }
   return res
 }
-export const checkVerifiedCode = async ({ body }) => {
+export const sendOTP = async ({ body }) => {
   let res
   try {
-    res = await fetchJSON(`${OAUTH_CALLBACK_HOST}/api/v1/check-verified-code`, {
+    res = await fetchJSON(`${OAUTH_HOST}/user/send-otp`, {
       method: 'POST',
       body: JSON.stringify(body),
     })
@@ -624,6 +624,55 @@ export const checkVerifiedCode = async ({ body }) => {
     res = { error: e }
   }
   return res
+}
+export const checkVerifiedCode = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_CALLBACK_HOST}/api/v1/user/phone`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const checkVerifiedCodeAny = async ({ body }) => {
+  let res
+  try {
+    res = await fetch(`${OAUTH_HOST}/api/v2/check-otp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Basic ' + btoa(OAUTH_CLIENT_ID + ':' + OAUTH_CLIENT_SECRET),
+      },
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  let result = await res.json()
+  return result
+}
+
+export const forgotPasswordSendCode = async ({ body }) => {
+  let res
+  try {
+    res = await fetch(`${OAUTH_HOST}/api/v2/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Basic ' + btoa(OAUTH_CLIENT_ID + ':' + OAUTH_CLIENT_SECRET),
+      },
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  let result = await res.json()
+  return result
 }
 export const updatePassword = async ({ body }) => {
   let res
@@ -649,7 +698,42 @@ export const updateEmail = async ({ body }) => {
   }
   return res
 }
-
+export const verifyEmails = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_HOST}/user/check-emails`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const updateUserEmail = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_HOST}/user/update-email`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const updateUserMobile = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${OAUTH_HOST}/user/update-mobile`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 export const getFeaturedAuctionRemainingTime = async ({ queryKey }) => {
   let res
   try {

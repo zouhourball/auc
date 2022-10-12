@@ -41,7 +41,7 @@ const ProfilePage = ({ company }) => {
         // skip: !orgId,
       },
       variables: {
-        orgId: '805',
+        orgId: '632',
       },
     },
   )
