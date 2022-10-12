@@ -18,6 +18,7 @@ import gridActive from 'images/Map View Selected.svg'
 import gridInactive from 'images/Map View Grey.svg'
 import listActive from 'images/List View Selected.svg'
 import listInactive from 'images/List View Grey.svg'
+import noResult from 'images/no_result_found.svg'
 
 import './style.scss'
 
@@ -93,12 +94,12 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
         />
       ))
     ) : (
-      <div>
-        <img src={listActive} />
-        <div>
-          <b>No Results Found</b>
+      <div className="empty-content">
+        <img className="empty-content-logo" src={noResult} />
+        <div className="empty-content-title">No Results Found</div>
+        <div className="empty-content-text">
+          {"We couldn't find what you're looking for!"}
         </div>
-        <div>{"We couldn't find what you're looking for!"}</div>
       </div>
     )
   let limitOfNumberShowing = 5
@@ -200,7 +201,13 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
       </div>
       {gridView === 0 ? (
         <>
-          <div className="md-grid auction-list-cards">{renderCards()}</div>
+          <div
+            className={`md-grid auction-list-cards ${
+              auctionsData?.results?.length === 0 ? 'empty' : ''
+            }`}
+          >
+            {renderCards()}
+          </div>
           {+auctionsData?.pagination?.total > limit && (
             <div className="table-paginator">
               <Button

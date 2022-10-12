@@ -7,6 +7,18 @@ import { get } from 'lodash-es'
 import { useState } from 'react'
 
 import { Avatar, Button, DialogContainer } from 'react-md'
+
+import companyEnabled from 'images/company_enable.svg'
+import companyDisabled from 'images/company_disable.svg'
+import securityEnabled from 'images/security_enable.svg'
+import securityDisabled from 'images/security_disable.svg'
+import supportEnabled from 'images/support_enable.svg'
+import supportDisabled from 'images/support_disable.svg'
+import payementEnabled from 'images/payment_enable.svg'
+import payementDisabled from 'images/payment_disable.svg'
+// import signOutEnabled from 'images/sign_out_enable.svg'
+// import signOutDisabled from 'images/sign_out_disable.svg'
+
 // import avatar from './avatar.jpg'
 import success from './Success.svg'
 
@@ -18,13 +30,6 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
 
   return (
     <div className="profile-menu">
-      {/* <img
-        className="profile-menu-avatar"
-        src={avatar}
-        width={80}
-        height={80}
-        style={{ borderRadius: '50%' }}
-      /> */}
       <UserInfoBySubject key={userInfo?.subject} subject={userInfo?.subject}>
         {(res) => {
           return (
@@ -47,18 +52,25 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
       <div className="profile-menu-fullName">{userInfo?.fullName}</div>
       <div className="profile-menu-email">{userInfo?.email}</div>
       <br />
-      {(!company ? views : viewsCompany)?.map(({ label, value }) => (
-        <Button
-          className={`profile-menu-infoBtn ${
-            currentView === value ? 'active' : ''
-          }`}
-          key={value}
-          onClick={() => setCurrentView(value)}
-          // primary={currentView === value}
-        >
-          {label}
-        </Button>
-      ))}
+      {(!company ? views : viewsCompany)?.map(
+        ({ label, value, iconDisabled, iconEnabled }) => (
+          <Button
+            className={`profile-menu-infoBtn ${
+              currentView === value ? 'active' : ''
+            }`}
+            key={value}
+            onClick={() => setCurrentView(value)}
+            iconEl={
+              <img
+                width={13}
+                src={currentView === value ? iconEnabled : iconDisabled}
+              />
+            }
+          >
+            <span>{label}</span>
+          </Button>
+        ),
+      )}
       <Button
         key={'signOut'}
         className="profile-menu-infoBtn"
@@ -111,31 +123,45 @@ const views = [
   {
     label: 'Personal Information',
     value: 'PersonalInformation',
+    iconEnabled: companyEnabled,
+    iconDisabled: companyDisabled,
   },
   {
     label: 'Payment',
     value: 'Payment',
+    iconEnabled: payementEnabled,
+    iconDisabled: payementDisabled,
   },
   {
     label: 'Security',
     value: 'Security',
+    iconEnabled: securityEnabled,
+    iconDisabled: securityDisabled,
   },
   {
     label: 'Support',
     value: 'Support',
+    iconEnabled: supportEnabled,
+    iconDisabled: supportDisabled,
   },
 ]
 const viewsCompany = [
   {
     label: 'Personal Information',
     value: 'PersonalInformationCompany',
+    iconEnabled: companyEnabled,
+    iconDisabled: companyDisabled,
   },
   {
     label: 'Security',
     value: 'Security',
+    iconEnabled: securityEnabled,
+    iconDisabled: securityDisabled,
   },
   {
     label: 'Support',
     value: 'Support',
+    iconEnabled: supportEnabled,
+    iconDisabled: securityDisabled,
   },
 ]

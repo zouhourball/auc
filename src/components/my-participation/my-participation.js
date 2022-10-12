@@ -64,7 +64,7 @@ const ParticipatedAuctions = () => {
         onClick={() => setTab(el.id)}
         primary={tab === el.id}
       >
-        {el.label}
+        <span>{el.label}</span>
       </Button>
     ))
 

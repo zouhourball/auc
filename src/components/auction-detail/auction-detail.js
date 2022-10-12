@@ -378,8 +378,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
       </div> */}
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
-        <Button onClick={() => window.history.go(-1)}>
-          <FontIcon>arrow_left</FontIcon>
+        <Button
+          className="back-btn"
+          primary
+          iconBefore
+          iconEl={<FontIcon>arrow_back</FontIcon>}
+          onClick={() => window.history.go(-1)}
+        >
           Back to Live Auctions
         </Button>
         <div className="auction-details-header md-cell md-cell--12">
