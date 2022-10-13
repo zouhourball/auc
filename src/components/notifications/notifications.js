@@ -1,8 +1,12 @@
 import { Button, FontIcon, TextField } from 'react-md'
-import { useState } from 'react'
-import { useInfiniteQuery } from 'react-query'
+import { useMemo, useState } from 'react'
+import { useInfiniteQuery, useMutation } from 'react-query'
+import moment from 'moment'
 
-import { getNotifications } from 'libs/api/auctions-api'
+import {
+  getNotifications,
+  markAsReadNotifications,
+} from 'libs/api/auctions-api'
 
 import NotificationCard from 'components/notification-card'
 import FilterBox from 'components/filter-box'
@@ -15,11 +19,12 @@ import './style.scss'
 
 const Notifications = () => {
   const [search, setSearch] = useState('')
-  const [filterData, setFilterData] = useState(null)
+  const [filterData, setFilterData] = useState({})
   const size = 7
 
   const {
     data: listNotifications,
+    refetch: refetchNotifs,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(['', size], getNotifications, {
@@ -30,19 +35,36 @@ const Notifications = () => {
       }
     },
   })
+  const { mutate: markRead } = useMutation(markAsReadNotifications, {
+    onSuccess: () => {
+      refetchNotifs()
+    },
+  })
+
   const filterDateList = [
-    { name: 'Today', value: 'today' },
-    { name: 'Yesterday', value: 'yesterday' },
-    { name: 'Last 7 Days', value: 'last_7_days' },
-    { name: 'Last 30 Days', value: 'last_30_days' },
+    { name: 'Today', value: moment().format('YYYY-MM-DD') },
+    {
+      name: 'Yesterday',
+      value: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+    },
+    {
+      name: 'Last 7 Days',
+      value: moment().subtract(7, 'days').format('YYYY-MM-DD'),
+    },
+    {
+      name: 'Last 30 Days',
+      value: moment().subtract(30, 'days').format('YYYY-MM-DD'),
+    },
   ]
   const notifications = listNotifications?.pages?.flatMap(
     (notifList) =>
       notifList?.content?.map((el) => ({
+        id: el?.id,
         icon: bidPlace,
-        label: 'You have outbid! Auction LOt #124',
-        date: '23 minutes',
-        withPoint: true,
+        label: el?.title,
+        date: moment(el.createdAt).fromNow(),
+        withPoint: !el.viewed,
+        formattedDate: moment(el.createdAt).format('YYYY-MM-DD'),
       })),
     // {
     //   icon: myActivity,
@@ -56,41 +78,68 @@ const Notifications = () => {
     //   date: '23 minutes',
     // },
   )
-
+  // ||  ||
+  let beforeMark = moment(filterData?.dateRange?.startDate).format('YYYY-MM-DD')
+  let afterMark = moment(filterData?.dateRange?.endDate).format('YYYY-MM-DD')
+  const renderNotification = useMemo(() => {
+    return Object.keys(filterData).length
+      ? notifications?.filter(
+          (el) =>
+            el?.formattedDate === filterData?.selectedItem ||
+            (!filterData?.dateRange?.endDate &&
+              el?.formattedDate > beforeMark) ||
+            (!filterData?.dateRange?.startDate &&
+              el?.formattedDate < afterMark) ||
+            (el?.formattedDate > beforeMark && el?.formattedDate < afterMark),
+        )
+      : search
+        ? notifications?.filter((el) => el?.label?.toLowerCase().includes(search))
+        : notifications
+  }, [filterData, listNotifications, search])
+  const onMarkRead = () =>
+    Promise.all(
+      renderNotification
+        ?.filter((el) => el?.withPoint)
+        ?.map((el) => markRead({ id: el?.id })),
+    ).then((values) => {})
   return (
     <div className="notifications">
       <div className="notifications-title">
         Notifications{' '}
-        <span className="blue-text">({notifications?.length})</span>
+        <span className="blue-text">({renderNotification?.length})</span>
       </div>
       <div className="notifications-container md-grid">
-        <div className="notifications-container-content md-cell md-cell--6">
-          {notifications?.map((item, index) => {
-            return (
-              <NotificationCard
-                key={item.index}
-                icon={item.icon}
-                label={item.label}
-                date={item.date}
-                withPoint
-              />
-            )
-          })}
-          {hasNextPage && (
-            <div className="actions">
-              <Button
-                flat
-                swapTheming
-                onClick={() => {
-                  fetchNextPage()
-                }}
-                className="load-more"
-              >
-                Load more notifications
-              </Button>
-            </div>
-          )}
-        </div>
+        {renderNotification?.length > 0 ? (
+          <div className="notifications-container-content md-cell md-cell--6">
+            {renderNotification?.map((item, index) => {
+              return (
+                <NotificationCard
+                  key={item.index}
+                  icon={item.icon}
+                  label={item.label}
+                  date={item.date}
+                  withPoint={item.withPoint}
+                />
+              )
+            })}
+            {hasNextPage && renderNotification?.length > 0 && (
+              <div className="actions">
+                <Button
+                  flat
+                  swapTheming
+                  onClick={() => {
+                    fetchNextPage()
+                  }}
+                  className="load-more"
+                >
+                  Load more notifications
+                </Button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>There s no notifications</div>
+        )}
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField
             id="search_textField"
@@ -112,7 +161,7 @@ const Notifications = () => {
           <Button
             flat
             swapTheming
-            onClick={() => {}}
+            onClick={() => onMarkRead()}
             className="markAllRead-btn"
           >
             Mark All Read

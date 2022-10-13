@@ -28,9 +28,7 @@ const NotifPanel = ({ notifications, markRead }) => {
             />
             <div className="notifPanel-item-data">
               <div className="label">{item.title}</div>
-              <div className="date">
-                {moment(item.createdAt).format('DD MM YYYY')}
-              </div>
+              <div className="date">{moment(item.createdAt).fromNow()}</div>
             </div>
             <div className="notificationCard-right">
               {!item.viewed && <div className="notifPoint" />}

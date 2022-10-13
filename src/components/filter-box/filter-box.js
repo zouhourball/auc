@@ -16,7 +16,7 @@ const FilterBox = ({ className, items, setFilterData, filterData }) => {
     if (status) {
       newSelectedItem = value
     }
-    setFilterData({ ...filterData, selectedItem: newSelectedItem })
+    setFilterData({ selectedItem: newSelectedItem })
   }
 
   const renderItems = () => {
@@ -38,7 +38,7 @@ const FilterBox = ({ className, items, setFilterData, filterData }) => {
   }
   const onHandleDate = (date, key) => {
     setFilterData({
-      ...filterData,
+      // ...filterData,
       dateRange: {
         ...filterData?.dateRange,
         [key]: date?.timestamp,
@@ -77,7 +77,7 @@ const FilterBox = ({ className, items, setFilterData, filterData }) => {
             onCancel={() =>
               setVisibleDatePicker({ ...visibleDatePicker, startDate: false })
             }
-            minValidDate={{ timestamp: new Date().getTime() }}
+            // minValidDate={{ timestamp: new Date().getTime() }}
             startView="year"
             endView="day"
           />
