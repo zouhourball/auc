@@ -106,7 +106,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
-        <h2>Personal Information</h2>
+        <h2>{t('personal_information')}</h2>
         <Button icon primary={!edit} onClick={() => setEdit((prev) => !prev)}>
           more_vert
         </Button>
@@ -114,12 +114,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
 
       {!company && (
         <div className="md-cell md-cell--6">
-          <div className="label">First Name*</div>
+          <div className="label">{t('first_name')}*</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.firstName}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -132,12 +132,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {!company && (
         <div className="md-cell md-cell--6">
-          <div className="label">Last Name*</div>
+          <div className="label">{t('last_name')}*</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.lastName}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -150,12 +150,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <div className="label">Company Name*</div>
+          <div className="label">{t('company_name')}*</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             block
             disabled={edit}
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.name}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -167,7 +167,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <div className="label">Email Address*</div>
+        <div className="label">{t('email_address')}*</div>
         <TextField
           className={`textField ${edit ? 'disabled' : 'active'}`}
           block
@@ -184,7 +184,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <div className="label">Phone Number*</div>
+        <div className="label">{t('phone_number')}*</div>
         <div
           className={`selectField ${edit ? 'disabled' : 'active'}`}
           style={{ display: 'flex' }}
@@ -243,12 +243,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <div className="label">Website URL*</div>
+          <div className="label">{t('website_url')}*</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.webSite}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -260,7 +260,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         </div>
       )}
       <div className="md-cell md-cell--6">
-        <div className="label">Country*</div>
+        <div className="label">{t('country')}</div>
         <SelectField
           disabled={edit}
           id={'country'}
@@ -283,12 +283,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       </div>
       {company && (
         <div className="md-cell md-cell--6">
-          <div className="label">Address*</div>
+          <div className="label">{t('address')}</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             disabled={edit}
             block
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.city?.cityName}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -310,7 +310,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
             rows={5}
             disabled={edit}
             block
-            placeholder={'Write here'}
+            placeholder={t('write_here')}
             value={information?.aboutUs}
             onChange={(v) =>
               setInformation((prev) => ({
@@ -323,8 +323,8 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {!edit && (
         <div className="personal-information-footer md-cell md-cell--12">
-          <Button className="cancel-btn" flat>
-            Cancel
+          <Button className="cancel-btn" flat onClick={() => setEdit(false)}>
+            {t('cancel')}
           </Button>
           <Button
             flat
@@ -366,7 +366,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
               })
             }}
           >
-            Save
+            {t('save')}
           </Button>
         </div>
       )}

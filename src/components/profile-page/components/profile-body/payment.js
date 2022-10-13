@@ -1,13 +1,16 @@
+import { useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { Button } from 'react-md'
 
 const Payment = () => {
+  const { t } = useTranslation()
+
   const [edit, setEdit] = useState(true)
 
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
-        <h2>Payment</h2>
+        <h2>{t('payment')}</h2>
         <Button icon primary={!edit} onClick={() => setEdit((prev) => !prev)}>
           more_vert
         </Button>
@@ -18,7 +21,7 @@ const Payment = () => {
           <div>12/08/2022 13:11</div>
           <div>14,000 OMR</div>
           <Button flat primary>
-            download
+            {t('download')}
           </Button>
         </div>
       ))}
