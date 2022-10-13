@@ -477,7 +477,12 @@ const RegistrationPage = () => {
             </div> */}
               <div className="grey-text font-size-bg">
                 {t('Don_t_have')}{' '}
-                <span className="blue-text font-size-bg">{t('log_in')}</span>{' '}
+                <span
+                  className="blue-text font-size-bg"
+                  onClick={() => navigate('/auctions/home')}
+                >
+                  {t('log_in')}
+                </span>{' '}
               </div>
             </div>
           </div>
