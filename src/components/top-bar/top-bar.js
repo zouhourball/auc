@@ -64,13 +64,21 @@ const TopBar = ({
   //   ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
   //   : null
   const modules = location.pathname.split('/').filter((v) => v !== '')
-  const { data: notifNumber } = useQuery(['getCount'], countNotifications)
-  const { data: notifications } = useQuery(
+  const { data: notifNumber, refetch: refetchCount } = useQuery(
+    ['getCount'],
+    countNotifications,
+  )
+  const { data: notifications, refetch: refetchNotifs } = useQuery(
     ['getNotifications', 3],
     getNotifications,
   )
 
-  const { mutate: markRead } = useMutation(markAsReadNotifications)
+  const { mutate: markRead } = useMutation(markAsReadNotifications, {
+    onSuccess: () => {
+      refetchNotifs()
+      refetchCount()
+    },
+  })
 
   useEffect(() => {
     if (
