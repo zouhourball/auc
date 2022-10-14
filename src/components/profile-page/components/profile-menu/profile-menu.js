@@ -67,7 +67,7 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
               />
             }
           >
-            <span>{label}</span>
+            <span>{t(label)}</span>
           </Button>
         ),
       )}
@@ -121,25 +121,25 @@ export default ProfileMenu
 
 const views = [
   {
-    label: 'Personal Information',
+    label: 'personal_information',
     value: 'PersonalInformation',
     iconEnabled: companyEnabled,
     iconDisabled: companyDisabled,
   },
   {
-    label: 'Payment',
+    label: 'payment',
     value: 'Payment',
     iconEnabled: payementEnabled,
     iconDisabled: payementDisabled,
   },
   {
-    label: 'Security',
+    label: 'security',
     value: 'Security',
     iconEnabled: securityEnabled,
     iconDisabled: securityDisabled,
   },
   {
-    label: 'Support',
+    label: 'support',
     value: 'Support',
     iconEnabled: supportEnabled,
     iconDisabled: supportDisabled,
@@ -147,19 +147,19 @@ const views = [
 ]
 const viewsCompany = [
   {
-    label: 'Personal Information',
+    label: 'personal_information',
     value: 'PersonalInformationCompany',
     iconEnabled: companyEnabled,
     iconDisabled: companyDisabled,
   },
   {
-    label: 'Security',
+    label: 'security',
     value: 'Security',
     iconEnabled: securityEnabled,
     iconDisabled: securityDisabled,
   },
   {
-    label: 'Support',
+    label: 'support',
     value: 'Support',
     iconEnabled: supportEnabled,
     iconDisabled: securityDisabled,

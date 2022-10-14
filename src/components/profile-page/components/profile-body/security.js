@@ -52,14 +52,14 @@ const Security = ({ userInfo }) => {
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
-        <h2>Security</h2>
+        <h2>{t('security')}</h2>
       </div>
 
       <div className="md-cell md-cell--6">
         <div className="change">
-          <div className="label">Email*</div>
+          <div className="label">{t('email')}*</div>
           <Button primary onClick={() => setDialogType('email')}>
-            Change
+            {t('change')}
           </Button>
         </div>
         <TextField
@@ -78,9 +78,9 @@ const Security = ({ userInfo }) => {
       </div>
       <div className="md-cell md-cell--6">
         <div className="change">
-          <div className="label">Password*</div>
+          <div className="label">{t('password')}*</div>
           <Button primary onClick={() => setDialogType('password')}>
-            Change
+            {t('change')}
           </Button>
         </div>
         <div className="passwordField">
@@ -98,15 +98,15 @@ const Security = ({ userInfo }) => {
             }
           />
           <Button primary onClick={() => setDialogType('forgot')}>
-            Forgot Password?
+            {t('forgot_password_?')}
           </Button>
         </div>
       </div>
       <div className="md-cell md-cell--6">
         <div className="change">
-          <div className="label">Phone Number*</div>
+          <div className="label">{t('phone_number')}*</div>
           <Button primary onClick={() => setDialogType('phone')}>
-            Change
+            {t('change')}
           </Button>
         </div>
         <TextField
@@ -158,6 +158,8 @@ const Security = ({ userInfo }) => {
 export default Security
 
 const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
+  const { t } = useTranslation()
+
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [email, setEmail] = useState('')
@@ -226,14 +228,14 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                   location.reload()
                 }}
               >
-                Done
+                {t('done')}
               </Button>
             </div>
           )}
           {step < 2 && (
             <span>
               <Button className="cancelBtn" onClick={onHide}>
-                Cancel
+                {t('cancel')}
               </Button>
             </span>
           )}{' '}
@@ -243,7 +245,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                 className="cancelBtn"
                 onClick={() => setStep((prev) => prev - 1)}
               >
-                Back
+                {t('back')}
               </Button>
             </span>
           )}
@@ -271,7 +273,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                   }
                 }}
               >
-                Next
+                {t('next')}
               </Button>
             </span>
           )}
@@ -291,7 +293,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                   })
                 }
               >
-                Confirm
+                {t('confirm')}
               </Button>
             </span>
           )}
@@ -299,12 +301,12 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
       ]}
     >
       <div className="change-email-dialog-container">
-        {step !== 3 && <h2>Change Email</h2>}
+        {step !== 3 && <h2>{t('change_email')}</h2>}
         {step < 2 && (
           <>
-            <div className="grey-label">Current Email</div>
+            <div className="grey-label">{t('current_email')}</div>
             <TextField
-              placeholder="Enter current email"
+              placeholder={t('enter_current_email')}
               value={oldEmail}
               block
               className="emailField"
@@ -314,9 +316,9 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         )}
         {step === 1 && (
           <>
-            <div className="grey-label">New Email</div>
+            <div className="grey-label">{t('new_email')}</div>
             <TextField
-              placeholder="Enter new email"
+              placeholder={t('enter_new_email')}
               value={email}
               block
               className="emailField"
@@ -327,8 +329,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
         {step === 2 && (
           <>
             <div className="opt-text">
-              {'An OTP has been sent to '}
-              {email}
+              {t('an_otp_has_been_sent_to')} {email}
             </div>
             <OtpInput
               value={otp}
@@ -350,9 +351,9 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
               }}
             />
             <div className="opt-text">
-              {"Didn't receive a code?"}{' '}
+              {t("didn't_receive_a_code?")}{' '}
               <span>
-                <Button primary>Resend</Button>
+                <Button primary>{t('resend')}</Button>
               </span>{' '}
             </div>
           </>
@@ -368,9 +369,9 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                 borderRadius: '50%',
               }}
             />
-            <h2>Email Changed</h2>
+            <h2>{t('email_changed')}</h2>
             <div className="grey-label" style={{ textAlign: 'center' }}>
-              Your email has been changed successfully
+              {t('your_email_has_been_changed_successfully')}
             </div>
           </div>
         )}
@@ -380,6 +381,8 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
 }
 
 const ChangeNumberDialog = ({ visible, onHide }) => {
+  const { t } = useTranslation()
+
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [key, setKey] = useState('')
@@ -420,7 +423,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
           {step < 2 && (
             <span>
               <Button className="cancelBtn" onClick={onHide}>
-                Cancel
+                {t('cancel')}
               </Button>
             </span>
           )}
@@ -430,7 +433,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                 className="cancelBtn"
                 onClick={() => setStep((prev) => prev - 1)}
               >
-                Back
+                {t('back')}
               </Button>
             </span>
           )}
@@ -453,7 +456,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                   }
                 }}
               >
-                Next
+                {t('next')}
               </Button>
             </span>
           )}
@@ -472,23 +475,23 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                   })
                 }}
               >
-                Confirm
+                {t('confirm')}
               </Button>
             </span>
           )}
           {step === 3 && (
             <Button className="confirmBtn" primary onClick={onHide}>
-              Done
+              {t('done')}
             </Button>
           )}
         </>,
       ]}
     >
       <div className="change-email-dialog-container">
-        {step !== 3 && <h2>Change Phone Number</h2>}
+        {step !== 3 && <h2>{t('change_phone_number')}</h2>}
         {step < 2 && (
           <>
-            <div className="gray-label">Current Phone Number</div>
+            <div className="gray-label">{t('current_phone_number')}</div>
             <div
               style={{ display: 'flex', marginBottom: 8 }}
               className="selectField"
@@ -527,7 +530,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
               <TextField
                 id={'phone'}
                 block
-                placeholder="Current Phone Number"
+                placeholder={t('current_phone_number')}
                 value={phoneNumber?.current}
                 onChange={(v) =>
                   setPhoneNumber((prev) => ({
@@ -577,7 +580,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
               <div className="sep"></div>
               <TextField
                 id={'phone'}
-                placeholder="New Phone Number"
+                placeholder={t('new_phone_number')}
                 block
                 value={phoneNumber?.new}
                 onChange={(v) =>
@@ -593,7 +596,8 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         {step === 2 && (
           <>
             <div className="opt-text">
-              {'An OTP has been sent to "' +
+              {t('an_otp_has_been_sent_to') +
+                ' ' +
                 phoneNumber?.newCode +
                 phoneNumber?.new +
                 '"'}
@@ -619,7 +623,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
               separator={<span>-</span>}
             />
             <div>
-              {"Didn't receive a code?"}
+              {t("didn't_receive_a_code")}
               <span>
                 <Button
                   className="confirmBtn"
@@ -632,7 +636,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                     })
                   }}
                 >
-                  Resend
+                  {t('resend')}
                 </Button>
               </span>
             </div>
@@ -649,8 +653,8 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                 borderRadius: '50%',
               }}
             />
-            <h2>Email Changed</h2>
-            <div>Your phone number has been changed successfully</div>
+            <h2>{t('phone_number_changed')}</h2>
+            <div>{t('your_phone_number_has_been_changed_successfully')}</div>
           </div>
         )}
       </div>
@@ -658,6 +662,8 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
   )
 }
 const ChangePasswordDialog = ({ visible, onHide, subject }) => {
+  const { t } = useTranslation()
+
   const [password, setPassword] = useState({
     current: '',
     new: '',
@@ -686,7 +692,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
             <>
               <span>
                 <Button className="cancelBtn" onClick={onHide}>
-                  Cancel
+                  {t('cancel')}
                 </Button>
               </span>
               <span>
@@ -707,7 +713,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                     }
                   }}
                 >
-                  Change
+                  {t('change')}
                 </Button>
               </span>
             </>
@@ -716,7 +722,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
         <>
           {step === 1 && (
             <Button className="confirmBtn" primary onClick={onHide}>
-              Done
+              {t('done')}
             </Button>
           )}
         </>,
@@ -725,10 +731,10 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
       <div className="change-email-dialog-container">
         {step === 0 && (
           <>
-            <h2>Change Password</h2>
-            <div className="grey-label">Current Password</div>
+            <h2>{t('forgot_password')}</h2>
+            <div className="grey-label">{t('current_password')}</div>
             <TextField
-              placeholder="Enter current password"
+              placeholder={t('enter_current_password')}
               type="password"
               block
               className="textField"
@@ -740,9 +746,9 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                 }))
               }
             />
-            <div className="grey-label">New Password</div>
+            <div className="grey-label">{t('new_password')}</div>
             <TextField
-              placeholder="Enter new password"
+              placeholder={t('enter_new_password')}
               type="password"
               block
               className="textField"
@@ -754,9 +760,9 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                 }))
               }
             />
-            <div className="grey-label">Re-enter Password</div>
+            <div className="grey-label">{t('re-enter_password')}</div>
             <TextField
-              placeholder="Re-enter new password"
+              placeholder={t('re-enter_new_password')}
               type="password"
               block
               className="textField"
@@ -781,8 +787,8 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                 borderRadius: '50%',
               }}
             />
-            <h2>Password Changed</h2>
-            <div>Your password has been changed successfully</div>
+            <h2>{t('password_changed')}</h2>
+            <div>{t('your_password_has_been_changed_successfully')}</div>
           </div>
         )}
       </div>
@@ -791,6 +797,8 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
 }
 
 const ForgotPasswordDialog = ({ visible, onHide, user }) => {
+  const { t } = useTranslation()
+
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState(0)
   const [type, setType] = useState(true)
@@ -834,7 +842,7 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
           {(step === 0 || step === 2) && (
             <span>
               <Button className="cancelBtn" onClick={onHide}>
-                Cancel
+                {t('cancel')}
               </Button>
             </span>
           )}
@@ -844,7 +852,7 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
                 className="cancelBtn"
                 onClick={() => setStep((prev) => prev - 1)}
               >
-                Back
+                {t('back')}
               </Button>
             </span>
           )}
@@ -897,7 +905,7 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
                   }
                 }}
               >
-                Next
+                {t('next')}
               </Button>
             </span>
           )}
@@ -930,34 +938,34 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
                   }
                 }}
               >
-                Confirm
+                {t('confirm')}
               </Button>
             </span>
           )}
           {step === 3 && (
             <Button className="confirmBtn" primary onClick={onHide}>
-              Done
+              {t('done')}
             </Button>
           )}
         </>,
       ]}
     >
       <div className="change-email-dialog-container">
-        {step !== 3 && <h2>Forgot Password</h2>}
+        {step !== 3 && <h2>{t('forgot_password')}</h2>}
         {step === 0 && (
           <div className="checkbox-group">
             <Checkbox
               type="radio"
               className={`checkbox-container ${type === true ? 'active' : ''}`}
               checked={type}
-              label="Email"
+              label={t('email')}
               onClick={() => setType((prev) => !prev)}
             />
             <Checkbox
               type="radio"
               className={`checkbox-container ${!type === true ? 'active' : ''}`}
               checked={!type}
-              label="Phone Number"
+              label={t('phone_number')}
               onClick={() => setType((prev) => !prev)}
             />
           </div>
@@ -965,7 +973,7 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
         {step === 1 && (
           <>
             <div className="opt-text">
-              {'An OTP has been sent to '}
+              {t('an_otp_has_been_sent_to')}{' '}
               {type ? user?.email : user?.phoneMobile}
             </div>
             <OtpInput
@@ -989,27 +997,27 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
               separator={<span>-</span>}
             />
             <div>
-              {"Didn't receive a code?"}{' '}
+              {t("didn't_receive_a_code?")}{' '}
               <span>
-                <Button primary>Resend</Button>
+                <Button primary>{t('resend')}</Button>
               </span>
             </div>
           </>
         )}
         {step === 2 && (
           <>
-            <div>New Password</div>
+            <div>{t('new_password')}</div>
             <TextField
               className="textField"
               block
-              placeholder="Enter new password"
+              placeholder={t('enter_new_password')}
               type="password"
               value={password1}
               onChange={(text) => setPassword1(text)}
             />
-            <div>Re-enter Password</div>
+            <div>{t('re-enter_password')}</div>
             <TextField
-              placeholder="Re-enter new password"
+              placeholder={t('re-enter_new_password')}
               className="textField"
               block
               type="password"
@@ -1029,9 +1037,9 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
                 borderRadius: '50%',
               }}
             />
-            <h2>Password Changed</h2>
+            <h2>{t('password_changed')}</h2>
             <div className="grey-label" style={{ textAlign: 'center' }}>
-              Your password has been changed successfully
+              {t('your_password_has_been_changed_successfully')}
             </div>
           </div>
         )}

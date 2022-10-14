@@ -14,11 +14,11 @@ const Support = () => {
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
-        <h2>Support</h2>
+        <h2>{t('support')}</h2>
       </div>
 
       <div className="md-cell md-cell--6">
-        <div className="label">Support Number</div>
+        <div className="label">{t('support_number')}</div>
         <TextField
           disabled
           block
@@ -34,7 +34,7 @@ const Support = () => {
         />
       </div>
       <div className="md-cell md-cell--6">
-        <div className="label">Support Email</div>
+        <div className="label">{t('support_email')}</div>
         <TextField
           block
           className="textField grey"
@@ -50,7 +50,7 @@ const Support = () => {
         />
       </div>
       <div className="md-cell md-cell--12">
-        <div className="label">Need Some Help?</div>
+        <div className="label">{t('need_some_help_?')}</div>
         <div className="textField">
           <TextField
             rows={5}
@@ -67,7 +67,7 @@ const Support = () => {
           />
           <div className="md-cell md-cell--12 personal-information-footer">
             <Button className="confirmBtn sendBtn" flat primary>
-              Send
+              {t('send')}
             </Button>
           </div>
         </div>
