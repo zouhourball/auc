@@ -37,19 +37,19 @@ const Root = ({ store, apolloClient }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <GeneralErrorBoundary>
-        <Provider store={store}>
-          <LangProvider>
-            <NotificationProvider>
-              <ApolloProvider client={apolloClient}>
-                <ApolloHooksProvider client={apolloClient}>
+        <LangProvider>
+          <NotificationProvider>
+            <ApolloProvider client={apolloClient}>
+              <ApolloHooksProvider client={apolloClient}>
+                <Provider store={store}>
                   {/* <ShellProvider> */}
                   <Main />
                   {/* </ShellProvider> */}
-                </ApolloHooksProvider>
-              </ApolloProvider>
-            </NotificationProvider>
-          </LangProvider>
-        </Provider>
+                </Provider>
+              </ApolloHooksProvider>
+            </ApolloProvider>
+          </NotificationProvider>
+        </LangProvider>
       </GeneralErrorBoundary>
     </QueryClientProvider>
   )
