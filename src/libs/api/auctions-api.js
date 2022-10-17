@@ -1,4 +1,5 @@
 import { fetchJSON } from 'libs/fetch'
+import { getAuthToken } from 'libs/utils/oauth-token'
 
 // import { encode as btoa } from 'base-64'
 
@@ -779,11 +780,11 @@ export const approveRejectBroker = async ({ orgId, apply }) => {
   return res
 }
 // DOWNLOAD CERTIFICATE
-export const downloadCertificate = async ({ queryKey }) => {
+export const downloadCertificate = async ({ uuid }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/award-certificate-pdf?access_token=${queryKey[2]}`,
+      `${appUrl}/api/v1/auctions/${uuid}/award-certificate-pdf?access_token=${getAuthToken()}`,
       {
         method: 'GET',
       },
