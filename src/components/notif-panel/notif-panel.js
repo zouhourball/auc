@@ -10,7 +10,6 @@ import './style.scss'
 
 const NotifPanel = ({ notifications, markRead }) => {
   const { t } = useTranslation()
-
   return (
     <div className="notifPanel">
       {notifications.map((item, index) => {
@@ -40,7 +39,9 @@ const NotifPanel = ({ notifications, markRead }) => {
         <Button
           flat
           primary
-          onClick={() => navigate('/auctions/notifications')}
+          onClick={() => {
+            navigate('/auctions/notifications')
+          }}
           className="load-more"
         >
           {t('view_all')}{' '}

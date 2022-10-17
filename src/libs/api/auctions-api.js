@@ -100,7 +100,7 @@ export const getNotifications = async ({ queryKey, pageParam = 0 }) => {
   let res
   try {
     res = await fetchJSON(
-      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications?page=${pageParam}&size=${queryKey[1]}&sort=createdAt,desc&&products=meeraspace.fluxble`,
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications?page=${pageParam}&size=${queryKey[1]}&sort=createdAt,desc&&products=leilam`,
       {
         method: 'GET',
       },
@@ -115,7 +115,7 @@ export const countNotifications = async () => {
   let res
   try {
     res = await fetchJSON(
-      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications/count`,
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications/count?products=leilam`,
       {
         method: 'GET',
       },
@@ -771,6 +771,21 @@ export const approveRejectBroker = async ({ orgId, apply }) => {
       {
         method: 'POST',
         body: JSON.stringify({ apply }),
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// DOWNLOAD CERTIFICATE
+export const downloadCertificate = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/auctions/${queryKey[1]}/award-certificate-pdf?access_token=${queryKey[2]}`,
+      {
+        method: 'GET',
       },
     )
   } catch (e) {
