@@ -1,5 +1,5 @@
-import { fetchJSON } from 'libs/fetch'
-import { getAuthToken } from 'libs/utils/oauth-token'
+import { fetchJSON, fetchGeneric } from 'libs/fetch'
+import { downloadFromBlob } from 'libs/utils/download-blob'
 
 // import { encode as btoa } from 'base-64'
 
@@ -783,8 +783,41 @@ export const approveRejectBroker = async ({ orgId, apply }) => {
 export const downloadCertificate = async ({ uuid }) => {
   let res
   try {
+    res = await fetchGeneric(
+      `${appUrl}/api/v1/auctions/${uuid}/award-certificate-pdf`,
+      {
+        method: 'GET',
+      },
+    ).then((response) => response.blob())
+    downloadFromBlob(res, `Award Certificate`)
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// DOWNLOAD INVOICE
+export const downloadInvoice = async ({ trackID }) => {
+  let res
+  try {
+    res = await fetchGeneric(
+      `${appUrl}/api/v1/history/my-auctions/guarantee-fees/${trackID}/invoice`,
+      {
+        method: 'GET',
+      },
+    ).then((response) => response.blob())
+    downloadFromBlob(res, `Award Certificate`)
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+
+// GET PAYMENT LIST
+export const getPaymentList = async ({ queryKey, pageParam = 0 }) => {
+  let res
+  try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/award-certificate-pdf?access_token=${getAuthToken()}`,
+      `${appUrl}/api/v1/history/my-auctions/guarantee-fees?limit=${queryKey[0]}&page=${pageParam}`,
       {
         method: 'GET',
       },
