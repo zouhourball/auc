@@ -1,16 +1,12 @@
-// import { useState } from 'react'
-
-//
-//
+import { useQuery } from 'react-query'
+import { useTranslation } from 'libs/langs'
+import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
 
 import HomeSlider from 'components/home-slider'
-
-import { useQuery } from 'react-query'
-import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
 import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
 
 const AuctionsPublic = ({ logged, user }) => {
-  //
+  const { t } = useTranslation()
 
   const { data: featAuctions } = useQuery(
     ['featuredAuctions', 'Active', 4],
@@ -23,7 +19,25 @@ const AuctionsPublic = ({ logged, user }) => {
 
   return (
     <>
-      <HomeSlider logged={logged} auctions={featAuctions?.results} />
+      <HomeSlider
+        logged={logged}
+        auctions={featAuctions?.results}
+        defaultNode={
+          <>
+            <div className="upcoming-auctions-title">
+              {/* {logged ? t('accelerate_asset') : t('auction_market')} */}
+              {t('auction_market')}
+            </div>
+            <div className="upcoming-auctions-separateur" />
+            <div
+              className="upcoming-auctions-description"
+              dangerouslySetInnerHTML={{
+                __html: t('browse_auctions'),
+              }}
+            />
+          </>
+        }
+      />
       <UpcomingAuctions
         cards={upcomingAuctionsData?.results}
         logged={logged}
