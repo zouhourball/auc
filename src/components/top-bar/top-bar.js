@@ -31,9 +31,12 @@ import {
   useChangeLanguage,
   useCurrentLang,
 } from 'libs/langs'
+import moment from 'moment'
 
+import { useNotificationsContext } from 'libs/hooks/notification-provider'
 import notifWhite from 'images/Notifications White.svg'
 import notifBlue from 'images/Notifications Purple.svg'
+import bidPlace from 'images/bid_place_successfully.svg'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 import NotifPanel from 'components/notif-panel'
@@ -58,6 +61,7 @@ const TopBar = ({
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
   const [currentModule, setCurrentModule] = useState('')
+  const [newNotif, setNewNotif] = useState('')
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
   // let avatarLetter = user
@@ -79,7 +83,18 @@ const TopBar = ({
       refetchCount()
     },
   })
-
+  const { newEvent } = useNotificationsContext()
+  const refetchNewNotif = (newNotification) => {
+    refetchCount()
+    refetchNotifs()
+    setNewNotif(newNotification)
+  }
+  // console.log(JSON.parse(newEvent), 'message')
+  useEffect(() => {
+    if (newEvent && JSON.parse(newEvent)?.event === 'NOTIFICATION') {
+      refetchNewNotif(JSON.parse(newEvent)?.payload?.payload)
+    }
+  }, [newEvent])
   useEffect(() => {
     if (
       modules?.includes('live-auctions') ||
@@ -348,11 +363,12 @@ const TopBar = ({
             <div className="top-bar-actions-menu-button notif-bull">
               <MenuButton
                 id="menu-button-1"
+                onClick={() => setNewNotif('')}
                 icon
                 menuItems={
                   <div className="notification-panel">
                     <NotifPanel
-                      notifications={notifications?.content}
+                      notifications={notifications?.content || []}
                       markRead={(id) => markRead({ id })}
                     />
                   </div>
@@ -383,7 +399,25 @@ const TopBar = ({
               )}
             </div>
           )}
-
+          {logged && newNotif && (
+            <div className="new-notif">
+              <img
+                className="notifPanel-item-icon"
+                src={bidPlace}
+                width="20px"
+                height="20px"
+              />
+              <div className="notifPanel-item-data">
+                <div className="label">{newNotif.title}</div>
+                <div className="date">
+                  {moment(newNotif.createdAt).fromNow()}
+                </div>
+              </div>
+              <div className="notificationCard-right">
+                {!newNotif.viewed && <div className="notifPoint" />}
+              </div>
+            </div>
+          )}
           {logged && (
             <div className="top-bar-actions-menu-button">
               <MenuButton

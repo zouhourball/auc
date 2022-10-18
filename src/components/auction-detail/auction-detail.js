@@ -12,6 +12,7 @@ import {
   useQuery as useQueryApollo,
 } from 'react-apollo'
 import { navigate } from '@reach/router'
+import store from 'libs/store'
 
 import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
@@ -24,6 +25,7 @@ import {
   approveAuction,
   saveAsFav,
   unsaveAsFav,
+  downloadCertificate,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -250,6 +252,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       }
     },
   })
+  const downloadCertificateMutation = useMutationQuery(downloadCertificate)
   const unsaveAuctionMutation = useMutationQuery(unsaveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -294,7 +297,14 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   //       />
   //     </>
   //   ))
-  const downloadCertificate = () => {}
+  const downloadToken = store?.getState()?.app?.dlToken
+
+  const onDownloadCertificate = (uuid) => {
+    downloadCertificateMutation.mutate({
+      uuid,
+      token: downloadToken,
+    })
+  }
   const renderKeyFeatures = () =>
     auctionData?.listing?.features?.map((el) => (
       <div key={el?.feature?.uuid} className="key-features-item">
@@ -648,7 +658,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 // swapTheming
                 className="auction-details-btn downloadCertificateBtn"
                 onClick={
-                  () => downloadCertificate()
+                  () => onDownloadCertificate(auctionData?.uuid)
                   // setBidDialog(true)
                 }
               >

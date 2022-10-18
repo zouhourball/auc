@@ -1,4 +1,10 @@
-import { createContext, useState, useCallback, useEffect } from 'react'
+import {
+  createContext,
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+} from 'react'
 
 import { connectWebsocket } from 'libs/api/api-chat'
 
@@ -29,4 +35,7 @@ export const NotificationProvider = ({ children }) => {
       {children}
     </NotifContext.Provider>
   )
+}
+export const useNotificationsContext = () => {
+  return useContext(NotifContext)
 }
