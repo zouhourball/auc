@@ -25,7 +25,7 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
 
   const renderCards = () =>
     cards?.map((el) => {
-      return cards?.length > 0 ? (
+      return (
         <BiddingCard
           user={user}
           className={'md-cell md-cell--4'}
@@ -36,26 +36,10 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
           refetch={refetch}
           logged={logged}
         />
-      ) : (
-        <div className="empty-content">
-          <img className="empty-content-logo" height={35} src={bidderIcon} />
-          <div className="empty-content-title">No Upcoming Auctions</div>
-        </div>
       )
     })
   return (
     <div className="upcoming-auctions">
-      <div className="upcoming-auctions-title">
-        {/* {logged ? t('accelerate_asset') : t('auction_market')} */}
-        {t('auction_market')}
-      </div>
-      <div className="upcoming-auctions-separateur" />
-      <div
-        className="upcoming-auctions-description"
-        dangerouslySetInnerHTML={{
-          __html: t('browse_auctions'),
-        }}
-      />
       {/* {t('accelerate_asset')} */}
       {/* <br /> */}
       <div className="upcoming-auctions-header">
@@ -73,13 +57,14 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
           {t('explore_more')}
         </Button>
       </div>
-      <div
-        className={`upcoming-auctions-cards md-grid ${
-          cards?.length === 0 ? 'empty' : ''
-        }`}
-      >
-        {renderCards()}
-      </div>
+      {!cards || cards?.length === 0 ? (
+        <div className="empty-content">
+          <img className="empty-content-logo" height={35} src={bidderIcon} />
+          <div className="empty-content-title">No Upcoming Auctions</div>
+        </div>
+      ) : (
+        <div className={`upcoming-auctions-cards md-grid`}>{renderCards()}</div>
+      )}
     </div>
   )
 }
