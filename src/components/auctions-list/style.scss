@@ -53,6 +53,8 @@
   }
 
   &-cards {
+    width: 100%;
+
     &.empty {
       display: grid;
       flex-grow: 1;

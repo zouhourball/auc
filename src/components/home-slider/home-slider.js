@@ -12,9 +12,11 @@ import AuctionTimer from 'components/auction-timer'
 
 import { propertyTypeList } from 'components/helpers'
 
+import defaultBg from './default-bg.jpeg'
+
 import './style.scss'
 
-const HomeSlider = ({ auctions, logged }) => {
+const HomeSlider = ({ auctions, logged, defaultNode }) => {
   const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
   let currentLang = useCurrentLang()
@@ -43,6 +45,10 @@ const HomeSlider = ({ auctions, logged }) => {
 
   return (
     <Slider {...settings} className="home-slider">
+      <div className="slide-section">
+        <img src={defaultBg} />
+        <div className="slide-section-defaultSection">{defaultNode}</div>
+      </div>
       {auctions?.map((auction) => (
         <div key={auction.uuid} className="slide-section">
           <img
