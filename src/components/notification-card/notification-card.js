@@ -3,9 +3,9 @@
 import bidPlace from 'images/bid_place_successfully.svg'
 import './style.scss'
 
-const NotificationCard = ({ icon, label, date, withPoint }) => {
+const NotificationCard = ({ icon, label, date, withPoint, cardHandler }) => {
   return (
-    <div className="notificationCard">
+    <div className="notificationCard" onClick={() => cardHandler()}>
       <img src={icon} width="20px" height="20px" />
       <div className="label">{label}</div>
       <div className="notificationCard-right">

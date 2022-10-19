@@ -295,5 +295,16 @@
   "support_number": "Support Number",
   "support_email": "Support Email",
   "need_some_help_?": "Need Some Help?",
-  "website_url": "Website URL"
+  "website_url": "Website URL",
+  "load_more_notifications": "Load more notifications",
+  "no_notifications": "There's no notifications",
+  "mark_read": "Mark All Read",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "last_7_days": "Last 7 Days",
+  "last_30_days": "Last 30 Days",
+  "custom_range": "Custom Range",
+  "new_registered_broker": "New Registered Broker",
+  "registered_bidders_brokers": "Registered Bidders & Brokers",
+  "notifications": "Notifications"
 }

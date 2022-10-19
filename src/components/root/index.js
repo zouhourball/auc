@@ -6,7 +6,7 @@ import {
   // graphql,
   useQuery as useQueryGraphql,
 } from 'react-apollo'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Router, Redirect } from '@reach/router'
 import { hot } from 'react-hot-loader/root'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
@@ -15,7 +15,7 @@ import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import meQuery from 'libs/queries/me-query.gql'
 import { getFSToken, getFSDlToken } from 'libs/api'
 import store from 'libs/store'
-import { LangProvider, useSupportedLangs } from 'libs/langs'
+import { LangProvider, useSupportedLangs, useTranslation } from 'libs/langs'
 
 import App from 'components/app'
 import SSO from 'components/sso'
@@ -23,6 +23,9 @@ import GeneralErrorBoundary from 'components/general-error-boundary'
 import Public from 'components/public'
 import Admin from 'components/admin-page'
 import RegistrationPage from 'components/registration'
+import Notifications from 'components/notifications'
+import AdminTopBar from 'components/admin-top-bar'
+import AuctionDetail from 'components/auction-detail'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -109,7 +112,8 @@ const Private = withOAuth()(({ ssoCallback }) => {
       {auctionRole && (
         <>
           <Redirect from="/auctions/home" to="/admin" />
-          <Admin path={'/admin'} />
+          <AdminSection path={'/admin/*'} />
+          {/* <Admin path={'/admin'} /> */}
         </>
       )}
 
@@ -117,6 +121,33 @@ const Private = withOAuth()(({ ssoCallback }) => {
     </Router>
   )
 })
+const AdminSection = () => {
+  const { t } = useTranslation()
+  const modulesList = [
+    { label: t('auctions') },
+    {
+      label: t('new_registered_broker'),
+    },
+    { label: t('registered_bidders_brokers') },
+  ]
+  const [currentTab, setCurrentTab] = useState(0)
+
+  return (
+    <div>
+      <AdminTopBar
+        modules={modulesList}
+        currentTab={currentTab}
+        setCurrentTab={setCurrentTab}
+      />
+
+      <Router>
+        <Admin path={'/'} currentTab={currentTab} />
+        <Notifications path={'/notifications/:admin'} />
+        <AuctionDetail path={'/detail/:auctionId/:admin'} logged />
+      </Router>
+    </div>
+  )
+}
 // const Private = () => {
 //   const langs = useSupportedLangs()
 

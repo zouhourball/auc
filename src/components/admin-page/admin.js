@@ -3,6 +3,9 @@ import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 // import { get } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
+// import { useQuery as useQueryApollo } from 'react-apollo-hooks'
+import { NotificationProvider } from 'libs/hooks/notification-provider'
+
 import {
   Button,
   Avatar,
@@ -11,11 +14,11 @@ import {
   CardTitle,
   FontIcon,
 } from 'react-md'
+
 import { configs, newBrokersConfigs } from './helper'
 import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
-import { cleanUp } from '@target-energysolutions/hoc-oauth'
 // import { getPublicUrl } from 'libs/utils/custom-function'
 
 import {
@@ -24,6 +27,7 @@ import {
   getApprovals,
   approveRejectBroker,
 } from 'libs/api/auctions-api'
+// import { meQuery } from 'libs/queries/me-query.gql'
 
 import BrokerHeader from 'components/broker-header'
 import DocumentsContainer from 'components/docs-dialog'
@@ -31,10 +35,10 @@ import DocumentsContainer from 'components/docs-dialog'
 
 import './style.scss'
 
-const Admin = (logged, auctionId) => {
+const Admin = ({ logged, auctionId, currentTab }) => {
   const { t } = useTranslation()
+
   const [documentsDialog, setDocumentsDialog] = useState(false)
-  const [currentTab, setCurrentTab] = useState(0)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
   const [offset, setOffset] = useState(0)
@@ -45,6 +49,13 @@ const Admin = (logged, auctionId) => {
     (state) => state?.selectRowsReducers?.selectedRows,
   )
   let limit = 10
+
+  // const { data: currentUser } = useQueryApollo(meQuery, {
+  //   notifyOnNetworkStatusChange: true,
+  //   context: {
+  //     uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+  //   },
+  // })
 
   const { data: auctionsRequestsData, refetch } = useQuery(
     [
@@ -293,7 +304,7 @@ const Admin = (logged, auctionId) => {
                     className="admin-page-actionBtn"
                     flat
                     onClick={() =>
-                      navigate(`auctions/detail/${selectedRow[0]?.id}/a`)
+                      navigate(`admin/detail/${selectedRow[0]?.id}/a`)
                     }
                   >
                     {t('view_details')}
@@ -350,7 +361,7 @@ const Admin = (logged, auctionId) => {
   )
   const newBrokersView = (
     <>
-      <h1>New Registered Broker</h1>
+      <h1>{t('new_registered_broker')}</h1>
       <div className="admin-page-mht">
         <Mht
           id={'admin-dashboard'}
@@ -460,7 +471,7 @@ const Admin = (logged, auctionId) => {
   ]
   const biddersAndBrokersView = (
     <>
-      <h1>Registered Bidders & Brokers</h1>
+      <h1>{t('registered_bidders_brokers')}</h1>
       <div className="broker-page">
         <BrokerHeader tabs={headerTabs} filters={headerFilters} />
         <div className="broker-page-cards">
@@ -469,60 +480,23 @@ const Admin = (logged, auctionId) => {
       </div>
     </>
   )
-  return (
-    <div className="admin-page">
-      <div className="admin-page-header">
-        <div className="admin-page-logo" onClick={() => navigate('/admin')}>
-          LEILAM
-        </div>
-        <div className="admin-page-actions">
-          <Button
-            flat
-            className={`item ${currentTab === 2 && 'active'}`}
-            onClick={() => setCurrentTab(2)}
-          >
-            Registered Bidders & Brokers
-          </Button>
-          <Button
-            flat
-            className={`item ${currentTab === 1 && 'active'}`}
-            onClick={() => setCurrentTab(1)}
-          >
-            New Registered Broker
-          </Button>
-          <Button
-            flat
-            className={`item ${currentTab === 0 && 'active'}`}
-            onClick={() => setCurrentTab(0)}
-          >
-            Auctions
-          </Button>
-        </div>
-        <Button
-          onClick={() => {
-            cleanUp()
-            navigate('/public/home')
-          }}
-          flat
-          swapTheming
-          primary
-          className="admin-page-loginBtn"
-        >
-          {t('log_out')}
-        </Button>
-      </div>
-      {currentTab === 0 && auctionsView}
-      {currentTab === 1 && newBrokersView}
-      {currentTab === 2 && biddersAndBrokersView}
 
-      {documentsDialog && (
-        <DocumentsContainer
-          visible={documentsDialog}
-          onHide={() => setDocumentsDialog(false)}
-          data={documentsDialog || []}
-        />
-      )}
-    </div>
+  return (
+    <NotificationProvider>
+      <div className="admin-page">
+        {currentTab === 0 && auctionsView}
+        {currentTab === 1 && newBrokersView}
+        {currentTab === 2 && biddersAndBrokersView}
+
+        {documentsDialog && (
+          <DocumentsContainer
+            visible={documentsDialog}
+            onHide={() => setDocumentsDialog(false)}
+            data={documentsDialog || []}
+          />
+        )}
+      </div>
+    </NotificationProvider>
   )
 }
 export default Admin

@@ -368,7 +368,7 @@ const TopBar = ({
                 menuItems={
                   <div className="notification-panel">
                     <NotifPanel
-                      notifications={notifications?.content || []}
+                      notifications={notifications?.content || []} // ?.filter(el => el?.sentTo?.sub === user?.subject)
                       markRead={(id) => markRead({ id })}
                     />
                   </div>
