@@ -16,7 +16,6 @@ import meQuery from 'libs/queries/me-query.gql'
 import { getFSToken, getFSDlToken } from 'libs/api'
 import store from 'libs/store'
 import { LangProvider, useSupportedLangs } from 'libs/langs'
-import { NotificationProvider } from 'libs/hooks/notification-provider'
 
 import App from 'components/app'
 import SSO from 'components/sso'
@@ -38,17 +37,15 @@ const Root = ({ store, apolloClient }) => {
     <QueryClientProvider client={queryClient}>
       <GeneralErrorBoundary>
         <LangProvider>
-          <NotificationProvider>
-            <ApolloProvider client={apolloClient}>
-              <ApolloHooksProvider client={apolloClient}>
-                <Provider store={store}>
-                  {/* <ShellProvider> */}
-                  <Main />
-                  {/* </ShellProvider> */}
-                </Provider>
-              </ApolloHooksProvider>
-            </ApolloProvider>
-          </NotificationProvider>
+          <ApolloProvider client={apolloClient}>
+            <ApolloHooksProvider client={apolloClient}>
+              <Provider store={store}>
+                {/* <ShellProvider> */}
+                <Main />
+                {/* </ShellProvider> */}
+              </Provider>
+            </ApolloHooksProvider>
+          </ApolloProvider>
         </LangProvider>
       </GeneralErrorBoundary>
     </QueryClientProvider>

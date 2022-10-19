@@ -25,8 +25,12 @@ const InsufficientDialog = ({
           {imgCard && <img src={imgCard} className="illustration" />}
           <div className="title">{title}</div>
           <div className="description">{description}</div>
-          <div>Current Amount :<span>{currentAmount}</span> </div>
-          <div>Deposit Amount : <span>{depositAmount}</span></div>
+          <div>
+            Current Amount :<span>{currentAmount}</span>{' '}
+          </div>
+          <div>
+            Deposit Amount : <span>{depositAmount}</span>
+          </div>
         </>
       </div>
       <Button
