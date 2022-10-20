@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { cls } from 'reactutils'
 import { Checkbox, FontIcon, TextField } from 'react-md'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 import { DatePicker } from '@target-energysolutions/date-picker'
 import moment from 'moment'
 const FilterBox = ({ className, items, setFilterData, filterData }) => {
+  const { t } = useTranslation()
   const [visibleDatePicker, setVisibleDatePicker] = useState({
     startDate: false,
     endDate: false,
@@ -52,7 +54,7 @@ const FilterBox = ({ className, items, setFilterData, filterData }) => {
         <div>Filter Date</div>
       </div>
       <div className="filter-box-content">{renderItems()}</div>
-      <div className="filter-box-label">Custom Range</div>
+      <div className="filter-box-label">{t('custom_range')}</div>
       <div className="filter-box-date">
         <TextField
           id="date-start"

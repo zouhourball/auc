@@ -2,6 +2,8 @@ import { Button, FontIcon, TextField } from 'react-md'
 import { useMemo, useState } from 'react'
 import { useInfiniteQuery, useMutation } from 'react-query'
 import moment from 'moment'
+import { useCurrentLang, useTranslation } from 'libs/langs'
+import { navigate } from '@reach/router'
 
 import {
   getNotifications,
@@ -17,7 +19,9 @@ import bidPlace from 'images/bid_place_successfully.svg'
 
 import './style.scss'
 
-const Notifications = () => {
+const Notifications = ({ admin }) => {
+  const { t } = useTranslation()
+  const lang = useCurrentLang()
   const [search, setSearch] = useState('')
   const [filterData, setFilterData] = useState({})
   const size = 7
@@ -42,17 +46,17 @@ const Notifications = () => {
   })
 
   const filterDateList = [
-    { name: 'Today', value: moment().format('YYYY-MM-DD') },
+    { name: t('today'), value: moment().format('YYYY-MM-DD') },
     {
-      name: 'Yesterday',
+      name: t('yesterday'),
       value: moment().subtract(1, 'days').format('YYYY-MM-DD'),
     },
     {
-      name: 'Last 7 Days',
+      name: t('last_7_days'),
       value: moment().subtract(7, 'days').format('YYYY-MM-DD'),
     },
     {
-      name: 'Last 30 Days',
+      name: t('last_30_days'),
       value: moment().subtract(30, 'days').format('YYYY-MM-DD'),
     },
   ]
@@ -61,10 +65,11 @@ const Notifications = () => {
       notifList?.content?.map((el) => ({
         id: el?.id,
         icon: bidPlace,
-        label: el?.title,
+        label: lang === 'ar' ? el?.data?.['title_ar'] : el?.title,
         date: moment(el.createdAt).fromNow(),
         withPoint: !el.viewed,
         formattedDate: moment(el.createdAt).format('YYYY-MM-DD'),
+        url: el?.data?.url,
       })),
     // {
     //   icon: myActivity,
@@ -105,7 +110,7 @@ const Notifications = () => {
   return (
     <div className="notifications">
       <div className="notifications-title">
-        Notifications{' '}
+        {t('notifications')}{' '}
         <span className="blue-text">({renderNotification?.length})</span>
       </div>
       <div className="notifications-container md-grid">
@@ -119,6 +124,10 @@ const Notifications = () => {
                   label={item.label}
                   date={item.date}
                   withPoint={item.withPoint}
+                  cardHandler={() => {
+                    item.withPoint && markRead({ id: item?.id })
+                    navigate(item?.url)
+                  }}
                 />
               )
             })}
@@ -132,20 +141,20 @@ const Notifications = () => {
                   }}
                   className="load-more"
                 >
-                  Load more notifications
+                  {t('load_more_notifications')}
                 </Button>
               </div>
             )}
           </div>
         ) : (
-          <div>There s no notifications</div>
+          <div>{t('no_notifications')}</div>
         )}
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField
             id="search_textField"
             className="searchTextField"
             block
-            rightIcon={<FontIcon>search</FontIcon>}
+            rightIcon={<FontIcon>{t('search')}</FontIcon>}
             value={search}
             onChange={(v) => {
               setSearch(v)
@@ -164,7 +173,7 @@ const Notifications = () => {
             onClick={() => onMarkRead()}
             className="markAllRead-btn"
           >
-            Mark All Read
+            {t('mark_read')}
           </Button>
         </div>
       </div>
