@@ -8,7 +8,7 @@ import moment from 'moment'
 
 import './style.scss'
 
-const NotifPanel = ({ notifications, markRead }) => {
+const NotifPanel = ({ notifications, markRead, admin }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
   return (
@@ -46,7 +46,9 @@ const NotifPanel = ({ notifications, markRead }) => {
           flat
           primary
           onClick={() => {
-            navigate('/admin/notifications/a')
+            admin
+              ? navigate('/admin/notifications/a')
+              : navigate('/auctions/notifications')
           }}
           className="load-more"
         >
