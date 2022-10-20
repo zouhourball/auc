@@ -13,9 +13,13 @@ import {
 import NotificationCard from 'components/notification-card'
 import FilterBox from 'components/filter-box'
 
-// import auctionWon from 'images/auction_won.svg'
-// import myActivity from 'images/my_activity_enable.svg'
+import auctionWon from 'images/auction_won.svg'
+import myActivity from 'images/my_activity_enable.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
+// import sent from 'images/bid_place_successfully.svg'
+import clock from 'images/End Soon.svg'
+import rejected from 'images/Auction Ended.svg'
+import add from 'images/Added New Auction.svg'
 
 import './style.scss'
 
@@ -60,11 +64,32 @@ const Notifications = ({ admin }) => {
       value: moment().subtract(30, 'days').format('YYYY-MM-DD'),
     },
   ]
+  const renderIcon = (iconKey) => {
+    switch (iconKey) {
+      case 'SENT':
+        return bidPlace
+      case 'APPROVED':
+        return bidPlace
+      case 'REJECTED':
+        return rejected
+      case 'AUCTION':
+        return myActivity
+      case 'TIME':
+        return clock
+      case 'ADD':
+        return add
+      case 'AWARD':
+        return auctionWon
+
+      default:
+        return add
+    }
+  }
   const notifications = listNotifications?.pages?.flatMap(
     (notifList) =>
       notifList?.content?.map((el) => ({
         id: el?.id,
-        icon: bidPlace,
+        icon: renderIcon(el?.data?.icon),
         label: lang === 'ar' ? el?.data?.['title_ar'] : el?.title,
         date: moment(el.createdAt).fromNow(),
         withPoint: !el.viewed,
