@@ -22,6 +22,7 @@ import {
   ListItem,
   MenuButton,
   Avatar,
+  Badge,
 } from 'react-md'
 import { Link, navigate } from '@reach/router'
 // import meera from './images/meera-logo.svg'
@@ -34,8 +35,6 @@ import {
 import moment from 'moment'
 
 import { useNotificationsContext } from 'libs/hooks/notification-provider'
-import notifWhite from 'images/Notifications White.svg'
-import notifBlue from 'images/Notifications Purple.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
@@ -381,12 +380,27 @@ const TopBar = ({
                 }}
                 position={MenuButton.Positions.BOTTOM}
               >
-                <img
+                {/* <img
                   className="top-bar-actions-menu-button-notifIcon"
                   src={modules[1] === 'home' ? notifWhite : notifBlue}
-                />
+                /> */}
+                {notifNumber > 0 && (
+                  <Badge
+                    badgeContent={notifNumber}
+                    circular
+                    className={cls(
+                      `notif-icon`,
+                      clear ? 'white' : 'blue',
+                      className,
+                    )}
+                  >
+                    <Button primary={!clear} icon>
+                      notifications
+                    </Button>
+                  </Badge>
+                )}
               </MenuButton>
-              {notifNumber > 0 && (
+              {/* {notifNumber > 0 && (
                 <span
                   className={cls(
                     `notif-bull-number`,
@@ -396,7 +410,7 @@ const TopBar = ({
                 >
                   {notifNumber}
                 </span>
-              )}
+              )} */}
             </div>
           )}
           {logged && newNotif && (
