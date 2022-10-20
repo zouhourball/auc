@@ -5,12 +5,37 @@ import myActivity from 'images/my_activity_enable.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
 import { useTranslation, useCurrentLang } from 'libs/langs'
 import moment from 'moment'
+// import sent from 'images/bid_place_successfully.svg'
+import clock from 'images/End Soon.svg'
+import rejected from 'images/Auction Ended.svg'
+import add from 'images/Added New Auction.svg'
 
 import './style.scss'
 
 const NotifPanel = ({ notifications, markRead, admin }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
+  const renderIcon = (iconKey) => {
+    switch (iconKey) {
+      case 'SENT':
+        return bidPlace
+      case 'APPROVED':
+        return bidPlace
+      case 'REJECTED':
+        return rejected
+      case 'AUCTION':
+        return myActivity
+      case 'TIME':
+        return clock
+      case 'ADD':
+        return add
+      case 'AWARD':
+        return auctionWon
+
+      default:
+        return add
+    }
+  }
   return (
     <div className="notifPanel">
       {notifications.map((item, index) => {
@@ -25,7 +50,7 @@ const NotifPanel = ({ notifications, markRead, admin }) => {
           >
             <img
               className="notifPanel-item-icon"
-              src={bidPlace}
+              src={renderIcon(item?.data?.icon)}
               width="20px"
               height="20px"
             />
