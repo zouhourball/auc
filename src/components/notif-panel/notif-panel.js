@@ -5,6 +5,8 @@ import myActivity from 'images/my_activity_enable.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
 import { useTranslation, useCurrentLang } from 'libs/langs'
 import moment from 'moment'
+import onClickOutside from 'react-onclickoutside'
+
 // import sent from 'images/bid_place_successfully.svg'
 import clock from 'images/End Soon.svg'
 import rejected from 'images/Auction Ended.svg'
@@ -12,9 +14,10 @@ import add from 'images/Added New Auction.svg'
 
 import './style.scss'
 
-const NotifPanel = ({ notifications, markRead, admin }) => {
+const NotifPanel = ({ notifications, markRead, admin, onHide }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
+  NotifPanel.handleClickOutside = () => onHide()
   const renderIcon = (iconKey) => {
     switch (iconKey) {
       case 'SENT':
@@ -74,6 +77,7 @@ const NotifPanel = ({ notifications, markRead, admin }) => {
             admin
               ? navigate('/admin/notifications/a')
               : navigate('/auctions/notifications')
+            onHide()
           }}
           className="load-more"
         >
@@ -83,8 +87,10 @@ const NotifPanel = ({ notifications, markRead, admin }) => {
     </div>
   )
 }
-
-export default NotifPanel
+const clickOutsideConfig = {
+  handleClickOutside: () => NotifPanel.handleClickOutside,
+}
+export default onClickOutside(NotifPanel, clickOutsideConfig)
 
 NotifPanel.defaultProps = {
   notifications: [
