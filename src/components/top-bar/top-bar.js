@@ -22,6 +22,7 @@ import {
   ListItem,
   MenuButton,
   Avatar,
+  Badge,
 } from 'react-md'
 import { Link, navigate } from '@reach/router'
 // import meera from './images/meera-logo.svg'
@@ -34,8 +35,6 @@ import {
 import moment from 'moment'
 
 import { useNotificationsContext } from 'libs/hooks/notification-provider'
-import notifWhite from 'images/Notifications White.svg'
-import notifBlue from 'images/Notifications Purple.svg'
 import bidPlace from 'images/bid_place_successfully.svg'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
@@ -84,6 +83,7 @@ const TopBar = ({
     },
   })
   const { newEvent } = useNotificationsContext()
+  const [visible, setVisible] = useState(false)
   const refetchNewNotif = (newNotification) => {
     refetchCount()
     refetchNotifs()
@@ -361,46 +361,54 @@ const TopBar = ({
           />
           {logged && (
             <div className="top-bar-actions-menu-button notif-bull">
-              <MenuButton
-                id="menu-button-1"
-                onClick={() => setNewNotif('')}
-                icon
-                menuItems={
-                  <div className="notification-panel">
-                    <NotifPanel
-                      notifications={notifications?.content || []} // ?.filter(el => el?.sentTo?.sub === user?.subject)
-                      markRead={(id) => markRead({ id })}
-                    />
-                  </div>
-                }
-                listInline
-                centered
-                anchor={{
-                  x: MenuButton.HorizontalAnchors.CENTER,
-                  y: MenuButton.VerticalAnchors.CENTER,
-                }}
-                position={MenuButton.Positions.BOTTOM}
+              <Badge
+                className={cls(
+                  `notif-icon`,
+                  clear ? 'white' : 'blue',
+                  className,
+                )}
+                badgeContent={notifNumber}
+                invisibleOnZero
+                circular
               >
-                <img
+                <Button
+                  primary={!clear}
+                  onClick={() => {
+                    setVisible(!visible)
+                    setNewNotif('')
+                  }}
+                  icon
+                >
+                  notifications_none
+                </Button>
+              </Badge>
+
+              {visible && (
+                <div className="notification-panel">
+                  <NotifPanel
+                    notifications={notifications?.content || []} // ?.filter(el => el?.sentTo?.sub === currentUser?.mev2?.user?.subject
+                    markRead={(id) => markRead({ id })}
+                    admin
+                    onHide={() => setVisible(false)}
+                  />
+                </div>
+              )}
+
+              {/* <img
                   className="top-bar-actions-menu-button-notifIcon"
                   src={modules[1] === 'home' ? notifWhite : notifBlue}
-                />
-              </MenuButton>
-              {notifNumber > 0 && (
-                <span
-                  className={cls(
-                    `notif-bull-number`,
-                    clear ? 'whiteNumber' : 'blueNumber',
-                    className,
-                  )}
-                >
-                  {notifNumber}
-                </span>
-              )}
+                /> */}
             </div>
           )}
           {logged && newNotif && (
-            <div className="new-notif">
+            <div
+              className="new-notif"
+              onClick={() => {
+                navigate(newNotif?.data?.url)
+                setNewNotif('')
+                markRead(newNotif?.id)
+              }}
+            >
               <img
                 className="notifPanel-item-icon"
                 src={bidPlace}

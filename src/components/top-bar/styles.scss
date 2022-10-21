@@ -214,29 +214,32 @@
       }
 
       &.notif-bull {
-        position: relative;
-
-        .notif-bull-number {
-          position: absolute;
-          left: 50%;
-          padding: 0 5px;
-          border: solid 1px #fff;
-          border-radius: 50%;
-          background-color: #fff;
+        .notif-icon {
           color: #5078e1;
-          font-size: 10px;
-          font-weight: bold;
 
-          &.blueNumber {
-            border: solid 1px #5078e1;
+          .md-badge--circular {
+            top: 0;
+            right: 4px;
+            width: 16px;
+            height: 16px;
             background-color: #5078e1;
             color: #fff;
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            font-size: 8px;
+            font-weight: bold;
+          }
+
+          &.white {
+            .md-badge--circular {
+              background-color: #fff;
+              color: #5078e1;
+            }
+
+            .material-icons {
+              color: #fff;
+            }
           }
         }
-      }
-
-      &-notifIcon {
-        margin-top: 5px;
       }
     }
   }

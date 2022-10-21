@@ -1,0 +1,22 @@
+.notif-bull {
+  // padding: 0 8px;
+  position: relative;
+
+  .notification-panel {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+  }
+
+  .md-badge--circular {
+    top: 0;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    background-color: #5078e1;
+    color: #fff;
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    font-size: 8px;
+    font-weight: bold;
+  }
+}
