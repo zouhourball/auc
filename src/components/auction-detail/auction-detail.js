@@ -691,7 +691,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               </Button>
             ) : (
               isActive &&
-              !(auctionData?.['submitted_by'] === user?.subject) && (
+              !(auctionData?.['submitted_by'] === user?.subject) &&
+              !(meOrgs?.length > 0) && (
                 <Button
                   flat
                   primary
