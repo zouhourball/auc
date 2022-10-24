@@ -346,7 +346,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
                 height: '4em',
                 borderRadius: 18,
                 backgroundColor: '#fff',
-                borderColor: '#fff',
+                border: 'none',
                 boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
               }}
             />
@@ -491,7 +491,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         {step !== 3 && <h2>{t('change_phone_number')}</h2>}
         {step < 2 && (
           <>
-            <div className="gray-label">{t('current_phone_number')}</div>
+            <div className="grey-label">{t('current_phone_number')}</div>
             <div
               style={{ display: 'flex', marginBottom: 8 }}
               className="selectField"
@@ -523,7 +523,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                     currentCode: value,
                   }))
                 }
-                // itemLabel="value"
+                simplifiedMenu={false}
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
@@ -574,7 +574,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                   }))
                 }
                 className="country-code"
-                // itemLabel="value"
+                simplifiedMenu={false}
                 position={SelectField.Positions.BELOW}
               />
               <div className="sep"></div>
@@ -617,7 +617,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
                 height: '4em',
                 borderRadius: 18,
                 backgroundColor: '#fff',
-                borderColor: '#fff',
+                border: 'none',
                 boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
               }}
               separator={<span>-</span>}
@@ -991,7 +991,7 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
                 height: '4em',
                 borderRadius: 18,
                 backgroundColor: '#fff',
-                borderColor: '#fff',
+                border: 'none',
                 boxShadow: '0 3px 6px 0 rgba(0, 0, 0, 0.18)',
               }}
               separator={<span>-</span>}

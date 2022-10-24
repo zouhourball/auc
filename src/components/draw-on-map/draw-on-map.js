@@ -129,6 +129,10 @@ const DrawOnMap = ({
       focusOnMount={false}
       className="drawOnMap"
       actions={actions}
+      portal={true}
+      lastChild={true}
+      disableScrollLocking={true}
+      renderNode={document.body}
     >
       <div className="drawOnMap-map">
         <MeeraMap

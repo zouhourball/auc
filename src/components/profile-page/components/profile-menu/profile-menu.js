@@ -16,11 +16,11 @@ import supportEnabled from 'images/support_enable.svg'
 import supportDisabled from 'images/support_disable.svg'
 import payementEnabled from 'images/payment_enable.svg'
 import payementDisabled from 'images/payment_disable.svg'
-// import signOutEnabled from 'images/sign_out_enable.svg'
-// import signOutDisabled from 'images/sign_out_disable.svg'
+import signOutEnabled from 'images/sign_out_enable.svg'
+import signOutDisabled from 'images/sign_out_disable.svg'
 
 // import avatar from './avatar.jpg'
-import success from './Success.svg'
+// import success from './Success.svg'
 
 import './style.scss'
 
@@ -75,6 +75,9 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
         key={'signOut'}
         className="profile-menu-infoBtn"
         onClick={() => setVisible(true)}
+        iconEl={
+          <img width={13} src={visible ? signOutEnabled : signOutDisabled} />
+        }
       >
         {t('sign_out')}
       </Button>
@@ -85,32 +88,34 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
           focusOnMount={false}
           onHide={() => setVisible(false)}
           actions={[
-            <Button key={'2'} onClick={() => setVisible(false)}>
-              Cancel
+            <Button key={'2'} flat onClick={() => setVisible(false)}>
+              {t('cancel')}
             </Button>,
             <Button
               key={'3'}
+              flat
+              primary
+              swapTheming
               onClick={() => {
                 cleanUp()
                 navigate('/public/home')
               }}
             >
-              Confirm
+              {t('confirm')}
             </Button>,
           ]}
         >
-          <div>
+          <div style={{ margin: '20px auto', textAlign: 'center' }}>
             <img
-              src={success}
+              src={signOutEnabled}
               width={50}
               height={50}
               className="success-image"
-              style={{
-                borderRadius: '50%',
-              }}
             />
-            <h2>Are you sure you want to sign out?</h2>
           </div>
+          <h2 style={{ textAlign: 'center' }}>
+            Are you sure you want to sign out?
+          </h2>
         </DialogContainer>
       )}
     </div>
