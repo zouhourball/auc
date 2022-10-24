@@ -106,7 +106,9 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
-        <h2>{t('personal_information')}</h2>
+        <h2>
+          {company ? t('company_information') : t('personal_information')}
+        </h2>
         <Button icon primary={!edit} onClick={() => setEdit((prev) => !prev)}>
           more_vert
         </Button>

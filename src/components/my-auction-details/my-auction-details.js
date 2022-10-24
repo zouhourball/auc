@@ -47,17 +47,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [addressView, setAddressView] = useState(false)
 
-  const [auctionEditData, setAuctionEditData] = useState({
-    // title: '',
-    // propertyType: '',
-    // country: '',
-    // city: '',
-    // startDate: '',
-    // endDate: '',
-    // startingPrice: '',
-    // incrementalPrice: '',
-    // description: '',
-  })
+  const [auctionEditData, setAuctionEditData] = useState({})
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [page, setPage] = useState(0)
   const [size] = useState(4)
@@ -72,7 +62,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     data: getCountryList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery([25], getCountry, {
+  } = useInfiniteQuery([25, ''], getCountry, {
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (
@@ -88,8 +78,8 @@ const MyAuctionDetails = ({ auctionId }) => {
     setAuctionEditData({
       title: auctionDetails?.listing?.title,
       propertyType: auctionDetails?.listing?.property?.['property_type_id'],
-      city: auctionDetails?.listing?.property?.city?.id,
-      country: auctionDetails?.listing?.property?.country?.id,
+      city: auctionDetails?.listing?.property?.city,
+      country: auctionDetails?.listing?.property?.country,
       startDate: auctionDetails?.['auction_start_date'],
       endDate: auctionDetails?.['auction_end_date'],
       startingPrice: auctionDetails?.['starting_price'],
@@ -103,7 +93,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     setImages(auctionDetails?.listing?.images)
   }, [auctionDetails])
   const { data: getCityList } = useQuery(
-    ['getCity', auctionDetails?.listing?.property?.country?.id],
+    ['getCity', auctionEditData?.country?.id],
     getCity,
   )
   const { data: biddersList, refetch: refetchBids } = useQueryApollo(getBids, {
@@ -148,6 +138,20 @@ const MyAuctionDetails = ({ auctionId }) => {
             value: `${ac.id}`,
           }
         })
+      if (
+        !arrayName?.find((el) => el?.value === auctionEditData?.country?.id)
+      ) {
+        arrayName = [
+          ...arrayName,
+          {
+            label:
+              lang === 'ar'
+                ? auctionEditData?.country?.['name_ar']
+                : auctionEditData?.country?.['name_en'],
+            value: `${auctionEditData?.country?.id}`,
+          },
+        ]
+      }
       return arrayName
     }
   }
@@ -160,6 +164,18 @@ const MyAuctionDetails = ({ auctionId }) => {
           value: `${ac.id}`,
         }
       })
+      if (!arrayName?.find((el) => el?.value === auctionEditData?.city?.id)) {
+        arrayName = [
+          ...arrayName,
+          {
+            label:
+              lang === 'ar'
+                ? auctionEditData?.city?.['name_ar']
+                : auctionEditData?.city?.['name_en'],
+            value: `${auctionEditData?.city?.id}`,
+          },
+        ]
+      }
       return arrayName
     }
   }
@@ -311,6 +327,8 @@ const MyAuctionDetails = ({ auctionId }) => {
         property_type: +auctionEditData?.propertyType,
         property_description: auctionEditData?.description,
         features: auctionEditData?.keyFeatures,
+        city_id: +auctionEditData?.city?.id,
+        country_id: +auctionEditData?.country?.id,
         address: auctionEditData?.address?.meta?.['display_name'],
         general_location_x: +auctionDetails?.address?.['general_location_x'],
         general_location_y: +auctionDetails?.address?.['general_location_y'],
@@ -500,9 +518,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                 onClick={() => setTest(1)}
                 // placeholder={t('city_select')}
                 menuItems={renderCity()}
-                value={auctionEditData?.city}
-                onChange={(city) =>
-                  setAuctionEditData({ ...auctionEditData, city })
+                value={auctionEditData?.city?.id}
+                onChange={(v) =>
+                  setAuctionEditData({ ...auctionEditData, city: { id: v } })
                 }
                 fullWidth
                 disabled={!editMode}
@@ -530,9 +548,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                 // placeholder={t('select_country')}
                 listClassName="country-list"
                 menuItems={renderCountry()}
-                value={auctionEditData?.country || 1}
+                value={auctionEditData?.country?.id || 1}
                 onChange={(v) =>
-                  setAuctionEditData({ ...auctionEditData, country: v })
+                  setAuctionEditData({ ...auctionEditData, country: { id: v } })
                 }
                 fullWidth
                 disabled={!editMode}

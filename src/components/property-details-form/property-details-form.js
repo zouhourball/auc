@@ -91,7 +91,9 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
         {t('property_details')}
       </div>
       <div className="md-cell md-cell--12">
-        <label className="auction-details-form-label">{t('title')}</label>
+        <label className="auction-details-form-label">
+          {t('property_description')}
+        </label>
         <TextField
           id="auctionDescription"
           value={description}

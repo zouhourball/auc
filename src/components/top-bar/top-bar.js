@@ -54,6 +54,7 @@ const TopBar = ({
   clear,
   showUpdatePassword,
   user,
+  broker,
 }) => {
   const { t } = useTranslation()
   const langs = useSupportedLangs()
@@ -388,7 +389,6 @@ const TopBar = ({
                   <NotifPanel
                     notifications={notifications?.content || []} // ?.filter(el => el?.sentTo?.sub === currentUser?.mev2?.user?.subject
                     markRead={(id) => markRead({ id })}
-                    admin
                     onHide={() => setVisible(false)}
                   />
                 </div>
@@ -442,7 +442,13 @@ const TopBar = ({
                         {user?.profile?.fullName}
                       </span>
                     </div> */}
-                    <Button onClick={() => navigate('/auctions/profile')}>
+                    <Button
+                      onClick={() =>
+                        broker
+                          ? navigate('/auctions/company-profile')
+                          : navigate('/auctions/profile')
+                      }
+                    >
                       {t('my_profile')}
                     </Button>
                     <div className="top-bar-profile-avatar-actions">

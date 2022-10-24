@@ -8,7 +8,7 @@ import bidderIcon from 'images/my_activity_disable.svg'
 
 import './styles.scss'
 
-const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
+const UpcomingAuctions = ({ cards, logged, user, refetch, meOrgs }) => {
   const { t } = useTranslation()
 
   const renderStatus = (auction) => {
@@ -35,6 +35,7 @@ const UpcomingAuctions = ({ cards, logged, user, refetch }) => {
           saveAuctionTag
           refetch={refetch}
           logged={logged}
+          meOrgs={meOrgs}
         />
       )
     })

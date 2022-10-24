@@ -539,7 +539,9 @@ export const getCity = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/countries/${queryKey[1]}/cities?search_key=${queryKey[2]}`,
+      `${appUrl}/api/v1/countries/${queryKey[1]}/cities?search_key=${
+        queryKey[2] || ''
+      }`,
       {
         method: 'GET',
       },

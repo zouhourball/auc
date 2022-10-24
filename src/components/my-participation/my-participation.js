@@ -10,7 +10,7 @@ import BiddingCard from 'components/bidding-card'
 
 import './style.scss'
 
-const ParticipatedAuctions = () => {
+const ParticipatedAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
 
   const [tab, setTab] = useState(0)
@@ -52,8 +52,10 @@ const ParticipatedAuctions = () => {
         className="md-cell md-cell--4"
         key={i}
         auctionData={el}
-        status={tab === 0 ? 'active' : 'active'}
+        status={tab === 0 && 'Active'}
         saveAuctionTag
+        logged
+        meOrgs={meOrgs}
       />
     ))
   }

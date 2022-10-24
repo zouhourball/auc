@@ -26,13 +26,13 @@ import CompanyInfoById from 'components/company-info-by-id'
 import { propertyTypeList } from 'components/helpers/index'
 
 // import gridActive from 'images/Map View Selected.svg'
-import gridInactive from 'images/Map View Grey.svg'
-import listActive from 'images/List View Selected.svg'
+// import gridInactive from 'images/Map View Grey.svg'
+// import listActive from 'images/List View Selected.svg'
 // import listInactive from 'images/List View Grey.svg'
 
 import './style.scss'
 
-const BrokerProfile = ({ brokerId, user, logged }) => {
+const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   const { t } = useTranslation()
   let currentLang = useCurrentLang()
 
@@ -255,6 +255,8 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
             ? navigate(`/auctions/detail/${el?.uuid}`)
             : navigate(`/public/detail/${el?.uuid}`)
         }
+        meOrgs={meOrgs}
+        logged={logged}
       />
     ))
 
@@ -458,11 +460,11 @@ const BrokerProfile = ({ brokerId, user, logged }) => {
                 position={SelectField.Positions.BELOW}
               />
             </div>
-            <div className="auction-list-header-filters-display">
+            {/* <div className="auction-list-header-filters-display">
               <img src={listActive} />
               <div className="sep"></div>
               <img src={gridInactive} />
-            </div>
+            </div> */}
           </div>
           <div className="cards">{renderCards()}</div>
           {+renderAuctionData()?.pagination?.total > limit && (
