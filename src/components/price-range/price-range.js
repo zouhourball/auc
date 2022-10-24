@@ -30,7 +30,10 @@ const PriceRange = ({
             step={50}
             min={0}
             max={5000}
-            values={[values.min, values.max > 5000 ? 5000 : values.max]}
+            values={[
+              values.min > 5000 ? 5000 : values.min,
+              values.max > 5000 ? 5000 : values.max,
+            ]}
             onChange={(v) => {
               setValue({ min: v[0], max: v[1] })
               onChangeSlider(values)
@@ -126,7 +129,9 @@ const PriceRange = ({
               placeholder="0"
               rightIcon={<span>OMR</span>}
               value={values?.min}
-              onChange={(v) => v >= 0 && setValue({ ...values, min: v })}
+              onChange={(v) =>
+                v >= 0 && v <= values.max && setValue({ ...values, min: v })
+              }
               block
             />
           </span>

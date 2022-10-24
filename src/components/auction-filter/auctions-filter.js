@@ -93,7 +93,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     //     </ExpansionPanel>
     //   )
     // })
-    return allCountryStateCities?.results.map((el) => {
+    return allCountryStateCities?.results?.map((el) => {
       return (
         <ExpansionPanel
           key={el.id}

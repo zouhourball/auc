@@ -197,13 +197,11 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {((user?.subject &&
-          !detailsUrl &&
+        {!detailsUrl &&
           !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
           !(auctionData?.['submitted_by'] === user?.subject) &&
           status === 'Active' &&
-          !(meOrgs?.length > 0)) ||
-          !user?.subject) && (
+          !(meOrgs?.length > 0) && (
           <Button
             flat
             primary
@@ -212,7 +210,11 @@ const BiddingCard = ({
             onClick={() =>
               detailsUrl
                 ? detailsUrl()
-                : navigate(`detail/${auctionData?.uuid}`)
+                : navigate(
+                  `/${logged ? 'auctions' : 'public'}/detail/${
+                        auctionData?.uuid
+                  }`,
+                )
             }
           >
             {renderBtnTitle()}
