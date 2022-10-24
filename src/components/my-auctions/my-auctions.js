@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import moment from 'moment'
 import { navigate } from '@reach/router'
+import { Button } from 'react-md'
 
 import { useTranslation } from 'libs/langs'
 import { useQuery } from 'react-query'
@@ -10,9 +11,8 @@ import { myAuctions, savedAuctions } from 'libs/api/auctions-api'
 import BiddingCard from 'components/bidding-card'
 
 import './style.scss'
-import { Button } from 'react-md'
 
-const MyAuctions = () => {
+const MyAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
   const [tab, setTab] = useState(0)
   const [statusTab, setStatusTab] = useState(0)
@@ -83,6 +83,8 @@ const MyAuctions = () => {
           : {})}
         // {...(tab === 1 ? { saveAuctionTag: false } : {})}
         refetch={() => refetch()}
+        logged
+        meOrgs={meOrgs}
       />
     ))
   const renderTabs = () =>
@@ -102,7 +104,9 @@ const MyAuctions = () => {
         {tab === 0 && <div className="title">{t('my_auctions')}</div>}
         {tab === 1 && <div className="title">{t('saved_auctions')}</div>}
       </div>
-      <div className="tabs-list">{renderTabs()}</div>
+      {modules.includes('my-auctions') && (
+        <div className="tabs-list">{renderTabs()}</div>
+      )}
       <div className="md-grid auction-list-cards">{renderCards()}</div>
     </div>
   )

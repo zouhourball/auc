@@ -48,7 +48,12 @@ const NotifPanel = ({ notifications, markRead, admin, onHide }) => {
             className="notifPanel-item"
             onClick={() => {
               !item.viewed && markRead(item?.id)
-              navigate(item?.data?.url)
+              item?.data?.url
+                ? navigate(item?.data?.url)
+                : admin
+                  ? navigate('/admin/notifications/a')
+                  : navigate('/auctions/notifications')
+              onHide()
             }}
           >
             <img

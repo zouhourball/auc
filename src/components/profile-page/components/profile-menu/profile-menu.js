@@ -152,7 +152,7 @@ const views = [
 ]
 const viewsCompany = [
   {
-    label: 'personal_information',
+    label: 'company_information',
     value: 'PersonalInformationCompany',
     iconEnabled: companyEnabled,
     iconDisabled: companyDisabled,
