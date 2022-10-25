@@ -71,10 +71,16 @@ const TopBar = ({
   const { data: notifNumber, refetch: refetchCount } = useQuery(
     ['getCount'],
     countNotifications,
+    {
+      enabled: logged,
+    },
   )
   const { data: notifications, refetch: refetchNotifs } = useQuery(
     ['getNotifications', 3],
     getNotifications,
+    {
+      enabled: logged,
+    },
   )
 
   const { mutate: markRead } = useMutation(markAsReadNotifications, {
@@ -368,7 +374,11 @@ const TopBar = ({
                   clear ? 'white' : 'blue',
                   className,
                 )}
-                badgeContent={notifNumber}
+                badgeContent={
+                  ['string', 'number'].includes(typeof notifNumber)
+                    ? notifNumber
+                    : ''
+                }
                 invisibleOnZero
                 circular
               >
@@ -393,11 +403,6 @@ const TopBar = ({
                   />
                 </div>
               )}
-
-              {/* <img
-                  className="top-bar-actions-menu-button-notifIcon"
-                  src={modules[1] === 'home' ? notifWhite : notifBlue}
-                /> */}
             </div>
           )}
           {logged && newNotif && (
