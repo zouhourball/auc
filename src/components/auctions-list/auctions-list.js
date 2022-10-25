@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 import { Button } from 'react-md'
 
 import BiddingCard from 'components/bidding-card'
@@ -24,6 +24,7 @@ import './style.scss'
 
 const AuctionsList = ({ logged, user, meOrgs }) => {
   const { t } = useTranslation()
+  let currentLang = useCurrentLang()
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const [filterData, setFilterData] = useState({})
@@ -216,7 +217,9 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
                 icon
                 className="table-paginator-arrowBtn"
               >
-                arrow_left
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'arrow_right'
+                  : 'arrow_left'}
               </Button>
               {offset < limitOfNumberShowing
                 ? renderPaginationButtons()
@@ -229,7 +232,9 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
                 icon
                 className="table-paginator-arrowBtn"
               >
-                arrow_right
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'arrow_left'
+                  : 'arrow_right'}
               </Button>
             </div>
           )}

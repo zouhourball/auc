@@ -1,5 +1,5 @@
 import Mht from '@target-energysolutions/mht'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 import { useSelector } from 'react-redux'
 // import { get } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
@@ -37,6 +37,7 @@ import './style.scss'
 
 const Admin = ({ logged, auctionId, currentTab }) => {
   const { t } = useTranslation()
+  let currentLang = useCurrentLang()
 
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
@@ -411,7 +412,11 @@ const Admin = ({ logged, auctionId, currentTab }) => {
                   icon
                   className="table-paginator-arrowBtn"
                 >
-                  <FontIcon>chevron_left</FontIcon>
+                  <FontIcon>
+                    {currentLang === 'ar-SA' || currentLang === 'ar'
+                      ? 'chevron_right'
+                      : 'chevron_left'}
+                  </FontIcon>
                 </Button>
                 {offset < limitOfNumberShowing
                   ? renderPaginationButtons()
@@ -422,7 +427,11 @@ const Admin = ({ logged, auctionId, currentTab }) => {
                   className="table-paginator-arrowBtn"
                   disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
                 >
-                  <FontIcon>chevron_right</FontIcon>
+                  <FontIcon>
+                    {currentLang === 'ar-SA' || currentLang === 'ar'
+                      ? 'chevron_left'
+                      : 'chevron_right'}
+                  </FontIcon>
                 </Button>
               </div>
             )

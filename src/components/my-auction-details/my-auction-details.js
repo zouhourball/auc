@@ -866,7 +866,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               icon
               className="table-paginator-arrowBtn"
             >
-              arrow_left
+              {lang === 'ar' ? 'arrow_right' : 'arrow_left'}
             </Button>
             {page < 3
               ? renderPaginationButtons()
@@ -877,7 +877,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               className="table-paginator-arrowBtn"
               disabled={!(+biddersList?.bids?.total - (page + 1) * size > 0)}
             >
-              arrow_right
+              {lang === 'ar' ? 'arrow_left' : 'arrow_right'}
             </Button>
           </div>
         )}

@@ -475,7 +475,9 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                 icon
                 className="table-paginator-arrowBtn"
               >
-                arrow_left
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'arrow_right'
+                  : 'arrow_left'}
               </Button>
               {offset < limitOfNumberShowing
                 ? renderPaginationButtons()
@@ -492,7 +494,9 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                   )
                 }
               >
-                arrow_right
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'arrow_left'
+                  : 'arrow_right'}
               </Button>
             </div>
           )}
