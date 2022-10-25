@@ -64,6 +64,7 @@
     }
 
     .label {
+      margin-bottom: 8px;
       color: #3d3d3e;
       font-size: 14px;
       font-weight: 500;
@@ -106,7 +107,7 @@
 
     .change {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
 
       .md-btn {
         font-size: 14px;
@@ -136,6 +137,11 @@
       }
     }
 
+    .flag {
+      margin-right: 5px;
+      border-radius: 3px;
+    }
+
     .selectField {
       border-radius: 7px;
       background-color: #fff;
@@ -148,6 +154,10 @@
 
       &.country {
         width: 100%;
+      }
+
+      .country-code {
+        flex-shrink: 0;
       }
 
       .md-select-field--btn {
@@ -235,7 +245,8 @@
     }
 
     .grey-label {
-      margin-bottom: 12px;
+      margin-top: 16px;
+      margin-bottom: 8px;
       color: #7c7c7c;
       font-size: 16px;
       font-weight: 500;

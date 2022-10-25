@@ -27,6 +27,7 @@ const HomeSlider = ({ auctions, logged, defaultNode }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
+    rtl: currentLang === 'ar-SA' || currentLang === 'ar',
     nextArrow: (
       <FontIcon primary>
         {currentLang === 'ar-SA' || currentLang === 'ar'

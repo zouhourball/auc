@@ -3,12 +3,16 @@
   padding: 60px 4.02vw;
 
   &-left {
-    border-right: 3px solid #e3e3e3;
+    position: relative;
 
-    // .vertical-sep{
-    //   height: 300px;
-    //   width: 2px;
-    //   background-color: #e3e3e3;
-    // }
+    .vertical-sep {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3px;
+      height: 100%;
+      border-radius: 10px;
+      background-color: #e3e3e3;
+    }
   }
 }

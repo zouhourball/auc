@@ -210,7 +210,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
                   }
                   key={el?.value}
                 >
-                  <img width={20} src={el?.flag} />
+                  <img
+                    width={'24px'}
+                    height="16px"
+                    src={el?.flag}
+                    className="flag"
+                  />
                   {el?.value}
                 </div>
               ),
