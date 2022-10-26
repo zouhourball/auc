@@ -70,14 +70,14 @@ DueDateProps) {
               className="date-picker-today"
               onClick={handleClickToday}
             >
-              today
+              Today
             </Button>
             <Button
               outlined
               className="date-picker-reset"
               onClick={handleReset}
             >
-              reset
+              Reset
             </Button>
           </div>
 
