@@ -388,6 +388,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                 placeholder={t('type')}
                 className="md-cell md-cell--1 broker-profile-selectField"
                 value={'type'}
+                dropdownIcon={<FontIcon>expand_more</FontIcon>}
                 position={SelectField.Positions.BELOW}
                 closeMenuOnSelect={false}
                 menuItems={propertyTypeList?.map((tp, index) => {
@@ -452,6 +453,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                 placeholder={t('location')}
                 className=" md-cell md-cell--2 broker-profile-selectField"
                 value={'location'}
+                dropdownIcon={<FontIcon>expand_more</FontIcon>}
                 menuItems={[
                   <ExpansionList key={'LocationExpansionList'}>
                     {renderCountries}
