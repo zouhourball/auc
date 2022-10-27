@@ -11,6 +11,8 @@
   "auction_detail": "Auction Details",
   "view_map": "View Map",
   "start_date": "Starting Date",
+  "end_date": "Ending Date",
+  "my_deposit": "My Deposit",
   "lot_number": "Lot Number",
   "current_price": "Current Price",
   "minimum_incr": "Minimum Increment",
