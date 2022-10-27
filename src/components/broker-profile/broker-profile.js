@@ -9,7 +9,7 @@ import {
 } from 'react-md'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { navigate } from '@reach/router'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
@@ -291,15 +291,16 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
     )
   }
 
-  const renderCountries = useMemo(() => {
-    return allCountryStateCities?.allCountries?.countries.map((el) => {
+  const renderCountries = allCountryStateCities?.allCountries?.countries.map(
+    (el) => {
       return (
         <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
           {renderStates(el?.states?.edges)}
         </ExpansionPanel>
       )
-    })
-  }, filterData.location)
+    },
+  )
+
   return (
     <div className="broker-profile">
       <div className="broker-profile-header">
@@ -392,7 +393,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                 closeMenuOnSelect={false}
                 menuItems={propertyTypeList?.map((tp, index) => {
                   return tp?.props?.text ? (
-                    <div>{tp?.props?.text}</div>
+                    <div>{t(tp?.props?.text)}</div>
                   ) : (
                     {
                       label: (

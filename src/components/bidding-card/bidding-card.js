@@ -32,8 +32,10 @@ const BiddingCard = ({
   meOrgs,
 }) => {
   const { t } = useTranslation()
+  const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
 
   const dispatch = useDispatch()
+
   const saveAuctionMutation = useMutation(saveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -120,9 +122,11 @@ const BiddingCard = ({
           user?.subject === auctionData.last_bid?.['member_subject'] && (
             <div className="highest-bidder">{t('highest_bidder')}</div>
           )}
-        {auctionData?.status === 'Pending' && (
-          <div className="highest-bidder pending">{t('pending')}</div>
-        )}
+        {auctionData?.status === 'Pending' &&
+          !isClosed &&
+          status !== 'Active' && (
+            <div className="highest-bidder pending">{t('pending')}</div>
+          )}
         {saveAuctionTag &&
           (auctionData?.['is_bookmarked'] ? (
             <Button
@@ -185,7 +189,9 @@ const BiddingCard = ({
               )}
             </div>
             <div className="title">{auctionData?.listing?.title}</div>
-            <div className="description">{auctionData.location}</div>
+            {auctionData.location && (
+              <div className="description">{auctionData.location}</div>
+            )}
             <div className="sep" />
             <div className="description">
               <span>{t('current_ask')}</span>

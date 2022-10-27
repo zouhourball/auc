@@ -15,6 +15,7 @@ const PlaceBidDialog = ({
   incrementPrice,
   bidAmount,
   setBidAmount,
+  label,
 }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -77,7 +78,7 @@ const PlaceBidDialog = ({
           <div className="title">
             {lastBidAmount} {t('OMR')}
           </div>
-          <div className="value">{t('last_bid_amount')}</div>
+          <div className="value">{label}</div>
         </div>
         <div className="sep" />
         <div className="increment">

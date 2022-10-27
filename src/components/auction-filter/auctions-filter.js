@@ -1,5 +1,6 @@
 import {
   Checkbox,
+  Chip,
   ExpansionList,
   ExpansionPanel,
   FontIcon,
@@ -20,6 +21,7 @@ import './style.scss'
 const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
+  const [chips, setChips] = useState([])
 
   const {
     search,
@@ -31,6 +33,109 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     // location,
     // brokerCompany,
   } = filterData
+
+  useEffect(() => {
+    // setChips(prev => prev.filter((ell) => filterData?.location?.includes(ell?.data?.id)))
+    setChips((prev) =>
+      prev.filter((ell) => {
+        return ell?.category === 'search'
+          ? filterData?.[ell?.category]
+          : ell?.category === 'auctionEndingSoon'
+            ? ell?.data?.id === filterData?.[ell?.category]
+            : filterData?.[ell?.category]?.includes(
+              ell?.data?.id || ell?.data?.name,
+            )
+      }),
+    )
+  }, [filterData])
+  const renderChips = () => {
+    return chips.map((el, i) => {
+      // filterData?.[el?.category]?.filter((ell) => ell !== el?.data?.id)
+      return (
+        <Chip
+          key={i}
+          label={
+            <span>
+              {el?.data?.name}
+              <FontIcon
+                onClick={() => {
+                  setFilterData((v) => ({
+                    ...v,
+                    [el?.category]:
+                      el?.category === 'search'
+                        ? ''
+                        : el?.category === 'auctionEndingSoon'
+                          ? status === 'Upcoming'
+                            ? 'ass'
+                            : 'aes'
+                          : v?.[el?.category]?.filter(
+                            (ell) => ell !== el?.data?.id,
+                          ),
+                  }))
+                  // setChips(prev => prev.filter((ell) => {
+                  //   return el?.category === 'search' ? '' : filterData?.[el?.category]?.includes(ell?.data?.id || ell?.data?.name)
+                  // }))
+                }}
+              >
+                add_circle
+              </FontIcon>
+            </span>
+          }
+        ></Chip>
+      )
+
+      // switch (el?.category) {
+      //   case 'location':
+      //     return <Chip key={i} label={<span>
+      //       {`${el?.countryName}, ${el?.data?.name}`}<FontIcon onClick={() => setFilterData(v => ({ ...v, location: v?.location?.filter((ell) => ell !== el?.data?.id) }))}>add_circle</FontIcon>
+      //     </span>} >
+      //     </Chip>
+      //   case 'search':
+      //     return <Chip key={i} label={<span>
+      //       {`${el?.searchText}`}<FontIcon onClick={() => {
+      //         setFilterData((prev) => {
+      //           return { ...prev, search: '' }
+      //         })
+      //         setChips(prev => prev.filter(el => el?.category !== 'search'))
+      //       }
+      //       }>add_circle</FontIcon>
+      //     </span>} >
+      //     </Chip>
+      //   case 'type':
+      //     return <Chip key={i} label={<span>
+      //       {`${el?.data?.name}`}<FontIcon onClick={() => setFilterData((prev) => {
+      //         return { ...prev, type: prev.type?.filter((ell) => ell !== el?.data?.id) }
+      //       })}>add_circle</FontIcon>
+      //     </span>} >
+      //     </Chip>
+      //   case 'brokerCompany':
+      //     return <Chip key={i} label={<span>
+      //       {`${el?.data?.name}`}<FontIcon onClick={() => setFilterData((prev) => {
+      //         return { ...prev, brokerCompany: prev.brokerCompany?.filter((ell) => ell !== el?.data?.id) }
+      //       })}>add_circle</FontIcon>
+      //     </span>} >
+      //     </Chip>
+      //   case 'auctionEndingSoon':
+      //     return <Chip key={i} label={<span>
+      //       {`${el?.data?.name}`}<FontIcon onClick={() => {
+      //         setFilterData(prev => ({
+      //           ...prev,
+      //           auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
+      //         }))
+      //         setChips(prev => prev.filter(el => el?.category !== 'auctionEndingSoon'))
+      //       }}>add_circle</FontIcon>
+      //     </span>} >
+      //     </Chip>
+
+      //   // case 'price':
+      //   //   return <Chip key={i} label={<span>
+      //   //     {`${el?.data?.min} - ${el?.data?.max}`}<FontIcon onClick={() => onChangeLocation(el?.data?.id)}>add_circle</FontIcon>
+      //   //   </span>} >
+      //   //   </Chip>
+      // }
+    })
+  }
+
   const { data: allCountryStateCities } = useQuery(
     ['allLocations'],
     allLocations,
@@ -63,8 +168,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         location: [...(filterData.location || []), id],
       })
   })
-
-  const renderStates = (states) => {
+  const renderStates = (states, countryName) => {
     return (
       <div>
         {states?.map((st) => {
@@ -76,6 +180,20 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
               label={lang === 'ar' ? st.name_ar : st.name_en}
               onChange={() => {
                 onChangeLocation(st.id)
+                !filterData?.location?.find((ch) => ch === st.id) &&
+                  setChips((prev) => [
+                    ...prev,
+                    {
+                      category: 'location',
+
+                      data: {
+                        id: st.id,
+                        name: `${countryName}, ${
+                          lang === 'ar' ? st.name_ar : st.name_en
+                        }`,
+                      },
+                    },
+                  ])
               }}
               checked={!!filterData?.location?.find((ch) => ch === st.id)}
             />
@@ -86,13 +204,6 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   }
 
   const renderCountries = () => {
-    // return allCountryStateCities?.allCountries?.countries.map((el) => {
-    //   return (
-    //     <ExpansionPanel key={el.id} label={el.countryName} footer={null}>
-    //       {renderStates(el?.states?.edges)}
-    //     </ExpansionPanel>
-    //   )
-    // })
     return allCountryStateCities?.results?.map((el) => {
       return (
         <ExpansionPanel
@@ -100,7 +211,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
           label={lang === 'ar' ? el.name_ar : el.name_en}
           footer={null}
         >
-          {renderStates(el?.cities)}
+          {renderStates(el?.cities, lang === 'ar' ? el.name_ar : el.name_en)}
         </ExpansionPanel>
       )
     })
@@ -111,7 +222,19 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         placeholder={t('looking_for_what')}
         className="md-cell md-cell--3 auctions-filter-textField"
         value={search}
-        onChange={(v) => setFilterData({ ...filterData, search: v })}
+        onChange={(v) => {
+          setFilterData({ ...filterData, search: v })
+          filterData?.search &&
+            setChips((prev) => [
+              ...prev?.filter((el) => el?.category !== 'search'),
+              {
+                category: 'search',
+                data: {
+                  name: v,
+                },
+              },
+            ])
+        }}
         rightIcon={<FontIcon>{t('search')}</FontIcon>}
         block
       />
@@ -124,13 +247,13 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         closeMenuOnSelect={false}
         menuItems={propertyTypeList?.map((tp, index) => {
           return tp?.props?.text ? (
-            <div>{tp?.props?.text}</div>
+            <div>{t(tp?.props?.text)}</div>
           ) : (
             <Checkbox
               key={`${tp.value}-auction-type-${index}`}
               id={`${tp.value}-auction-type`}
               name={`${tp.value}-checkboxes`}
-              label={tp.label}
+              label={t(tp.label)}
               onChange={(a, e) => {
                 filterData?.type?.find((el) => el === tp.value)
                   ? setFilterData({
@@ -141,6 +264,17 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
                     ...filterData,
                     type: [...(filterData?.type || []), tp.value],
                   })
+                !filterData?.type?.find((el) => el === tp.value) &&
+                  setChips((prev) => [
+                    ...prev,
+                    {
+                      category: 'type',
+                      data: {
+                        id: tp.value,
+                        name: t(tp.label),
+                      },
+                    },
+                  ])
                 e.stopPropagation()
               }}
               checked={!!filterData?.type?.find((el) => el === tp.value)}
@@ -157,6 +291,14 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
                 ...filterData,
                 price: { ...price, min: v.min, max: v.max },
               })
+              // setChips(prev => [...prev, {
+              //   category: 'price',
+              //   data: {
+              //     min: v.min,
+              //     max: v.max,
+              //   },
+
+              // }])
             }}
             onFinalChange={() => {
               setNewPrice(false)
@@ -244,6 +386,17 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
                       bc?.id,
                   ],
                 })
+              !filterData?.brokerCompany?.find((el) => el === bc.id) &&
+                setChips((prev) => [
+                  ...prev,
+                  {
+                    category: 'brokerCompany',
+                    data: {
+                      id: bc.id,
+                      name: bc.name,
+                    },
+                  },
+                ])
               e.stopPropagation()
             }}
             checked={!!filterData?.brokerCompany?.find((el) => el === bc.id)}
@@ -279,7 +432,24 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         className="md-cell md-cell--2 auctions-filter-selectField"
         value={auctionEndingSoon}
         defaultValue={status === 'Upcoming' ? 'ass' : 'aes'}
-        onChange={(v) => setFilterData({ ...filterData, auctionEndingSoon: v })}
+        onChange={(v) => {
+          setFilterData({ ...filterData, auctionEndingSoon: v })
+          setChips((prev) => [
+            ...prev?.filter((el) => el?.category !== 'auctionEndingSoon'),
+            {
+              category: 'auctionEndingSoon',
+              data: {
+                name:
+                  v === 'ass'
+                    ? t('auction_starting_soon')
+                    : v === 'aes'
+                      ? t('auction_ending_soon')
+                      : t('recently_added'),
+                id: v,
+              },
+            },
+          ])
+        }}
         menuItems={[
           status === 'Upcoming'
             ? { label: t('auction_starting_soon'), value: 'ass' }
@@ -288,6 +458,20 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         ]}
         position={SelectField.Positions.BELOW}
       />
+      <div>
+        {chips?.length > 0 && (
+          <Chip
+            label={<span>{t('reset_filters')}</span>}
+            onClick={() => {
+              setFilterData({
+                auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
+                search: '',
+              })
+            }}
+          />
+        )}
+        {renderChips()}
+      </div>
     </div>
   )
 }

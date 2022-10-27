@@ -107,7 +107,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     if (getCityList) {
       arrayName = getCityList?.results?.map((ac) => {
         return {
-          label: ac?.['name_en'],
+          label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
           value: `${ac?.id}`,
         }
       })
@@ -297,9 +297,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('property_select')}
           menuItems={propertyTypeList?.map((el) =>
             el?.props ? (
-              <div>{el?.props?.text}</div>
+              <div>{t(el?.props?.text)}</div>
             ) : (
-              { label: el?.label, value: el?.value }
+              { label: t(el?.label), value: el?.value }
             ),
           )}
           value={propertyType}
