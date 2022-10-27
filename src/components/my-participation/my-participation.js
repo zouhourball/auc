@@ -18,7 +18,7 @@ const ParticipatedAuctions = ({ meOrgs }) => {
     { id: 0, label: t('active') },
     { id: 1, label: t('won') },
     { id: 2, label: t('lost') },
-    { id: 3, label: 'My Deposit' },
+    { id: 3, label: t('my_deposit') },
   ]
   const renderTabName = () => {
     switch (tab) {

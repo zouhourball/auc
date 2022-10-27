@@ -2,6 +2,7 @@ import { useTranslation } from 'libs/langs'
 import { useState } from 'react'
 import { Button } from 'react-md'
 import moment from 'moment'
+import pdfIcon from './pdf.svg'
 
 import { getPaymentList, downloadInvoice } from 'libs/api/auctions-api'
 import { useInfiniteQuery, useMutation } from 'react-query'
@@ -52,6 +53,8 @@ const Payment = () => {
             <Button
               flat
               primary
+              iconBefore
+              iconEl={<img src={pdfIcon} />}
               onClick={() => onDownloadInvoice(el?.['track_id'])}
             >
               {t('download')}

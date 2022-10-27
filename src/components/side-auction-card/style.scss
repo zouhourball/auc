@@ -53,14 +53,16 @@
   }
 
   .sep {
-    width: 100%;
+    width: 75%;
     height: 1px;
     background-color: #3d3d3e;
   }
 
   .countdown {
+    width: max-content;
     padding: 6px 13px;
     border: solid 1px #3d3d3e;
     border-radius: 11px;
+    gap: 5px;
   }
 }

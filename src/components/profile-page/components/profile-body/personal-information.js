@@ -330,7 +330,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {!edit && (
         <div className="personal-information-footer md-cell md-cell--12">
-          <Button className="cancel-btn" flat onClick={() => setEdit(false)}>
+          <Button className="cancel-btn" flat onClick={() => setEdit(true)}>
             {t('cancel')}
           </Button>
           <Button

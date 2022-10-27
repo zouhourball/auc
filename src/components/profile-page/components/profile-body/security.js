@@ -27,18 +27,22 @@ import {
   verifyEmails,
 } from 'libs/api/auctions-api'
 import { useMutation } from 'react-query'
+import ToastMsg from 'components/toast-msg'
+import { addToast } from 'modules/app/actions'
+import { useDispatch } from 'react-redux'
 
 const Security = ({ userInfo }) => {
   const { t } = useTranslation()
   const [dialogType, setDialogType] = useState('')
   const [informations, setInformations] = useState({
-    email:
-      userInfo?.email.substring(0, 2) +
-      '**********' +
-      userInfo?.email.substring(
-        userInfo?.email?.indexOf('@'),
-        userInfo?.email?.length,
-      ),
+    email: userInfo?.email
+      ? userInfo?.email?.substring(0, 2) +
+        '**********' +
+        userInfo?.email?.substring(
+          userInfo?.email?.indexOf('@'),
+          userInfo?.email?.length,
+        )
+      : '',
     password: '********',
     phoneMobile:
       userInfo?.phoneMobile.substring(0, 4) +
@@ -382,7 +386,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
 
 const ChangeNumberDialog = ({ visible, onHide }) => {
   const { t } = useTranslation()
-
+  const dispatch = useDispatch()
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [key, setKey] = useState('')
@@ -398,7 +402,15 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
         setKey(res?.data?.key)
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.message)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })

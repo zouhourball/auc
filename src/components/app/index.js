@@ -32,12 +32,6 @@ import './styles.scss'
 const Shell = ({ lang }) => {
   // const langs = useSupportedLangs()
 
-  const { data } = useQuery(meQuery, {
-    notifyOnNetworkStatusChange: true,
-    context: {
-      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
-    },
-  })
   // const { data: dataTokenUp } = useQueryReact('getFSToken', getFSToken)
   // const { data: dataTokenDo } = useQueryReact('getFSDlToken', getFSDlToken)
   // store.dispatch({
@@ -72,9 +66,17 @@ const Shell = ({ lang }) => {
   //   }
   // }
 
-  const me = getLodash(data, 'mev2')
-
   const token = getAuthToken()
+
+  const { data } = useQuery(meQuery, {
+    skip: !token,
+    notifyOnNetworkStatusChange: true,
+    context: {
+      uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
+    },
+  })
+
+  const me = getLodash(data, 'mev2')
 
   // const actionMenus = []
 
