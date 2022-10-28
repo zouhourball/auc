@@ -448,7 +448,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 placeholder={t('property_select')}
                 menuItems={propertyTypeList?.map((el) =>
                   el?.props ? (
-                    <div>{el?.props?.text}</div>
+                    <div>{t(el?.props?.text)}</div>
                   ) : (
                     { label: el?.label, value: el?.value }
                   ),

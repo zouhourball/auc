@@ -253,10 +253,6 @@
   "resident": "Resident",
   "commercial": "Commercial",
   "land": "Land",
-  "residential_commercial": "Residential Commercial",
-  "industrial": "Industrial",
-  "tourist": "Tourist",
-  "government": "Government",
   "my_profile": "My Profile",
   "personal_information": "Personal Information",
   "company_information": "Company Information",
@@ -312,5 +308,11 @@
   "custom_range": "Custom Range",
   "new_registered_broker": "New Registered Broker",
   "registered_bidders_brokers": "Registered Bidders & Brokers",
-  "notifications": "Notifications"
+  "notifications": "Notifications",
+  "sqm": "sqm",
+  "residential_commercial": "Residential Commercial",
+  "tourist": "Tourist",
+  "government": "Government",
+  "industrial": "Industrial",
+  "reset_filters": "Reset all filters"
 }

@@ -503,7 +503,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
             <div className="auction-details-card-details-item">
               <img src={icon3} />
-              {auctionPropertyData?.['total_area']}
+              {auctionPropertyData?.['total_area']} {t('sqm')}
             </div>
           </div>
         </div>
@@ -799,6 +799,11 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           lastBidAmount={
             auctionData?.['last_bid']?.['bid_amount'] ||
             auctionData?.['current_price']
+          }
+          label={
+            auctionData?.['last_bid']?.['bid_amount']
+              ? t('last_bid_amount')
+              : t('starting_price_label')
           }
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}

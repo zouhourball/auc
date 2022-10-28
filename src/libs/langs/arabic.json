@@ -151,5 +151,6 @@
   "auction_title": "عنوان المزاد",
   "auction_position": "موقع*",
   "broker": "الوسطاء",
-  "my_profile": ""
+  "my_profile": "",
+  "sqm": "متر مربع"
 }
