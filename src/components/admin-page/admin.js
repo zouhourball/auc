@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { useEffect, useMemo, useState } from 'react'
 // import { useQuery as useQueryApollo } from 'react-apollo-hooks'
 import { NotificationProvider } from 'libs/hooks/notification-provider'
+// import { getPublicUrl } from 'libs/utils/custom-function'
 
 import {
   Button,
@@ -20,6 +21,7 @@ import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
 // import { getPublicUrl } from 'libs/utils/custom-function'
+import store from 'libs/store'
 
 import {
   auctionsRequest,
@@ -50,6 +52,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     (state) => state?.selectRowsReducers?.selectedRows,
   )
   let limit = 10
+  const downloadToken = store?.getState()?.app?.dlToken
 
   // const { data: currentUser } = useQueryApollo(meQuery, {
   //   notifyOnNetworkStatusChange: true,
@@ -94,7 +97,11 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     getApprovalsList?.response?.data?.map((el) => ({
       id: el?.id,
       status: el?.status,
-      Logo: <Avatar src={el?.logo}></Avatar>,
+      logo: el?.logo ? (
+        <Avatar src={`${el?.logo}?token=${downloadToken}&view=true`} />
+      ) : (
+        <Avatar>{el?.name?.charAt(0).toUpperCase()}</Avatar>
+      ),
       companyName: el?.name,
       country: el?.country,
       address: el?.address,
