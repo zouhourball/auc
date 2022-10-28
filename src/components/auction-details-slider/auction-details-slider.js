@@ -4,14 +4,35 @@ import Slider from 'react-slick'
 import store from 'libs/store'
 
 import './styles.scss'
+import { useEffect, useState } from 'react'
+import moment from 'moment'
 const AuctionDetailsSlider = ({
   images,
   isBookMarked,
   unsaveAuction,
   saveAuction,
+  startDate,
 }) => {
   const downloadToken = store?.getState()?.app?.dlToken
   let currentLang = useCurrentLang()
+  const [countdown, setCountdown] = useState({
+    d: 0,
+    h: 0,
+    m: 0,
+    s: 0,
+  })
+  useEffect(() => {
+    let interval = setInterval(() => {
+      let newCount = secondsToTime(
+        (+moment.utc(startDate) - +new Date()) / 1000,
+      )
+      setCountdown(newCount)
+    }, 1000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [startDate])
   var settings = {
     dots: false,
     infinite: true,
@@ -38,7 +59,18 @@ const AuctionDetailsSlider = ({
     images?.map((auction) => (
       <div key={auction.uuid} className="slide-elements">
         <img src={`${auction?.url}?token=${downloadToken}&view=true`} />
-
+        {true && (
+          <div className="countdown-timer">
+            <FontIcon>timer</FontIcon>:{' '}
+            {countdown?.d +
+              ' : ' +
+              countdown?.h +
+              ' : ' +
+              countdown?.m +
+              ' : ' +
+              countdown?.s}
+          </div>
+        )}
         {isBookMarked ? (
           <Button
             icon
@@ -72,3 +104,24 @@ const AuctionDetailsSlider = ({
 }
 
 export default AuctionDetailsSlider
+
+const secondsToTime = (secs) => {
+  let days = Math.floor(secs / (60 * 60 * 24))
+
+  let divisorForHours = secs % (60 * 60 * 24)
+  let hours = Math.floor(divisorForHours / (60 * 60))
+
+  let divisorForMinutes = divisorForHours % (60 * 60)
+  let minutes = Math.floor(divisorForMinutes / 60)
+
+  let divisorForSeconds = divisorForMinutes % 60
+  let seconds = Math.ceil(divisorForSeconds)
+
+  let obj = {
+    d: days,
+    h: hours,
+    m: minutes,
+    s: seconds,
+  }
+  return obj
+}
