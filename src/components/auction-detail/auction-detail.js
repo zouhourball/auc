@@ -445,6 +445,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
           isBookMarked={auctionData?.['is_bookmarked']}
           images={auctionData?.listing?.images}
+          startDate={auctionData?.['auction_start_date']}
         />
       </div>
       <div className="auction-details-info md-cell md-cell--4 md-grid">
