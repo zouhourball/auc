@@ -1,12 +1,18 @@
 .countdown-timer {
   display: flex;
-  position: absolute;
-  top: 48px;
-  left: 10px;
-  flex-direction: row;
-  padding: 5px 10px 5px 10px;
-  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 5px 12px;
+  border-radius: 0 12px 12px 0;
   background-color: white;
+  color: #5078e1;
+
+  .time-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
 }
 
 .details-slider {
@@ -32,11 +38,32 @@
     height: 100vh;
     background: #000;
 
-    img {
+    > img {
       width: 100%;
       height: 100%;
       opacity: 0.7;
       object-fit: cover;
     }
+
+    &-header {
+      display: flex;
+      position: absolute;
+      top: 30px;
+      justify-content: space-between;
+      width: 100%;
+
+      &-save-btn {
+        margin: 0 20px;
+        padding: 0;
+        border-radius: 10px;
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .countdown-timer {
+    border-radius: 12px 0 0 12px;
   }
 }
