@@ -10,7 +10,7 @@ import organisationByID from 'libs/queries/organization-by-id.gql'
 import './style.scss'
 // import { useSelector } from 'react-redux'
 
-const ProfilePage = ({ company }) => {
+const ProfilePage = ({ company, companyId }) => {
   const [currentView, setCurrentView] = useState(
     company ? 'PersonalInformationCompany' : 'PersonalInformation',
   )
@@ -41,7 +41,7 @@ const ProfilePage = ({ company }) => {
         // skip: !orgId,
       },
       variables: {
-        orgId: '632',
+        orgId: companyId,
       },
     },
   )
