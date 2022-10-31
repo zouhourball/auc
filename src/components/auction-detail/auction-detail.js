@@ -14,7 +14,7 @@ import {
 import { navigate } from '@reach/router'
 import store from 'libs/store'
 
-import { useTranslation } from 'libs/langs'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import {
   getAuction,
@@ -63,6 +63,8 @@ import DrawOnMap from 'components/draw-on-map'
 import './style.scss'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
+  let currentLang = useCurrentLang()
+
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
@@ -100,7 +102,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       status,
     })
   }
-  // console.log(location.pathname, 'pathname')
+
+  let momentInstance = moment(auctionData?.['created_date'])
+  let momentTranslation = momentInstance
+    .locale(currentLang === 'ar' ? 'ar' : 'en')
+    .fromNow()
+
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
@@ -397,7 +404,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             iconEl={<FontIcon>arrow_back</FontIcon>}
             onClick={() => window.history.go(-1)}
           >
-            Back to Live Auctions
+            {t('back_to_live_auctions')}
           </Button>
         )}
         <div className="auction-details-header md-cell md-cell--12">
@@ -484,7 +491,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
         <div className="auction-details-card md-cell md-cell--12">
           <div className="note">
-            {t('posted')} {moment(auctionData?.['created_date']).fromNow()}
+            {t('posted')} {momentTranslation}
           </div>
           <div className="title">
             {
@@ -806,7 +813,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           label={
             auctionData?.['last_bid']?.['bid_amount']
               ? t('last_bid_amount')
-              : t('starting_price_label')
+              : t('starting_price')
           }
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}
