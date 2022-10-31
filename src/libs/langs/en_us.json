@@ -314,5 +314,6 @@
   "tourist": "Tourist",
   "government": "Government",
   "industrial": "Industrial",
-  "reset_filters": "Reset all filters"
+  "reset_filters": "Reset all filters",
+  "are_you_sure": "Are you sure you want to sign out?"
 }
