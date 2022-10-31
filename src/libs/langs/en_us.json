@@ -316,5 +316,21 @@
   "government": "Government",
   "industrial": "Industrial",
   "reset_filters": "Reset all filters",
-  "back_to_live_auctions": "Back to Live Auctions"
+  "back_to_live_auctions": "Back to Live Auctions",
+  "Farm House": "Farm House",
+  "Townhouse": "Townhouse",
+  "Clinic": "Clinic",
+  "Showroom": "Showroom",
+  "Warehouse": "Warehouse",
+  "Complex": "Complex",
+  "Restaurant": "Restaurant",
+  "Cafe": "Cafe",
+  "Full_floor": "FullFloor",
+  "Supermarket": "Supermarket",
+  "Hotel": "Hotel",
+  "Staff_housing": "Staff Housing",
+  "Mixed_use": "Mixed Use",
+  "Factory": "Factory",
+  "Resort": "Resort",
+  "Park": "Park"
 }
