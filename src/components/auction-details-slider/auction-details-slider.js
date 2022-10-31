@@ -6,6 +6,7 @@ import store from 'libs/store'
 import './styles.scss'
 import { useEffect, useState } from 'react'
 import moment from 'moment'
+import timeIcon from './time.svg'
 const AuctionDetailsSlider = ({
   images,
   isBookMarked,
@@ -59,41 +60,43 @@ const AuctionDetailsSlider = ({
     images?.map((auction) => (
       <div key={auction.uuid} className="slide-elements">
         <img src={`${auction?.url}?token=${downloadToken}&view=true`} />
-        {true && (
-          <div className="countdown-timer">
-            <FontIcon>timer</FontIcon>:{' '}
-            {countdown?.d +
-              ' : ' +
-              countdown?.h +
-              ' : ' +
-              countdown?.m +
-              ' : ' +
-              countdown?.s}
-          </div>
-        )}
-        {isBookMarked ? (
-          <Button
-            icon
-            primary
-            className="save-btn"
-            iconClassName="mdi mdi-bookmark"
-            onClick={(e) => {
-              e.stopPropagation()
-              unsaveAuction()
-            }}
-          />
-        ) : (
-          <Button
-            icon
-            primary
-            className="save-btn"
-            iconClassName="mdi mdi-bookmark-outline"
-            onClick={(e) => {
-              e.stopPropagation()
-              saveAuction()
-            }}
-          />
-        )}
+        <div className="slide-elements-header">
+          {true && (
+            <div className="countdown-timer ">
+              <img className="time-icon" src={timeIcon} height={15} />:{' '}
+              {countdown?.d +
+                ' : ' +
+                countdown?.h +
+                ' : ' +
+                countdown?.m +
+                ' : ' +
+                countdown?.s}
+            </div>
+          )}
+          {isBookMarked ? (
+            <Button
+              icon
+              primary
+              className="slide-elements-header-save-btn"
+              iconClassName="mdi mdi-bookmark"
+              onClick={(e) => {
+                e.stopPropagation()
+                unsaveAuction()
+              }}
+            />
+          ) : (
+            <Button
+              icon
+              primary
+              className="slide-elements-header-save-btn"
+              iconClassName="mdi mdi-bookmark-outline"
+              onClick={(e) => {
+                e.stopPropagation()
+                saveAuction()
+              }}
+            />
+          )}
+        </div>
       </div>
     ))
   return (
