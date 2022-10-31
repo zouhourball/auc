@@ -103,19 +103,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       status,
     })
   }
-  // let momentTranslation
+
   let momentInstance = moment(auctionData?.['created_date'])
   let momentTranslation = momentInstance
     .locale(currentLang === 'ar' ? 'ar' : 'en')
     .fromNow()
-  // if (currentLang === 'ar') {
-  //   // momentInstance
-  //   momentTranslation = momentInstance.locale('ar').fromNow()
-  // } else {
-  //   // momentInstance
-  //   momentTranslation = momentInstance.locale('en').fromNow()
-  // }
-  // console.log(location.pathname, 'pathname')
+
   const paymentCallback = location.pathname
     .split('/')
     .filter((v) => v === 'success' || v === 'error')[0]
