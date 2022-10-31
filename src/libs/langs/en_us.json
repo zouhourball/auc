@@ -97,6 +97,7 @@
   "start_end_dates_label": "Start-End Date:",
   "start_end_time_label": "Start-End Time:",
   "starting_price_label": "Starting Price:",
+  "starting_price": "Starting Price",
   "incremental_price_label": "Incremental Price:",
   "description_label": "Description:",
   "key_features_placeholder": "Enter key feature",

@@ -103,15 +103,18 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       status,
     })
   }
-  let momentTranslation
+  // let momentTranslation
   let momentInstance = moment(auctionData?.['created_date'])
-  if (currentLang === 'ar') {
-    momentInstance.locale('ar')
-    momentTranslation = momentInstance.fromNow()
-  } else {
-    momentInstance.locale('en')
-    momentTranslation = momentInstance.fromNow()
-  }
+  let momentTranslation = momentInstance
+    .locale(currentLang === 'ar' ? 'ar' : 'en')
+    .fromNow()
+  // if (currentLang === 'ar') {
+  //   // momentInstance
+  //   momentTranslation = momentInstance.locale('ar').fromNow()
+  // } else {
+  //   // momentInstance
+  //   momentTranslation = momentInstance.locale('en').fromNow()
+  // }
   // console.log(location.pathname, 'pathname')
   const paymentCallback = location.pathname
     .split('/')
@@ -817,7 +820,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           label={
             auctionData?.['last_bid']?.['bid_amount']
               ? t('last_bid_amount')
-              : t('starting_price_label')
+              : t('starting_price')
           }
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}
