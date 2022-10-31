@@ -1271,6 +1271,7 @@ export const countriesCodes = [
     label: 'United Kingdom',
   },
   {
+    flag: USA,
     value: '+1',
     label: 'United States',
   },
