@@ -152,5 +152,6 @@
   "auction_position": "موقع*",
   "broker": "الوسطاء",
   "my_profile": "",
-  "sqm": "متر مربع"
+  "sqm": "متر مربع",
+  "back_to_live_auctions": "الرجوع إلى المزادات النشطة"
 }

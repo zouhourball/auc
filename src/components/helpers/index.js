@@ -55,7 +55,7 @@ export const propertyTypeList =
       value: 3,
     },
     {
-      label: 'Farm House',
+      label: 'Farm_house',
       value: 11,
     },
     {
@@ -113,7 +113,7 @@ export const propertyTypeList =
     },
 
     {
-      label: 'Full Floor',
+      label: 'Full_floor',
       value: 19,
     },
 
@@ -144,7 +144,7 @@ export const propertyTypeList =
       value: 7,
     },
     {
-      label: 'Full Floor',
+      label: 'Full_floor',
       value: 19,
     },
     {
@@ -160,11 +160,11 @@ export const propertyTypeList =
       value: 21,
     },
     {
-      label: 'Staff Housing',
+      label: 'Staff_housing',
       value: 22,
     },
     {
-      label: 'Mixed Use',
+      label: 'Mixed_use',
       value: 23,
     },
 
@@ -199,7 +199,7 @@ export const propertyTypeList =
       value: 26,
     },
     {
-      label: 'Mixed Use',
+      label: 'Mixed_use',
       value: 23,
     },
     {
