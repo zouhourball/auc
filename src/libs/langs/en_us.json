@@ -314,5 +314,6 @@
   "tourist": "Tourist",
   "government": "Government",
   "industrial": "Industrial",
-  "reset_filters": "Reset all filters"
+  "reset_filters": "Reset all filters",
+  "back_to_live_auctions": "Back to Live Auctions"
 }

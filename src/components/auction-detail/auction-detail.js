@@ -61,7 +61,11 @@ import './style.scss'
 import AuctionDetailsSlider from 'components/auction-details-slider'
 import DrawOnMap from 'components/draw-on-map'
 
+import 'moment/locale/ar'
+
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
+  moment.locale('ar')
+
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
@@ -396,7 +400,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             iconEl={<FontIcon>arrow_back</FontIcon>}
             onClick={() => window.history.go(-1)}
           >
-            Back to Live Auctions
+            {t('back_to_live_auctions')}
           </Button>
         )}
         <div className="auction-details-header md-cell md-cell--12">
