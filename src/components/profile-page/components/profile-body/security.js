@@ -163,7 +163,7 @@ export default Security
 
 const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
   const { t } = useTranslation()
-
+  const dispatch = useDispatch()
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState('')
   const [email, setEmail] = useState('')
@@ -183,7 +183,15 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
       if (res?.data?.['0']?.exist) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.message)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -201,7 +209,15 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.error)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -210,7 +226,15 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.message)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -419,7 +443,15 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
       if (res?.code === 'ok') {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.message)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -675,7 +707,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
 }
 const ChangePasswordDialog = ({ visible, onHide, subject }) => {
   const { t } = useTranslation()
-
+  const dispatch = useDispatch()
   const [password, setPassword] = useState({
     current: '',
     new: '',
@@ -686,7 +718,15 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.error)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -721,7 +761,15 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
                         },
                       })
                     } else {
-                      // alert('Unmatched password')
+                      dispatch(
+                        addToast(
+                          <ToastMsg
+                            text={'Password are not match'}
+                            type="error"
+                          />,
+                          'hide',
+                        ),
+                      )
                     }
                   }}
                 >
@@ -810,7 +858,7 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
 
 const ForgotPasswordDialog = ({ visible, onHide, user }) => {
   const { t } = useTranslation()
-
+  const dispatch = useDispatch()
   const [step, setStep] = useState(0)
   const [otp, setOtp] = useState(0)
   const [type, setType] = useState(true)
@@ -821,7 +869,15 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.error)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -830,7 +886,15 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.message)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })
@@ -839,7 +903,15 @@ const ForgotPasswordDialog = ({ visible, onHide, user }) => {
       if (res?.success) {
         setStep((prev) => prev + 1)
       } else {
-        // alert(res?.error)
+        dispatch(
+          addToast(
+            <ToastMsg
+              text={res?.message || 'Something went wrong'}
+              type="error"
+            />,
+            'hide',
+          ),
+        )
       }
     },
   })

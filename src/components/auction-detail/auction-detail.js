@@ -14,7 +14,7 @@ import {
 import { navigate } from '@reach/router'
 import store from 'libs/store'
 
-import { useTranslation } from 'libs/langs'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import {
   getAuction,
@@ -61,10 +61,10 @@ import './style.scss'
 import AuctionDetailsSlider from 'components/auction-details-slider'
 import DrawOnMap from 'components/draw-on-map'
 
-import 'moment/locale/ar'
+// import 'moment/locale/ar'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
-  moment.locale('ar')
+  let currentLang = useCurrentLang()
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -102,6 +102,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       uuid: auctionId,
       status,
     })
+  }
+  let momentTranslation
+  let momentInstance = moment(auctionData?.['created_date'])
+  if (currentLang === 'ar') {
+    momentInstance.locale('ar')
+    momentTranslation = momentInstance.fromNow()
+  } else {
+    momentInstance.locale('en')
+    momentTranslation = momentInstance.fromNow()
   }
   // console.log(location.pathname, 'pathname')
   const paymentCallback = location.pathname
@@ -486,7 +495,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         </div>
         <div className="auction-details-card md-cell md-cell--12">
           <div className="note">
-            {t('posted')} {moment(auctionData?.['created_date']).fromNow()}
+            {t('posted')} {momentTranslation}
           </div>
           <div className="title">
             {
