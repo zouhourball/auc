@@ -390,6 +390,19 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             }}
             onCancel={() => setVisibleStartTimePicker(false)}
             translation={{ date: 'Time' }}
+            onReset={() => {
+              setStartTime(moment().valueOf())
+              setAuctionDetails({
+                ...auctionDetails,
+                startDate: new Date(
+                  moment(startDate)
+                    .hour(moment(moment().valueOf()).hour())
+                    .minute(moment(moment().valueOf()).minute())
+                    .valueOf(),
+                ),
+              })
+              setVisibleStartTimePicker(false)
+            }}
           />
         )}
       </div>
@@ -428,6 +441,19 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             }}
             onCancel={() => setVisibleEndTimePicker(false)}
             translation={{ date: 'Time' }}
+            onReset={() => {
+              setEndTime(moment().valueOf())
+              setAuctionDetails({
+                ...auctionDetails,
+                endDate: new Date(
+                  moment(endDate)
+                    .hour(moment(moment().valueOf()).hour())
+                    .minute(moment(moment().valueOf()).minute())
+                    .valueOf(),
+                ),
+              })
+              setVisibleEndTimePicker(false)
+            }}
           />
         )}
       </div>

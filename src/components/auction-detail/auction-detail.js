@@ -57,9 +57,10 @@ import icon3 from './icons/area.svg'
 import tick from 'images/Tick.svg'
 import info from 'images/Info.svg'
 
-import './style.scss'
 import AuctionDetailsSlider from 'components/auction-details-slider'
 import DrawOnMap from 'components/draw-on-map'
+
+import './style.scss'
 
 const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const { t } = useTranslation()
@@ -446,6 +447,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           isBookMarked={auctionData?.['is_bookmarked']}
           images={auctionData?.listing?.images}
           startDate={auctionData?.['auction_start_date']}
+          status={!isActive}
         />
       </div>
       <div className="auction-details-info md-cell md-cell--4 md-grid">

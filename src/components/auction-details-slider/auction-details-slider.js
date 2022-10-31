@@ -12,6 +12,7 @@ const AuctionDetailsSlider = ({
   unsaveAuction,
   saveAuction,
   startDate,
+  status,
 }) => {
   const downloadToken = store?.getState()?.app?.dlToken
   let currentLang = useCurrentLang()
@@ -59,7 +60,7 @@ const AuctionDetailsSlider = ({
     images?.map((auction) => (
       <div key={auction.uuid} className="slide-elements">
         <img src={`${auction?.url}?token=${downloadToken}&view=true`} />
-        {true && (
+        {status && (
           <div className="countdown-timer">
             <FontIcon>timer</FontIcon>:{' '}
             {countdown?.d +
