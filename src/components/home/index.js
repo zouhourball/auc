@@ -130,7 +130,7 @@ const Home = () => {
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
           user={currentUser?.mev2?.user}
-          broker={meOrgs?.length > 0}
+          broker={meOrgs?.length > 0 ? meOrgs?.[0]?.ID : ''}
         />
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />
@@ -157,7 +157,7 @@ const Home = () => {
             meOrgs={meOrgs}
           />
           <ProfilePage path={'/profile'} />
-          <ProfilePage path={'/company-profile'} company />
+          <ProfilePage path={'/company-profile/:companyId'} company />
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
             <MyAuctions key={i} path={page} meOrgs={meOrgs} />
           ))}
