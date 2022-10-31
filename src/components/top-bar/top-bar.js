@@ -450,7 +450,7 @@ const TopBar = ({
                     <Button
                       onClick={() =>
                         broker
-                          ? navigate('/auctions/company-profile')
+                          ? navigate('/auctions/company-profile/' + broker)
                           : navigate('/auctions/profile')
                       }
                     >
