@@ -572,7 +572,7 @@ export const registerBidder = async ({ body }) => {
     return res
   })
 }
-
+// GENERATE TOKEN CONFIGURATOR
 export const genUploadToken = async ({ queryKey }) => {
   return fetch(
     `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/gen-upload-token?action=${queryKey[1]}`,
@@ -591,7 +591,31 @@ export const genUploadToken = async ({ queryKey }) => {
     return res
   })
 }
-
+// PERSIST AFTER UPLOAD WITH CONFIGURATOR TOKEN
+export const filePersistence = async ({ id }) => {
+  let res
+  try {
+    res = await fetch(
+      `${PRODUCT_APP_URL_API}/meerastorage/backend/files/${id}/persistence`,
+      {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/x-www-form-urlencoded',
+        //   Authorization: `Basic ${btoa(
+        //     `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
+        //   )}`,
+        //   // 'x-jwt-key': `${btoa(
+        //   //   `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
+        //   // )}`,
+        // },
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+// REGISTER BROKER
 export const registerBroker = async ({ body }) => {
   let res
   try {
