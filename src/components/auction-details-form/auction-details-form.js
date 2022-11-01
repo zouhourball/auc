@@ -252,7 +252,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
 
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('state-gov')}</label>
+        <label className="auction-details-form-label">{t('state_gov')}</label>
         {/* <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={t('state-gov')}
@@ -266,14 +266,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         /> */}
         <CustomSelectWithSearch
           items={renderCity()}
-          label={t('state-gov')}
+          label={t('state_gov')}
           hideSecondaryLabel={false}
           listVisibility={showListCities}
           setListVisibility={handleShowListCities}
           selectedItem={
             renderCity()?.find((el) => el?.value === city)?.label || ''
           }
-          searchPlaceholder={t('state-gov')}
+          searchPlaceholder={t('state_gov')}
           onClickItem={(itemSelected) => {
             onSetFormDetails('city', itemSelected?.value)
             setTextSearch('')
