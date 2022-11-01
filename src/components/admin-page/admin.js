@@ -21,12 +21,13 @@ import { navigate } from '@reach/router'
 import { useMutation, useQuery } from 'react-query'
 import moment from 'moment'
 // import { getPublicUrl } from 'libs/utils/custom-function'
-import store from 'libs/store'
+// import store from 'libs/store'
 
 import {
   auctionsRequest,
   approveAuction,
   getApprovals,
+  genUploadToken,
   approveRejectBroker,
 } from 'libs/api/auctions-api'
 // import { meQuery } from 'libs/queries/me-query.gql'
@@ -52,7 +53,11 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     (state) => state?.selectRowsReducers?.selectedRows,
   )
   let limit = 10
-  const downloadToken = store?.getState()?.app?.dlToken
+
+  const { data: downloadToken } = useQuery(
+    ['genUploadToken', 'download'],
+    genUploadToken,
+  )
 
   // const { data: currentUser } = useQueryApollo(meQuery, {
   //   notifyOnNetworkStatusChange: true,
@@ -342,26 +347,31 @@ const Admin = ({ logged, auctionId, currentTab }) => {
             )
           }
           withFooter
+          hideTotal
           footerTemplate={
-            +getTotalElements > limit && (
-              <div className="pagination-numbers">
-                <Button
-                  onClick={() => setOffset((prev) => prev - 1)}
-                  disabled={offset === 0}
-                >
-                  <FontIcon>chevron_left</FontIcon>
-                </Button>
-                {offset < limitOfNumberShowing
-                  ? renderPaginationButtons()
-                  : renderPaginationButtons(offset + 1)}
-                <Button
-                  onClick={() => setOffset((prev) => prev + 1)}
-                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
-                >
-                  <FontIcon>chevron_right</FontIcon>
-                </Button>
-              </div>
-            )
+            <>
+              <span>Total Pages {getTotalElements}</span>
+
+              {+getTotalElements > limit && (
+                <div className="pagination-numbers">
+                  <Button
+                    onClick={() => setOffset((prev) => prev - 1)}
+                    disabled={offset === 0}
+                  >
+                    <FontIcon>chevron_left</FontIcon>
+                  </Button>
+                  {offset < limitOfNumberShowing
+                    ? renderPaginationButtons()
+                    : renderPaginationButtons(offset + 1)}
+                  <Button
+                    onClick={() => setOffset((prev) => prev + 1)}
+                    disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
+                  >
+                    <FontIcon>chevron_right</FontIcon>
+                  </Button>
+                </div>
+              )}
+            </>
           }
         />
       </div>
@@ -410,38 +420,42 @@ const Admin = ({ logged, auctionId, currentTab }) => {
             )
           }
           withFooter
+          hideTotal
           footerTemplate={
-            +getTotalElements > limit && (
-              <div className="table-paginator">
-                <Button
-                  onClick={() => setOffset((prev) => prev - 1)}
-                  disabled={offset === 0}
-                  icon
-                  className="table-paginator-arrowBtn"
-                >
-                  <FontIcon>
-                    {currentLang === 'ar-SA' || currentLang === 'ar'
-                      ? 'chevron_right'
-                      : 'chevron_left'}
-                  </FontIcon>
-                </Button>
-                {offset < limitOfNumberShowing
-                  ? renderPaginationButtons()
-                  : renderPaginationButtons(offset + 1)}
-                <Button
-                  onClick={() => setOffset((prev) => prev + 1)}
-                  icon
-                  className="table-paginator-arrowBtn"
-                  disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
-                >
-                  <FontIcon>
-                    {currentLang === 'ar-SA' || currentLang === 'ar'
-                      ? 'chevron_left'
-                      : 'chevron_right'}
-                  </FontIcon>
-                </Button>
-              </div>
-            )
+            <>
+              <span>Total Pages {getTotalElements}</span>
+              {+getTotalElements > limit && (
+                <div className="table-paginator">
+                  <Button
+                    onClick={() => setOffset((prev) => prev - 1)}
+                    disabled={offset === 0}
+                    icon
+                    className="table-paginator-arrowBtn"
+                  >
+                    <FontIcon>
+                      {currentLang === 'ar-SA' || currentLang === 'ar'
+                        ? 'chevron_right'
+                        : 'chevron_left'}
+                    </FontIcon>
+                  </Button>
+                  {offset < limitOfNumberShowing
+                    ? renderPaginationButtons()
+                    : renderPaginationButtons(offset + 1)}
+                  <Button
+                    onClick={() => setOffset((prev) => prev + 1)}
+                    icon
+                    className="table-paginator-arrowBtn"
+                    disabled={!(+getTotalElements - (offset + 1) * limit > 0)}
+                  >
+                    <FontIcon>
+                      {currentLang === 'ar-SA' || currentLang === 'ar'
+                        ? 'chevron_left'
+                        : 'chevron_right'}
+                    </FontIcon>
+                  </Button>
+                </div>
+              )}
+            </>
           }
         />
       </div>
