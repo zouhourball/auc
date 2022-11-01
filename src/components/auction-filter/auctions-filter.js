@@ -235,7 +235,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
               },
             ])
         }}
-        rightIcon={<FontIcon>{t('search')}</FontIcon>}
+        rightIcon={<FontIcon>search</FontIcon>}
         block
       />
       <SelectField

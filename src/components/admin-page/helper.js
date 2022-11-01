@@ -94,7 +94,7 @@ export const newBrokersConfigs = [
   {
     label: 'Email',
     key: 'email',
-    width: '200',
+    width: '350',
     type: 'text',
     displayInCsv: true,
   },
