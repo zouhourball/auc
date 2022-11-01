@@ -35,6 +35,7 @@ import UploadImages from 'components/upload-images'
 import ConfirmDialog from 'components/confirm-dialog'
 
 import './style.scss'
+import CustomSelectWithSearch from 'components/custom-select-with-search'
 
 const RegistrationPage = () => {
   const { t } = useTranslation()
@@ -44,6 +45,9 @@ const RegistrationPage = () => {
 
   const [currentTab, setCurrentTab] = useState(0)
   const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
+  const [textSearch, setTextSearch] = useState('')
+  const [showListCountry, handleShowListCountry] = useState('')
+
   const [signupData, setSignupData] = useState({
     countryCode: '+968',
     acceptTerms: false,
@@ -130,7 +134,7 @@ const RegistrationPage = () => {
     data: getCountryList,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery([25, ''], getCountry, {
+  } = useInfiniteQuery([25, textSearch], getCountry, {
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (
@@ -155,8 +159,9 @@ const RegistrationPage = () => {
       return arrayName
     }
   }
+  const [test] = useState(0)
+
   const ref = document.getElementsByClassName('country-list')
-  const [test, setTest] = useState(0)
   useEffect(() => {
     ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
 
@@ -181,7 +186,30 @@ const RegistrationPage = () => {
               onChange={(v) => setValues('companyName', v)}
               className="textField"
             />
-            <SelectField
+            <CustomSelectWithSearch
+              items={renderCountry()}
+              label={t('country')}
+              hideSecondaryLabel={false}
+              listVisibility={showListCountry}
+              setListVisibility={handleShowListCountry}
+              selectedItem={
+                renderCountry()?.find((el) => el?.value === countryId)?.label ||
+                ''
+              }
+              searchPlaceholder={t('country')}
+              onClickItem={(itemSelected) => {
+                setValues('countryId', itemSelected?.value)
+                setTextSearch('')
+              }}
+              hideAvatar={true}
+              withHeader={true}
+              searchItem={textSearch}
+              setSearchItem={setTextSearch}
+              searchItemPlaceHolder={t('search_country')}
+              singleSelect
+              className="selectField-withShadow"
+            />
+            {/* <SelectField
               id={'country'}
               menuItems={renderCountry()}
               listClassName="country-list"
@@ -191,7 +219,7 @@ const RegistrationPage = () => {
               onChange={(value) => setValues('countryId', value)}
               position={SelectField.Positions.BELOW}
               className={'textField selectField'}
-            />
+            /> */}
             <div className="textField phone-field">
               <SelectField
                 id={'country-code'}

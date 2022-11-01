@@ -124,7 +124,7 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
             />
           </div>
           <h2 style={{ textAlign: 'center' }}>
-            Are you sure you want to sign out?
+            {t('are_you_sure')}
           </h2>
         </DialogContainer>
       )}
