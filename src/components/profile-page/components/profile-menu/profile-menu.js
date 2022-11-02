@@ -30,33 +30,40 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
 
   return (
     <div className="profile-menu">
-      {!company && (
-        <UserInfoBySubject key={userInfo?.subject} subject={userInfo?.subject}>
-          {(res) => {
-            return (
-              <Avatar
-                className="profile-menu-avatar"
-                src={
-                  get(res, 'photo.aPIURL', null)
-                    ? getPublicUrl(res?.photo?.aPIURL)
-                    : null
-                }
-              >
-                {get(res, 'photo.aPIURL', null)
-                  ? null
-                  : get(res, 'fullName.0', '')}
-              </Avatar>
-            )
-          }}
-        </UserInfoBySubject>
-      )}
-      {company && (
-        <Avatar
-          className="profile-menu-avatar"
-          src={getPublicUrl(userInfo?.bgURL)}
-        ></Avatar>
-      )}
-
+      <div className="avatar-container">
+        <Button icon primary floating className="edit-btn">
+          edit
+        </Button>
+        {!company && (
+          <UserInfoBySubject
+            key={userInfo?.subject}
+            subject={userInfo?.subject}
+          >
+            {(res) => {
+              return (
+                <Avatar
+                  className="profile-menu-avatar"
+                  src={
+                    get(res, 'photo.aPIURL', null)
+                      ? getPublicUrl(res?.photo?.aPIURL)
+                      : null
+                  }
+                >
+                  {get(res, 'photo.aPIURL', null)
+                    ? null
+                    : get(res, 'fullName.0', '')}
+                </Avatar>
+              )
+            }}
+          </UserInfoBySubject>
+        )}
+        {company && (
+          <Avatar
+            className="profile-menu-avatar"
+            src={getPublicUrl(userInfo?.bgURL)}
+          ></Avatar>
+        )}
+      </div>
       <div className="profile-menu-fullName">
         {company ? userInfo?.name : userInfo?.fullName}
       </div>
@@ -123,9 +130,7 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
               className="success-image"
             />
           </div>
-          <h2 style={{ textAlign: 'center' }}>
-            {t('are_you_sure')}
-          </h2>
+          <h2 style={{ textAlign: 'center' }}>{t('are_you_sure')}</h2>
         </DialogContainer>
       )}
     </div>
