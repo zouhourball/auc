@@ -440,7 +440,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
               setVisibleEndTimePicker(false)
             }}
             onCancel={() => setVisibleEndTimePicker(false)}
-            translation={{ date: 'Time' }}
+            translation={{ date: 'Time', reset: 'Reset' }}
             onReset={() => {
               setEndTime(moment().valueOf())
               setAuctionDetails({
