@@ -3,6 +3,7 @@ import { TextField, FontIcon, Checkbox, Button } from 'react-md'
 import { useTranslation } from 'libs/langs'
 
 import UploadImages from 'components/upload-images'
+import selectImg from 'images/select-img.png'
 
 const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
   const { t } = useTranslation()
@@ -207,7 +208,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
             </div>
           }
           titleUpload={images?.length > 0 ? 'add_images' : ''}
-          icon={<FontIcon>add_photo_alternate</FontIcon>}
+          icon={<img src={selectImg} width="20px" />}
           accept="image/jpeg, image/png, image/jpg"
           className="custom"
         />

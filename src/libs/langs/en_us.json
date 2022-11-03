@@ -28,8 +28,8 @@
   "heat": "heat",
   "title": "Title*",
   "enter_title": "Enter title",
-  "address": "Address*",
-  "country": "Select country*",
+  "address": "Address",
+  "country": "Country",
   "select_country": "Select country",
   "city": "City*",
   "city_select": "City",
@@ -145,7 +145,6 @@
   "hours_auction": "H",
   "min_auctions": "M",
   "seconds_auction": "S",
-
   "add_details": "Add Auction Details",
   "select_dates": "Select start date - end date",
   "sort": "Sort By",
@@ -171,7 +170,6 @@
   "part_two": "Once the auction is closed, the winner (who submitted the highest price) must accept the payment of the usufruct value of the square meter of the land being auctioned according to the price he submitted",
   "part_three": "The winner will be contacted with the outcome of the auction by text message to review the ministry within (10) ten working days from the date of the notification to complete the procedures and contract. The award and confiscation of the subscription value",
   "set_cover": "Set As Cover",
-
   "condition4": "The first contract is issued for a period of (2) two years, subject to renewal, and is renewed every (5) five years after the completion of implementation, or according to the mortgage period in the case of financing, provided that the total period of the contract does not exceed (99) ninety-nine years",
   "condition5": "The beneficiary is obligated to complete the architectural drawings and maps for the final conception of the project in accordance with the engineering, technical and administrative procedures and requirements for the concerned authorities to approve them, issue building permits and the necessary licenses in accordance with the applicable regulations, and pay the prescribed fees for issuing such licenses.",
   "condition6": "The beneficiary must start executing the project within a period not exceeding (2) two years from the date of registering the usufruct contract, and the contract is considered void in the event that implementation is not started at the end of that period, and the Ministry has the right to restore the situation to what it was before signing the contract at the expense of the beneficiary",
@@ -333,5 +331,6 @@
   "Mixed_use": "Mixed Use",
   "Factory": "Factory",
   "Resort": "Resort",
-  "Park": "Park"
+  "Park": "Park",
+  "state": "State"
 }

@@ -1,7 +1,7 @@
-import { FontIcon } from 'react-md'
 import { useTranslation } from 'libs/langs'
 
 import UploadImages from 'components/upload-images'
+import selectImg from 'images/select-img.png'
 
 const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   //  const [images, setImages] = useState({})
@@ -63,7 +63,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
         //   </div>
         // }
         // titleUpload={images?.length > 0 ? 'add_images' : ''}
-        icon={<FontIcon>add_photo_alternate</FontIcon>}
+        icon={<img src={selectImg} width="20px" />}
         // accept="image/jpeg, image/png, image/jpg"
         className="custom"
       />

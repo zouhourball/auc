@@ -30,6 +30,7 @@ import UploadImages from 'components/upload-images'
 import { DueDate } from 'components/due-date'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
+import selectImg from 'images/select-img.png'
 
 import './style.scss'
 
@@ -803,7 +804,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   </>
                 }
                 titleUpload={images?.length > 0 ? 'add_images' : ''}
-                icon={<FontIcon>add_photo_alternate</FontIcon>}
+                icon={<img src={selectImg} width="20px" />}
                 accept="image/jpeg, image/png, image/jpg"
                 className="custom"
               />

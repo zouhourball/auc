@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
 import { TextField } from 'react-md'
-// import { Slider } from 'material-ui-slider'
+import { useCurrentLang } from 'libs/langs'
 import { Range, getTrackBackground } from 'react-range'
 import onClickOutside from 'react-onclickoutside'
 import './style.scss'
@@ -13,6 +13,7 @@ const PriceRange = ({
   onFinalChange,
   price,
 }) => {
+  const currentLang = useCurrentLang()
   const [values, setValue] = useState({ min: 0, max: 5000 })
   // const { min, max } = values
   const ref = useRef()
@@ -26,6 +27,8 @@ const PriceRange = ({
       <div className="salary-range-body">
         <div className={'salary-range-wrapper'}>
           <Range
+            // direction={currentLang === 'ar-SA' || currentLang === 'ar' ? Direction.Left : Direction.Right}
+            rtl={currentLang === 'ar-SA' || currentLang === 'ar'}
             ref={ref}
             step={50}
             min={0}
@@ -60,6 +63,7 @@ const PriceRange = ({
                       colors: ['#7c7c7c', '#5078e1', '#7c7c7c'],
                       min: 0,
                       max: 5000,
+                      rtl: currentLang === 'ar-SA' || currentLang === 'ar',
                     }),
                     alignSelf: 'center',
                   }}
