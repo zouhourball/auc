@@ -853,3 +853,14 @@ export const getPaymentList = async ({ queryKey, pageParam = 0 }) => {
   }
   return res
 }
+export const deleteAuctionById = async ({ auctionId }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/auctions/${auctionId}`, {
+      method: 'DELETE',
+    })
+  } catch (e) {
+    throw e
+  }
+  return res
+}

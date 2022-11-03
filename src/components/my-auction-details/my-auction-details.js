@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
-import { TextField, Button, FontIcon, SelectField } from 'react-md'
+import {
+  TextField,
+  Button,
+  FontIcon,
+  SelectField,
+  MenuButton,
+  DialogContainer,
+} from 'react-md'
 import { useQuery, useMutation, useInfiniteQuery } from 'react-query'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
 import { useDispatch } from 'react-redux'
+import { navigate } from '@reach/router'
 
 import { addToast } from 'modules/app/actions'
 import { propertyTypeList } from 'components/helpers'
@@ -21,6 +29,7 @@ import {
   updateImgs,
   getCountry,
   getCity,
+  deleteAuctionById,
 } from 'libs/api/auctions-api'
 
 // import { dummyData } from './helpers'
@@ -47,6 +56,7 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [images, setImages] = useState([])
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [addressView, setAddressView] = useState(false)
+  const [confirmDialog, setConfirmDialog] = useState(false)
 
   const [auctionEditData, setAuctionEditData] = useState({})
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -75,6 +85,35 @@ const MyAuctionDetails = ({ auctionId }) => {
     },
   })
 
+  const { mutate: deleteMutate } = useMutation(deleteAuctionById, {
+    onSuccess: (res) => {
+      if (res?.success) {
+        navigate('/auctions/my-auctions')
+        dispatch(
+          addToast(
+            <ToastMsg text={'Auction deleted successfully'} type="success" />,
+            'hide',
+          ),
+        )
+        refetchAuction()
+      } else {
+        dispatch(
+          addToast(
+            <ToastMsg text={'Something is wrong'} type="error" />,
+            'hide',
+          ),
+        )
+      }
+    },
+    onError: (error) => {
+      dispatch(
+        addToast(
+          <ToastMsg text={error?.error || 'Something is wrong'} type="error" />,
+          'hide',
+        ),
+      )
+    },
+  })
   useEffect(() => {
     setAuctionEditData({
       title: auctionDetails?.listing?.title,
@@ -732,9 +771,32 @@ const MyAuctionDetails = ({ auctionId }) => {
             </div>
           </div>
         </div>
-        <Button onClick={() => onDisableEdit()} icon primary>
+        {/* <Button onClick={() => onDisableEdit()} icon primary>
           more_vert
-        </Button>
+        </Button> */}
+        <MenuButton
+          id="menu-button-2"
+          className="top-bar-menu"
+          icon
+          iconChildren={<FontIcon>more_vert</FontIcon>}
+          menuItems={
+            <div className="top-bar-menu-items">
+              <Button onClick={() => onDisableEdit()}>
+                {t('edit_details')}
+              </Button>
+              <Button onClick={() => setConfirmDialog(true)}>
+                {t('delete_auction')}
+              </Button>
+            </div>
+          }
+          listInline
+          centered
+          anchor={{
+            x: MenuButton.HorizontalAnchors.CENTER,
+            y: MenuButton.VerticalAnchors.CENTER,
+          }}
+          position={MenuButton.Positions.BOTTOM}
+        ></MenuButton>
       </div>
       {showMore && (
         <div className="auction-details-details">
@@ -883,6 +945,26 @@ const MyAuctionDetails = ({ auctionId }) => {
           </div>
         )}
       </div>
+      <DialogContainer
+        className="confirm-dialog"
+        visible={confirmDialog}
+        onHide={() => setConfirmDialog(false)}
+        id="confirm-dialog"
+        focusOnMount={false}
+        actions={[
+          <Button key={'cancel-btn'} onClick={() => setConfirmDialog(false)}>
+            {t('cancel')}
+          </Button>,
+          <Button
+            key={'delete-btn'}
+            onClick={() => deleteMutate({ auctionId })}
+          >
+            {t('delete')}
+          </Button>,
+        ]}
+      >
+        <div>{t('are_you_sure_you_want_to_delete_this_auction')}</div>
+      </DialogContainer>
     </div>
   )
 }
