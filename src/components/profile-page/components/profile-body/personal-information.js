@@ -2,7 +2,7 @@ import { countriesCodes } from 'components/registration/helper'
 import { getCountry } from 'libs/api/auctions-api'
 import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
-import { Button, SelectField, TextField } from 'react-md'
+import { Button, SelectField, TextField, FontIcon } from 'react-md'
 import { useInfiniteQuery } from 'react-query'
 
 import { useMutation } from 'react-apollo'
@@ -194,6 +194,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           <SelectField
             disabled={edit}
             id={'country-code'}
+            dropdownIcon={<FontIcon primary>expand_more</FontIcon>}
             menuItems={countriesCodes?.map((el) => ({
               value: el?.value,
               label: (
@@ -271,6 +272,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
         <SelectField
           disabled={edit}
           id={'country'}
+          dropdownIcon={<FontIcon primary>expand_more</FontIcon>}
           menuItems={renderCountry()}
           listClassName="country-list"
           value={information?.country?.id}

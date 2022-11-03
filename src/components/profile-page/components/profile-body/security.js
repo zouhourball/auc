@@ -45,9 +45,9 @@ const Security = ({ userInfo }) => {
       : '',
     password: '********',
     phoneMobile:
-      userInfo?.phoneMobile.substring(0, 4) +
+      userInfo?.phoneMobile?.substring(0, 4) +
       '****' +
-      userInfo?.phoneMobile.substring(
+      userInfo?.phoneMobile?.substring(
         userInfo?.phoneMobile?.length - 3,
         userInfo?.phoneMobile?.length,
       ),
@@ -538,10 +538,11 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
             <div className="grey-label">{t('current_phone_number')}</div>
             <div
               style={{ display: 'flex', marginBottom: 8 }}
-              className="selectField"
+              className="change-num-selectField"
             >
               <SelectField
                 id={'country-code'}
+                className="country-code"
                 block
                 menuItems={countriesCodes?.map((el) => ({
                   value: el?.value,

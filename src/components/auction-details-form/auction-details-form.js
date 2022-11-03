@@ -2,7 +2,7 @@ import { useCurrentLang, useTranslation } from 'libs/langs'
 import { useEffect, useState } from 'react'
 import { useInfiniteQuery, useQuery } from 'react-query'
 // import { useQuery as useQueryHook } from 'react-apollo-hooks'
-import { TextField, SelectField, Button } from 'react-md'
+import { TextField, SelectField, Button, FontIcon } from 'react-md'
 import moment from 'moment'
 // import allCountryStateCitiesGql from 'libs/queries/all-country.gql'
 import { DatePicker } from '@target-energysolutions/date-picker'
@@ -125,7 +125,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     startingPrice,
     incrementalPrice,
     participationFee,
-    guaranteeFee,
+    // guaranteeFee,
   } = auctionDetails
 
   const ref = document.getElementsByClassName('country-list')
@@ -159,7 +159,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           value={title}
           onChange={(title) => onSetFormDetails('title', title)}
           className="textField-withShadow"
-          required
           block
         />
       </div>
@@ -197,7 +196,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
               })
             }
             className="textField-map"
-            required
             block
           />
           <Button
@@ -213,7 +211,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         </div>
       </div>
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('country')}</label>
+        <label className="auction-details-form-label">{t('country')}*</label>
         {/* <SelectField
           onClick={() => setTest(1)}
           id="select-field-with-elements-country-spinner"
@@ -229,14 +227,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         /> */}
         <CustomSelectWithSearch
           items={renderCountry()}
-          label={t('country')}
+          label={t('select_country')}
           hideSecondaryLabel={false}
           listVisibility={showListCountry}
           setListVisibility={handleShowListCountry}
           selectedItem={
             renderCountry()?.find((el) => el?.value === country)?.label || ''
           }
-          searchPlaceholder={t('country')}
+          searchPlaceholder={t('select_country')}
           onClickItem={(itemSelected) => {
             onSetFormDetails('country', itemSelected?.value)
             setTextSearch('')
@@ -252,7 +250,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
 
       <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">{t('state_gov')}</label>
+        <label className="auction-details-form-label">{t('state')}*</label>
         {/* <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={t('state-gov')}
@@ -297,7 +295,9 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('property_select')}
           menuItems={propertyTypeList?.map((el) =>
             el?.props ? (
-              <div>{t(el?.props?.text)}</div>
+              <div className="md-list-tile">
+                <b>{t(el?.props?.text)}</b>
+              </div>
             ) : (
               { label: t(el?.label), value: el?.value }
             ),
@@ -319,7 +319,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           id="range"
           placeholder={t('select_dates')}
           block
-          required
           rightIcon={<img src={dateIcon} height={20} />}
           value={
             startDate
@@ -355,15 +354,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           />
         )}
       </div>
-      <div className="md-cell md-cell--6">
+      <div className="dateWrapper md-cell md-cell--6">
         <label className="auction-details-form-label">{t('start_time')}</label>
         <TextField
           id="time-start"
           placeholder={t('start_time_select')}
           block
-          required
           // type="number"
-          rightIcon={<img src={dateIcon} height={20} />}
+          inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={startDate && `${moment(startDate).format('HH:mm')}`}
           onClick={() => setVisibleStartTimePicker(true)}
           className="textField-withShadow"
@@ -406,15 +404,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           />
         )}
       </div>
-      <div className="md-cell md-cell--6">
+      <div className="dateWrapper md-cell md-cell--6">
         <label className="auction-details-form-label">{t('end_time')}</label>
         <TextField
           id="time-end"
           placeholder={t('end_time_select')}
           block
-          required
           // type="number"
-          rightIcon={<img src={dateIcon} height={20} />}
+          inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={endDate && `${moment(endDate).format('HH:mm')}`}
           onClick={() => setVisibleEndTimePicker(true)}
           className="textField-withShadow"
@@ -467,7 +464,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             onSetFormDetails('startingPrice', startingPrice)
           }
           className="textField-withShadow"
-          required
           type="number"
           min={0}
           block
@@ -483,7 +479,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             onSetFormDetails('incrementalPrice', incrementalPrice)
           }
           className="textField-withShadow"
-          required
           type="number"
           min={0}
           block
@@ -491,7 +486,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       </div>
       <div className="md-cell md-cell--6">
         <label className="auction-details-form-label">
-          {t('participation_fee')}
+          {t('participation_fee') + '*'}
         </label>
         <TextField
           id="participationFee"
@@ -499,23 +494,6 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           value={participationFee < 0 ? 0 : participationFee}
           onChange={(val) => onSetFormDetails('participationFee', val)}
           className="textField-withShadow"
-          required
-          type="number"
-          min={0}
-          block
-        />
-      </div>
-      <div className="md-cell md-cell--6">
-        <label className="auction-details-form-label">
-          {t('guarantee_fee')}
-        </label>
-        <TextField
-          id="guaranteeFee"
-          placeholder={t('guar_fee_enter')}
-          value={guaranteeFee < 0 ? 0 : guaranteeFee}
-          onChange={(val) => onSetFormDetails('guaranteeFee', val)}
-          className="textField-withShadow"
-          required
           type="number"
           min={0}
           block

@@ -112,7 +112,7 @@ const CreateAuctionStepper = ({
     city,
     country,
     endDate,
-    guaranteeFee,
+    // guaranteeFee,
     incrementalPrice,
     participationFee,
     propertyType,
@@ -137,7 +137,7 @@ const CreateAuctionStepper = ({
           address &&
           city &&
           country &&
-          guaranteeFee &&
+          // guaranteeFee &&
           incrementalPrice &&
           participationFee &&
           propertyType &&

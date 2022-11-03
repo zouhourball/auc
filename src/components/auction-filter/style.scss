@@ -14,6 +14,35 @@
     color: #5078e1;
   }
 
+  &-chipWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  &-chip {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: #ebebeb;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    color: #7c7c7c;
+    font-size: 12px;
+    line-height: 1;
+    gap: 5px;
+
+    &.active {
+      background: #e7ebf5;
+      color: #5078e1;
+    }
+
+    .md-icon {
+      font-size: 14px;
+    }
+  }
+
   .md-text {
     color: #7c7c7c;
     font-size: 12px;
@@ -65,8 +94,9 @@
     }
 
     .md-selection-control-container {
-      height: 22px;
+      height: auto;
       padding-left: 8px;
+      line-height: 1.1;
 
       .md-icon {
         font-size: 15px;
@@ -83,6 +113,12 @@
 
     &[aria-expanded='true'] {
       border-radius: 12px 12px 0 0;
+
+      .md-icon-separator {
+        .md-icon {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 
@@ -92,7 +128,7 @@
     top: 27px;
     width: 100%;
     border-radius: 0 0 12px 12px;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 3px 4px -1px rgba(0, 0, 0, 0.4);
   }
 
   .price-range {
@@ -117,6 +153,10 @@
     .md-text-field-icon--positioned {
       margin-bottom: 0;
     }
+
+    &.expanded {
+      border-radius: 12px 12px 0 0;
+    }
   }
 
   .price {
@@ -128,31 +168,33 @@
   }
 
   .md-list {
-    &::-webkit-scrollbar-track {
-      visibility: visible;
-      height: 100%;
-      border-radius: 3px;
-      opacity: 1;
-      background-color: #d0d0d0;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
     &::-webkit-scrollbar {
       visibility: visible;
       position: absolute;
       top: 0;
-      right: 15px;
-      width: 5px;
-      height: 90%;
+      right: 0;
+      width: 15px;
+      height: 100%;
       transition: all 400ms;
       opacity: 1;
     }
 
+    &::-webkit-scrollbar-track {
+      visibility: visible;
+      height: 100%;
+      border: 5px solid #fff;
+      border-radius: 12px;
+      opacity: 1;
+      background-color: #d0d0d0;
+      // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
     &::-webkit-scrollbar-thumb {
       visibility: visible;
+      border: 5px solid transparent;
       border-radius: 12px;
       background-color: #7c7c7c;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      // box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
       background-clip: content-box;
     }
 
@@ -218,5 +260,6 @@
 
   .md-paper--2 {
     border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
   }
 }

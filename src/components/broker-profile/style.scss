@@ -45,42 +45,59 @@
       display: none;
     }
 
+    .md-selection-control-container {
+      height: unset;
+    }
+
+    .md-icon {
+      color: #5078e1;
+      font-size: 16px;
+    }
+
     &[aria-expanded='true'] {
       border-radius: 12px 12px 0 0;
+
+      .md-icon-separator {
+        .md-icon {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 
-  .md-icon {
-    color: #5078e1;
-  }
-
   .md-list {
-    &::-webkit-scrollbar-track {
-      visibility: visible;
-      height: 100%;
-      border-radius: 12px;
-      opacity: 1;
-      background-color: #d0d0d0;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    &.md-paper--2 {
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
     }
 
     &::-webkit-scrollbar {
       visibility: visible;
       position: absolute;
       top: 0;
-      right: 50px;
-      width: 5px;
-      height: 90%;
+      right: 0;
+      width: 15px;
+      height: 100%;
       transition: all 400ms;
       opacity: 1;
     }
 
+    &::-webkit-scrollbar-track {
+      visibility: visible;
+      height: 100%;
+      border: 5px solid #fff;
+      border-radius: 12px;
+      opacity: 1;
+      background-color: #d0d0d0;
+      // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
     &::-webkit-scrollbar-thumb {
       visibility: visible;
+      border: 5px solid transparent;
       border-radius: 12px;
       background-color: #7c7c7c;
+      // box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
       background-clip: content-box;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     }
 
     &:hover {
@@ -95,12 +112,14 @@
 
   .md-list-item {
     .md-list-tile {
-      height: 22px;
+      height: unset;
       padding-left: 4px;
     }
   }
 
   .md-text {
+    display: flex;
+    align-items: center;
     padding-left: 12px;
     color: #7c7c7c;
     font-size: 12px;
@@ -112,13 +131,8 @@
 
     .md-btn--icon {
       width: 25px;
-      height: 35px;
-      padding: 10px 0;
-    }
-
-    .md-icon {
-      color: #5078e1;
-      font-size: 16px;
+      height: 20px;
+      padding: 0 0;
     }
   }
 
@@ -138,6 +152,7 @@
   .md-expansion-panel-list {
     .md-expansion-panel--expanded[aria-expanded='true'] {
       margin-top: 0;
+      margin-bottom: 0;
 
       .md-panel-column {
         padding-left: 12px;
@@ -249,10 +264,6 @@
           margin-left: 5px;
           color: inherit;
           font-size: 12px;
-        }
-
-        .md-icon {
-          color: inherit;
         }
       }
     }

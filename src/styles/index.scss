@@ -109,6 +109,11 @@ body {
     .md-text-field {
       font-size: 16px;
     }
+
+    .md-text-field-inline-indicator {
+      top: 20px;
+      right: 18px;
+    }
   }
 
   .selectField-withShadow {
@@ -123,32 +128,39 @@ body {
       font-weight: 400;
     }
 
+    &.customSelect_wrapper .list-itemMultiPick,
     .md-list {
-      &::-webkit-scrollbar-track {
-        visibility: visible;
-        height: 100%;
-        border-radius: 3px;
-        opacity: 1;
-        background-color: #d0d0d0;
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      }
+      margin-top: -11px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
 
       &::-webkit-scrollbar {
         visibility: visible;
         position: absolute;
         top: 0;
-        right: 15px;
-        width: 5px;
-        height: 90%;
+        right: 0;
+        width: 15px;
+        height: 100%;
         transition: all 400ms;
         opacity: 1;
       }
 
+      &::-webkit-scrollbar-track {
+        visibility: visible;
+        height: 100%;
+        border: 5px solid #fff;
+        border-radius: 12px;
+        opacity: 1;
+        background-color: #d0d0d0;
+        box-shadow: none;
+      }
+
       &::-webkit-scrollbar-thumb {
         visibility: visible;
+        border: 5px solid transparent;
         border-radius: 12px;
         background-color: #7c7c7c;
-        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        box-shadow: none;
         background-clip: content-box;
       }
 
@@ -160,6 +172,19 @@ body {
           opacity: 1;
         }
       }
+    }
+  }
+
+  .dateWrapper {
+    position: relative;
+
+    .due-date-container,
+    .target-date-picker-datepicker {
+      bottom: 12px;
+      width: 100%;
+      transform: translateY(100%);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
     }
   }
 

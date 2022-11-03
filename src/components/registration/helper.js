@@ -185,7 +185,7 @@ import Uganda from 'images/country-flag/Uganda.png'
 import Ukraine from 'images/country-flag/Ukraine.png'
 import Emirates from 'images/country-flag/United-Arab-Emirates.png'
 import Kingdom from 'images/country-flag/United-Kingdom.png'
-import USA from 'images/country-flag/United-States-of-America.png'
+import usa from 'images/country-flag/United-States-of-America.png'
 import Uruguay from 'images/country-flag/Uruguay.png'
 import Uzbekistan from 'images/country-flag/Uzbekistan.png'
 import Vanuatu from 'images/country-flag/Vanuatu.png'
@@ -195,6 +195,51 @@ import Vietnam from 'images/country-flag/Vietnam.png'
 import Yemen from 'images/country-flag/Yemen.png'
 import Zambia from 'images/country-flag/Zambia.png'
 import Zimbabwe from 'images/country-flag/Zimbabwe.png'
+import anguilla from 'images/country-flag/anguilla.png'
+import aruba from 'images/country-flag/aruba.png'
+import ascension from 'images/country-flag/ascension.png'
+import barbuda from 'images/country-flag/barbuda.png'
+import bermuda from 'images/country-flag/bermuda.png'
+import britishIndianOceanTerritory from 'images/country-flag/british-indian-ocean-territory.png'
+import britishVirginIslands from 'images/country-flag/british-virgin-islands.png'
+import capeVerde from 'images/country-flag/cape-verde.png'
+import caymanIslands from 'images/country-flag/cayman-islands.png'
+import christmasIsland from 'images/country-flag/christmas-island.png'
+import cocosKeelingIslands from 'images/country-flag/cocos-keeling-islands.png'
+import cookIslands from 'images/country-flag/cook-islands.png'
+import curacao from 'images/country-flag/curacao.png'
+import diegoGarcia from 'images/country-flag/diego-garcia.png'
+import easterIslands from 'images/country-flag/easter-islands.png'
+import falklandIslands from 'images/country-flag/falkland-islands.png'
+import faroeIslands from 'images/country-flag/faroe-islands.png'
+import frenchAntilles from 'images/country-flag/french-antilles.svg'
+import frenchGuiana from 'images/country-flag/french-guiana.png'
+import frenchPolynesia from 'images/country-flag/french-polynesia.png'
+import gibraltar from 'images/country-flag/gibraltar.png'
+import greenland from 'images/country-flag/greenland.png'
+import guadeloupe from 'images/country-flag/guadeloupe.png'
+import guam from 'images/country-flag/guam.png'
+import hongKong from 'images/country-flag/hong-kong.png'
+import ivoryCoast from 'images/country-flag/ivory-coast.png'
+import macau from 'images/country-flag/macau.png'
+import martinique from 'images/country-flag/martinique.png'
+import mayotte from 'images/country-flag/mayotte.png'
+import midwayIsland from 'images/country-flag/midway-island.png'
+import montserrat from 'images/country-flag/montserrat.png'
+import netherlandsAntilles from 'images/country-flag/netherlands-antilles.svg'
+import newCaledonia from 'images/country-flag/new-caledonia.jpeg'
+import niue from 'images/country-flag/niue.png'
+import norfolkIsland from 'images/country-flag/norfolk-island.png'
+import northernMarianaIslands from 'images/country-flag/northern-mariana-islands.png'
+import puertoRico from 'images/country-flag/puerto-rico.png'
+import reunion from 'images/country-flag/reunion.png'
+import swaziland from 'images/country-flag/swaziland.png'
+import tokelau from 'images/country-flag/tokelau.png'
+import turksAndCaicosIslands from 'images/country-flag/turks-and-caicos-islands.svg'
+import usVirginIslands from 'images/country-flag/us-virgin-islands.png'
+import wakeIsland from 'images/country-flag/wake-island.png'
+import wallisAndFutuna from 'images/country-flag/wallis-and-futuna.png'
+import zanzibar from 'images/country-flag/zanzibar.png'
 
 export const countriesCodes = [
   {
@@ -213,7 +258,7 @@ export const countriesCodes = [
     label: 'Algeria',
   },
   {
-    flag: USA,
+    flag: usa,
     value: '+1 684',
     label: 'American Samoa',
   },
@@ -228,6 +273,7 @@ export const countriesCodes = [
     label: 'Angola',
   },
   {
+    flag: anguilla,
     value: '+1 264',
     label: 'Anguilla',
   },
@@ -247,10 +293,12 @@ export const countriesCodes = [
     label: 'Armenia',
   },
   {
+    flag: aruba,
     value: '+297',
     label: 'Aruba',
   },
   {
+    flag: ascension,
     value: '+247',
     label: 'Ascension',
   },
@@ -295,6 +343,7 @@ export const countriesCodes = [
     label: 'Barbados',
   },
   {
+    flag: barbuda,
     value: '+1 268',
     label: 'Barbuda',
   },
@@ -319,6 +368,7 @@ export const countriesCodes = [
     label: 'Benin',
   },
   {
+    flag: bermuda,
     value: '+1 441',
     label: 'Bermuda',
   },
@@ -348,10 +398,12 @@ export const countriesCodes = [
     label: 'Brazil',
   },
   {
+    flag: britishIndianOceanTerritory,
     value: '+246',
     label: 'British Indian Ocean Territory',
   },
   {
+    flag: britishVirginIslands,
     value: '+1 284',
     label: 'British Virgin Islands',
   },
@@ -391,10 +443,12 @@ export const countriesCodes = [
     label: 'Canada',
   },
   {
+    flag: capeVerde,
     value: '+238',
     label: 'Cape Verde',
   },
   {
+    flag: caymanIslands,
     value: '+ 345',
     label: 'Cayman Islands',
   },
@@ -419,10 +473,12 @@ export const countriesCodes = [
     label: 'China',
   },
   {
+    flag: christmasIsland,
     value: '+61',
     label: 'Christmas Island',
   },
   {
+    flag: cocosKeelingIslands,
     value: '+61',
     label: 'Cocos-Keeling Islands',
   },
@@ -447,6 +503,7 @@ export const countriesCodes = [
     label: 'Congo, Dem. Rep. of (Zaire)',
   },
   {
+    flag: cookIslands,
     value: '+682',
     label: 'Cook Islands',
   },
@@ -466,6 +523,7 @@ export const countriesCodes = [
     label: 'Cuba',
   },
   {
+    flag: curacao,
     value: '+599',
     label: 'Curacao',
   },
@@ -485,6 +543,7 @@ export const countriesCodes = [
     label: 'Denmark',
   },
   {
+    flag: diegoGarcia,
     value: '+246',
     label: 'Diego Garcia',
   },
@@ -509,6 +568,7 @@ export const countriesCodes = [
     label: 'East Timor',
   },
   {
+    flag: easterIslands,
     value: '+56',
     label: 'Easter Island',
   },
@@ -548,10 +608,12 @@ export const countriesCodes = [
     label: 'Ethiopia',
   },
   {
+    flag: falklandIslands,
     value: '+500',
     label: 'Falkland Islands',
   },
   {
+    flag: faroeIslands,
     value: '+298',
     label: 'Faroe Islands',
   },
@@ -571,14 +633,17 @@ export const countriesCodes = [
     label: 'France',
   },
   {
+    flag: frenchAntilles,
     value: '+596',
     label: 'French Antilles',
   },
   {
+    flag: frenchGuiana,
     value: '+594',
     label: 'French Guiana',
   },
   {
+    flag: frenchPolynesia,
     value: '+689',
     label: 'French Polynesia',
   },
@@ -608,6 +673,7 @@ export const countriesCodes = [
     label: 'Ghana',
   },
   {
+    flag: gibraltar,
     value: '+350',
     label: 'Gibraltar',
   },
@@ -617,6 +683,7 @@ export const countriesCodes = [
     label: 'Greece',
   },
   {
+    flag: greenland,
     value: '+299',
     label: 'Greenland',
   },
@@ -626,10 +693,12 @@ export const countriesCodes = [
     label: 'Grenada',
   },
   {
+    flag: guadeloupe,
     value: '+590',
     label: 'Guadeloupe',
   },
   {
+    flag: guam,
     value: '+1 671',
     label: 'Guam',
   },
@@ -664,6 +733,7 @@ export const countriesCodes = [
     label: 'Honduras',
   },
   {
+    flag: hongKong,
     value: '+852',
     label: 'Hong Kong SAR China',
   },
@@ -713,6 +783,7 @@ export const countriesCodes = [
     label: 'Italy',
   },
   {
+    flag: ivoryCoast,
     value: '+225',
     label: 'Ivory Coast',
   },
@@ -802,6 +873,7 @@ export const countriesCodes = [
     label: 'Luxembourg',
   },
   {
+    flag: macau,
     value: '+853',
     label: 'Macau SAR China',
   },
@@ -846,6 +918,7 @@ export const countriesCodes = [
     label: 'Marshall Islands',
   },
   {
+    flag: martinique,
     value: '+596',
     label: 'Martinique',
   },
@@ -860,6 +933,7 @@ export const countriesCodes = [
     label: 'Mauritius',
   },
   {
+    flag: mayotte,
     value: '+262',
     label: 'Mayotte',
   },
@@ -874,6 +948,7 @@ export const countriesCodes = [
     label: 'Micronesia',
   },
   {
+    flag: midwayIsland,
     value: '+1 808',
     label: 'Midway Island',
   },
@@ -898,6 +973,7 @@ export const countriesCodes = [
     label: 'Montenegro',
   },
   {
+    flag: montserrat,
     value: '+1664',
     label: 'Montserrat',
   },
@@ -932,6 +1008,7 @@ export const countriesCodes = [
     label: 'Netherlands',
   },
   {
+    flag: netherlandsAntilles,
     value: '+599',
     label: 'Netherlands Antilles',
   },
@@ -941,6 +1018,7 @@ export const countriesCodes = [
     label: 'Nevis',
   },
   {
+    flag: newCaledonia,
     value: '+687',
     label: 'New Caledonia',
   },
@@ -965,10 +1043,12 @@ export const countriesCodes = [
     label: 'Nigeria',
   },
   {
+    flag: niue,
     value: '+683',
     label: 'Niue',
   },
   {
+    flag: norfolkIsland,
     value: '+672',
     label: 'Norfolk Island',
   },
@@ -978,6 +1058,7 @@ export const countriesCodes = [
     label: 'North Korea',
   },
   {
+    flag: northernMarianaIslands,
     value: '+1 670',
     label: 'Northern Mariana Islands',
   },
@@ -1042,6 +1123,7 @@ export const countriesCodes = [
     label: 'Portugal',
   },
   {
+    flag: puertoRico,
     value: '+1 787',
     label: 'Puerto Rico',
   },
@@ -1051,6 +1133,7 @@ export const countriesCodes = [
     label: 'Qatar',
   },
   {
+    flag: reunion,
     value: '+262',
     label: 'Reunion',
   },
@@ -1160,6 +1243,7 @@ export const countriesCodes = [
     label: 'Suriname',
   },
   {
+    flag: swaziland,
     value: '+268',
     label: 'Swaziland',
   },
@@ -1209,6 +1293,7 @@ export const countriesCodes = [
     label: 'Togo',
   },
   {
+    flag: tokelau,
     value: '+690',
     label: 'Tokelau',
   },
@@ -1238,6 +1323,7 @@ export const countriesCodes = [
     label: 'Turkmenistan',
   },
   {
+    flag: turksAndCaicosIslands,
     value: '+1 649',
     label: 'Turks and Caicos Islands',
   },
@@ -1247,6 +1333,7 @@ export const countriesCodes = [
     label: 'Tuvalu',
   },
   {
+    flag: usVirginIslands,
     value: '+1 340',
     label: 'U.S. Virgin Islands',
   },
@@ -1271,7 +1358,7 @@ export const countriesCodes = [
     label: 'United Kingdom',
   },
   {
-    flag: USA,
+    flag: usa,
     value: '+1',
     label: 'United States',
   },
@@ -1301,10 +1388,12 @@ export const countriesCodes = [
     label: 'Vietnam',
   },
   {
+    flag: wakeIsland,
     value: '+1 808',
     label: 'Wake Island',
   },
   {
+    flag: wallisAndFutuna,
     value: '+681',
     label: 'Wallis and Futuna',
   },
@@ -1319,6 +1408,7 @@ export const countriesCodes = [
     label: 'Zambia',
   },
   {
+    flag: zanzibar,
     value: '+255',
     label: 'Zanzibar',
   },

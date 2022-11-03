@@ -367,7 +367,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                       onClick={() => window.open(res?.webSite)}
                       className="website-link"
                     >
-                      <FontIcon>language</FontIcon>
+                      <FontIcon primary>language</FontIcon>
                       <span>{res?.webSite}</span>
                     </div>
                   )}
@@ -394,7 +394,9 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                 closeMenuOnSelect={false}
                 menuItems={propertyTypeList?.map((tp, index) => {
                   return tp?.props?.text ? (
-                    <div>{t(tp?.props?.text)}</div>
+                    <div className="md-text">
+                      <b>{t(tp?.props?.text)}</b>
+                    </div>
                   ) : (
                     {
                       label: (
