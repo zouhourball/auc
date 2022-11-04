@@ -5,6 +5,20 @@
   align-items: center;
   padding: 10px 0;
   //border-right: 2px solid #e3e3e3;
+  .avatar-container {
+    position: relative;
+
+    > .edit-btn {
+      display: flex;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+    }
+  }
 
   &-avatar {
     width: 82px;
@@ -72,10 +86,119 @@
     padding: 24px 24px;
   }
 
+  .md-dialog-footer {
+    justify-content: center;
+    padding-top: 0;
+    border-top: none;
+  }
+
   h2 {
     color: #3d3d3e;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
+  }
+
+  .change-num-selectField {
+    border-radius: 7px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+    .md-ink-container {
+      display: none;
+    }
+
+    &.country {
+      width: 100%;
+    }
+
+    .country-code {
+      flex-shrink: 0;
+
+      .md-icon-text {
+        width: 80px;
+      }
+
+      &[aria-expanded='true'] {
+        .md-icon-separator {
+          .md-icon {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+
+    .md-paper--1 {
+      box-shadow: none;
+    }
+
+    .md-select-field--btn {
+      //height: auto;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 400;
+
+      .md-icon-text {
+        color: #7c7c7c;
+        font-weight: 500;
+
+        &:first-child {
+          padding-right: 6px;
+        }
+      }
+    }
+
+    .md-text-field-container--input-block {
+      padding: 6px 10px;
+    }
+
+    .md-list {
+      margin-top: -5px;
+      border-radius: 0 0 7px 7px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+      &.md-paper--2 {
+        box-shadow: none;
+      }
+
+      &::-webkit-scrollbar {
+        visibility: visible;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 15px;
+        height: 100%;
+        transition: all 400ms;
+        opacity: 1;
+      }
+
+      &::-webkit-scrollbar-track {
+        visibility: visible;
+        height: 100%;
+        border: 5px solid #fff;
+        border-radius: 12px;
+        opacity: 1;
+        background-color: #d0d0d0;
+        // box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+        border: 5px solid transparent;
+        border-radius: 12px;
+        background-color: #7c7c7c;
+        // box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+        background-clip: content-box;
+      }
+
+      &:hover {
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-thumb {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
   }
 }

@@ -1,6 +1,5 @@
 import {
   Checkbox,
-  Chip,
   ExpansionList,
   ExpansionPanel,
   FontIcon,
@@ -52,36 +51,29 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
     return chips.map((el, i) => {
       // filterData?.[el?.category]?.filter((ell) => ell !== el?.data?.id)
       return (
-        <Chip
-          key={i}
-          label={
-            <span>
-              {el?.data?.name}
-              <FontIcon
-                onClick={() => {
-                  setFilterData((v) => ({
-                    ...v,
-                    [el?.category]:
-                      el?.category === 'search'
-                        ? ''
-                        : el?.category === 'auctionEndingSoon'
-                          ? status === 'Upcoming'
-                            ? 'ass'
-                            : 'aes'
-                          : v?.[el?.category]?.filter(
-                            (ell) => ell !== el?.data?.id,
-                          ),
-                  }))
-                  // setChips(prev => prev.filter((ell) => {
-                  //   return el?.category === 'search' ? '' : filterData?.[el?.category]?.includes(ell?.data?.id || ell?.data?.name)
-                  // }))
-                }}
-              >
-                add_circle
-              </FontIcon>
-            </span>
-          }
-        ></Chip>
+        <div key={i} className="auctions-filter-chip">
+          <span>{el?.data?.name}</span>
+          <FontIcon
+            onClick={() => {
+              setFilterData((v) => ({
+                ...v,
+                [el?.category]:
+                  el?.category === 'search'
+                    ? ''
+                    : el?.category === 'auctionEndingSoon'
+                      ? status === 'Upcoming'
+                        ? 'ass'
+                        : 'aes'
+                      : v?.[el?.category]?.filter((ell) => ell !== el?.data?.id),
+              }))
+              // setChips(prev => prev.filter((ell) => {
+              //   return el?.category === 'search' ? '' : filterData?.[el?.category]?.includes(ell?.data?.id || ell?.data?.name)
+              // }))
+            }}
+          >
+            close
+          </FontIcon>
+        </div>
       )
 
       // switch (el?.category) {
@@ -241,7 +233,6 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       <SelectField
         placeholder={t('type')}
         className="md-cell md-cell--1 auctions-filter-selectField"
-        toggleClassName="is-toggled"
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
@@ -254,7 +245,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         }
         menuItems={propertyTypeList?.map((tp, index) => {
           return tp?.props?.text ? (
-            <div>{t(tp?.props?.text)}</div>
+            <div className="md-selection-control-container">
+              <b>{t(tp?.props?.text)}</b>
+            </div>
           ) : (
             <Checkbox
               key={`${tp.value}-auction-type-${index}`}
@@ -319,15 +312,13 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
               ? `${price?.min} - ${price?.max}`
               : t('price_range')
           }
-          className="auctions-filter-textField price-range"
+          className={`auctions-filter-textField price-range ${
+            newPrice ? 'expanded' : ''
+          }`}
           onClick={() => setNewPrice(!newPrice)}
           disabled
           rightIcon={
-            filterData?.price ? (
-              <FontIcon>check</FontIcon>
-            ) : (
-              <FontIcon>expand_more</FontIcon>
-            )
+            <FontIcon>{newPrice ? 'expand_less' : 'expand_more'}</FontIcon>
           }
           // value={newPrice}
           // menuItems={[
@@ -492,17 +483,19 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         ]}
         position={SelectField.Positions.BELOW}
       />
-      <div>
+      <div className="auctions-filter-chipWrapper">
         {chips?.length > 0 && (
-          <Chip
-            label={<span>{t('reset_filters')}</span>}
+          <div
+            className="auctions-filter-chip active"
             onClick={() => {
               setFilterData({
                 auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
                 search: '',
               })
             }}
-          />
+          >
+            <span>{t('reset_filters')}</span>
+          </div>
         )}
         {renderChips()}
       </div>

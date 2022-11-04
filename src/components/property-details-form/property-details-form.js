@@ -3,6 +3,7 @@ import { TextField, FontIcon, Checkbox, Button } from 'react-md'
 import { useTranslation } from 'libs/langs'
 
 import UploadImages from 'components/upload-images'
+import selectImg from 'images/select-img.png'
 
 const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
   const { t } = useTranslation()
@@ -18,7 +19,6 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
   } = propertyDetails
   const [keyFeature, setKeyFeature] = useState()
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
-
   const onSetFormDetails = (property, value) => {
     setPropertyDetails({ ...propertyDetails, [property]: value })
   }
@@ -109,32 +109,36 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           block
         />
       </div>
-      <div className="md-cell md-cell--4">
-        <label className="auction-details-form-label">
-          {t('bedrooms_label')}
-        </label>
-        <TextField
-          id="bedrooms"
-          placeholder={t('bedrooms_number_placeholder')}
-          value={bedrooms}
-          onChange={(value) => onSetFormDetails('bedrooms', value)}
-          className="textField-withShadow"
-          block
-        />
-      </div>
-      <div className="md-cell md-cell--4">
-        <label className="auction-details-form-label">
-          {t('bathrooms_label')}
-        </label>
-        <TextField
-          id="bathrooms"
-          placeholder={t('bathrooms_number_placeholder')}
-          value={bathrooms}
-          onChange={(value) => onSetFormDetails('bathrooms', value)}
-          className="textField-withShadow"
-          block
-        />
-      </div>
+      {![5, 9].includes(propertyDetails?.propertyType) && (
+        <div className="md-cell md-cell--4">
+          <label className="auction-details-form-label">
+            {t('bedrooms_label')}
+          </label>
+          <TextField
+            id="bedrooms"
+            placeholder={t('bedrooms_number_placeholder')}
+            value={bedrooms}
+            onChange={(value) => onSetFormDetails('bedrooms', value)}
+            className="textField-withShadow"
+            block
+          />
+        </div>
+      )}
+      {![5, 9].includes(propertyDetails?.propertyType) && (
+        <div className="md-cell md-cell--4">
+          <label className="auction-details-form-label">
+            {t('bathrooms_label')}
+          </label>
+          <TextField
+            id="bathrooms"
+            placeholder={t('bathrooms_number_placeholder')}
+            value={bathrooms}
+            onChange={(value) => onSetFormDetails('bathrooms', value)}
+            className="textField-withShadow"
+            block
+          />
+        </div>
+      )}
       <div className="md-cell md-cell--4">
         <label className="auction-details-form-label">{t('area_label')}</label>
         <TextField
@@ -211,7 +215,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
             </div>
           }
           titleUpload={images?.length > 0 ? 'add_images' : ''}
-          icon={<FontIcon>add_photo_alternate</FontIcon>}
+          icon={<img src={selectImg} width="20px" />}
           accept="image/jpeg, image/png, image/jpg"
           className="custom"
         />

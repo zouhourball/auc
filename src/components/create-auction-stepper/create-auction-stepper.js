@@ -73,7 +73,6 @@ const CreateAuctionStepper = ({
   //   age: 0,
   //   gcc_percentage: 0, */
   // })
-
   const renderCurrentTabContent = () => {
     switch (currentStep) {
       case 1:
@@ -86,7 +85,7 @@ const CreateAuctionStepper = ({
       case 2:
         return (
           <PropertyDetailsForm
-            propertyDetails={propertyDetails}
+            propertyDetails={auctionDetails}
             setPropertyDetails={setPropertyDetails}
           />
         )
@@ -113,7 +112,7 @@ const CreateAuctionStepper = ({
     city,
     country,
     endDate,
-    guaranteeFee,
+    // guaranteeFee,
     incrementalPrice,
     participationFee,
     propertyType,
@@ -138,7 +137,7 @@ const CreateAuctionStepper = ({
           address &&
           city &&
           country &&
-          guaranteeFee &&
+          // guaranteeFee &&
           incrementalPrice &&
           participationFee &&
           propertyType &&

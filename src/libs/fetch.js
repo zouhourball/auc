@@ -52,20 +52,21 @@ export async function fetchJSON (url, opts, auth = true) {
       }
     } else {
       const failed = await res.json()
-      const err = new Error(
-        failed?.error?.msg || failed?.message || 'network status error',
-      )
+      // console.log('here fetch ', failed)
+      // const err = new Error(
+      //   failed?.error?.msg || failed?.error || failed?.message || 'network status error',
+      // )
 
-      err.status = res.status
-      try {
-        const json = await res.json()
-        if (json) {
-          err.body = json
-        }
-      } catch (e) {
-        // ignore if there is no json body
-      }
-      throw err
+      // err.status = res.status
+      // try {
+      //   const json = await res.json()
+      //   if (json) {
+      //     err.body = json
+      //   }
+      // } catch (e) {
+      //   // ignore if there is no json body
+      // }
+      throw failed
     }
   }
 
