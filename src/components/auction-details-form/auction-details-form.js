@@ -143,7 +143,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
       hasNextPage && fetchNextPage()
     }
   }
-
+  const errorText = t('please_fill_in_missing_details')
   return (
     <div className="auction-details-form md-grid">
       <div className="auction-details-form-title md-cell md-cell--12">
@@ -161,6 +161,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           className="textField-withShadow"
           required
           block
+          errorText={errorText}
         />
       </div>
       <div className="md-cell md-cell--6">
@@ -199,6 +200,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
             className="textField-map"
             required
             block
+            errorText={errorText}
           />
           <Button
             icon
@@ -230,6 +232,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         <CustomSelectWithSearch
           items={renderCountry()}
           label={t('country')}
+          required
+          id={'country'}
           hideSecondaryLabel={false}
           listVisibility={showListCountry}
           setListVisibility={handleShowListCountry}
@@ -248,6 +252,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           searchItemPlaceHolder={t('search_country')}
           singleSelect
           className="selectField-withShadow"
+          errorTextProp={errorText}
         />
       </div>
 
@@ -267,6 +272,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
         <CustomSelectWithSearch
           items={renderCity()}
           label={t('state_gov')}
+          id={'city'}
+          required
           hideSecondaryLabel={false}
           listVisibility={showListCities}
           setListVisibility={handleShowListCities}
@@ -285,6 +292,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           searchItemPlaceHolder={t('search_city')}
           singleSelect
           className="selectField-withShadow"
+          errorTextProp={errorText}
         />
       </div>
       <div className="md-cell md-cell--6">
@@ -310,6 +318,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           position={SelectField.Positions.BELOW}
           dropdownIcon={<img src={arrowDown} height={10} />}
           className="selectField-withShadow"
+          required
+          errorText={errorText}
         />
       </div>
 
@@ -320,6 +330,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('select_dates')}
           block
           required
+          // errorText={errorText}
           rightIcon={<img src={dateIcon} height={20} />}
           value={
             startDate
@@ -362,6 +373,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('start_time_select')}
           block
           required
+          // errorText={errorText}
           // type="number"
           rightIcon={<img src={dateIcon} height={20} />}
           value={startDate && `${moment(startDate).format('HH:mm')}`}
@@ -413,6 +425,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('end_time_select')}
           block
           required
+          // errorText={errorText}
           // type="number"
           rightIcon={<img src={dateIcon} height={20} />}
           value={endDate && `${moment(endDate).format('HH:mm')}`}
@@ -468,6 +481,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           }
           className="textField-withShadow"
           required
+          errorText={errorText}
           type="number"
           min={0}
           block
@@ -484,6 +498,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           }
           className="textField-withShadow"
           required
+          errorText={errorText}
           type="number"
           min={0}
           block
@@ -500,6 +515,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(val) => onSetFormDetails('participationFee', val)}
           className="textField-withShadow"
           required
+          errorText={errorText}
           type="number"
           min={0}
           block
@@ -516,6 +532,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(val) => onSetFormDetails('guaranteeFee', val)}
           className="textField-withShadow"
           required
+          errorText={errorText}
           type="number"
           min={0}
           block

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
-import { TextField, Button, FontIcon, SelectField } from 'react-md'
+import { TextField, Button, FontIcon, SelectField, Checkbox } from 'react-md'
 import { useQuery, useMutation, useInfiniteQuery } from 'react-query'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
@@ -134,8 +134,8 @@ const MyAuctionDetails = ({ auctionId }) => {
         ?.flatMap((el) => el?.results)
         ?.map((ac) => {
           return {
-            label: lang === 'ar' ? ac.name_ar : ac.name_en,
-            value: `${ac.id}`,
+            label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
+            value: `${ac?.id}`,
           }
         })
       if (
@@ -160,8 +160,8 @@ const MyAuctionDetails = ({ auctionId }) => {
     if (getCityList) {
       arrayName = getCityList?.results?.map((ac) => {
         return {
-          label: ac.name_en,
-          value: `${ac.id}`,
+          label: ac?.['name_en'],
+          value: `${ac?.id}`,
         }
       })
       if (!arrayName?.find((el) => el?.value === auctionEditData?.city?.id)) {
@@ -824,6 +824,15 @@ const MyAuctionDetails = ({ auctionId }) => {
               </div>
             </>
           )}
+          <h3>{t('appointments')}</h3>
+          <Checkbox
+            id={`request-viewing`}
+            name={`request-viewing-checkboxes`}
+            label={t('request_viewing')}
+            onChange={() => {}}
+            disabled={!editMode}
+            checked={true}
+          />
         </div>
       )}
       <div className="auction-details-buttonWrapper">

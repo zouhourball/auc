@@ -333,5 +333,8 @@
   "Mixed_use": "Mixed Use",
   "Factory": "Factory",
   "Resort": "Resort",
+  "please_fill_in_missing_details": "Please fill in missing details",
+  "request_viewing": "Request for Viewing",
+  "appointments": "Appointments",
   "Park": "Park"
 }

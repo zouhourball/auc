@@ -599,15 +599,13 @@ export const filePersistence = async ({ id }) => {
       `${PRODUCT_APP_URL_API}/meerastorage/backend/files/${id}/persistence`,
       {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/x-www-form-urlencoded',
-        //   Authorization: `Basic ${btoa(
-        //     `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
-        //   )}`,
-        //   // 'x-jwt-key': `${btoa(
-        //   //   `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
-        //   // )}`,
-        // },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          // Authorization: `Basic ${btoa(
+          //   `${OAUTH_CLIENT_ID}:${OAUTH_CLIENT_SECRET}`,
+          // )}`,
+          'x-jwt-key': `Tes9tinas2kmskajirn`,
+        },
       },
     )
   } catch (e) {
@@ -831,7 +829,7 @@ export const downloadInvoice = async ({ trackID }) => {
         method: 'GET',
       },
     ).then((response) => response.blob())
-    downloadFromBlob(res, `Award Certificate`)
+    downloadFromBlob(res, `Invoice`)
   } catch (e) {
     res = { error: e }
   }

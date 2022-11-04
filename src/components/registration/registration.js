@@ -15,7 +15,7 @@ import {
   registerBidder,
   genUploadToken,
   registerBroker,
-  filePersistence,
+  // filePersistence,
 } from 'libs/api/auctions-api'
 import {
   useChangeLanguage,
@@ -87,15 +87,15 @@ const RegistrationPage = () => {
     },
   )
 
-  const { mutate: filePersistenceMutation } = useMutation(filePersistence, {
-    // onSuccess: (res) => {
-    //   if (!res.error) {
-    //     setConfirmDialogVisible(true)
-    //   } else {
-    //     setConfirmDialogVisible({ error: res?.msg })
-    //   }
-    // },
-  })
+  // const { mutate: filePersistenceMutation } = useMutation(filePersistence, {
+  // onSuccess: (res) => {
+  //   if (!res.error) {
+  //     setConfirmDialogVisible(true)
+  //   } else {
+  //     setConfirmDialogVisible({ error: res?.msg })
+  //   }
+  // },
+  // })
   const { mutate: registerBrokerMutation, isLoading: loading } = useMutation(
     registerBroker,
     {
@@ -301,9 +301,9 @@ const RegistrationPage = () => {
                 </>
               }
               setListFiles={(files) => {
-                filePersistenceMutation({
-                  id: files[0]?.id,
-                })
+                // filePersistenceMutation({
+                //   id: files[0]?.id,
+                // })
                 setValues('logo', files)
               }}
               onRemoveFile={() => setValues('logo', [])}

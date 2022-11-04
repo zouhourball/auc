@@ -19,6 +19,7 @@ export default class CustomSelectWithSearch extends Component {
       listVisible: false,
       search: '',
       selectedItem: null,
+      inputError: false,
       selectedItemsArray: [],
       currentSection:
         props.sections && props.sections.length > 0
@@ -37,14 +38,17 @@ export default class CustomSelectWithSearch extends Component {
     this.containerRef = React.createRef()
   }
 
-  handleClickOutside = () => {
-    const { search } = this.state
+  handleClickOutside = (e) => {
+    const { search, targetId } = this.state
     const {
       onTextChange,
       setListVisibility,
       keepData,
       onClickItem,
       searchValue,
+      selectedItem,
+      required,
+      id,
     } = this.props
 
     setListVisibility
@@ -61,6 +65,11 @@ export default class CustomSelectWithSearch extends Component {
     if (keepData && validateEmail(searchValue)) {
       onClickItem({ label: searchValue })
     }
+
+    !selectedItem &&
+      required &&
+      targetId === id &&
+      this.setState({ inputError: true })
   }
 
   renderItems = () => {
@@ -75,6 +84,7 @@ export default class CustomSelectWithSearch extends Component {
       mentor,
       searchValue,
       keepData,
+      // errorTextProp,
     } = this.props
 
     const { currentSection, search } = this.state
@@ -139,6 +149,7 @@ export default class CustomSelectWithSearch extends Component {
           onClick={(e) => {
             e.stopPropagation()
             onClickItem(elem)
+            setListVisibility && this.setState({ inputError: false })
             setListVisibility
               ? setListVisibility(false)
               : this.setState({ listVisible: false })
@@ -252,13 +263,15 @@ export default class CustomSelectWithSearch extends Component {
       rightIcon,
       onClickItem,
       required,
-      error,
-      errorText,
+      // error,
+      // errorText,
       helpText,
       withHelp,
       keepData,
       searchValue,
       setSearchValue,
+      id,
+      errorTextProp,
     } = this.props
     const {
       // listVisible,
@@ -266,6 +279,7 @@ export default class CustomSelectWithSearch extends Component {
       // currentSection,
       styleH,
       styleV,
+      inputError,
     } = this.state
 
     const dataToSearch = keepData ? searchValue : search
@@ -280,14 +294,16 @@ export default class CustomSelectWithSearch extends Component {
           <div className="customSelect_wrapper_list_items" ref={this.myRef}>
             <TextField
               placeholder={searchPlaceholder}
+              id={id}
               // label={label}
               disabled
               className={`customSelect_wrapper_textField ${
                 textFieldClassName || ''
               }`}
               required={required}
-              error={error}
-              errorText={errorText}
+              // error={error}
+              error={inputError}
+              errorText={errorTextProp || ''}
               value={
                 !(singleSelect && selectedItem) ? dataToSearch : selectedItem
               }
@@ -337,7 +353,10 @@ export default class CustomSelectWithSearch extends Component {
                   onTextChange(val)
                 }
               }}
-              onClick={() => setListVisibility(!listVisibility)}
+              onClick={() => {
+                setListVisibility(!listVisibility)
+                required && this.setState({ targetId: id })
+              }}
               block
               // disabled={withHeader && !singleSelect}
             />

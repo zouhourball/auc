@@ -77,7 +77,7 @@ const UploadImages = ({
     ).then((res) => {
       setLoading(false)
       setFiles([...newFiles])
-      // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.replace(`=/${res[0]?.options?.metadata?.filename}`, ''))
+      // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.split(`=/`))
       setListFiles &&
         setListFiles(
           [
@@ -85,7 +85,7 @@ const UploadImages = ({
             ...res.map((r) => ({
               id: res[0]?.url
                 ?.replace(res[0]?.options?.endpoint, '')
-                ?.replace(`=/${res[0]?.options?.metadata?.filename}`, ''),
+                ?.split(`=/`)?.[0],
               url: r.url,
               type: r?.file?.type,
               options: r.options,

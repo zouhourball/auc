@@ -84,6 +84,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       onSetFormDetails('images', newImages)
     }
   }
+  const errorText = t('please_fill_in_missing_details')
 
   return (
     <div className="auction-details-form md-grid">
@@ -102,6 +103,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           }
           className="textField-withShadow"
           required
+          errorText={errorText}
           rows={5}
           placeholder={t('property_description_placeholder')}
           block
@@ -142,6 +144,8 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           onChange={(value) => onSetFormDetails('area', value)}
           className="textField-withShadow"
           block
+          required
+          errorText={errorText}
         />
       </div>
       <div className="md-cell md-cell--12">
