@@ -1,12 +1,67 @@
 .conditions-dialog {
   .md-dialog {
-    width: 50%;
-    border-radius: 20px;
+    width: 670px;
+    border-radius: 35px;
     font-size: 18px;
   }
 
   .md-title {
-    font-size: 24px;
+    color: #3d3d3e;
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
     text-align: center;
+  }
+
+  .md-dialog-content--padded {
+    padding: 0 24px;
+  }
+
+  .conditions-list {
+    margin-bottom: 0;
+
+    > li {
+      color: #7c7c7c;
+      font-family: Roboto, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      list-style: inside;
+
+      &::marker {
+        margin-right: 8px;
+      }
+
+      &.item-with-number {
+        list-style: none;
+      }
+    }
+  }
+
+  .conditions-dialog-checkbox {
+    .md-text {
+      color: #5078e1;
+      font-family: Roboto, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .md-btn--icon {
+      width: 30px;
+      padding: 10px 0;
+      color: #5078e1;
+    }
+  }
+
+  .md-dialog-footer--inline {
+    padding: 0 16px 16px;
+    border-top: none;
+  }
+
+  .md-btn {
+    border-radius: 18px;
+
+    &.disagree {
+      color: #7c7c7c;
+    }
   }
 }
