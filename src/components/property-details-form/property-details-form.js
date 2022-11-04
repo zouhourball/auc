@@ -191,6 +191,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
         <label className="auction-details-form-label">
           {t('property_images')}
         </label>
+
         <UploadImages
           cover
           multiple={true}
