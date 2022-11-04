@@ -65,7 +65,7 @@ const ImageCrop = ({ src, visible, setVisible, onConfirm }) => {
   const onImageLoad = (e) => {
     setImageRef(e?.currentTarget)
   }
-
+  // console.log(src, 'filelist 2')
   const uploadCropFile = () => {
     const canvasRef = previewCanvasRef.current
 
@@ -150,6 +150,8 @@ const ImageCrop = ({ src, visible, setVisible, onConfirm }) => {
           ref={previewCanvasRef}
           style={{
             border: '1px solid black',
+            // width: '1000px',
+            // height: '700px',
             objectFit: 'contain',
             display: 'none',
           }}

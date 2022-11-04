@@ -236,7 +236,13 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={
+          filterData?.type?.length > 0 ? (
+            <FontIcon>check</FontIcon>
+          ) : (
+            <FontIcon>expand_more</FontIcon>
+          )
+        }
         menuItems={propertyTypeList?.map((tp, index) => {
           return tp?.props?.text ? (
             <div className="md-selection-control-container">
@@ -346,9 +352,15 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       </div>
       <SelectField
         placeholder={t('location')}
-        className=" md-cell md-cell--2 auctions-filter-selectField"
+        className={`md-cell md-cell--2 auctions-filter-selectField`}
         value={'location'}
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={
+          filterData?.location?.length > 0 ? (
+            <FontIcon>check</FontIcon>
+          ) : (
+            <FontIcon>expand_more</FontIcon>
+          )
+        }
         menuItems={[
           <ExpansionList key={'LocationExpansionList'}>
             {renderCountries()}
@@ -360,7 +372,13 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       <SelectField
         placeholder={t('broker_company')}
         className=" md-cell md-cell--2 auctions-filter-selectField"
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={
+          filterData?.brokerCompany?.length > 0 ? (
+            <FontIcon>check</FontIcon>
+          ) : (
+            <FontIcon>expand_more</FontIcon>
+          )
+        }
         value={'Broker Company'}
         // onChange={(v) => setFilterData({ ...filterData, brokerCompany: v })}
         menuItems={getBrokers?.results?.map((bc, index) => (
@@ -430,7 +448,13 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       <SelectField
         placeholder={t('auction_ending')}
         className="md-cell md-cell--2 auctions-filter-selectField"
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={
+          filterData?.auctionEndingSoon ? (
+            <FontIcon>check</FontIcon>
+          ) : (
+            <FontIcon>expand_more</FontIcon>
+          )
+        }
         value={auctionEndingSoon}
         defaultValue={status === 'Upcoming' ? 'ass' : 'aes'}
         onChange={(v) => {
