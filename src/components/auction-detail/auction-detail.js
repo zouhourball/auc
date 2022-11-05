@@ -224,6 +224,18 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       )
     }
   }, [auctionData])
+
+  // Remove this section after finishing
+  //* *************************
+  // useEffect(() => {
+  dispatch(
+    addToast(
+      <ToastMsg text={'You have been outbid!'} type="success" />,
+      'hide',
+    ),
+  )
+  // }, [])
+  //* *************************
   useEffect(() => {
     refetchAuction()
     // console.log(timeExtension, 'timeExtension1')
