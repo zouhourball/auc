@@ -18,15 +18,17 @@ class ToastMsg extends React.Component {
         return <FontIcon className="toastMsg_icon warning">cancel</FontIcon>
       case 'info':
         return <FontIcon className="toastMsg_icon info">info</FontIcon>
+      case 'outbid':
+        return <FontIcon className="toastMsg_icon info">outbid</FontIcon>
       default:
         return <></>
     }
   }
   render () {
-    const { text } = this.props
+    const { text, type } = this.props
 
     return (
-      <div className="toastMsg">
+      <div className={`toastMsg ${type === 'outbid' ? 'class-outbid' : ''}`}>
         {this.renderIcon()}
         <div className="toastMsg_text">{text}</div>
       </div>

@@ -218,7 +218,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
     ) {
       dispatch(
         addToast(
-          <ToastMsg text={'You have been outbid!'} type="success" />,
+          <ToastMsg text={'You have been outbid!'} type="outbid" />,
           'hide',
         ),
       )
@@ -229,10 +229,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   //* *************************
   // useEffect(() => {
   dispatch(
-    addToast(
-      <ToastMsg text={'You have been outbid!'} type="success" />,
-      'hide',
-    ),
+    addToast(<ToastMsg text={'You have been outbid!'} type="outbid" />, 'hide'),
   )
   // }, [])
   //* *************************
