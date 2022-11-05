@@ -382,3 +382,29 @@
     }
   }
 }
+
+.md-snackbar {
+  border-radius: 16px;
+  background-color: #5078e1;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+  color: #fff;
+
+  .toastMsg {
+    flex-grow: 1;
+  }
+
+  .toastMsg_icon {
+    margin-right: 0;
+    border-right: none;
+  }
+
+  .toastMsg_icon.info {
+    color: #fff;
+  }
+
+  .toastMsg_text {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}

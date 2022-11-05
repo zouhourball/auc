@@ -19,7 +19,11 @@ class ToastMsg extends React.Component {
       case 'info':
         return <FontIcon className="toastMsg_icon info">info</FontIcon>
       case 'outbid':
-        return <FontIcon className="toastMsg_icon info">outbid</FontIcon>
+        return (
+          <FontIcon className="toastMsg_icon info">
+            sentiment_very_dissatisfied
+          </FontIcon>
+        )
       default:
         return <></>
     }

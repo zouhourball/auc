@@ -167,31 +167,34 @@ const AdminTopBar = ({ modules, currentTab, setCurrentTab }) => {
             {notifNumber}
           </span>
         )} */}
+          {newNotif && (
+            <div
+              className="new-notif"
+              onClick={() => {
+                navigate(newNotif?.data?.url)
+                setNewNotif('')
+                markRead(newNotif?.id)
+              }}
+            >
+              <img
+                className="notifPanel-item-icon"
+                src={bidPlace}
+                width="20px"
+                height="20px"
+              />
+              <div className="notifPanel-item-data">
+                <div className="label">{newNotif.title}</div>
+                <div className="date">
+                  {moment(newNotif.createdAt).fromNow()}
+                </div>
+              </div>
+              <div className="notificationCard-right">
+                {!newNotif.viewed && <div className="notifPoint" />}
+              </div>
+            </div>
+          )}
         </div>
-        {newNotif && (
-          <div
-            className="new-notif"
-            onClick={() => {
-              navigate(newNotif?.data?.url)
-              setNewNotif('')
-              markRead(newNotif?.id)
-            }}
-          >
-            <img
-              className="notifPanel-item-icon"
-              src={bidPlace}
-              width="20px"
-              height="20px"
-            />
-            <div className="notifPanel-item-data">
-              <div className="label">{newNotif.title}</div>
-              <div className="date">{moment(newNotif.createdAt).fromNow()}</div>
-            </div>
-            <div className="notificationCard-right">
-              {!newNotif.viewed && <div className="notifPoint" />}
-            </div>
-          </div>
-        )}
+
         <Button
           onClick={() => {
             cleanUp()
