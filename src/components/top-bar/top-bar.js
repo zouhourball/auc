@@ -102,6 +102,11 @@ const TopBar = ({
       refetchNewNotif(JSON.parse(newEvent)?.payload?.payload)
     }
   }, [newEvent])
+  // remove this **Begin**
+  useEffect(() => {
+    setNewNotif(notifications?.content[0])
+  }, [notifications])
+  // remove this **End**
   useEffect(() => {
     if (
       modules?.includes('live-auctions') ||
