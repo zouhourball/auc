@@ -97,7 +97,7 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
     ) : (
       <div className="empty-content">
         <img className="empty-content-logo" src={noResult} />
-        <div className="empty-content-title">No Results Found</div>
+        <div className="empty-content-title">{t('no_result')}</div>
         <div className="empty-content-text">
           {"We couldn't find what you're looking for!"}
         </div>
