@@ -1,6 +1,8 @@
-import Mht from '@target-energysolutions/mht'
+import Mht, {
+  setSelectedRow as setSelectedRowAction,
+} from '@target-energysolutions/mht'
 import { useTranslation, useCurrentLang } from 'libs/langs'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // import { get } from 'lodash-es'
 import { useEffect, useMemo, useState } from 'react'
 // import { useQuery as useQueryApollo } from 'react-apollo-hooks'
@@ -40,18 +42,23 @@ import './style.scss'
 
 const Admin = ({ logged, auctionId, currentTab }) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   let currentLang = useCurrentLang()
 
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
   const [offset, setOffset] = useState(0)
-  useEffect(() => {
-    setOffset(0)
-  }, [currentTab])
+
   const selectedRowSelector = useSelector(
     (state) => state?.selectRowsReducers?.selectedRows,
   )
+  const setSelectedRow = (data) => dispatch(setSelectedRowAction(data))
+
+  useEffect(() => {
+    setOffset(0)
+    setSelectedRow([])
+  }, [currentTab])
   let limit = 10
 
   const { data: downloadToken } = useQuery(
@@ -76,7 +83,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
         offset,
       },
     ],
-    auctionsRequest,
+    currentTab === 0 && auctionsRequest,
   )
 
   const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
@@ -87,7 +94,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
         offset,
       },
     ],
-    getApprovals,
+    currentTab === 1 && getApprovals,
   )
 
   const approveBrokerMutation = useMutation(approveRejectBroker, {
@@ -103,7 +110,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
       id: el?.id,
       status: el?.status,
       logo: el?.logo ? (
-        <Avatar src={`${el?.logo}?token=${downloadToken}&view=true`} />
+        <Avatar src={`${el?.logo}?token=${downloadToken?.token}&view=true`} />
       ) : (
         <Avatar>{el?.name?.charAt(0).toUpperCase()}</Avatar>
       ),

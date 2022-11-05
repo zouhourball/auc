@@ -9,6 +9,7 @@ import { uploadFileTus, fileDownloadTus } from 'libs/api/tus-upload'
 import { useTranslation } from 'libs/langs'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
 import store from 'libs/store'
+import ImageCrop from 'components/image-crop'
 
 import './style.scss'
 
@@ -45,66 +46,80 @@ const UploadImages = ({
   const [fileSrc, setFileSrc] = useState('')
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
+  const [testFile, setFile] = useState(null)
   const downloadToken = publicDownloadToken || store?.getState()?.app?.dlToken
 
   const onDropFiles = (fls) => {
-    let newFiles = []
+    const myFileItemReader = new FileReader()
+    myFileItemReader.addEventListener(
+      'load',
+      () => {
+        // this.setState({ imgSrc: myFileItemReader.result })
+        setFile(myFileItemReader.result)
+      },
+      false,
+    )
+    myFileItemReader.readAsDataURL(fls?.[0])
+
+    // console.log(fls, 'filelist')
+
+    // let newFiles = []
 
     setLoading(true)
-    Promise.all(
-      fls.map((f) =>
-        uploadFileTus(
-          f,
-          null,
-          (res) => {
-            newFiles = [
-              ...newFiles,
-              {
-                id: res?.url,
-                url: res?.url,
-                size: res?.file?.size?.toString(),
+    // Promise.all(
+    //   [testFile]?.map((f) =>
+    //     uploadFileTus(
+    //       f,
+    //       null,
+    //       (res) => {
+    //         newFiles = [
+    //           ...newFiles,
+    //           {
+    //             id: res?.url,
+    //             url: res?.url,
+    //             size: res?.file?.size?.toString(),
 
-                fileName: res?.file?.name,
-                type: res?.file?.type,
-              },
-            ]
-          },
-          null,
-          false,
-          publicToken,
-        ),
-      ),
-    ).then((res) => {
-      setLoading(false)
-      setFiles([...newFiles])
-      // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.split(`=/`))
-      setListFiles &&
-        setListFiles(
-          [
-            // ...files,
-            ...res.map((r) => ({
-              id: res[0]?.url
-                ?.replace(res[0]?.options?.endpoint, '')
-                ?.split(`=/`)?.[0],
-              url: r.url,
-              type: r?.file?.type,
-              options: r.options,
-              size: r._size,
-            })),
-          ],
-          'add',
-        )
-      onDrop &&
-        onDrop([
-          ...files,
-          ...res.map((r) => ({
-            url: r.url,
-            type: r.file.type,
-            options: r.options,
-            size: r._size,
-          })),
-        ])
-    })
+    //             fileName: res?.file?.name,
+    //             type: res?.file?.type,
+    //           },
+    //         ]
+    //       },
+    //       null,
+    //       false,
+    //       publicToken,
+    //     ),
+    //   ),
+    // ).then((res) => {
+    //   setLoading(false)
+    //   setFiles([...newFiles])
+    //   // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.split(`=/`))
+    //   setListFiles &&
+    //     setListFiles(
+    //       [
+    //         // ...files,
+    //         ...res.map((r) => ({
+    //           id: res[0]?.url
+    //             ?.replace(res[0]?.options?.endpoint, '')
+    //             ?.split(`=/`)?.[0],
+    //           url: r.url,
+    //           type: r?.file?.type,
+    //           options: r.options,
+    //           size: r._size,
+    //         })),
+    //       ],
+    //       'add',
+    //     )
+    //   onDrop &&
+    //     onDrop([
+    //       ...files,
+    //       ...res.map((r) => ({
+    //         url: r.url,
+    //         type: r.file.type,
+    //         options: r.options,
+    //         size: r._size,
+    //       })),
+    //     ])
+    // })
   }
 
   const { getRootProps, getInputProps, open } = useDropzone({
@@ -132,6 +147,7 @@ const UploadImages = ({
   useEffect(() => {
     listFiles && setFiles(listFiles)
   }, [listFiles])
+  // console.log(listFiles, 'listFiles')
 
   const preview = (file) => {
     setFileSrc(file)
@@ -403,6 +419,70 @@ const UploadImages = ({
 
   return (
     <div key={key} className={cls('upload-images', className)}>
+      <ImageCrop
+        src={testFile}
+        visible={testFile}
+        // setVisible={setVisible}
+        onConfirm={(file) => {
+          // console.log(file, 'file')
+          let newFiles = []
+
+          Promise.all(
+            [file]?.map((f) =>
+              uploadFileTus(
+                f,
+                null,
+                (res) => {
+                  newFiles = [
+                    ...newFiles,
+                    {
+                      id: res?.url,
+                      url: res?.url,
+                      size: res?.file?.size?.toString(),
+
+                      fileName: res?.file?.name,
+                      type: res?.file?.type,
+                    },
+                  ]
+                },
+                null,
+                false,
+                publicToken,
+              ),
+            ),
+          ).then((res) => {
+            setLoading(false)
+            setFiles([...newFiles])
+            // console.log(res[0]?.url, files, 'heeeeere')
+            setListFiles &&
+              setListFiles(
+                [
+                  // ...files,
+                  ...res.map((r) => ({
+                    id: res[0]?.url
+                      ?.replace(res[0]?.options?.endpoint, '')
+                      ?.split(`=/`)?.[0],
+                    url: r.url,
+                    type: r?.file?.type,
+                    options: r.options,
+                    size: r._size,
+                  })),
+                ],
+                'add',
+              )
+            onDrop &&
+              onDrop([
+                ...files,
+                ...res.map((r) => ({
+                  url: r.url,
+                  type: r.file.type,
+                  options: r.options,
+                  size: r._size,
+                })),
+              ])
+          })
+        }}
+      />
       <div
         className={cls(
           'upload-images-title-content',
