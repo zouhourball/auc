@@ -160,6 +160,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           onChange={(title) => onSetFormDetails('title', title)}
           className="textField-withShadow"
           block
+          error={!title}
           errorText={errorText}
         />
       </div>

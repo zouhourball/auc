@@ -227,11 +227,11 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
 
   // Remove this section after finishing
   //* *************************
-  useEffect(() => {
-    dispatch(
-      addToast(<ToastMsg text={'You have been outbid!'} type="outbid" />),
-    )
-  }, [])
+  // useEffect(() => {
+  //   dispatch(
+  //     addToast(<ToastMsg text={'You have been outbid!'} type="outbid" />),
+  //   )
+  // }, [])
   //* *************************
   useEffect(() => {
     refetchAuction()

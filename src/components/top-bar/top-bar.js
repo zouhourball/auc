@@ -103,9 +103,9 @@ const TopBar = ({
     }
   }, [newEvent])
   // remove this **Begin**
-  useEffect(() => {
-    setNewNotif(notifications?.content[0])
-  }, [notifications])
+  // useEffect(() => {
+  //   setNewNotif(notifications?.content[0])
+  // }, [notifications])
   // remove this **End**
   useEffect(() => {
     if (
