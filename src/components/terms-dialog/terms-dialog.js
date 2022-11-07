@@ -58,23 +58,11 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       title={t('terms_condition')}
     >
       <ul className="conditions-list">
-        <li>
-          {t('term1')}
-          <ul className="conditions-list-sublist">
-            <li>{t('term2')}</li>
-            <li>{t('term3')}</li>
-            <li>{t('term4')}</li>
-            <li>{t('term5')}</li>
-          </ul>
-        </li>
-        <li>{t('part_two')}</li>
-        <li>{t('part_three')}</li>
-        <li>{t('condition4')}</li>
-        <li>{t('condition5')}</li>
-        <li>{t('condition6')}</li>
-        <li>{t('condition7')}</li>
-        <li>{t('condition8')}</li>
-        <li>{t('condition9')}</li>
+        <li className="item-with-number">{t('first_term')}</li>
+        <li>{t('second_term')}</li>
+        <li>{t('third_term')}</li>
+        <li>{t('fourth_term')}</li>
+        <li>{t('fifth_term')}</li>
       </ul>
       <Checkbox
         key={0}
