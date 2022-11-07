@@ -246,8 +246,9 @@
 
   .new-notif {
     position: absolute;
-    top: 65%;
-    right: 6%;
+    top: 30px;
+    right: 6px;
+    width: max-content;
     padding: 12px 14px;
     border-radius: 12px;
     background-color: #fff;

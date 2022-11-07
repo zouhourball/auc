@@ -102,6 +102,11 @@ const TopBar = ({
       refetchNewNotif(JSON.parse(newEvent)?.payload?.payload)
     }
   }, [newEvent])
+  // remove this **Begin**
+  // useEffect(() => {
+  //   setNewNotif(notifications?.content[0])
+  // }, [notifications])
+  // remove this **End**
   useEffect(() => {
     if (
       modules?.includes('live-auctions') ||
@@ -403,34 +408,35 @@ const TopBar = ({
                   />
                 </div>
               )}
-            </div>
-          )}
-          {logged && newNotif && (
-            <div
-              className="new-notif"
-              onClick={() => {
-                navigate(newNotif?.data?.url)
-                setNewNotif('')
-                markRead(newNotif?.id)
-              }}
-            >
-              <img
-                className="notifPanel-item-icon"
-                src={bidPlace}
-                width="20px"
-                height="20px"
-              />
-              <div className="notifPanel-item-data">
-                <div className="label">{newNotif.title}</div>
-                <div className="date">
-                  {moment(newNotif.createdAt).fromNow()}
+              {newNotif && (
+                <div
+                  className="new-notif"
+                  onClick={() => {
+                    navigate(newNotif?.data?.url)
+                    setNewNotif('')
+                    markRead(newNotif?.id)
+                  }}
+                >
+                  <img
+                    className="notifPanel-item-icon"
+                    src={bidPlace}
+                    width="20px"
+                    height="20px"
+                  />
+                  <div className="notifPanel-item-data">
+                    <div className="label">{newNotif.title}</div>
+                    <div className="date">
+                      {moment(newNotif.createdAt).fromNow()}
+                    </div>
+                  </div>
+                  <div className="notificationCard-right">
+                    {!newNotif.viewed && <div className="notifPoint" />}
+                  </div>
                 </div>
-              </div>
-              <div className="notificationCard-right">
-                {!newNotif.viewed && <div className="notifPoint" />}
-              </div>
+              )}
             </div>
           )}
+
           {logged && (
             <div className="top-bar-actions-menu-button">
               <MenuButton
