@@ -93,16 +93,12 @@ const MyAuctionDetails = ({ auctionId }) => {
         dispatch(
           addToast(
             <ToastMsg text={'Auction deleted successfully'} type="success" />,
-            'hide',
           ),
         )
         refetchAuction()
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something is wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
         )
       }
     },
@@ -110,7 +106,6 @@ const MyAuctionDetails = ({ auctionId }) => {
       dispatch(
         addToast(
           <ToastMsg text={error?.error || 'Something is wrong'} type="error" />,
-          'hide',
         ),
       )
     },
@@ -329,7 +324,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                 text={'Auction is updated successfully' || 'success'}
                 type="success"
               />,
-              'hide',
             ),
           )
           onDisableEdit()
@@ -340,7 +334,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                 text={res.error?.body?.message || 'error'}
                 type="error"
               />,
-              'hide',
             ),
           )
         }
@@ -913,7 +906,13 @@ const MyAuctionDetails = ({ auctionId }) => {
           <Button className="cancelBtn" onClick={() => onDisableEdit()}>
             Cancel
           </Button>
-          <Button className="saveBtn" onClick={() => saveChanges()}>
+          <Button
+            className="saveBtn"
+            onClick={() => {
+              saveChanges()
+              onDisableEdit()
+            }}
+          >
             Save
           </Button>
         </div>

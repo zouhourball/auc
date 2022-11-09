@@ -49,16 +49,12 @@ const SideAuctionCard = ({
         dispatch(
           addToast(
             <ToastMsg text={'Auction saved as favorite'} type="success" />,
-            'hide',
           ),
         )
         refetch()
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something is wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
         )
       }
     },
@@ -73,16 +69,12 @@ const SideAuctionCard = ({
               text={'Auction is removed from favorites list successfully'}
               type="success"
             />,
-            'hide',
           ),
         )
         refetch()
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something is wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
         )
       }
     },

@@ -117,7 +117,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       dispatch(
         addToast(
           <ToastMsg text={'Payment done successfully '} type="success" />,
-          'hide',
         ),
       )
       // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
@@ -133,7 +132,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       dispatch(
         addToast(
           <ToastMsg text={'Payment procedure has failed'} type="error" />,
-          'hide',
         ),
       )
       history.replaceState(null, null, `/auctions/detail/${auctionId}`)
@@ -156,12 +154,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const [placeNewBid] = useMutation(placeBid, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
     onError: (res) => {
-      dispatch(
-        addToast(
-          <ToastMsg text={'Unacceptable Amount'} type="error" />,
-          'hide',
-        ),
-      )
+      dispatch(addToast(<ToastMsg text={'Unacceptable Amount'} type="error" />))
     },
   })
 
@@ -186,7 +179,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               text={res.message || 'Bid placed successfully !'}
               type="success"
             />,
-            'hide',
           ),
         )
       } else {
@@ -196,7 +188,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               text={res.error?.body?.message || 'error'}
               type="error"
             />,
-            'hide',
           ),
         )
       }
@@ -217,10 +208,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
       !(auctionData?.['last_bid']?.['member_subject'] === user?.subject)
     ) {
       dispatch(
-        addToast(
-          <ToastMsg text={'You have been outbid!'} type="outbid" />,
-          'hide',
-        ),
+        addToast(<ToastMsg text={'You have been outbid!'} type="outbid" />),
       )
     }
   }, [auctionData])
@@ -255,16 +243,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         dispatch(
           addToast(
             <ToastMsg text={'Auction saved as favorite'} type="success" />,
-            'hide',
           ),
         )
         refetchAuction()
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something is wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
         )
       }
     },
@@ -279,16 +263,12 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
               text={'Auction is removed from favorites list successfully'}
               type="success"
             />,
-            'hide',
           ),
         )
         refetchAuction()
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something is wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
         )
       }
     },

@@ -30,16 +30,12 @@ const Auctions = () => {
         dispatch(
           addToast(
             <ToastMsg text={'Auction published successfully'} type="success" />,
-            'hide',
           ),
         )
         navigate('/auctions')
       } else {
         dispatch(
-          addToast(
-            <ToastMsg text={'Something went wrong'} type="error" />,
-            'hide',
-          ),
+          addToast(<ToastMsg text={'Something went wrong'} type="error" />),
         )
       }
     },

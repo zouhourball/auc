@@ -304,7 +304,12 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   return (
     <div className="broker-profile">
       <div className="broker-profile-header">
-        <FontIcon onClick={() => navigate('/auctions/broker')}>
+        <FontIcon
+          onClick={() => {
+            navigate('/auctions/broker')
+            // window.history.go(-1)
+          }}
+        >
           {currentLang === 'ar-SA' || currentLang === 'ar'
             ? 'arrow_forward'
             : 'arrow_back'}

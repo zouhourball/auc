@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Avatar, Card, CardActions, CardTitle, FontIcon } from 'react-md'
 import { navigate } from '@reach/router'
+import { useTranslation } from 'libs/langs'
 
 import BrokerHeader from 'components/broker-header'
 
@@ -13,6 +14,7 @@ import './style.scss'
 const BrokerPage = ({ logged }) => {
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   // const [filter, setFilter] = useState(0)
+  const { t } = useTranslation()
   const { data: getBrokers } = useQuery(['getBrokers'], allBrokersDetails)
   // const dummyData = [
   //   {
@@ -124,7 +126,7 @@ const BrokerPage = ({ logged }) => {
       key: 'broker',
       className: `broker-header-title ${activeHeaderTab === 0 ? 'active' : ''}`,
       onClick: () => setActiveHeaderTab(0),
-      title: 'Broker Company',
+      title: t('broker_company'),
     },
   ]
   const headerFilters = [
