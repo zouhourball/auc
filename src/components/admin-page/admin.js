@@ -55,10 +55,6 @@ const Admin = ({ logged, auctionId, currentTab }) => {
   )
   const setSelectedRow = (data) => dispatch(setSelectedRowAction(data))
 
-  useEffect(() => {
-    setOffset(0)
-    setSelectedRow([])
-  }, [currentTab])
   let limit = 10
 
   const { data: downloadToken } = useQuery(
@@ -96,7 +92,12 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     ],
     currentTab === 1 && getApprovals,
   )
-
+  useEffect(() => {
+    setOffset(0)
+    setSelectedRow([])
+    currentTab === 1 && refetchApprovalList()
+    currentTab === 0 && refetch()
+  }, [currentTab])
   const approveBrokerMutation = useMutation(approveRejectBroker, {
     onSuccess: (res) => {
       if (!res.error) {
@@ -473,14 +474,14 @@ const Admin = ({ logged, auctionId, currentTab }) => {
       key: 'broker',
       className: `broker-header-title ${activeHeaderTab === 0 ? 'active' : ''}`,
       onClick: () => setActiveHeaderTab(0),
-      title: 'Broker Company',
+      title: t('broker_company'),
     },
 
     {
       key: 'bidder',
       className: `broker-header-title ${activeHeaderTab === 1 ? 'active' : ''}`,
       onClick: () => setActiveHeaderTab(1),
-      title: 'Bidders',
+      title: t('bidders'),
     },
   ]
   const headerFilters = [

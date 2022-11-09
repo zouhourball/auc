@@ -35,18 +35,15 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           dispatch(
             addToast(
               <ToastMsg text={'Changes done successfully '} type="success" />,
-              'hide',
             ),
           )
         } else {
           dispatch(
-            addToast(
-              <ToastMsg text={'Changes has failed'} type="error" />,
-              'hide',
-            ),
+            addToast(<ToastMsg text={'Changes has failed'} type="error" />),
           )
         }
         refetch && refetch()
+        setEdit(true)
       },
     },
   )
