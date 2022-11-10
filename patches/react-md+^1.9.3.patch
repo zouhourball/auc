@@ -3,6 +3,19 @@
 # declared package:
 #   react-md: ^1.9.3
 #
+diff --git a/node_modules/react-md/es/SelectFields/SelectFieldToggle.js b/node_modules/react-md/es/SelectFields/SelectFieldToggle.js
+index d885f4c..106940f 100644
+--- a/node_modules/react-md/es/SelectFields/SelectFieldToggle.js
++++ b/node_modules/react-md/es/SelectFields/SelectFieldToggle.js
+@@ -58,7 +58,7 @@ var SelectFieldToggle = function (_PureComponent) {
+       }
+ 
+       if (placeholder && !label) {
+-        placeholder = addSuffix(placeholder, '*');
++        placeholder = addSuffix(placeholder, '');
+       }
+     }
+ 
 diff --git a/node_modules/react-md/es/TextFields/TextField.js b/node_modules/react-md/es/TextFields/TextField.js
 index 3c25737..2c04a38 100644
 --- a/node_modules/react-md/es/TextFields/TextField.js
