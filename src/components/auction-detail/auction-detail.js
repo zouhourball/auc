@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
@@ -595,7 +596,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             orgId={auctionData?.['configurator_organization_id']}
           >
             {(res) => {
-              // console.log(res, 'res')
               return (
                 <>
                   <Avatar
@@ -619,13 +619,16 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     floating
                     iconEl={<img src={mailIcon} />}
                     className="owner-card-btn"
-                    onClick={() =>
+                    onClick={(e) => {
+                      // eslint-disable-next-line no-undef
+                      e?.stopPropagation()
                       setShowContactInfo({
                         ownerName: res?.name,
                         contact: res?.email,
                         type: 'email',
                       })
-                    }
+                    }}
+
                     // res?.phoneMobile
                   />
                   <Button
@@ -633,13 +636,15 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     primary
                     iconEl={<img src={phoneIcon} />}
                     className="owner-card-btn"
-                    onClick={() =>
+                    onClick={(e) => {
+                      // eslint-disable-next-line no-unused-expressions
+                      e?.stopPropagation()
                       setShowContactInfo({
                         ownerName: res?.name,
                         contact: res?.phoneMobile,
                         type: 'phone',
                       })
-                    }
+                    }}
                     // res?.email
                   />
                 </>
