@@ -28,7 +28,8 @@
     "format:style:prettier": "prettier --write \"**/*.@(css|sass|scss)\"",
     "format:style:stylelint": "stylelint \"**/*.@(css|sass|scss)\" --fix",
     "test": "jest --config ./jest.config.json",
-    "test:watch": "jest --watchAll --config ./jest.config.json"
+    "test:watch": "jest --watchAll --config ./jest.config.json",
+    "postinstall": "patch-package"
   },
   "lint-staged": {
     "**/*.@(js|jsx)": [
@@ -55,6 +56,7 @@
     "@apollo/react-hooks": "^4.0.0",
     "@commitlint/cli": "7.5.2",
     "@commitlint/config-conventional": "8.3.4",
+    "@milahu/patch-package": "^6.4.14",
     "@reach/router": "^1.3.4",
     "@target-energysolutions/app-shell": "^23.17.8",
     "@target-energysolutions/auth-check": "^0.3.7",
