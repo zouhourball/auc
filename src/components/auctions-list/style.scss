@@ -56,26 +56,20 @@
   &-cards {
     width: 100%;
 
-    &.empty {
-      display: grid;
-      flex-grow: 1;
-      place-items: center;
+    .empty-content {
+      margin: 50px auto;
+      text-align: center;
 
-      .empty-content {
-        margin: 0 auto;
-        text-align: center;
+      &-title {
+        color: #7c7c7c;
+        font-size: 14px;
+        font-weight: bold;
+      }
 
-        &-title {
-          color: #7c7c7c;
-          font-size: 14px;
-          font-weight: bold;
-        }
-
-        &-text {
-          color: #7c7c7c;
-          font-size: 12px;
-          font-weight: normal;
-        }
+      &-text {
+        color: #7c7c7c;
+        font-size: 12px;
+        font-weight: normal;
       }
     }
   }
