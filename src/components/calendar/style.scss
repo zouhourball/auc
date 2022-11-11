@@ -1,0 +1,34 @@
+//style
+.event-item {
+  display: flex;
+  align-items: center;
+  // background-color: red;
+
+  &-status {
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    // background-color: green;
+
+    &.pending {
+      background: #ffd5d4;
+    }
+
+    &.confirmed {
+      background: #78deb3;
+    }
+
+    &.cancelled {
+      background: #fc0d1b;
+    }
+  }
+
+  .modal-show {
+    display: block;
+  }
+
+  .modal-hide {
+    display: none;
+  }
+}
