@@ -155,6 +155,24 @@ const calendar = () => {
           <div className="value">{`${moment(selectedEvent?.start).format(
             'hh:mm',
           )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+          <div className="popup-actions">
+            {selectedEvent?.status === 'cancelled' ? (
+              <>
+                <Button flat className="popup-actions-reschedule">
+                  Reschedule Appointment
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button flat className="popup-actions-cancel">
+                  Cancel Appointment
+                </Button>
+                <Button flat className="popup-actions-reschedule">
+                  Reschedule Appointment
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       )}
     </div>
