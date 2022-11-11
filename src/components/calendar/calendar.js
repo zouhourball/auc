@@ -5,7 +5,7 @@ import './style.scss'
 import { useClickOutside } from 'libs/utils/useclickoutside'
 
 import { eventsList } from './helper'
-import { Avatar, Button } from 'react-md'
+import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef, useState } from 'react'
 
 export let navigate = {
@@ -20,6 +20,49 @@ const calendar = () => {
   const ref = useRef()
   const myRef = useRef()
   const [selectedEvent, setSelectedEvent] = useState(null)
+  const [search, setSearch] = useState(null)
+  const CustomToolbar = (props) => {
+    let { label } = props
+    const onNavigatee = (action) => {
+      props.onNavigate(action)
+    }
+    return (
+      <div className="toolbar">
+        <div className="toolbar-top">
+          <TextField
+            placeholder={'Search for an appointment'}
+            className="md-cell md-cell--3 toolbar-textField"
+            value={search}
+            onChange={(v) => {
+              setSearch(v)
+            }}
+            rightIcon={<FontIcon>search</FontIcon>}
+            block
+          />
+          <div className="btn-group">
+            <Button icon onClick={() => onNavigatee(navigate.PREVIOUS)}>
+              <FontIcon>chevron_left</FontIcon>
+            </Button>
+            <span className="toolbar-label">{label}</span>
+            <Button icon onClick={() => onNavigatee(navigate.NEXT)}>
+              <FontIcon>chevron_right</FontIcon>
+            </Button>
+          </div>
+        </div>
+        <div className="toolbar-bottom">
+          <span className="toolbar-bottom-label">{label}</span>
+          <div className="toolbar-bottom-legend">
+            <div className={`event-item-status pending`} />
+            <div>Pending</div>
+            <div className={`event-item-status confirmed`} />
+            <div>Confirmed</div>
+            <div className={`event-item-status cancelled`} />
+            <div>Cancelled</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const EventWrapperComponent = ({ event, children }) => {
     const onSelectEvent = (event, e) => {
@@ -79,7 +122,7 @@ const calendar = () => {
         defaultDate={new Date()}
         components={{
           eventWrapper: EventWrapperComponent,
-          toolbar: CustomToolbarr,
+          toolbar: CustomToolbar,
         }}
         popup
         selectable
@@ -119,25 +162,3 @@ const calendar = () => {
 }
 
 export default calendar
-
-const CustomToolbarr = (props) => {
-  let { label } = props
-  const onNavigatee = (action) => {
-    props.onNavigate(action)
-  }
-  return (
-    <div className="rbc-toolbar">
-      <span className="rbc-btn-group">
-        <Button type="button" onClick={() => onNavigatee(navigate.PREVIOUS)}>
-          Prev
-        </Button>
-      </span>
-      <span className="rbc-toolbar-label">{label}</span>
-      <span className="rbc-btn-group">
-        <Button type="button" onClick={() => onNavigatee(navigate.NEXT)}>
-          Next
-        </Button>
-      </span>
-    </div>
-  )
-}
