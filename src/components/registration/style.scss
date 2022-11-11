@@ -162,6 +162,12 @@
             }
           }
 
+          .md-icon-separator {
+            .hide-when-selected {
+              display: none;
+            }
+          }
+
           &.phone-field {
             display: flex;
             align-items: center;

@@ -1,0 +1,220 @@
+@import '../broker-page/style.scss';
+
+.admin-page {
+  padding: 0 4.02vw 4vh;
+
+  .broker-page {
+    padding: 0;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 4.02vw;
+
+    > h1 {
+      color: #7c7c7c;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .langSelector {
+      .md-select-field--btn {
+        padding: 16px 8px;
+      }
+
+      .md-icon-text {
+        color: #7c7c7c;
+        font-size: 16px;
+        font-weight: normal;
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 8px;
+
+    .item {
+      height: auto;
+      color: #7c7c7c;
+      font-size: 18px;
+      font-weight: normal;
+
+      .md-ink-container {
+        display: none;
+      }
+
+      &.md-btn--hover {
+        background: none;
+      }
+
+      &.active {
+        color: #3d3d3e;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &-options {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-logo {
+    color: #1979ff;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 30px;
+    cursor: default;
+  }
+
+  &-loginBtn {
+    height: auto;
+    padding: 8px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  &-mht {
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      order: 2;
+      width: 100%;
+      margin: 16px 0 8px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+      .admin-page-actionBtn {
+        height: auto;
+        margin-left: 8px;
+        border-radius: 10px;
+        background: rgba($color: #7c7c7c, $alpha: 0.5);
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        color: #fff;
+
+        &.md-text--theme-primary {
+          background: #78deb3;
+        }
+
+        &.md-text--theme-secondary {
+          background: #fc0d1b;
+        }
+      }
+    }
+
+    .xeena-data-table {
+      .actions-bar {
+        flex-wrap: wrap;
+        background: none;
+
+        .search-bar {
+          padding: 11px 8px;
+          border-radius: 12px;
+          background: #fff;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+          .md-text {
+            text-transform: capitalize;
+          }
+        }
+      }
+
+      .common-actions-button {
+        &.md-btn--flat {
+          height: 40px;
+          padding: 8px 13px;
+          border-radius: 12px;
+          background: #fff;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+          text-transform: none;
+        }
+
+        &.md-btn--icon {
+          display: none;
+        }
+      }
+    }
+
+    .xeena-table-container {
+      margin-top: 16px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .xeena-table-body,
+    .xeena-table-header {
+      border: none;
+
+      .xeena-row {
+        border-bottom-width: 1px;
+
+        .order-check-column .order-check-buttonWrapper .md-text--theme-secondary {
+          color: #5078e1;
+        }
+
+        &.selected {
+          background: rgba($color: #5078e1, $alpha: 0.05);
+
+          .order-check-column .order-check-buttonWrapper {
+            background: #f7f8fe;
+          }
+        }
+      }
+    }
+
+    .pagination-numbers {
+      display: flex;
+    }
+
+    .wrapper.white {
+      border-bottom: none;
+    }
+
+    .subject {
+      display: flex;
+      align-items: center;
+    }
+
+    .md-avatar--default {
+      margin-right: 8px;
+      background: transparent;
+      color: #f5f5f5;
+    }
+
+    .status {
+      padding: 5px 16px;
+      border-radius: 16px;
+      font-weight: bold;
+      text-align: center;
+
+      &.Pending {
+        background: #dde4fa;
+        color: #5078e1;
+      }
+
+      &.Approved {
+        background: #e6f9ef;
+        color: #78deb3;
+      }
+
+      &.Rejected {
+        background: #ffd5d4;
+        color: #fc0d1b;
+      }
+
+      &.Request {
+        background-color: #dce4f9;
+        color: #5078e1;
+      }
+    }
+  }
+}

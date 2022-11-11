@@ -130,7 +130,7 @@ const UploadImages = ({
   }
   useEffect(() => {
     listFiles && setFiles(listFiles)
-  }, [])
+  }, [listFiles])
 
   const preview = (file) => {
     setFileSrc(file)
