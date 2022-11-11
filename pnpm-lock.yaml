@@ -55,6 +55,7 @@ dependencies:
   react: 18.0.0
   react-apollo: 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
   react-apollo-hooks: 0.5.0_2c96c9933ebd2915398bd36f5b1ded38
+  react-big-calendar: 1.5.1_react-dom@18.0.0+react@18.0.0
   react-color: 2.19.3_react@18.0.0
   react-day-picker: 7.4.10_react@18.0.0
   react-dom: 18.0.0_react@18.0.0
@@ -1778,6 +1779,14 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
+  /@babel/runtime/7.20.1:
+    dependencies:
+      regenerator-runtime: 0.13.10
+    dev: false
+    engines:
+      node: '>=6.9.0'
+    resolution:
+      integrity: sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==
   /@babel/template/7.16.7:
     dependencies:
       '@babel/code-frame': 7.16.7
@@ -3759,6 +3768,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==
+  /@popperjs/core/2.11.6:
+    dev: false
+    resolution:
+      integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
   /@protobufjs/aspromise/1.1.2:
     dev: false
     resolution:
@@ -3909,6 +3922,15 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-1UugAcTbJ/yJNLVvEIJ+hAp/KcwBiRU76vPvNXD1NLrU0ZzK1+GrxvzR7p4effMTJgPRkRzvz8tRNklv8YLLHQ==
+  /@restart/hooks/0.4.7_react@18.0.0:
+    dependencies:
+      dequal: 2.0.3
+      react: 18.0.0
+    dev: false
+    peerDependencies:
+      react: '>=16.8.0'
+    resolution:
+      integrity: sha512-ZbjlEHcG+FQtpDPHd7i4FzNNvJf2enAwZfJbpM8CW7BhmOAbsHpZe3tsHwfQUrBuyrxWqPYp2x5UMnilWcY22A==
   /@rmwc/avatar/5.7.2_react-dom@18.0.0+react@18.0.0:
     dependencies:
       '@rmwc/base': 5.7.2_react-dom@18.0.0+react@18.0.0
@@ -6004,6 +6026,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7gAPz7anVK5xzbeQW9wFBDg7G++aPLAFY0QaSMOou9rJZpbuI58WAuJrgu+qR92l61grlnCUe7AFX8KGahAgug==
+  /@types/react/18.0.25:
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.1
+    dev: false
+    resolution:
+      integrity: sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==
   /@types/react/18.0.9:
     dependencies:
       '@types/prop-types': 15.7.5
@@ -6067,6 +6097,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-b3nLFGaGkJ9rzOcuXRfHkZMdjsawuDD0ENL9fzTophtBg8FJHSGbH7daXkEpcwy3v7Xol3pAvsmlYyFhR4pqJw==
+  /@types/warning/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-t/Tvs5qR47OLOr+4E9ckN8AmP2Tf16gWq+/qA4iUGS/OOyHVO8wv2vjJuX8SNOUTJyWb+2t7wJm6cXILFnOROA==
   /@types/webpack-sources/3.2.0:
     dependencies:
       '@types/node': 18.0.6
@@ -9103,6 +9137,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==
+  /csstype/3.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
   /current-executing-script/0.1.3:
     dev: false
     resolution:
@@ -9224,6 +9262,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-X5eWTSXO/BJmpdIKCRuKUgSCgAN0OwliVK3yPKbwIWU1Tdw5BRajxlzMidvh+gwko9AfQ9zIj52pzF91Q3YAvQ==
+  /date-arithmetic/4.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-QWxYLR5P/6GStZcdem+V1xoto6DMadYWpMXU82ES3/RfR3Wdwr3D0+be7mgOJ+Ov0G9D5Dmb9T17sNLQYj9XOg==
   /date-fns/1.30.1:
     resolution:
       integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
@@ -9448,6 +9490,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
+  /dequal/2.0.3:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
   /des.js/1.0.1:
     dependencies:
       inherits: 2.0.4
@@ -9591,8 +9639,8 @@ packages:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
   /dom-helpers/5.2.1:
     dependencies:
-      '@babel/runtime': 7.18.3
-      csstype: 3.1.0
+      '@babel/runtime': 7.20.1
+      csstype: 3.1.1
     dev: false
     resolution:
       integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
@@ -11543,6 +11591,10 @@ packages:
       process: 0.11.10
     resolution:
       integrity: sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
+  /globalize/0.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-5e01v8eLGfuQSOvx2MsDMOWS0GFtCx1wPzQSmcHw4hkxFzrQDBO3Xwg/m8Hr/7qXMrHeOIE29qWVzyv06u1TZA==
   /globals/11.12.0:
     engines:
       node: '>=4'
@@ -14359,6 +14411,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2lrmGAoTHDPoiTwgaAt3Gw8TXMdHuYNAhBUi2PRoSeSknovaJQUrKK9c07AmFocNcOEoqPpEAZjSo9v3+CB+zg==
+  /luxon/2.5.0:
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-IDkEPB80Rb6gCAU+FEib0t4FeJ4uVOuX1CQ9GsvU3O+JAGIgu0J7sf1OarXKaKDygTZIoJyU6YdZzTFRu+YR0A==
   /make-cancellable-promise/1.1.0:
     dev: false
     resolution:
@@ -14562,6 +14620,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==
+  /memoize-one/6.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw==
   /memory-fs/0.4.1:
     dependencies:
       errno: 0.1.8
@@ -14904,6 +14966,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+  /moment/2.29.4:
+    dev: false
+    resolution:
+      integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
   /moo/0.5.1:
     dev: true
     resolution:
@@ -17876,6 +17942,31 @@ packages:
       react-dom: ^16.8.5
     resolution:
       integrity: sha512-s5UrOXNDgeEC+sx65IgbeFlqKKgK3c0UfbrJLWufP34WBheyu5kJ741DtJbsSgPKyNLkqfswpMYr0P8lRj42cA==
+  /react-big-calendar/1.5.1_react-dom@18.0.0+react@18.0.0:
+    dependencies:
+      '@babel/runtime': 7.20.1
+      clsx: 1.2.1
+      date-arithmetic: 4.1.0
+      dom-helpers: 5.2.1
+      globalize: 0.1.1
+      invariant: 2.2.4
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      luxon: 2.5.0
+      memoize-one: 6.0.0
+      moment: 2.29.4
+      moment-timezone: 0.5.34
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      react-overlays: 5.2.1_react-dom@18.0.0+react@18.0.0
+      uncontrollable: 7.2.1_react@18.0.0
+    dev: false
+    peerDependencies:
+      react: ^16.14.0 || ^17 || ^18
+      react-dom: ^16.14.0 || ^17 || ^18
+    resolution:
+      integrity: sha512-6sHIzJMQVz2X+WavwZovmgRwY4LZAuHXogKLgDQCDGjro4jc85PG4Ty8AO0l05U73PFauWYTnvun9ASncVCqcA==
   /react-color/2.19.3_react@18.0.0:
     dependencies:
       '@icons/material': 0.2.4_react@18.0.0
@@ -18374,6 +18465,24 @@ packages:
       react-dom: ^0.14 || >=15
     resolution:
       integrity: sha512-Te/7zFU0oHpAnctl//pP3hEAeobfeHMyygHB8MnjP6sX5OR8KHT1G3jmLsV3U9RnIYo+Yn+peJYWu+D5tUS8qQ==
+  /react-overlays/5.2.1_react-dom@18.0.0+react@18.0.0:
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@popperjs/core': 2.11.6
+      '@restart/hooks': 0.4.7_react@18.0.0
+      '@types/warning': 3.0.0
+      dom-helpers: 5.2.1
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      uncontrollable: 7.2.1_react@18.0.0
+      warning: 4.0.3
+    dev: false
+    peerDependencies:
+      react: '>=16.3.0'
+      react-dom: '>=16.3.0'
+    resolution:
+      integrity: sha512-GLLSOLWr21CqtJn8geSwQfoJufdt3mfdsnIiQswouuQ2MMPns+ihZklxvsTDKD3cR2tF8ELbi5xUsvqVhR6WvA==
   /react-pdf/5.2.0_75f279ef6cf212aa2d915693ede263f0:
     dependencies:
       '@babel/runtime': 7.18.3
@@ -19164,6 +19273,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
+  /regenerator-runtime/0.13.10:
+    dev: false
+    resolution:
+      integrity: sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
   /regenerator-runtime/0.13.9:
     resolution:
       integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
@@ -21608,6 +21721,18 @@ packages:
       which-boxed-primitive: 1.0.2
     resolution:
       integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==
+  /uncontrollable/7.2.1_react@18.0.0:
+    dependencies:
+      '@babel/runtime': 7.20.1
+      '@types/react': 18.0.25
+      invariant: 2.2.4
+      react: 18.0.0
+      react-lifecycles-compat: 3.0.4
+    dev: false
+    peerDependencies:
+      react: '>=15.0.0'
+    resolution:
+      integrity: sha512-svtcfoTADIB0nT9nltgjujTi7BzVmwjZClOmskKu/E8FW9BXzg9os8OLr4f8Dlnk0rYWJIWr4wv9eKUXiQvQwQ==
   /unherit/1.1.3:
     dependencies:
       inherits: 2.0.4
@@ -22825,6 +22950,7 @@ specifiers:
   react: 18.0.0
   react-apollo: ^3.1.5
   react-apollo-hooks: ^0.5.0
+  react-big-calendar: ^1.5.1
   react-color: ^2.19.3
   react-day-picker: ^7.4.10
   react-dom: 18.0.0

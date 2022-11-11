@@ -45,6 +45,7 @@ import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
 // import SuccessfulRegistration from 'components/success-registration'
 import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
+// import ContactInfoDialogdays from 'components/contact-info-dialog-days/contact-info-dialog-days'
 import FeesDialog from 'components/fees-dialog/fees-dialog'
 import CompanyInfoById from 'components/company-info-by-id'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
@@ -70,6 +71,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
+  // const [showContactInfodays, setShowContactInfodays] = useState(null)
+
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
 
@@ -648,6 +651,23 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     }}
                     // res?.email
                   />
+
+                  {/* <Button
+                  floating
+                  primary
+                  iconEl={<img src={phoneIcon} />}
+                  className="owner-card-btn"
+                  onClick={(e) => {
+                    // eslint-disable-next-line no-unused-expressions
+                    e?.stopPropagation()
+                    setShowContactInfodays({
+                      ownerName: res?.name,
+                      contact: res?.phoneMobile,
+                      type: 'phone',
+                    })
+                  }}
+                  // res?.email
+                /> */}
                 </>
               )
             }}
@@ -838,6 +858,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           onHide={() => setShowContactInfo()}
         />
       )}
+
+      {/* {showContactInfodays && (
+        <ContactInfoDialogdays
+          visible={showContactInfodays}
+          onHide={() => setShowContactInfodays()}
+        />
+      )} */}
 
       {feesDialog && (
         <FeesDialog type={feesDialog} onHide={() => setFeesDialog('')} />
