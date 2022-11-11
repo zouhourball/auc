@@ -1,2 +1,2 @@
-import Calendar from './calendar'
-export default Calendar
+import CalendarCustom from './calendar'
+export default CalendarCustom

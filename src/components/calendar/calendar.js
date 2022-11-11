@@ -15,7 +15,7 @@ export let navigate = {
   DATE: 'DATE',
 }
 
-const calendar = () => {
+const CalendarCustom = () => {
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
@@ -179,4 +179,4 @@ const calendar = () => {
   )
 }
 
-export default calendar
+export default CalendarCustom

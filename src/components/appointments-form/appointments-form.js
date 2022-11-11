@@ -5,6 +5,8 @@ import { useTranslation } from 'libs/langs'
 
 import { DatePicker } from '@target-energysolutions/date-picker'
 
+import ContactInfoDialogdays from 'components/contact-info-dialog-days'
+
 const AppointmentsForm = ({ appointmentsDetails, setAppointmentDetails }) => {
   const { t } = useTranslation()
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
@@ -159,16 +161,20 @@ const AppointmentsForm = ({ appointmentsDetails, setAppointmentDetails }) => {
           className="textField-withShadow"
         />
         {visibleDaysPicker && (
-          <DatePicker
-            translation={{ update: 'select' }}
-            onUpdate={(start, end) => {
-              onSetFormDetails('appointmentDays', { start, end })
-              setVisibleDaysPicker(false)
-            }}
-            onCancel={() => setVisibleDaysPicker(false)}
-            startView="day"
-            endView="day"
+          <ContactInfoDialogdays
+            visible={visibleDaysPicker}
+            onHide={() => setVisibleDaysPicker(false)}
           />
+          // <DatePicker
+          //   translation={{ update: 'select' }}
+          //   onUpdate={(start, end) => {
+          //     onSetFormDetails('appointmentDays', { start, end })
+          //     setVisibleDaysPicker(false)
+          //   }}
+          //   onCancel={() => setVisibleDaysPicker(false)}
+          //   startView="day"
+          //   endView="day"
+          // />
         )}
       </div>
     </div>

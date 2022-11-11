@@ -1,4 +1,10 @@
+import CalendarCustom from 'components/calendar'
+
 const AppointmentsCalendar = () => {
-  return <div>calendar page</div>
+  return (
+    <div>
+      <CalendarCustom />
+    </div>
+  )
 }
 export default AppointmentsCalendar
