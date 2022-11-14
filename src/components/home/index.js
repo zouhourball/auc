@@ -25,6 +25,9 @@ import BrokerPage from 'components/broker-page'
 import BrokerProfile from 'components/broker-profile'
 import HowItWorks from 'components/how-it-works'
 import Notifications from 'components/notifications'
+import AuctionRequestAppointment from 'components/auction-request-appointment'
+import AppointmentsRequests from 'components/appointments-request'
+import AppointmentsCalendar from 'components/appointments-calendar'
 
 import './style.scss'
 import store from 'libs/store'
@@ -60,6 +63,8 @@ const Home = () => {
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const modulesList = [
     { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
+    { label: t('appointments'), key: 'appointments', linkToNewTab: 'calendar' },
+
     {
       label: t('how_it_works'),
       key: 'how-it-works',
@@ -87,6 +92,14 @@ const Home = () => {
   ]
   const modulesListUser = [
     { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
+    {
+      label: t('appointments'),
+      key: 'appointments',
+      subMenu: [
+        { label: t('requests'), link: 'requests' },
+        { label: t('calendar'), link: 'calendar' },
+      ],
+    },
     {
       label: t('how_it_works'),
       key: 'how-it-works',
@@ -177,7 +190,9 @@ const Home = () => {
               meOrgs={meOrgs}
             />
           ))}
-          {/* <AuctionDetail path={'/detail/:auctionId'} /> */}
+          <AuctionRequestAppointment path={'/appointment/:auctionId'} />
+          <AppointmentsRequests path={'/requests'} />
+          <AppointmentsCalendar path={'/calendar'} />
           <MyAuctionDetails path={'/my-auction-details/:auctionId'} />
           <AuctionAsset path={'/auction-asset'} />
         </Router>

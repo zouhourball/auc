@@ -344,8 +344,5 @@
   "please_fill_in_missing_details": "Please fill in missing details",
   "request_viewing": "Request for Viewing",
   "appointments": "Appointments",
-  "are_you_sure_you_want_to_delete_this_auction": "Are you sure you want to delete this auction?",
-  "no_upcoming_auctions": "No Upcoming Auctions",
-  "we_couldnt_find_what_your_looking_for": "We couldn't find what you're looking for!",
-  "no_result": "No Result"
+  "are_you_sure_you_want_to_delete_this_auction": "Are you sure you want to delete this auction?"
 }

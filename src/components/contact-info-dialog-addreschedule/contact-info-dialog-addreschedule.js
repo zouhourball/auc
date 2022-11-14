@@ -11,31 +11,20 @@ import { useState } from 'react'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
 
-const ContactInfoDialogreschedule = ({
+const ContactInfoDialogaddreschedule = ({
   visible,
   onHide,
-  setVisibleSuccessReschedule,
   setFilterData,
   filterData,
 }) => {
-  const [visibleDatePicker, setVisibleDatePicker] = useState(false)
+  const [visibleDatePicker, setVisibleDatePicker] = useState({
+    startDate: false,
+    endDate: false,
+  })
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
 
   const [startTime, setStartTime] = useState(moment().valueOf())
   const [startDate, setStartDate] = useState(moment().valueOf())
-
-  // console.log(startTime, 'startTime')
-
-  // const onHandleDate = (date, key) => {
-  //   setFilterData({
-  //     // ...filterData,
-  //     dateRange: {
-  //       ...filterData?.dateRange,
-  //       [key]: date?.timestamp,
-  //     },
-  //   })
-  //   setVisibleDatePicker({ ...visibleDatePicker, [key]: false })
-  // }
 
   return (
     <DialogContainer
@@ -43,22 +32,20 @@ const ContactInfoDialogreschedule = ({
       onHide={onHide}
       focusOnMount={false}
       className="contact-info-dialog"
-      title={
-        <div className="contact-info-dialog-title">reschedule Appointment</div>
-      }
+      title={<div className="contact-info-dialog-title">Add Appointment</div>}
     >
       <div className="dateWrapper md-cell md-cell--12">
         <label className="auction-details-form-label">
-          Type of Appointment
+          Type of Appointment{' '}
         </label>
 
         <SelectField
           id="select-field-3-1"
           menuItems={[
-            { label: 'In-person', value: '0' },
-            { label: 'Online', value: '1' },
+            { label: 'text', value: 'text' },
+            { label: 'text', value: 'text' },
+            { label: 'text', value: 'text' },
           ]}
-          required
           simplifiedMenu={false}
           onChange={(v) => {
             // location.reload()
@@ -80,12 +67,16 @@ const ContactInfoDialogreschedule = ({
             placeholder="dd/mm/yy"
             block
             required
-            rightIcon={<FontIcon className="dateRangeIcon">date</FontIcon>}
+            rightIcon={
+              <FontIcon className="dateRangeIcon">date_range</FontIcon>
+            }
             value={`${moment(startDate).format('DD/MM/YYYY')}`}
-            onClick={() => setVisibleDatePicker(true)}
+            onClick={() =>
+              setVisibleDatePicker({ ...visibleDatePicker, endDate: true })
+            }
           />
 
-          {visibleDatePicker && (
+          {visibleDatePicker?.endDate && (
             <DatePicker
               singlePick
               translation={{ update: 'select' }}
@@ -101,18 +92,16 @@ const ContactInfoDialogreschedule = ({
           )}
         </div>
       </div>
-
       <div className="dateWrapper md-cell md-cell--12">
         <label className="auction-details-form-label">Time*</label>
         <TextField
-          className="textField-withShadow"
-          required
           id="time-start"
           placeholder={'Select from'}
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           onClick={() => setVisibleStartTimePicker(true)}
           value={`${moment(startTime).format('HH:mm')}`}
+          className="textField-withShadow"
         />
         {visibleStartTimePicker && (
           <DatePicker
@@ -149,18 +138,15 @@ const ContactInfoDialogreschedule = ({
         primary
         swapTheming
         className="owner-card-btn"
-        onClick={() => {
-          onHide && onHide()
-          setVisibleSuccessReschedule(true)
-        }}
+        onClick={onHide}
       >
         Reschedule
       </Button>
     </DialogContainer>
   )
 }
-ContactInfoDialogreschedule.propTypes = {
+ContactInfoDialogaddreschedule.propTypes = {
   visible: propTypes.bool,
 }
 
-export default ContactInfoDialogreschedule
+export default ContactInfoDialogaddreschedule

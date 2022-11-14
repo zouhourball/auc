@@ -22,6 +22,8 @@ const Auctions = () => {
   const [auctionDetails, setAuctionDetails] = useState({})
   const [propertyDetails, setPropertyDetails] = useState({})
   const [documents, setDocuments] = useState({})
+  const [appointmentDetails, setAppointmentDetails] = useState({})
+
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
 
   const publishAuctionMutation = useMutation(publishAuction, {
@@ -100,6 +102,8 @@ const Auctions = () => {
         setPropertyDetails={setPropertyDetails}
         documents={documents}
         setDocuments={setDocuments}
+        appointmentDetails={appointmentDetails}
+        setAppointmentDetails={setAppointmentDetails}
       />
     </div>
   )

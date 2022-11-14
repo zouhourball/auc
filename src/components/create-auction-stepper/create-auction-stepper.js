@@ -8,7 +8,7 @@ import AuctionDetailsForm from 'components/auction-details-form'
 import DocumentsForm from 'components/documents-form'
 // import EligibilityCriteriaForm from 'components/eligibility-criteria-form'
 import PropertyDetailsForm from 'components/property-details-form'
-
+import AppointmentsForm from 'components/appointments-form'
 // import { v4 as uuidv4 } from 'uuid'
 
 import './style.scss'
@@ -31,6 +31,8 @@ const CreateAuctionStepper = ({
   onPublish,
   documents,
   setDocuments,
+  appointmentDetails,
+  setAppointmentDetails,
 }) => {
   const { t } = useTranslation()
 
@@ -85,7 +87,7 @@ const CreateAuctionStepper = ({
       case 2:
         return (
           <PropertyDetailsForm
-            propertyDetails={auctionDetails}
+            propertyDetails={propertyDetails}
             setPropertyDetails={setPropertyDetails}
           />
         )
@@ -96,13 +98,13 @@ const CreateAuctionStepper = ({
             setDocumentDetails={setDocuments}
           />
         )
-      // case 4:
-      //   return (
-      //     <EligibilityCriteriaForm
-      //       eligibilityCriteria={eligibilityCriteria}
-      //       setEligibilityCriteria={setEligibilityCriteria}
-      //     />
-      //   )
+      case 4:
+        return (
+          <AppointmentsForm
+            appointmentDetails={appointmentDetails}
+            setAppointmentDetails={setAppointmentDetails}
+          />
+        )
       default:
         break
     }
@@ -189,13 +191,13 @@ const CreateAuctionStepper = ({
             active={currentStep === 3}
             done={currentStep > 3}
           />
-          {/* <div className="stepper-separateur" /> */}
-          {/* <Step
+          <div className="stepper-separateur" />
+          <Step
             index={4}
-            label="Auction Details"
+            label={t('appointments')}
             active={currentStep === 4}
             done={currentStep > 4}
-          /> */}
+          />
         </div>
       </div>
       <div className="">{renderCurrentTabContent()}</div>
@@ -224,14 +226,14 @@ const CreateAuctionStepper = ({
           swapTheming={!validData()}
           disabled={validData()}
           onClick={() =>
-            currentStep > 2
+            currentStep > 3
               ? auctionUuid
                 ? onUpdateAuction()
                 : onPublish()
               : setCurrentStep(currentStep + 1)
           }
         >
-          {currentStep < 3 ? t('continue') : t('submit')}
+          {currentStep < 4 ? t('continue') : t('submit')}
         </Button>
       </div>
     </div>

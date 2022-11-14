@@ -1,27 +1,58 @@
 import moment from 'moment'
 import { useState } from 'react'
-import { FontIcon, SelectField, TextField } from 'react-md'
+import { FontIcon, SelectField, TextField, Checkbox } from 'react-md'
+import { useTranslation } from 'libs/langs'
 
 import { DatePicker } from '@target-energysolutions/date-picker'
 
-const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
+import ContactInfoDialogdays from 'components/contact-info-dialog-days'
+
+const AppointmentsForm = ({ appointmentsDetails, setAppointmentDetails }) => {
+  const { t } = useTranslation()
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [visibleDaysPicker, setVisibleDaysPicker] = useState(false)
 
   const onSetFormDetails = (property, value) => {
-    setAppointmentsData({ ...appointmentsData, [property]: value })
+    setAppointmentDetails((prev) => ({
+      ...prev,
+      [property]:
+        property === 'appointmentsType'
+          ? prev?.appointmentsType?.length > 0
+            ? [...prev?.appointmentsType, value]
+            : [value]
+          : value,
+    }))
   }
 
   const appointmentsTypeList = [
-    { label: 'Type 1', value: 'type 1' },
-    { label: 'Type 2', value: 'type 2' },
-    { label: 'Type 3', value: 'type 3' },
+    <Checkbox
+      key={'in-person'}
+      id={`in-person`}
+      label={'In-person'}
+      onChange={() => {
+        onSetFormDetails('appointmentsType', '0')
+      }}
+      checked={
+        !!appointmentsDetails?.appointmentsType?.find((ch) => ch === '0')
+      }
+    />,
+    <Checkbox
+      key={'online'}
+      id={`online`}
+      label={'Online'}
+      onChange={() => {
+        onSetFormDetails('appointmentsType', '1')
+      }}
+      checked={
+        !!appointmentsDetails?.appointmentsType?.find((ch) => ch === '1')
+      }
+    />,
   ]
   return (
     <div className="appointments-form md-grid">
       <div className="appointments-form-title md-cell md-cell--12">
-        {'Appointments (Optional)'}
+        {t('Appointments')} ({t('optional')})
       </div>
       <div className="md-cell md-cell--6">
         <label className="appointments-form-label">Appointment Type</label>
@@ -31,8 +62,8 @@ const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
           placeholder="Select appointment type"
           listClassName="country-list"
           menuItems={appointmentsTypeList}
-          value={appointmentsData?.appointmentsType}
-          onChange={(item) => onSetFormDetails('appointmentsType', item)} // setAppointmentsType(item)}
+          value={appointmentsDetails?.appointmentsType}
+          onChange={(item) => {}} // setAppointmentsType(item)}
           fullWidth
           position={SelectField.Positions.BELOW}
           dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
@@ -49,8 +80,8 @@ const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
-            appointmentsData?.appointmentStartTime &&
-            `${moment(appointmentsData.appointmentStartTime).format('HH:mm')}`
+            appointmentsDetails?.appointmentStartTime &&
+            moment(appointmentsDetails?.appointmentStartTime).format('HH:mm')
           }
           onClick={() => setVisibleStartTimePicker(true)}
           className="textField-withShadow"
@@ -84,8 +115,8 @@ const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
-            appointmentsData?.appointmentEndTime &&
-            `${moment(appointmentsData?.appointmentEndTime).format('HH:mm')}`
+            appointmentsDetails?.appointmentEndTime &&
+            moment(appointmentsDetails?.appointmentEndTime).format('HH:mm')
           }
           onClick={() => setVisibleEndTimePicker(true)}
           className="textField-withShadow"
@@ -119,10 +150,10 @@ const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
-            appointmentsData?.appointmentDays &&
-            `${moment(appointmentsData?.appointmentDays?.start).format(
+            appointmentsDetails?.appointmentDays &&
+            `${moment(appointmentsDetails?.appointmentDays?.start).format(
               'DD MMM YYYY',
-            )} - ${moment(appointmentsData?.appointmentDays?.end).format(
+            )} - ${moment(appointmentsDetails?.appointmentDays?.end).format(
               'DD MMM YYYY',
             )} `
           }
@@ -130,16 +161,20 @@ const AppointmentsForm = ({ appointmentsData, setAppointmentsData }) => {
           className="textField-withShadow"
         />
         {visibleDaysPicker && (
-          <DatePicker
-            translation={{ update: 'select' }}
-            onUpdate={(start, end) => {
-              onSetFormDetails('appointmentDays', { start, end })
-              setVisibleDaysPicker(false)
-            }}
-            onCancel={() => setVisibleDaysPicker(false)}
-            startView="day"
-            endView="day"
+          <ContactInfoDialogdays
+            visible={visibleDaysPicker}
+            onHide={() => setVisibleDaysPicker(false)}
           />
+          // <DatePicker
+          //   translation={{ update: 'select' }}
+          //   onUpdate={(start, end) => {
+          //     onSetFormDetails('appointmentDays', { start, end })
+          //     setVisibleDaysPicker(false)
+          //   }}
+          //   onCancel={() => setVisibleDaysPicker(false)}
+          //   startView="day"
+          //   endView="day"
+          // />
         )}
       </div>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable indent */
 import { useEffect, useState } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
@@ -44,6 +45,7 @@ import TermsDialogContainer from 'components/terms-dialog'
 import BidDialog from 'components/place-bid-dialog'
 // import SuccessfulRegistration from 'components/success-registration'
 import ContactInfoDialog from 'components/contact-info-dialog/contact-info-dialog'
+// import ContactInfoDialogdays from 'components/contact-info-dialog-days/contact-info-dialog-days'
 import FeesDialog from 'components/fees-dialog/fees-dialog'
 import CompanyInfoById from 'components/company-info-by-id'
 // import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
@@ -69,6 +71,8 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
+  // const [showContactInfodays, setShowContactInfodays] = useState(null)
+
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
 
@@ -308,6 +312,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
         <img src={tick} /> {el?.feature?.name}
       </div>
     ))
+  const ableToRequestViewing = true
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       {/*
@@ -595,7 +600,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             orgId={auctionData?.['configurator_organization_id']}
           >
             {(res) => {
-              // console.log(res, 'res')
               return (
                 <>
                   <Avatar
@@ -619,13 +623,16 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     floating
                     iconEl={<img src={mailIcon} />}
                     className="owner-card-btn"
-                    onClick={() =>
+                    onClick={(e) => {
+                      // eslint-disable-next-line no-undef
+                      e?.stopPropagation()
                       setShowContactInfo({
                         ownerName: res?.name,
                         contact: res?.email,
                         type: 'email',
                       })
-                    }
+                    }}
+
                     // res?.phoneMobile
                   />
                   <Button
@@ -633,15 +640,34 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     primary
                     iconEl={<img src={phoneIcon} />}
                     className="owner-card-btn"
-                    onClick={() =>
+                    onClick={(e) => {
+                      // eslint-disable-next-line no-unused-expressions
+                      e?.stopPropagation()
                       setShowContactInfo({
                         ownerName: res?.name,
                         contact: res?.phoneMobile,
                         type: 'phone',
                       })
-                    }
+                    }}
                     // res?.email
                   />
+
+                  {/* <Button
+                  floating
+                  primary
+                  iconEl={<img src={phoneIcon} />}
+                  className="owner-card-btn"
+                  onClick={(e) => {
+                    // eslint-disable-next-line no-unused-expressions
+                    e?.stopPropagation()
+                    setShowContactInfodays({
+                      ownerName: res?.name,
+                      contact: res?.phoneMobile,
+                      type: 'phone',
+                    })
+                  }}
+                  // res?.email
+                /> */}
                 </>
               )
             }}
@@ -689,26 +715,43 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive &&
-              !(auctionData?.['submitted_by'] === user?.subject) &&
-              !(meOrgs?.length > 0) && (
-                <Button
-                  flat
-                  primary
-                  swapTheming
-                  className="auction-details-btn"
-                  onClick={
-                    () =>
-                      logged
-                        ? isParticipant
-                          ? setBidDialog(true)
-                          : setTermsDialog(true)
-                        : navigate(`/auctions/detail/${auctionData?.uuid}`)
-                    // setBidDialog(true)
-                  }
-                >
-                  {t('bid_now')}
-                </Button>
+              isActive && (
+                // temporarly commented BEGIN
+                // !(auctionData?.['submitted_by'] === user?.subject) &&
+                // !(meOrgs?.length > 0) &&
+                // temporarly commented END
+                <>
+                  <Button
+                    flat
+                    primary
+                    swapTheming
+                    className="auction-details-btn"
+                    onClick={
+                      () =>
+                        logged
+                          ? isParticipant
+                            ? setBidDialog(true)
+                            : setTermsDialog(true)
+                          : navigate(`/auctions/detail/${auctionData?.uuid}`)
+                      // setBidDialog(true)
+                    }
+                  >
+                    {t('bid_now')}
+                  </Button>
+                  {ableToRequestViewing && (
+                    <Button
+                      flat
+                      primary
+                      swapTheming
+                      className="auction-details-btn"
+                      onClick={() =>
+                        navigate(`/auctions/appointment/${auctionData?.uuid}`)
+                      }
+                    >
+                      {t('request_viewing_label')}
+                    </Button>
+                  )}
+                </>
               )
             )
 
@@ -815,6 +858,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
           onHide={() => setShowContactInfo()}
         />
       )}
+
+      {/* {showContactInfodays && (
+        <ContactInfoDialogdays
+          visible={showContactInfodays}
+          onHide={() => setShowContactInfodays()}
+        />
+      )} */}
 
       {feesDialog && (
         <FeesDialog type={feesDialog} onHide={() => setFeesDialog('')} />

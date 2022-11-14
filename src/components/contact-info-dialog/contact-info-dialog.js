@@ -1,4 +1,4 @@
-import { Button, DialogContainer, FontIcon } from 'react-md'
+import { Button, DialogContainer } from 'react-md'
 import './style.scss'
 
 const ContactInfoDialog = ({ visible, onHide }) => {
@@ -10,18 +10,25 @@ const ContactInfoDialog = ({ visible, onHide }) => {
       className="contact-info-dialog"
       title={
         <div className="contact-info-dialog-title">
-          {visible?.ownerName}
-          <Button icon onClick={onHide}>
-            close
-          </Button>
+          {visible?.type === 'phone' && <h3>Phone Number</h3>}
+          {visible?.type === 'email' && <h3>Email Adress</h3>}
         </div>
       }
     >
       <div className="contact-info-dialog-content">
-        {visible?.type === 'phone' && <FontIcon>call</FontIcon>}
-        {visible?.type === 'email' && <FontIcon>mail_outline</FontIcon>}
+        {visible?.type === 'phone' && <h4>{visible?.email}</h4>}
+        {visible?.type === 'email' && <h4>{visible?.phoneMobile}</h4>}
         <div>{visible?.contact}</div>
       </div>
+      <Button
+        flat
+        primary
+        swapTheming
+        className="auction-details-btn"
+        onClick={onHide}
+      >
+        Done
+      </Button>
     </DialogContainer>
   )
 }

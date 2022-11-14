@@ -12,23 +12,23 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
     description,
     keyFeatures = [],
     suggestedKeyFeatures,
-    images = [],
+    images,
     bedrooms,
     bathrooms,
     area,
   } = propertyDetails
-  const [keyFeature, setKeyFeature] = useState()
+  const [keyFeature, setKeyFeature] = useState('')
   const [suggestedKeyPanel, setSuggestedKeysPanel] = useState(false)
   const onSetFormDetails = (property, value) => {
     setPropertyDetails({ ...propertyDetails, [property]: value })
   }
 
   const addKeyFeature = () => {
-    setKeyFeature('')
     onSetFormDetails('keyFeatures', [
       ...keyFeatures,
       { label: keyFeature, status: 'new' },
     ])
+    setKeyFeature('')
   }
 
   const handleRemoveKey = (key) => {
