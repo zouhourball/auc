@@ -1,18 +1,15 @@
-//style
 .event-item {
   display: flex;
   align-items: center;
-  // background-color: red;
 
   &-status {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     margin: 5px;
     border-radius: 10px;
-    // background-color: green;
 
     &.pending {
-      background: #ffd5d4;
+      background: #f58d00;
     }
 
     &.confirmed {
@@ -34,21 +31,203 @@
 }
 
 .toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
   &-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .toolbar-textField {
+      width: 300px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background-color: #fff;
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+
+      .md-text-field {
+        font-size: 10px;
+      }
+
+      .md-icon {
+        color: #5078e1;
+        font-size: 18px;
+      }
+
+      .md-text-field--margin {
+        margin-top: 0;
+      }
+
+      .md-divider {
+        display: none;
+      }
+    }
+
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .nav-btn {
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+        &.md-btn--icon {
+          width: 30px;
+          height: 30px;
+          padding: 4px;
+
+          .md-icon {
+            color: #5078e1;
+            font-size: 22px;
+          }
+        }
+      }
+
+      .toolbar-label {
+        padding: 4px 10px;
+      }
+    }
   }
 
   &-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 16px 30px 0;
+    border-radius: 12px 12px 0 0;
+    background-color: #fff;
+    box-shadow: 0 16px 24px -6px rgba(0, 0, 0, 0.18);
+
+    &-label {
+      color: #707070;
+      font-size: 16px;
+      font-weight: 500;
+    }
 
     &-legend {
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
+
+      .label {
+        font-size: 10px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.rbc-month-view {
+  padding: 0 30px 30px;
+  border: none;
+  border-radius: 0 0 12px 12px;
+  background-color: #fff;
+  box-shadow: -2px 14px 24px -11px rgba(0, 0, 0, 0.18);
+
+  .rbc-month-row {
+    border: 1px solid #ddd;
+    border-bottom: none;
+
+    &:last-child {
+      border-bottom: 1px solid #ddd;
+      border-radius: 0 0 12px 12px;
+    }
+  }
+
+  .rbc-month-header {
+    border: none;
+
+    .rbc-header {
+      padding: 12px 8px;
+      border: none;
+      color: #707070;
+      font-size: 100%;
+      font-weight: 500;
+      text-align: right;
+    }
+
+    & + .rbc-month-row {
+      border-radius: 12px 12px 0 0;
+    }
+  }
+
+  .rbc-date-cell {
+    padding-right: 10px;
+    text-align: right;
+  }
+}
+
+.popup {
+  position: relative;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.18);
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 21px;
+    left: -7px;
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    background-color: #fff;
+    box-shadow: -2px 14px 24px -11px rgba(0, 0, 0, 0.18);
+  }
+
+  &-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .md-avatar {
+      width: 25px;
+      height: 25px;
+    }
+
+    .title {
+      color: #707070;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+
+  .info {
+    padding: 4px 0;
+    font-size: 11px;
+
+    .label {
+      font-weight: 600;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    .md-btn {
+      width: 100%;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    &-cancel {
+      border: 1px solid #fc0d1b;
+      color: #fc0d1b;
+    }
+
+    &-reschedule {
+      border: 1px solid #5078e1;
+      color: #5078e1;
     }
   }
 }
