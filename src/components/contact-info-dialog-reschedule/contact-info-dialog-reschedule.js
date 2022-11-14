@@ -14,6 +14,7 @@ import { DatePicker } from '@target-energysolutions/date-picker'
 const ContactInfoDialogreschedule = ({
   visible,
   onHide,
+  setVisibleSuccessReschedule,
   setFilterData,
   filterData,
 }) => {
@@ -148,7 +149,10 @@ const ContactInfoDialogreschedule = ({
         primary
         swapTheming
         className="owner-card-btn"
-        onClick={onHide}
+        onClick={() => {
+          onHide && onHide()
+          setVisibleSuccessReschedule(true)
+        }}
       >
         Reschedule
       </Button>
