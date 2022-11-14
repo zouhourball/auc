@@ -11,7 +11,7 @@ import { useState } from 'react'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
 // import { propertyTypeList } from 'components/helpers'
-import locationIcon from './location_icon.svg'
+import locationIcon from 'images/location_icon.svg'
 
 const RequestViewing = ({
   visible,
