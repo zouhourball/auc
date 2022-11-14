@@ -1,7 +1,9 @@
 import { Button, DialogContainer } from 'react-md'
+import { useTranslation } from 'libs/langs'
 import './style.scss'
 
 const ContactInfoDialogrequest = ({ visible, onHide }) => {
+  const { t } = useTranslation()
   return (
     <DialogContainer
       visible={visible}
@@ -14,10 +16,10 @@ const ContactInfoDialogrequest = ({ visible, onHide }) => {
           <img src="" alt="icon" />
         </div>
         <div className="contact-info-dialog-content">
-          <h3>Request for Viewing Sent Successfully</h3>
+          <h3>{t('request_for_viewing_success')}</h3>
         </div>
         <div>
-          <p>Please wait for approval from the broker</p>
+          <p>{t('wait_for_approval')}</p>
         </div>
         <Button
           flat
@@ -26,7 +28,7 @@ const ContactInfoDialogrequest = ({ visible, onHide }) => {
           className="auction-details-btn"
           onClick={onHide}
         >
-          Done
+          {t('done')}
         </Button>
       </div>
     </DialogContainer>

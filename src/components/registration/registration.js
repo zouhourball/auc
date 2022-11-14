@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   TextField,
   Button,
@@ -169,15 +169,17 @@ const RegistrationPage = () => {
       return arrayName
     }
   }
-  const [test] = useState(0)
 
-  const ref = document.getElementsByClassName('country-list')
+  const ref = useMemo(
+    () => document.getElementsByClassName('list-itemMultiPick'),
+    [currentTab],
+  )
   useEffect(() => {
     ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
 
     return () =>
       ref[0] && ref[0].removeEventListener('scroll', updateOffsetAndRefetch)
-  }, [test])
+  }, [currentTab])
 
   const updateOffsetAndRefetch = () => {
     if (ref[0].scrollHeight - ref[0].scrollTop <= ref[0].clientHeight) {
@@ -242,6 +244,7 @@ const RegistrationPage = () => {
                       key={el?.value}
                     >
                       <img width={20} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
                       {el?.value}
                     </div>
                   ),
@@ -345,6 +348,7 @@ const RegistrationPage = () => {
                       key={el?.value}
                     >
                       <img width={20} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
                       {el?.value}
                     </div>
                   ),

@@ -46,7 +46,6 @@ const UploadImages = ({
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
   const downloadToken = publicDownloadToken || store?.getState()?.app?.dlToken
-
   const onDropFiles = (fls) => {
     let newFiles = []
 
@@ -77,7 +76,7 @@ const UploadImages = ({
     ).then((res) => {
       setLoading(false)
       setFiles([...newFiles])
-      // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.split(`=/`))
+      // console.log(res[0], 'files', res[0]?.url?.replace(res[0]?.options?.endpoint, '')?.replace(`=/${res[0]?.options?.metadata?.filename}`, ''))
       setListFiles &&
         setListFiles(
           [
@@ -400,7 +399,6 @@ const UploadImages = ({
     ))
   }
   // ------------------
-
   return (
     <div key={key} className={cls('upload-images', className)}>
       <div

@@ -344,5 +344,19 @@
   "please_fill_in_missing_details": "Please fill in missing details",
   "request_viewing": "Request for Viewing",
   "appointments": "Appointments",
-  "are_you_sure_you_want_to_delete_this_auction": "Are you sure you want to delete this auction?"
+  "are_you_sure_you_want_to_delete_this_auction": "Are you sure you want to delete this auction?",
+  "request_viewing_label": "Request Viewing",
+  "please_fill_the_information": "Please fill in the information to be able set an appointment to view asset",
+  "type_of_appointment": "Type of Appointment",
+  "date": "Date",
+  "time": "Time",
+  "notes": "Notes",
+  "note": "Note",
+  "online_link_note": "Online link will appear in 'Appointments' once it is approved by the broker",
+  "request_for_viewing_success": "Request for Viewing Sent Successfully",
+  "wait_for_approval": "Please wait for approval from the broker",
+  "requests": "Requests",
+  "calendar": "Calendar",
+  "optional": "Optional",
+  "send_request": "Send Request"
 }
