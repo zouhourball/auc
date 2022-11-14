@@ -72,6 +72,16 @@
         }
       }
     }
+
+    .actionWrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .auction-details-btn {
+        flex: 1;
+      }
+    }
   }
 
   .auction-timer {
@@ -248,6 +258,10 @@
     font-weight: 700;
 
     &.downloadCertificateBtn {
+      background-color: #e7ebf5;
+    }
+
+    &.md-text--theme-primary {
       background-color: #e7ebf5;
     }
   }

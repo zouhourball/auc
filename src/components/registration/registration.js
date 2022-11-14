@@ -406,6 +406,7 @@ const RegistrationPage = () => {
           imgCard={successRegister}
           onHide={() => {
             setConfirmDialogVisible(false)
+            !confirmDialogVisible?.error && navigate('/public/home')
           }}
         />
       )}
