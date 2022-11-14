@@ -15,7 +15,11 @@ export let navigate = {
   DATE: 'DATE',
 }
 
-const CalendarCustom = () => {
+const CalendarCustom = ({
+  setVisibleAreYouSure,
+  setVisibleReschedule,
+  setVisibleAddAppointment,
+}) => {
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
@@ -39,6 +43,9 @@ const CalendarCustom = () => {
             rightIcon={<FontIcon>search</FontIcon>}
             block
           />
+          <Button onClick={() => setVisibleAddAppointment(true)}>
+            Add Appointment
+          </Button>
           <div className="btn-group">
             <Button
               className="nav-btn"
@@ -179,16 +186,28 @@ const CalendarCustom = () => {
           <div className="popup-actions">
             {selectedEvent?.status === 'cancelled' ? (
               <>
-                <Button flat className="popup-actions-reschedule">
+                <Button
+                  flat
+                  className="popup-actions-reschedule"
+                  onClick={() => setVisibleReschedule(true)}
+                >
                   Reschedule Appointment
                 </Button>
               </>
             ) : (
               <>
-                <Button flat className="popup-actions-cancel">
+                <Button
+                  flat
+                  className="popup-actions-cancel"
+                  onClick={() => setVisibleAreYouSure(true)}
+                >
                   Cancel Appointment
                 </Button>
-                <Button flat className="popup-actions-reschedule">
+                <Button
+                  flat
+                  className="popup-actions-reschedule"
+                  onClick={() => setVisibleReschedule(true)}
+                >
                   Reschedule Appointment
                 </Button>
               </>

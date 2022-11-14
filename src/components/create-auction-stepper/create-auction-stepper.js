@@ -36,7 +36,7 @@ const CreateAuctionStepper = ({
 }) => {
   const { t } = useTranslation()
 
-  const [currentStep, setCurrentStep] = useState(4)
+  const [currentStep, setCurrentStep] = useState(1)
   // const [auctionDetails, setAuctionDetails] = useState({
   //   uuid: uuidv4(),
   //   title: '',
