@@ -1,26 +1,27 @@
-.contact-info-dialog {
+.cancel-appointment-dialog {
+  &.md-dialog-container.md-overlay {
+    z-index: 9999;
+  }
+
   .md-dialog {
-    width: auto;
-    border-radius: 12px;
+    width: 250px;
+    border-radius: 18px;
   }
 
   .md-title--dialog {
     padding: 12px 24px;
-    padding-bottom: 20px;
+    text-align: center;
   }
 
-  &-title {
+  .title {
     display: flex;
+    flex-direction: column;
+    gap: 8px;
     align-items: center;
-    justify-content: space-between;
     color: #3d3d3e;
-    font-size: 22px;
+    font-size: 14px;
     font-weight: bold;
-
-    .md-icon {
-      color: #3d3d3e;
-      font-size: 22px;
-    }
+    line-height: 1.2;
   }
 
   &-content {
@@ -36,6 +37,28 @@
     .md-icon {
       color: #5078e1;
       font-size: 22px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .md-btn {
+      width: 120px;
+      height: 40px;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      font-size: 12px;
+      font-weight: bold;
+
+      &.cancel-btn {
+        background-color: #fff;
+        color: #7c7c7c;
+      }
     }
   }
 }

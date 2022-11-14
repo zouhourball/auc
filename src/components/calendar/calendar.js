@@ -43,10 +43,14 @@ const CalendarCustom = ({
             rightIcon={<FontIcon>search</FontIcon>}
             block
           />
-          <Button onClick={() => setVisibleAddAppointment(true)}>
-            Add Appointment
-          </Button>
+
           <div className="btn-group">
+            <Button
+              className="nav-btn add-btn"
+              onClick={() => setVisibleAddAppointment(true)}
+            >
+              Add Appointment
+            </Button>
             <Button
               className="nav-btn"
               icon
