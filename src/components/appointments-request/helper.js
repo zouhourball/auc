@@ -24,7 +24,7 @@ export const configs = (
   {
     label: 'Appointment Type',
     key: 'appointmentType',
-    width: '200',
+    width: '300',
     type: 'text',
     displayInCsv: true,
   },
@@ -36,23 +36,27 @@ export const configs = (
     displayInCsv: true,
     render: (row) => {
       return row?.appointmentType === '0' ? (
-        <Button onClick={() => setLocationVisible(true)}>Edit Location</Button>
+        <Button flat primary onClick={() => setLocationVisible(true)}>
+          Edit Location
+        </Button>
       ) : (
-        <Button onClick={() => setLinkVisible(true)}>Add Link</Button>
+        <Button flat primary onClick={() => setLinkVisible(true)}>
+          Add Link
+        </Button>
       )
     },
   },
   {
     label: 'Date',
     key: 'date',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
     label: 'Time',
     key: 'time',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
   },
@@ -63,22 +67,38 @@ export const configs = (
     type: 'text',
     displayInCsv: true,
     render: (row) => {
-      return <Button onClick={() => setNotesVisible(row?.id)}>View</Button>
+      return (
+        <Button flat primary onClick={() => setNotesVisible(row?.id)}>
+          View
+        </Button>
+      )
     },
   },
   {
     label: 'Action',
     key: 'action',
-    width: '200',
+    width: '220',
     type: 'text',
     render: (row) => {
       return row?.status === 'submitted' ? (
         <>
-          <Button onClick={() => onRespond(row?.id, 'approve')}>Approve</Button>
-          <Button onClick={() => onRespond(row?.id, 'reject')}>Reject</Button>
+          <Button
+            flat
+            onClick={() => onRespond(row?.id, 'approve')}
+            className="status Approved"
+          >
+            Approve
+          </Button>
+          <Button
+            flat
+            onClick={() => onRespond(row?.id, 'reject')}
+            className="status Rejected"
+          >
+            Reject
+          </Button>
         </>
       ) : (
-        <div>{row?.status}</div>
+        <div className="status Pending">{row?.status}</div>
       )
     },
   },
@@ -87,6 +107,15 @@ export const dummyDataMht = [
   {
     id: '1',
     status: 'approved',
+    title: 'test',
+    name: 'test',
+    appointmentType: 'test',
+    data: '',
+    time: '',
+  },
+  {
+    id: '1',
+    status: 'submitted',
     title: 'test',
     name: 'test',
     appointmentType: 'test',

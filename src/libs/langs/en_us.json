@@ -358,5 +358,6 @@
   "requests": "Requests",
   "calendar": "Calendar",
   "optional": "Optional",
-  "send_request": "Send Request"
+  "send_request": "Send Request",
+  "back_to_auctions": "Back to Auctions"
 }

@@ -1,8 +1,6 @@
 @import '../broker-page/style.scss';
 
 .admin-page {
-  padding: 0 4.02vw 4vh;
-
   .broker-page {
     padding: 0;
   }
@@ -81,6 +79,8 @@
   }
 
   &-mht {
+    padding: 0 4.02vw 4vh;
+
     &-header {
       display: flex;
       align-items: center;
@@ -191,14 +191,16 @@
     }
 
     .status {
+      margin: 0 8px;
       padding: 5px 16px;
       border-radius: 16px;
       font-weight: bold;
       text-align: center;
+      text-transform: capitalize;
 
       &.Pending {
-        background: #dde4fa;
-        color: #5078e1;
+        background: #f1f1f1;
+        color: #6f6f6f;
       }
 
       &.Approved {
