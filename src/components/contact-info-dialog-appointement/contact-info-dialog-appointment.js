@@ -1,4 +1,6 @@
 import { Button, DialogContainer } from 'react-md'
+import closeIcon from './Auction Ended.svg'
+
 import './style.scss'
 
 const ContactInfoDialogappointment = ({ visible, onHide }) => {
@@ -7,35 +9,21 @@ const ContactInfoDialogappointment = ({ visible, onHide }) => {
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
-      className="contact-info-dialog"
+      className="cancel-appointment-dialog"
+      title={
+        <div className="title">
+          <img height={40} src={closeIcon} />
+          <div>Are you sure you want to cancel the appointment ?</div>
+        </div>
+      }
     >
-      <div>
-        <div className="contact-info-dialog-title">
-          <img src="" alt="icon" />
-        </div>
-        <div className="contact-info-dialog-content">
-          <h3>Are you sure you want to cancel the appointment ?</h3>
-        </div>
-        <div>
-          <Button
-            flat
-            primary
-            swapTheming
-            className="auction-details-btn"
-            onClick={onHide}
-          >
-            Confirm
-          </Button>
-          <Button
-            flat
-            primary
-            swapTheming
-            className="auction-details-btn"
-            onClick={onHide}
-          >
-            cancel
-          </Button>
-        </div>
+      <div className="actions">
+        <Button flat swapTheming className="cancel-btn" onClick={onHide}>
+          cancel
+        </Button>
+        <Button flat primary swapTheming className="add-btn" onClick={onHide}>
+          Confirm
+        </Button>
       </div>
     </DialogContainer>
   )

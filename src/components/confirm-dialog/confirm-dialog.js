@@ -1,5 +1,4 @@
 import { DialogContainer, Button } from 'react-md'
-import { navigate } from '@reach/router'
 import { useTranslation } from 'libs/langs'
 
 import './style.scss'
@@ -48,7 +47,6 @@ const ConfirmDialog = ({
         onClick={(e) => {
           e.stopPropagation()
           onHide && onHide()
-          !msg && navigate('/public/home')
         }}
       >
         {btnTitle}

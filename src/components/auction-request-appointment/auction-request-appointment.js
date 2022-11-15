@@ -5,7 +5,8 @@ import { navigate } from '@reach/router'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
 // import { propertyTypeList } from 'components/helpers'
-import ContactInfoDialogrequest from 'components/contact-info-dialog-request'
+import successRegister from 'images/successfully-register.png'
+import ConfirmDialog from 'components/confirm-dialog'
 
 import './style.scss'
 
@@ -27,15 +28,23 @@ const AuctionRequestAppointment = ({ auctionId }) => {
     setSuccessRequestVisible(true)
   }
   return (
-    <div>
-      <div>
-        <div className="contact-info-dialog-title">{t('request_viewing')}</div>
-        <span>{t('please_fill_the_information')}</span>
-        <div className="dateWrapper md-cell md-cell--12">
+    <>
+      <div className="request-appointment">
+        <Button
+          className="back-btn"
+          primary
+          iconBefore
+          iconEl={<FontIcon>arrow_back</FontIcon>}
+          onClick={() => window.history.go(-1)}
+        >
+          {t('back_to_auctions')}
+        </Button>
+        <div className="request-appointment-title">{t('request_viewing')}</div>
+        <div>{t('please_fill_the_information')}</div>
+        <div className="dateWrapper">
           <label className="auction-details-form-label">
             {t('type_of_appointment')}
           </label>
-
           <SelectField
             id="select-field-3-1"
             menuItems={[
@@ -49,12 +58,12 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             placeholder="Select type of Appointment"
             position={SelectField.Positions.BELOW}
             value={type}
-            className="langSelector"
+            className="selectField-withShadow"
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
         </div>
         {type === '0' && (
-          <div className="dateWrapper md-cell md-cell--12">
+          <div className="dateWrapper">
             <label className="auction-details-form-label">
               {t('location')}
             </label>
@@ -66,50 +75,50 @@ const AuctionRequestAppointment = ({ auctionId }) => {
               }}
               value={location}
               disabled
+              block
+              className="textField-withShadow"
             />
           </div>
         )}
 
-        <div className="dateWrapper md-cell md-cell--12">
+        <div className="dateWrapper">
           <label className="auction-details-form-label">{t('date')}* </label>
-          <div className="filter-box-date">
-            <TextField
-              className="textField"
-              id="date"
-              placeholder="dd/mm/yy"
-              block
-              required
-              rightIcon={
-                <FontIcon className="dateRangeIcon">date_range</FontIcon>
-              }
-              value={`${moment(date).format('DD/MM/YYYY')}`}
-              onClick={() => setVisibleDatePicker(!visibleDatePicker)}
-            />
+          <TextField
+            className="textField-withShadow"
+            id="date"
+            placeholder="dd/mm/yy"
+            block
+            required
+            rightIcon={
+              <FontIcon className="dateRangeIcon">date_range</FontIcon>
+            }
+            value={`${moment(date).format('DD/MM/YYYY')}`}
+            onClick={() => setVisibleDatePicker(!visibleDatePicker)}
+          />
 
-            {visibleDatePicker && (
-              <DatePicker
-                singlePick
-                translation={{ update: 'select' }}
-                onUpdate={({ timestamp }) => {
-                  setAppointmentData((prev) => ({ ...prev, date: timestamp }))
-                  setVisibleDatePicker(false)
-                }}
-                onCancel={() => setVisibleDatePicker(false)}
-                // minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
-                startView="year"
-                endView="day"
-                onReset={() => {
-                  setAppointmentData((prev) => ({
-                    ...prev,
-                    date: moment().valueOf(),
-                  }))
-                  setVisibleDatePicker(false)
-                }}
-              />
-            )}
-          </div>
+          {visibleDatePicker && (
+            <DatePicker
+              singlePick
+              translation={{ update: 'select' }}
+              onUpdate={({ timestamp }) => {
+                setAppointmentData((prev) => ({ ...prev, date: timestamp }))
+                setVisibleDatePicker(false)
+              }}
+              onCancel={() => setVisibleDatePicker(false)}
+              // minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
+              startView="year"
+              endView="day"
+              onReset={() => {
+                setAppointmentData((prev) => ({
+                  ...prev,
+                  date: moment().valueOf(),
+                }))
+                setVisibleDatePicker(false)
+              }}
+            />
+          )}
         </div>
-        <div className="dateWrapper md-cell md-cell--12">
+        <div className="dateWrapper">
           <label className="auction-details-form-label">{t('time')}*</label>
           <TextField
             id="time-start"
@@ -145,7 +154,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             />
           )}
         </div>
-        <div className="dateWrapper md-cell md-cell--12">
+        <div className="dateWrapper">
           <label className="auction-details-form-label">{t('notes')}*</label>
 
           <TextField
@@ -157,45 +166,49 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             onChange={(v) =>
               setAppointmentData((prev) => ({ ...prev, notes: v }))
             }
+            block
             rows={5}
           />
         </div>
         {type === '1' && (
-          <div>
-            <span>{t('note')}</span>
+          <div className="request-appointment-note">
+            <span className="blueText">{t('note')}</span>
             {t('online_link_note')}
           </div>
         )}
-
-        <Button
-          flat
-          primary
-          swapTheming
-          className="owner-card-btn"
-          onClick={() => navigate(`/auctions/detail/${auctionId}`)}
-        >
-          {t('cancel')}
-        </Button>
-        <Button
-          flat
-          primary
-          swapTheming
-          className="owner-card-btn"
-          onClick={() => {
-            sendRequest()
-          }}
-        >
-          {t('send_request')}
-        </Button>
+        <div className="request-appointment-actions">
+          <Button
+            flat
+            primary
+            className="request-appointment-btn"
+            onClick={() => navigate(`/auctions/detail/${auctionId}`)}
+          >
+            {t('cancel')}
+          </Button>
+          <Button
+            flat
+            primary
+            swapTheming
+            className="request-appointment-btn"
+            onClick={() => {
+              sendRequest()
+            }}
+          >
+            {t('send_request')}
+          </Button>
+        </div>
       </div>
-      <ContactInfoDialogrequest
+      <ConfirmDialog
+        title={t('request_for_viewing_success')}
+        description={t('wait_for_approval')}
         visible={successRequestVisible}
+        imgCard={successRegister}
         onHide={() => {
           setSuccessRequestVisible(false)
           navigate(`/auctions/detail/${auctionId}`)
         }}
       />
-    </div>
+    </>
   )
 }
 export default AuctionRequestAppointment

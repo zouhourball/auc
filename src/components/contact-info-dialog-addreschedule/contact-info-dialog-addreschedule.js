@@ -31,20 +31,18 @@ const ContactInfoDialogaddreschedule = ({
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
-      className="contact-info-dialog"
-      title={<div className="contact-info-dialog-title">Add Appointment</div>}
+      className="add-appointment-dialog"
+      title={
+        <div className="add-appointment-dialog-title">Add Appointment</div>
+      }
     >
-      <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">
-          Type of Appointment{' '}
-        </label>
-
+      <div className="dateWrapper">
+        <div className="label">Type of Appointment</div>
         <SelectField
           id="select-field-3-1"
           menuItems={[
-            { label: 'text', value: 'text' },
-            { label: 'text', value: 'text' },
-            { label: 'text', value: 'text' },
+            { label: 'In-person', value: '0' },
+            { label: 'Online', value: '1' },
           ]}
           simplifiedMenu={false}
           onChange={(v) => {
@@ -53,18 +51,17 @@ const ContactInfoDialogaddreschedule = ({
           placeholder="Select type of Appointment"
           position={SelectField.Positions.BELOW}
           value={''}
-          className="langSelector"
+          className="selectField"
           dropdownIcon={<FontIcon>expand_more</FontIcon>}
         />
       </div>
-
-      <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Date* </label>
-        <div className="filter-box-date">
+      <div className="dateWrapper">
+        <div className="label">Date*</div>
+        <div className="date">
           <TextField
             className="textField"
             id="date"
-            placeholder="dd/mm/yy"
+            placeholder="select date"
             block
             required
             rightIcon={
@@ -92,56 +89,61 @@ const ContactInfoDialogaddreschedule = ({
           )}
         </div>
       </div>
-      <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Time*</label>
-        <TextField
-          id="time-start"
-          placeholder={'Select from'}
-          block
-          inlineIndicator={<FontIcon primary>schedule</FontIcon>}
-          onClick={() => setVisibleStartTimePicker(true)}
-          value={`${moment(startTime).format('HH:mm')}`}
-          className="textField-withShadow"
-        />
-        {visibleStartTimePicker && (
-          <DatePicker
-            startView="time"
-            endView="time"
-            singlePick={true}
-            minuteInterval={5}
-            timeFormat={null}
-            onUpdate={({ timestamp }) => {
-              setStartTime(timestamp)
-              setVisibleStartTimePicker(false)
-            }}
-            onCancel={() => setVisibleStartTimePicker(false)}
-            translation={{ date: 'Time' }}
-            onReset={() => {
-              setStartTime(moment().valueOf())
-              setVisibleStartTimePicker(false)
-            }}
+      <div className="dateWrapper">
+        <div className="label">Time*</div>
+        <div className="date">
+          <TextField
+            id="time-start"
+            placeholder={'Select from'}
+            block
+            rightIcon={
+              <FontIcon className="dateRangeIcon">expand_more</FontIcon>
+            }
+            onClick={() => setVisibleStartTimePicker(true)}
+            value={`${moment(startTime).format('HH:mm')}`}
+            className="textField"
           />
-        )}
+          {visibleStartTimePicker && (
+            <DatePicker
+              startView="time"
+              endView="time"
+              singlePick={true}
+              minuteInterval={5}
+              timeFormat={null}
+              onUpdate={({ timestamp }) => {
+                setStartTime(timestamp)
+                setVisibleStartTimePicker(false)
+              }}
+              onCancel={() => setVisibleStartTimePicker(false)}
+              translation={{ date: 'Time' }}
+              onReset={() => {
+                setStartTime(moment().valueOf())
+                setVisibleStartTimePicker(false)
+              }}
+            />
+          )}
+        </div>
       </div>
-
-      <Button
-        flat
-        primary
-        swapTheming
-        className="owner-card-btn"
-        onClick={onHide}
-      >
-        Cancel
-      </Button>
-      <Button
-        flat
-        primary
-        swapTheming
-        className="owner-card-btn"
-        onClick={onHide}
-      >
-        Reschedule
-      </Button>
+      <div className="actions">
+        <Button
+          flat
+          primary
+          swapTheming
+          className="cancel-btn"
+          onClick={onHide}
+        >
+          Cancel
+        </Button>
+        <Button
+          flat
+          primary
+          swapTheming
+          className="reschedule-btn"
+          onClick={onHide}
+        >
+          Add Appointment
+        </Button>
+      </div>
     </DialogContainer>
   )
 }

@@ -720,7 +720,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 // !(auctionData?.['submitted_by'] === user?.subject) &&
                 // !(meOrgs?.length > 0) &&
                 // temporarly commented END
-                <>
+                <div className="actionWrapper">
                   <Button
                     flat
                     primary
@@ -742,7 +742,6 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                     <Button
                       flat
                       primary
-                      swapTheming
                       className="auction-details-btn"
                       onClick={() =>
                         navigate(`/auctions/appointment/${auctionData?.uuid}`)
@@ -751,7 +750,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                       {t('request_viewing_label')}
                     </Button>
                   )}
-                </>
+                </div>
               )
             )
 
