@@ -1,10 +1,15 @@
+import { useState } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import CalendarCustom from 'components/calendar'
-import './style.scss'
 import ContactInfoDialogappointment from 'components/contact-info-dialog-appointement'
 import ContactInfoDialogreschedule from 'components/contact-info-dialog-reschedule'
-import ContactInfoDialogrequest from 'components/contact-info-dialog-request'
 import ContactInfoDialogaddreschedule from 'components/contact-info-dialog-addreschedule'
-import { useState } from 'react'
+import ConfirmDialog from 'components/confirm-dialog'
+
+import successRegister from 'images/successfully-register.png'
+
+import './style.scss'
 
 const AppointmentsCalendar = () => {
   const [visibleAreYouSure, setVisibleAreYouSure] = useState(false)
@@ -12,7 +17,7 @@ const AppointmentsCalendar = () => {
   const [visibleSuccessReschedule, setVisibleSuccessReschedule] =
     useState(false)
   const [visibleAddAppointment, setVisibleAddAppointment] = useState(false)
-
+  const { t } = useTranslation()
   return (
     <div className="appointments-calendar-page">
       <div className="appointments-calendar-page-title">Appointments</div>
@@ -39,13 +44,17 @@ const AppointmentsCalendar = () => {
         />
       )}
       {visibleSuccessReschedule && (
-        <ContactInfoDialogrequest
+        <ConfirmDialog
+          title={t('request_for_viewing_success')}
+          description={t('wait_for_approval')}
           visible={visibleSuccessReschedule}
+          imgCard={successRegister}
           onHide={() => {
             setVisibleSuccessReschedule(false)
           }}
         />
       )}
+
       {visibleAddAppointment && (
         <ContactInfoDialogaddreschedule
           visible={visibleAddAppointment}
