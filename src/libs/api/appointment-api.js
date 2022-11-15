@@ -91,10 +91,16 @@ export const getRequestsForBroker = async ({ queryKey }) => {
   return res
 }
 export const getRequestsForBrokerCalendar = async ({ queryKey }) => {
+  const queryParams = []
+  for (const [key, value] of Object.entries(queryKey[1])) {
+    queryParams.push(`${key}=${value}`)
+  }
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/requests-for-broker/calendar`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests-for-broker/calendar?${queryParams.join(
+        '&',
+      )}`,
       {
         method: 'GET',
       },
@@ -147,11 +153,11 @@ export const approveRequest = async ({ uuid, reqUuid }) => {
   }
   return res
 }
-export const rescheduleRequest = async ({ uuid, reqUuid }) => {
+export const rescheduleRequest = async ({ reqUuid }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/requests/${reqUuid}/reschedule`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}/reschedule`,
       {
         method: 'PUT',
       },
@@ -161,11 +167,11 @@ export const rescheduleRequest = async ({ uuid, reqUuid }) => {
   }
   return res
 }
-export const cancelRequest = async ({ uuid, reqUuid }) => {
+export const cancelRequest = async ({ reqUuid }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/requests/${reqUuid}/cancel`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}/cancel`,
       {
         method: 'PUT',
       },

@@ -15,8 +15,8 @@ const ContactInfoDialogreschedule = ({
   visible,
   onHide,
   setVisibleSuccessReschedule,
-  setFilterData,
-  filterData,
+  rescheduleData,
+  onConfirm,
 }) => {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
@@ -27,10 +27,10 @@ const ContactInfoDialogreschedule = ({
   // console.log(startTime, 'startTime')
 
   // const onHandleDate = (date, key) => {
-  //   setFilterData({
-  //     // ...filterData,
+  //   setrescheduleData({
+  //     // ...rescheduleData,
   //     dateRange: {
-  //       ...filterData?.dateRange,
+  //       ...rescheduleData?.dateRange,
   //       [key]: date?.timestamp,
   //     },
   //   })
@@ -94,7 +94,7 @@ const ContactInfoDialogreschedule = ({
                 setVisibleDatePicker(false)
               }}
               onCancel={() => setVisibleDatePicker(false)}
-              minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
+              minValidDate={{ timestamp: rescheduleData?.dateRange?.startDate }}
               startView="year"
               endView="day"
             />
@@ -150,6 +150,7 @@ const ContactInfoDialogreschedule = ({
         swapTheming
         className="owner-card-btn"
         onClick={() => {
+          onConfirm(rescheduleData)
           onHide && onHide()
           setVisibleSuccessReschedule(true)
         }}

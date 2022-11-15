@@ -1,12 +1,13 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import './style.scss'
 import { useClickOutside } from 'libs/utils/useclickoutside'
-
-import { eventsList } from './helper'
 import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef, useState } from 'react'
+
+import { eventsList } from './helper'
+
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import './style.scss'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -19,6 +20,7 @@ const CalendarCustom = ({
   setVisibleAreYouSure,
   setVisibleReschedule,
   setVisibleAddAppointment,
+  setMonth,
 }) => {
   const localizer = momentLocalizer(moment)
   const ref = useRef()
@@ -26,9 +28,11 @@ const CalendarCustom = ({
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [search, setSearch] = useState(null)
   const CustomToolbar = (props) => {
-    let { label } = props
+    let { label, date } = props
+
     const onNavigatee = (action) => {
       props.onNavigate(action)
+      setMonth(moment(date).format('MM'))
     }
     return (
       <div className="toolbar">

@@ -81,7 +81,6 @@
   "services": "الخدمات",
   "how_it_works": "كيف تعمل",
   "my_activity": "نشاطي",
-  "my_auctions": "مزاداتي",
   "saved_auctions": "المزادات المحفوظة",
   "my_participation": "مشاركتي",
   "villa": "فيلا",
@@ -156,5 +155,19 @@
   "my_profile": "",
   "sqm": "متر مربع",
   "are_you_sure": "هل أنت متأكد أنك تريد الخروج ؟",
-  "back_to_live_auctions": "الرجوع إلى المزادات النشطة"
+  "back_to_live_auctions": "الرجوع إلى المزادات النشطة",
+  "resident": "سكني",
+  "reset_filters": "اعادة تصفية",
+  "land": "أرض",
+  "Complex": "مجمع",
+  "Mixed_use": "استخدام متعدد",
+  "tourist": "سياحي",
+  "Resort": "منتجع",
+  "no_upcoming_auctions": "لا يوجد مزادات قادمة ",
+  "we_couldnt_find_what_your_looking_for": "!لم نجد ما تبحث عنه",
+  "no_result": "لا توجد نتائج ",
+  "live": "النشطة",
+  "closed": "المغلقة",
+  "broker_profile": "ملف الوسيط",
+  "my_auctions": "نشاطي"
 }
