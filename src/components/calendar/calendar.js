@@ -35,7 +35,7 @@ const CalendarCustom = ({
         <div className="toolbar-top">
           <TextField
             placeholder={'Search for an appointment'}
-            className="md-cell md-cell--3 toolbar-textField"
+            className="toolbar-textField"
             value={search}
             onChange={(v) => {
               setSearch(v)
@@ -43,15 +43,27 @@ const CalendarCustom = ({
             rightIcon={<FontIcon>search</FontIcon>}
             block
           />
-          <Button onClick={() => setVisibleAddAppointment(true)}>
-            Add Appointment
-          </Button>
+
           <div className="btn-group">
-            <Button icon onClick={() => onNavigatee(navigate.PREVIOUS)}>
+            <Button
+              className="nav-btn add-btn"
+              onClick={() => setVisibleAddAppointment(true)}
+            >
+              Add Appointment
+            </Button>
+            <Button
+              className="nav-btn"
+              icon
+              onClick={() => onNavigatee(navigate.PREVIOUS)}
+            >
               <FontIcon>chevron_left</FontIcon>
             </Button>
-            <span className="toolbar-label">{label}</span>
-            <Button icon onClick={() => onNavigatee(navigate.NEXT)}>
+            <span className="toolbar-label nav-btn">{label}</span>
+            <Button
+              className="nav-btn"
+              icon
+              onClick={() => onNavigatee(navigate.NEXT)}
+            >
               <FontIcon>chevron_right</FontIcon>
             </Button>
           </div>
@@ -59,12 +71,18 @@ const CalendarCustom = ({
         <div className="toolbar-bottom">
           <span className="toolbar-bottom-label">{label}</span>
           <div className="toolbar-bottom-legend">
-            <div className={`event-item-status pending`} />
-            <div>Pending</div>
-            <div className={`event-item-status confirmed`} />
-            <div>Confirmed</div>
-            <div className={`event-item-status cancelled`} />
-            <div>Cancelled</div>
+            <div className="event-item">
+              <div className={`event-item-status pending`} />
+              <div className="label">Pending</div>
+            </div>
+            <div className="event-item">
+              <div className={`event-item-status confirmed`} />
+              <div className="label">Confirmed</div>
+            </div>
+            <div className="event-item">
+              <div className={`event-item-status cancelled`} />
+              <div className="label">Cancelled</div>
+            </div>
           </div>
         </div>
       </div>
@@ -120,7 +138,7 @@ const CalendarCustom = ({
   })
 
   return (
-    <div style={{ height: 700 }} ref={ref}>
+    <div className="appointments-calendar" ref={ref}>
       <Calendar
         localizer={localizer}
         events={eventsList}
@@ -133,6 +151,7 @@ const CalendarCustom = ({
         }}
         popup
         selectable
+        style={{ height: 700 }}
       />
 
       {selectedEvent && (
@@ -145,7 +164,7 @@ const CalendarCustom = ({
             left: `${selectedEvent.x}px`,
             zIndex: 1111,
             background: '#fff',
-            width: '270px',
+            width: '250px',
           }}
         >
           <div className="popup-top">
@@ -154,14 +173,20 @@ const CalendarCustom = ({
             </Avatar>
             <div className="title">{selectedEvent?.title}</div>
           </div>
-          <div className="label">Type of Appointment</div>
-          <div className="value">{selectedEvent?.type}</div>
-          <div className="label">Location</div>
-          <div className="value">{selectedEvent?.location}</div>
-          <div className="label">Time</div>
-          <div className="value">{`${moment(selectedEvent?.start).format(
-            'hh:mm',
-          )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+          <div className="info">
+            <div className="label">Type of Appointment</div>
+            <div className="value">{selectedEvent?.type}</div>
+          </div>
+          <div className="info">
+            <div className="label">Location</div>
+            <div className="value">{selectedEvent?.location}</div>
+          </div>
+          <div className="info">
+            <div className="label">Time</div>
+            <div className="value">{`${moment(selectedEvent?.start).format(
+              'hh:mm',
+            )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+          </div>
           <div className="popup-actions">
             {selectedEvent?.status === 'cancelled' ? (
               <>

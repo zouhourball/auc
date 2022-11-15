@@ -1,4 +1,5 @@
 import CalendarCustom from 'components/calendar'
+import './style.scss'
 import ContactInfoDialogappointment from 'components/contact-info-dialog-appointement'
 import ContactInfoDialogreschedule from 'components/contact-info-dialog-reschedule'
 import ContactInfoDialogrequest from 'components/contact-info-dialog-request'
@@ -13,7 +14,8 @@ const AppointmentsCalendar = () => {
   const [visibleAddAppointment, setVisibleAddAppointment] = useState(false)
 
   return (
-    <div>
+    <div className="appointments-calendar-page">
+      <div className="appointments-calendar-page-title">Appointments</div>
       <CalendarCustom
         setVisibleAreYouSure={setVisibleAreYouSure}
         setVisibleReschedule={setVisibleReschedule}
