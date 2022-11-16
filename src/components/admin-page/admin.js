@@ -310,7 +310,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
       <div className="admin-page-mht">
         <Mht
           id={'admin-dashboard'}
-          configs={configs}
+          configs={configs(t)}
           tableData={renderData() || []}
           withChecked
           singleSelect
@@ -319,7 +319,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           headerTemplate={
             selectedRow?.length === 1 && (
               <div className="admin-page-mht-header">
-                {`${selectedRow.length} Row Selected`}
+                {`${selectedRow.length}  ${t('Row_Selected')}`}
                 <div>
                   <Button
                     className="admin-page-actionBtn"
@@ -358,7 +358,9 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           hideTotal
           footerTemplate={
             <>
-              <span>Total Pages {getTotalElements}</span>
+              <span>
+                {t('Total_Pages')} {getTotalElements}
+              </span>
 
               {+getTotalElements > limit && (
                 <div className="pagination-numbers">
@@ -391,7 +393,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
       <div className="admin-page-mht">
         <Mht
           id={'admin-dashboard'}
-          configs={newBrokersConfigs}
+          configs={newBrokersConfigs(t)}
           tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
@@ -401,7 +403,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           headerTemplate={
             selectedRowBroker?.length === 1 && (
               <div className="admin-page-mht-header">
-                {`${selectedRowBroker.length} Row Selected`}
+                {`${selectedRowBroker.length} ${t('Row_Selected')}`}
                 <div>
                   {selectedRowBroker[0]?.status === 'New Request' && (
                     <>
@@ -431,7 +433,9 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           hideTotal
           footerTemplate={
             <>
-              <span>Total Pages {getTotalElements}</span>
+              <span>
+                {t('Total_Pages')} {getTotalElements}
+              </span>
               {+getTotalElements > limit && (
                 <div className="table-paginator">
                   <Button
@@ -489,21 +493,21 @@ const Admin = ({ logged, auctionId, currentTab }) => {
       key: 'citizen',
       className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
       onClick: () => setFilter(0),
-      title: 'Omani Citizen',
+      title: t('Omani_Citizen'),
       num: 10,
     },
     {
       key: 'resident',
       className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
       onClick: () => setFilter(1),
-      title: 'Omani Resident',
+      title: t('Omani_Resident'),
       num: 10,
     },
     {
       key: 'foreign',
       className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
       onClick: () => setFilter(2),
-      title: 'Foreign',
+      title: t('Foreign'),
       num: 10,
     },
   ]
