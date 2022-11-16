@@ -1,10 +1,11 @@
 import { Button } from 'react-md'
 
 export const configs = (
+  onApprove,
+  onReject,
   setNotesVisible,
   setLocationVisible,
   setLinkVisible,
-  onRespond,
 ) => [
   {
     label: 'Title',
@@ -35,12 +36,18 @@ export const configs = (
     type: 'text',
     displayInCsv: true,
     render: (row) => {
-      return row?.appointmentType === '0' ? (
-        <Button flat primary onClick={() => setLocationVisible(true)}>
+      return row?.appointmentType === 'In-person' ? (
+        <Button
+          flat
+          primary
+          onClick={() =>
+            setLocationVisible({ x: row?.xLocation, y: row?.yLocation })
+          }
+        >
           Edit Location
         </Button>
       ) : (
-        <Button flat primary onClick={() => setLinkVisible(true)}>
+        <Button flat primary onClick={() => setLinkVisible(row?.link)}>
           Add Link
         </Button>
       )
@@ -67,10 +74,12 @@ export const configs = (
     type: 'text',
     displayInCsv: true,
     render: (row) => {
-      return (
-        <Button flat primary onClick={() => setNotesVisible(row?.id)}>
+      return row?.note ? (
+        <Button flat primary onClick={() => setNotesVisible(row?.note)}>
           View
         </Button>
+      ) : (
+        <></>
       )
     },
   },
@@ -80,18 +89,18 @@ export const configs = (
     width: '220',
     type: 'text',
     render: (row) => {
-      return row?.status === 'submitted' ? (
+      return row?.status === 'Pending' ? (
         <>
           <Button
             flat
-            onClick={() => onRespond(row?.id, 'approve')}
+            onClick={() => onApprove(row?.id, 'auctionId')}
             className="status Approved"
           >
             Approve
           </Button>
           <Button
             flat
-            onClick={() => onRespond(row?.id, 'reject')}
+            onClick={() => onReject(row?.id, 'auctionId')}
             className="status Rejected"
           >
             Reject
@@ -109,17 +118,20 @@ export const dummyDataMht = [
     status: 'approved',
     title: 'test',
     name: 'test',
-    appointmentType: 'test',
+    appointmentType: 'In-person',
     data: '',
     time: '',
+    note: 'test',
+    link: 'link here',
   },
   {
     id: '1',
-    status: 'submitted',
+    status: 'Pending',
     title: 'test',
     name: 'test',
-    appointmentType: 'test',
+    appointmentType: 'Online',
     data: '',
     time: '',
+    link: 'link here',
   },
 ]
