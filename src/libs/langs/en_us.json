@@ -358,5 +358,7 @@
   "calendar": "Calendar",
   "optional": "Optional",
   "send_request": "Send Request",
-  "back_to_auctions": "Back to Auctions"
+  "back_to_auctions": "Back to Auctions",
+  "We_couldnt_find": "We couldn't find what you're looking for!",
+  "No_Upcoming_Auctions": "No Upcoming Auctions"
 }

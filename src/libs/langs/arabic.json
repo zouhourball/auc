@@ -203,5 +203,8 @@
   "rejected": "مرفوض",
   "Pending": "في الإنتظار",
   "edit_details": "تعديل",
-  "delete_auction": "حذف"
+  "delete_auction": "حذف",
+
+  "OMR": " ريال عماني",
+  "We_couldnt_find": "لم نجد عما تبحث عنه ! "
 }
