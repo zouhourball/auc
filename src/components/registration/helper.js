@@ -117,7 +117,7 @@ import Monaco from 'images/country-flag/Monaco.png'
 import Mongolia from 'images/country-flag/Mongolia.png'
 import Montenegro from 'images/country-flag/Montenegro.png'
 import Morocco from 'images/country-flag/Morocco.png'
-// import Mozambique from 'images/country-flag/Mozambique.png'
+import Mozambique from 'images/country-flag/Mozambique.png'
 import Myanmar from 'images/country-flag/Myanmar.png'
 import Namibia from 'images/country-flag/Namibia.png'
 import Nauru from 'images/country-flag/Nauru.png'
@@ -146,7 +146,7 @@ import Russia from 'images/country-flag/Russia.png'
 import Rwanda from 'images/country-flag/Rwanda.png'
 import Samoa from 'images/country-flag/Samoa.png'
 import Marino from 'images/country-flag/San-Marino.png'
-// import SaoTome from 'images/country-flag/Sao-Tome-and-Principe.png'
+import SaoTome from 'images/country-flag/Sao-Tome-and-Principe.png'
 import Saudi from 'images/country-flag/Saudi-Arabia.png'
 import Senegal from 'images/country-flag/Senegal.png'
 import Serbia from 'images/country-flag/Serbia.png'
@@ -156,9 +156,9 @@ import Singapore from 'images/country-flag/Singapore.png'
 import Slovakia from 'images/country-flag/Slovakia.png'
 import Slovenia from 'images/country-flag/Slovenia.png'
 import Solomon from 'images/country-flag/Solomon-Islands.png'
-// import Somalia from 'images/country-flag/Somalia.png'
+import Somalia from 'images/country-flag/Somalia.png'
 import SouthAfrica from 'images/country-flag/South-Africa.png'
-// import SouthSudan from 'images/country-flag/South-Sudan.png'
+import SouthSudan from 'images/country-flag/South-Sudan.png'
 import Spain from 'images/country-flag/Spain.png'
 import SriLanka from 'images/country-flag/Sri-Lanka.png'
 import Nevis from 'images/country-flag/St-Kitts-Nevis.png'
@@ -189,7 +189,7 @@ import usa from 'images/country-flag/United-States-of-America.png'
 import Uruguay from 'images/country-flag/Uruguay.png'
 import Uzbekistan from 'images/country-flag/Uzbekistan.png'
 import Vanuatu from 'images/country-flag/Vanuatu.png'
-// import Vatican from 'images/country-flag/Vatican-City.png'
+import Vatican from 'images/country-flag/Vatican-City.png'
 import Venezuela from 'images/country-flag/Venezuela.png'
 import Vietnam from 'images/country-flag/Vietnam.png'
 import Yemen from 'images/country-flag/Yemen.png'
@@ -280,7 +280,7 @@ export const countriesCodes = [
   {
     flag: antigua,
     value: '+1 268',
-    label: 'Antigua and Barbuda',
+    label: 'Antigua And Barbuda',
   },
   {
     flag: argentina,
@@ -405,7 +405,7 @@ export const countriesCodes = [
   {
     flag: britishVirginIslands,
     value: '+1 284',
-    label: 'British Virgin Islands',
+    label: 'Virgin Islands (British)',
   },
   {
     flag: Brunei,
@@ -480,7 +480,7 @@ export const countriesCodes = [
   {
     flag: cocosKeelingIslands,
     value: '+61',
-    label: 'Cocos-Keeling Islands',
+    label: 'Cocos (Keeling) Islands',
   },
   {
     flag: Colombia,
@@ -565,7 +565,7 @@ export const countriesCodes = [
   {
     flag: Timor,
     value: '+670',
-    label: 'East Timor',
+    label: 'Timor-Leste (East Timor)',
   },
   {
     flag: easterIslands,
@@ -983,6 +983,12 @@ export const countriesCodes = [
     label: 'Morocco',
   },
   {
+    flag: Mozambique,
+    value: '+258',
+    label: 'Mozambique',
+  },
+
+  {
     flag: Myanmar,
     value: '+95',
     label: 'Myanmar',
@@ -1095,7 +1101,7 @@ export const countriesCodes = [
   {
     flag: NewGuinea,
     value: '+675',
-    label: 'Papua New Guinea',
+    label: 'Papua new Guinea',
   },
   {
     flag: Paraguay,
@@ -1168,6 +1174,17 @@ export const countriesCodes = [
     label: 'Saudi Arabia',
   },
   {
+    flag: SaoTome,
+    value: '+239',
+    label: 'Sao Tome and Principe',
+  },
+  {
+    flag: Somalia,
+    value: '+252',
+    label: 'Somalia',
+  },
+
+  {
     flag: Senegal,
     value: '+221',
     label: 'Senegal',
@@ -1212,6 +1229,12 @@ export const countriesCodes = [
     value: '+27',
     label: 'South Africa',
   },
+  {
+    flag: SouthSudan,
+    value: '+211',
+    label: 'South Sudan',
+  },
+
   {
     flag: Georgia,
     value: '+500',
@@ -1285,7 +1308,7 @@ export const countriesCodes = [
   {
     flag: Timor,
     value: '+670',
-    label: 'Timor Leste',
+    label: 'Timor-Leste',
   },
   {
     flag: Togo,
@@ -1325,7 +1348,7 @@ export const countriesCodes = [
   {
     flag: turksAndCaicosIslands,
     value: '+1 649',
-    label: 'Turks and Caicos Islands',
+    label: 'Turks And Caicos Islands',
   },
   {
     flag: Tuvalu,
@@ -1335,7 +1358,7 @@ export const countriesCodes = [
   {
     flag: usVirginIslands,
     value: '+1 340',
-    label: 'U.S. Virgin Islands',
+    label: 'Virgin Islands (US)',
   },
   {
     flag: Uganda,
@@ -1377,6 +1400,12 @@ export const countriesCodes = [
     value: '+678',
     label: 'Vanuatu',
   },
+  {
+    flag: Vatican,
+    value: '+379',
+    label: 'Vatican City',
+  },
+
   {
     flag: Venezuela,
     value: '+58',

@@ -84,6 +84,7 @@ export default class CustomSelectWithSearch extends Component {
       mentor,
       searchValue,
       keepData,
+      searchableKey,
       // errorTextProp,
     } = this.props
 
@@ -99,7 +100,11 @@ export default class CustomSelectWithSearch extends Component {
 
     filteredData = searchItem
       ? filteredData?.filter((item) =>
-          item.label?.toLowerCase().includes(searchItem?.toLowerCase()),
+        searchableKey
+          ? item?.[searchableKey]
+                ?.toLowerCase()
+                .includes(searchItem?.toLowerCase())
+          : item.label?.toLowerCase().includes(searchItem?.toLowerCase()),
         )
       : filteredData
     filteredData = dataToSearch
@@ -108,7 +113,11 @@ export default class CustomSelectWithSearch extends Component {
             item.name?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
         : filteredData.filter((item) =>
-            item.label?.toLowerCase().includes(dataToSearch?.toLowerCase()),
+          searchableKey
+            ? item?.[searchableKey]
+                  ?.toLowerCase()
+                  .includes(dataToSearch?.toLowerCase())
+            : item.label?.toLowerCase().includes(dataToSearch?.toLowerCase()),
         )
       : filteredData
     // if (selectedItemsArray.length > 0) {
@@ -144,7 +153,13 @@ export default class CustomSelectWithSearch extends Component {
       ) : (
         <div
           className={`elemWrapper ${
-            selectedItem === elem.label ? 'selected' : ''
+            searchableKey
+              ? selectedItem === elem?.[searchableKey]
+                ? 'selected'
+                : ''
+              : selectedItem === elem.label
+                ? 'selected'
+                : ''
           }`}
           onClick={(e) => {
             e.stopPropagation()
@@ -163,7 +178,10 @@ export default class CustomSelectWithSearch extends Component {
               </div>
             )}
           </div>
-          {selectedItem === elem.label && !withOutCheckIcon && (
+          {(searchableKey
+            ? selectedItem === elem?.[searchableKey]
+            : selectedItem === elem.label) &&
+            !withOutCheckIcon && (
             <FontIcon className="elemWrapper-icon">check</FontIcon>
           )}
         </div>
@@ -260,6 +278,7 @@ export default class CustomSelectWithSearch extends Component {
       searchItemPlaceHolder,
       addItemBtnLabel,
       selectedItem,
+      selectedItemFlag,
       rightIcon,
       onClickItem,
       required,
@@ -307,6 +326,7 @@ export default class CustomSelectWithSearch extends Component {
               value={
                 !(singleSelect && selectedItem) ? dataToSearch : selectedItem
               }
+              leftIcon={selectedItemFlag || <div />}
               rightIcon={
                 <>
                   {withHelp && (

@@ -33,6 +33,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [showListCountry, handleShowListCountry] = useState('')
   const [showListCities, handleShowListCities] = useState('')
   const [textSearch, setTextSearch] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState('')
+  const [selectedCity, setSelectedCity] = useState('')
 
   // const { data: getCountryList } = useQuery(['getCountry'], getCountry)
 
@@ -117,8 +119,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const {
     title,
     address,
-    city,
-    country,
+    // city,
+    // country,
     propertyType,
     startDate,
     endDate,
@@ -236,13 +238,12 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           hideSecondaryLabel={false}
           listVisibility={showListCountry}
           setListVisibility={handleShowListCountry}
-          selectedItem={
-            renderCountry()?.find((el) => el?.value === country)?.label || ''
-          }
+          selectedItem={selectedCountry?.label || ''}
           searchPlaceholder={t('select_country')}
           onClickItem={(itemSelected) => {
             onSetFormDetails('country', itemSelected?.value)
             setTextSearch('')
+            setSelectedCountry(itemSelected)
           }}
           hideAvatar={true}
           withHeader={true}
@@ -276,13 +277,12 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           hideSecondaryLabel={false}
           listVisibility={showListCities}
           setListVisibility={handleShowListCities}
-          selectedItem={
-            renderCity()?.find((el) => el?.value === city)?.label || ''
-          }
+          selectedItem={selectedCity?.label || ''}
           searchPlaceholder={t('state_gov')}
           onClickItem={(itemSelected) => {
             onSetFormDetails('city', itemSelected?.value)
             setTextSearch('')
+            setSelectedCity(itemSelected)
           }}
           hideAvatar={true}
           withHeader={true}
