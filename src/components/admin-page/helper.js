@@ -1,8 +1,8 @@
 import { Button } from 'react-md'
 
-export const configs = [
+export const configs = (t) => [
   {
-    label: 'Title',
+    label: t('title_label'),
     key: 'title',
     width: '200',
     // icon: 'mdi mdi-spellcheck',
@@ -10,109 +10,109 @@ export const configs = [
     displayInCsv: true,
   },
   {
-    label: 'Location',
+    label: t('location'),
     key: 'location',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Company Broker',
+    label: t('Company_Broker'),
     key: 'owner',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Bid Open Date',
+    label: t('Bid_Open_Date'),
     key: 'bidOpenDate',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Bid Close Date',
+    label: t('Bid_Close_Date'),
     key: 'bidCloseDate',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Submission Date',
+    label: t('Submission_Date'),
     key: 'submissionDate',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Status',
+    label: t('Status'),
     key: 'status',
     width: '200',
     type: 'text',
     displayInCsv: true,
     render: (row) => {
-      return <div className={`status ${row.status}`}>{row.status}</div>
+      return <div className={`status ${row.status}`}>{t(row.status)}</div>
     },
   },
   {
-    label: 'Documents',
+    label: t('documents_admin'),
     key: 'documents',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
 ]
-export const newBrokersConfigs = [
+export const newBrokersConfigs = (t) => [
   {
-    label: 'Logo',
+    label: t('Logo'),
     key: 'logo',
     width: '100',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Company Name',
+    label: t('Company_Name'),
     key: 'companyName',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Country',
+    label: t('Country'),
     key: 'country',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Address',
+    label: t('Address'),
     key: 'address',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Email',
+    label: t('Email'),
     key: 'email',
     width: '350',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Phone No',
+    label: t('Phone_No'),
     key: 'phone',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Status',
+    label: t('Status'),
     key: 'status',
     width: '200',
     type: 'text',
     displayInCsv: true,
     render: (row) => {
-      return <div className={`status ${row.status}`}>{row.status}</div>
+      return <div className={`status ${row.status}`}>{t(row.status)}</div>
     },
   },
 ]

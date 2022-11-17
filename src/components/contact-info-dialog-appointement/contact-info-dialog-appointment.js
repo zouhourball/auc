@@ -3,7 +3,7 @@ import closeIcon from './Auction Ended.svg'
 
 import './style.scss'
 
-const ContactInfoDialogappointment = ({ visible, onHide }) => {
+const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
   return (
     <DialogContainer
       visible={visible}
@@ -18,10 +18,24 @@ const ContactInfoDialogappointment = ({ visible, onHide }) => {
       }
     >
       <div className="actions">
-        <Button flat swapTheming className="cancel-btn" onClick={onHide}>
+        <Button
+          flat
+          swapTheming
+          className="cancel-btn"
+          onClick={() => onHide()}
+        >
           cancel
         </Button>
-        <Button flat primary swapTheming className="add-btn" onClick={onHide}>
+        <Button
+          flat
+          primary
+          swapTheming
+          className="add-btn"
+          onClick={() => {
+            onConfirm()
+            onHide()
+          }}
+        >
           Confirm
         </Button>
       </div>

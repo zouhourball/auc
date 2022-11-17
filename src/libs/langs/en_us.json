@@ -240,7 +240,6 @@
   "new_to_auctions": "New to Auctions",
   "sign_up_to_view": "Sign up to view listed properties",
   "bidders": "Bidders",
-  "omani_citizen": "Omani Citizen",
   "brokers": "Brokers",
   "i_accept": "I accept",
   "Terms_&_Conditions": "Terms & Conditions",
@@ -359,6 +358,5 @@
   "calendar": "Calendar",
   "optional": "Optional",
   "send_request": "Send Request",
-  "back_to_auctions": "Back to Auctions",
-  "We_couldnt_find": "We couldn't find what you're looking for!"
+  "back_to_auctions": "Back to Auctions"
 }

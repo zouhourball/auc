@@ -1,12 +1,13 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import './style.scss'
 import { useClickOutside } from 'libs/utils/useclickoutside'
+import { Avatar, Button, FontIcon, TextField } from 'react-md'
+import { useRef } from 'react'
 
 import { eventsList } from './helper'
-import { Avatar, Button, FontIcon, TextField } from 'react-md'
-import { useRef, useState } from 'react'
+
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import './style.scss'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -19,16 +20,23 @@ const CalendarCustom = ({
   setVisibleAreYouSure,
   setVisibleReschedule,
   setVisibleAddAppointment,
+  setMonth,
+  calendarAppointments,
+  setSelectedEvent,
+  selectedEvent,
+  broker,
+  setSearch,
+  search,
 }) => {
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
-  const [selectedEvent, setSelectedEvent] = useState(null)
-  const [search, setSearch] = useState(null)
   const CustomToolbar = (props) => {
-    let { label } = props
+    let { label, date } = props
+
     const onNavigatee = (action) => {
       props.onNavigate(action)
+      setMonth(moment(date).format('MM'))
     }
     return (
       <div className="toolbar">
@@ -58,7 +66,12 @@ const CalendarCustom = ({
             >
               <FontIcon>chevron_left</FontIcon>
             </Button>
-            <span className="toolbar-label nav-btn">{label}</span>
+            <span
+              onClick={() => onNavigatee(navigate.TODAY)}
+              className="toolbar-label nav-btn"
+            >
+              Today
+            </span>
             <Button
               className="nav-btn"
               icon
@@ -134,14 +147,14 @@ const CalendarCustom = ({
   }
 
   const popupRef = useClickOutside(() => {
-    setSelectedEvent(false)
+    setSelectedEvent((prev) => ({ ...prev, hide: true }))
   })
 
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar
         localizer={localizer}
-        events={eventsList}
+        events={calendarAppointments || eventsList}
         step={60}
         views={['month']}
         defaultDate={new Date()}
@@ -154,7 +167,7 @@ const CalendarCustom = ({
         style={{ height: 700 }}
       />
 
-      {selectedEvent && (
+      {!selectedEvent?.hide && (
         <div
           className="popup"
           ref={popupRef}
@@ -168,9 +181,12 @@ const CalendarCustom = ({
           }}
         >
           <div className="popup-top">
-            <Avatar className="avatar" src={selectedEvent?.avatar}>
-              {selectedEvent?.title[0]}
-            </Avatar>
+            {!broker && (
+              <Avatar className="avatar" src={selectedEvent?.avatar}>
+                {selectedEvent?.title[0]}
+              </Avatar>
+            )}
+            {broker && <div className="label">Name</div>}
             <div className="title">{selectedEvent?.title}</div>
           </div>
           <div className="info">

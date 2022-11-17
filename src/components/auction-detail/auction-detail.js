@@ -497,14 +497,18 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             in {auctionPropertyData?.address}
           </div>
           <div className="auction-details-card-details">
-            <div className="auction-details-card-details-item">
-              <img src={icon1} /> {auctionPropertyData?.['count_bedrooms']}{' '}
-              {t('bedrooms')}
-            </div>
-            <div className="auction-details-card-details-item">
-              <img src={icon2} />
-              {auctionPropertyData?.['count_bathrooms']} {t('bathrooms')}
-            </div>
+            {auctionPropertyData?.['count_bedrooms'] && (
+              <div className="auction-details-card-details-item">
+                <img src={icon1} /> {auctionPropertyData?.['count_bedrooms']}{' '}
+                {t('bedrooms')}
+              </div>
+            )}
+            {auctionPropertyData?.['count_bathrooms'] && (
+              <div className="auction-details-card-details-item">
+                <img src={icon2} />
+                {auctionPropertyData?.['count_bathrooms']} {t('bathrooms')}
+              </div>
+            )}
             <div className="auction-details-card-details-item">
               <img src={icon3} />
               {auctionPropertyData?.['total_area']} {t('sqm')}
