@@ -63,10 +63,16 @@ export const getAvailabilitiesConfig = async ({ queryKey }) => {
   return res
 }
 export const getAppointmentsRequest = async ({ queryKey }) => {
+  const queryParams = []
+  for (const [key, value] of Object.entries(queryKey[1])) {
+    queryParams.push(`${key}=${value}`)
+  }
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/requests`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests?${queryParams.join(
+        '&',
+      )}`,
       {
         method: 'GET',
       },
@@ -77,10 +83,16 @@ export const getAppointmentsRequest = async ({ queryKey }) => {
   return res
 }
 export const getRequestsForBroker = async ({ queryKey }) => {
+  const queryParams = []
+  for (const [key, value] of Object.entries(queryKey[1])) {
+    queryParams.push(`${key}=${value}`)
+  }
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/requests-for-broker`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests-for-broker?${queryParams.join(
+        '&',
+      )}`,
       {
         method: 'GET',
       },

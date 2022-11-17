@@ -91,6 +91,7 @@ export const events = [
 
 export const eventsList = [
   {
+    id: '1',
     title: 'Al Madina Real Estate',
     allDay: true,
     start: new Date('2022-11-10T12:30:00Z'), // new Date(2015, 3, 0),
@@ -101,6 +102,7 @@ export const eventsList = [
     location: 'Al Khoudh, Nama Street',
   },
   {
+    id: '33',
     title: 'Al Habib Real Estate',
     start: new Date('2022-11-11T12:30:00Z'), // new Date(2015, 3, 0),
     end: new Date('2022-11-11T14:00:00Z'), // new Date(2015, 3, 1),
@@ -110,6 +112,7 @@ export const eventsList = [
     location: 'Al Khoudh, Nama Street',
   },
   {
+    id: '44',
     title: 'Al Madina Real Estate',
     start: new Date('2022-11-12T12:30:00Z'), // new Date(2015, 3, 0),
     end: new Date('2022-11-12T14:00:00Z'), // new Date(2015, 3, 1),
@@ -120,6 +123,7 @@ export const eventsList = [
   },
 
   {
+    id: '43',
     title: 'Al Madina Real Estate',
     start: new Date('2022-11-13T12:30:00Z'), // new Date(2015, 3, 0),
     end: new Date('2022-11-13T15:00:00Z'), // new Date(2015, 3, 1),
@@ -130,6 +134,7 @@ export const eventsList = [
   },
 
   {
+    id: '66',
     title: 'Al Madina Real Estate',
     start: new Date('2022-11-14T12:30:00Z'), // new Date(2015, 3, 0),
     end: new Date('2022-11-14T15:00:00Z'), // new Date(2015, 3, 1),

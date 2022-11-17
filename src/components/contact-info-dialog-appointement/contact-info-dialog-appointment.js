@@ -18,7 +18,12 @@ const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
       }
     >
       <div className="actions">
-        <Button flat swapTheming className="cancel-btn" onClick={onHide}>
+        <Button
+          flat
+          swapTheming
+          className="cancel-btn"
+          onClick={() => onHide()}
+        >
           cancel
         </Button>
         <Button
