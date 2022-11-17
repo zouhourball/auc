@@ -61,7 +61,7 @@ const UpcomingAuctions = ({ cards, logged, user, refetch, meOrgs }) => {
       {!cards || cards?.length === 0 ? (
         <div className="empty-content">
           <img className="empty-content-logo" height={35} src={bidderIcon} />
-          <div className="empty-content-title">No Upcoming Auctions</div>
+          <div className="empty-content-title">{t('No_Upcoming_Auctions')}</div>
         </div>
       ) : (
         <div className={`upcoming-auctions-cards md-grid`}>{renderCards()}</div>
