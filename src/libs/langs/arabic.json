@@ -169,5 +169,7 @@
   "live": "النشطة",
   "closed": "المغلقة",
   "broker_profile": "ملف الوسيط",
-  "my_auctions": "نشاطي"
+  "my_auctions": "نشاطي",
+  "edit_details": "تعديل",
+  "delete_auction": "حذف"
 }
