@@ -11,13 +11,14 @@ import { useQuery, useMutation } from 'react-query'
 import moment from 'moment'
 import ToastMsg from 'components/toast-msg'
 import { addToast } from 'modules/app/actions'
+import { Button, DialogContainer, TextField } from 'react-md'
+import DrawOnMap from 'components/draw-on-map'
 
 import UserInfoBySubject from 'components/user-info-by-subject'
 
 import { configs, dummyDataMht } from './helper'
 
 import './style.scss'
-import { Button, DialogContainer } from 'react-md'
 
 const AppointmentsRequests = () => {
   // const [search, setSearch] = useState('')
@@ -49,6 +50,8 @@ const AppointmentsRequests = () => {
             />,
           ),
         )
+        setLocationVisible(false)
+        setLinkVisible(false)
         refetchAppointments()
       } else {
         dispatch(
@@ -165,31 +168,72 @@ const AppointmentsRequests = () => {
         </DialogContainer>
       )}
       {locationVisible && (
-        <DialogContainer
+        <DrawOnMap
+          id={'address'}
+          onClose={() => {
+            setLocationVisible(false)
+          }}
+          // readOnly={true}
           visible={locationVisible}
-          onHide={() => setLocationVisible(false)}
-          id={'notes-dialog'}
-          initialFocus="notes-dialog"
-        >
-          <div>Map here</div>
-        </DialogContainer>
+          layers={[
+            {
+              type: 'symbol',
+              id: 'Symbol-Layer-Id',
+              items: [],
+            },
+          ]}
+          onSetAddress={(newCoordinates) => {
+            setLocationVisible({
+              y: newCoordinates?.['lat'],
+              x: newCoordinates?.['lon'],
+              address: newCoordinates?.['display_name'],
+            })
+          }}
+          longitude={locationVisible?.x}
+          latitude={locationVisible?.y}
+          customActions={[
+            <Button
+              onClick={() =>
+                onUpdateRequest('1', '3', {
+                  general_location_y: locationVisible?.y,
+                  general_location_x: locationVisible?.x,
+                  appointment_address: locationVisible?.address,
+                })
+              }
+              key={'update-btn'}
+            >
+              Update
+            </Button>,
+          ]}
+        />
       )}
       {linkVisible && (
         <DialogContainer
           visible={linkVisible}
           onHide={() => setLinkVisible(false)}
-          id={'notes-dialog'}
-          initialFocus="notes-dialog"
+          id={'link-dialog'}
+          initialFocus="link-dialog"
           actions={[
             <Button
-              onClick={() => onUpdateRequest('1', '3', {})}
+              onClick={() =>
+                onUpdateRequest('1', '3', {
+                  appointment_link: linkVisible?.link,
+                })
+              }
               key={'update-btn'}
             >
               Update
             </Button>,
           ]}
         >
-          <div>Link here</div>
+          <TextField
+            id="appointment-link"
+            placeholder={'Appointment Link Here'}
+            block
+            value={linkVisible?.link}
+            onChange={(v) => setLinkVisible({ link: v })}
+            className="textField-withShadow"
+          />
         </DialogContainer>
       )}
     </div>

@@ -4,7 +4,7 @@ import Mht, {
 import { useTranslation, useCurrentLang } from 'libs/langs'
 import { useSelector, useDispatch } from 'react-redux'
 // import { get } from 'lodash-es'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 // import { useQuery as useQueryApollo } from 'react-apollo-hooks'
 import { NotificationProvider } from 'libs/hooks/notification-provider'
 // import { getPublicUrl } from 'libs/utils/custom-function'
@@ -106,21 +106,24 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     },
   })
 
-  const renderApprovalsData = () =>
-    getApprovalsList?.response?.data?.map((el) => ({
-      id: el?.id,
-      status: el?.status,
-      logo: el?.logo ? (
-        <Avatar src={`${el?.logo}?token=${downloadToken?.token}&view=true`} />
-      ) : (
-        <Avatar>{el?.name?.charAt(0).toUpperCase()}</Avatar>
-      ),
-      companyName: el?.name,
-      country: el?.country,
-      address: el?.address,
-      email: el?.email,
-      phone: el?.phone,
-    }))
+  const renderApprovalsData = useCallback(
+    () =>
+      getApprovalsList?.response?.data?.map((el) => ({
+        id: el?.id,
+        status: el?.status,
+        logo: el?.logo ? (
+          <Avatar src={`${el?.logo}?token=${downloadToken?.token}&view=true`} />
+        ) : (
+          <Avatar>{el?.name?.charAt(0).toUpperCase()}</Avatar>
+        ),
+        companyName: el?.name,
+        country: el?.country,
+        address: el?.address,
+        email: el?.email,
+        phone: el?.phone,
+      })),
+    [getApprovalsList],
+  )
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
       id: el?.uuid,

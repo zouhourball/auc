@@ -196,7 +196,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     if (getCityList) {
       arrayName = getCityList?.results?.map((ac) => {
         return {
-          label: ac?.['name_en'],
+          label: lang === 'ar' ? ac?.['name_ar'] : ac?.['name_en'],
           value: `${ac?.id}`,
         }
       })
