@@ -320,6 +320,18 @@
     background: none;
     color: #596875;
 
+    .md-divider {
+      display: none;
+    }
+
+    .md-paper--2 {
+      border-radius: 8px;
+    }
+
+    .md-text-field--margin {
+      margin-top: 0;
+    }
+
     .md-select-field__toggle {
       .md-fake-btn--no-outline {
         .md-text-field {

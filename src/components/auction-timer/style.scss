@@ -1,5 +1,5 @@
 .auction-timer {
-  padding: 30px;
+  padding: 2.196vw;
   border-radius: 30px;
   background: #fff;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
@@ -84,16 +84,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: max-content;
+      width: 400px;
+      max-width: 100%;
       margin: auto;
-      padding: 5px 50px;
+      padding: 5px 8px;
       border: solid 2px #000;
       border-radius: 13px;
       gap: 10px;
 
       .value {
         color: #3d3d3e;
-        font-size: 22px;
+        font-size: 1.611vw;
         font-weight: 500;
       }
 

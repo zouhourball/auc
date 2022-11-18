@@ -359,11 +359,9 @@
   "optional": "Optional",
   "send_request": "Send Request",
   "back_to_auctions": "Back to Auctions",
-
   "rejected": "Rejected",
   "Rejected": "Rejected",
   "approved": "Accepted",
-
   "Row_Selected": "Row Selected",
   "Pending": "Pending",
   "Total_Pages": "Total Pages",
@@ -381,5 +379,6 @@
   "Address": "Address",
   "Country": "Country",
   "Company_Name": "Company Name",
-  "Logo": "Logo"
+  "Logo": "Logo",
+  "result_not_found": "We couldn't find what you're looking for!"
 }
