@@ -214,7 +214,8 @@ const RegistrationPage = () => {
               placeholder={t('enter_company_name')}
               value={companyName || ''}
               onChange={(v) => setValues('companyName', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
             <CustomSelectWithSearch
               items={renderCountry()}
@@ -249,55 +250,55 @@ const RegistrationPage = () => {
               position={SelectField.Positions.BELOW}
               className={'textField selectField'}
             /> */}
-            {/* <div className="textField phone-field"> */}
-            <CustomSelectWithSearch
-              items={countriesCodes?.map((el) => ({
-                label: (
-                  <div
-                    className="countries-dropdown"
-                    // onClick={() => setValues('countryCode', el?.value)}
-                    key={el?.value}
-                  >
-                    <img width={20} src={el?.flag} />
-                    <span className="hide-when-selected">{el?.label}</span>
-                    {el?.value}
-                  </div>
-                ),
-                value: el?.value,
-                name: el?.label,
-              }))}
-              label={t('country_code')}
-              hideSecondaryLabel={false}
-              listVisibility={showListCountryCodes}
-              setListVisibility={handleShowListCountryCodes}
-              selectedItem={
-                countriesCodes?.find((el) => el?.value === countryCode)
-                  ?.value || ''
-              }
-              selectedItemFlag={
-                <img
-                  width={20}
-                  src={
-                    countriesCodes?.find((el) => el?.value === countryCode)
-                      ?.flag
-                  }
-                />
-              }
-              searchPlaceholder={t('country_code')}
-              onClickItem={(itemSelected) => {
-                setValues('countryCode', itemSelected?.value)
-                setCountryCodeSearch('')
-              }}
-              hideAvatar={true}
-              withHeader={true}
-              searchItem={countryCodeSearch || ''}
-              setSearchItem={setCountryCodeSearch}
-              searchableKey={'name'}
-              searchItemPlaceHolder={t('search_country_code')}
-              singleSelect
-              className="selectField-withShadow"
-            />
-            {/* <SelectField
+            <div className="phone-field">
+              <CustomSelectWithSearch
+                items={countriesCodes?.map((el) => ({
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      // onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
+                      {el?.value}
+                    </div>
+                  ),
+                  value: el?.value,
+                  name: el?.label,
+                }))}
+                label={t('country_code')}
+                hideSecondaryLabel={false}
+                listVisibility={showListCountryCodes}
+                setListVisibility={handleShowListCountryCodes}
+                selectedItem={
+                  countriesCodes?.find((el) => el?.value === countryCode)
+                    ?.value || ''
+                }
+                selectedItemFlag={
+                  <img
+                    width={20}
+                    src={
+                      countriesCodes?.find((el) => el?.value === countryCode)
+                        ?.flag
+                    }
+                  />
+                }
+                searchPlaceholder={t('country_code')}
+                onClickItem={(itemSelected) => {
+                  setValues('countryCode', itemSelected?.value)
+                  setCountryCodeSearch('')
+                }}
+                hideAvatar={true}
+                withHeader={true}
+                searchItem={countryCodeSearch || ''}
+                setSearchItem={setCountryCodeSearch}
+                searchableKey={'name'}
+                searchItemPlaceHolder={t('search_country_code')}
+                singleSelect
+                // className="selectField-withShadow"
+              />
+              {/* <SelectField
                 id={'country-code'}
                 menuItems={countriesCodes?.map((el) => ({
                   value: el?.value,
@@ -320,28 +321,31 @@ const RegistrationPage = () => {
                 // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               /> */}
-            <div className="sep"></div>
-            <TextField
-              id={'phone'}
-              placeholder={t('enter_phone_number')}
-              value={phoneNum || ''}
-              onChange={(v) => setValues('phoneNum', v)}
-              className="phone-number"
-            />
-            {/* </div> */}
+              <div className="sep"></div>
+              <TextField
+                id={'phone'}
+                placeholder={t('enter_phone_number')}
+                value={phoneNum || ''}
+                onChange={(v) => setValues('phoneNum', v)}
+                className="phone-number"
+                block
+              />
+            </div>
             <TextField
               id={'address'}
               placeholder={t('enter_address')}
               value={address || ''}
               onChange={(v) => setValues('address', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
             <TextField
               id={'email'}
               placeholder={t('enter_email')}
               value={email || ''}
               onChange={(v) => setValues('email', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
             <TextField
               id={'pw'}
@@ -349,7 +353,8 @@ const RegistrationPage = () => {
               placeholder={t('enter_password')}
               value={password || ''}
               onChange={(v) => setValues('password', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
             <div className="company-logo-title">
               <h3>{t('company_logo')}</h3>
@@ -391,17 +396,19 @@ const RegistrationPage = () => {
               placeholder={t('enter_full_name')}
               value={fullName || ''}
               onChange={(v) => setValues('fullName', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
             <TextField
               id={'email'}
               placeholder={t('enter_email')}
               value={email || ''}
               onChange={(v) => setValues('email', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
-            {/* <div className="textField phone-field"> */}
-            {/* <SelectField
+            <div className="phone-field">
+              {/* <SelectField
                 id={'country-code'}
                 menuItems={countriesCodes?.map((el) => ({
                   value: el?.value,
@@ -424,60 +431,62 @@ const RegistrationPage = () => {
                 // itemLabel="value"
                 position={SelectField.Positions.BELOW}
               /> */}
-            <CustomSelectWithSearch
-              items={countriesCodes?.map((el) => ({
-                label: (
-                  <div
-                    className="countries-dropdown"
-                    // onClick={() => setValues('countryCode', el?.value)}
-                    key={el?.value}
-                  >
-                    <img width={20} src={el?.flag} />
-                    <span className="hide-when-selected">{el?.label}</span>
-                    {el?.value}
-                  </div>
-                ),
-                value: el?.value,
-                name: el?.label,
-              }))}
-              label={t('country_code')}
-              hideSecondaryLabel={false}
-              listVisibility={showListCountryCodes}
-              setListVisibility={handleShowListCountryCodes}
-              selectedItem={
-                countriesCodes?.find((el) => el?.value === countryCode)
-                  ?.value || ''
-              }
-              searchPlaceholder={t('country_code')}
-              onClickItem={(itemSelected) => {
-                setValues('countryCode', itemSelected?.value)
-                setCountryCodeSearch('')
-              }}
-              hideAvatar={true}
-              withHeader={true}
-              searchItem={countryCodeSearch || ''}
-              setSearchItem={setCountryCodeSearch}
-              searchableKey={'name'}
-              searchItemPlaceHolder={t('search_country_code')}
-              singleSelect
-              className="selectField-withShadow"
-            />
-            <div className="sep"></div>
-            <TextField
-              id={'phone'}
-              placeholder={t('enter_phone_number')}
-              value={phoneNum}
-              onChange={(v) => setValues('phoneNum', v)}
-              className="phone-number"
-            />
-            {/* </div> */}
+              <CustomSelectWithSearch
+                items={countriesCodes?.map((el) => ({
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      // onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={20} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
+                      {el?.value}
+                    </div>
+                  ),
+                  value: el?.value,
+                  name: el?.label,
+                }))}
+                label={t('country_code')}
+                hideSecondaryLabel={false}
+                listVisibility={showListCountryCodes}
+                setListVisibility={handleShowListCountryCodes}
+                selectedItem={
+                  countriesCodes?.find((el) => el?.value === countryCode)
+                    ?.value || ''
+                }
+                searchPlaceholder={t('country_code')}
+                onClickItem={(itemSelected) => {
+                  setValues('countryCode', itemSelected?.value)
+                  setCountryCodeSearch('')
+                }}
+                hideAvatar={true}
+                withHeader={true}
+                searchItem={countryCodeSearch || ''}
+                setSearchItem={setCountryCodeSearch}
+                searchableKey={'name'}
+                searchItemPlaceHolder={t('search_country_code')}
+                singleSelect
+                className="selectField-withShadow"
+              />
+              <div className="sep"></div>
+              <TextField
+                id={'phone'}
+                placeholder={t('enter_phone_number')}
+                value={phoneNum}
+                onChange={(v) => setValues('phoneNum', v)}
+                className="phone-number"
+                block
+              />
+            </div>
             <TextField
               id={'email'}
               type="password"
               placeholder={t('enter_password')}
               value={password || ''}
               onChange={(v) => setValues('password', v)}
-              className="textField"
+              className="textField-withShadow"
+              block
             />
           </>
         )

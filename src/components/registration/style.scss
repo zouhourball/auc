@@ -97,102 +97,75 @@
       }
 
       .view {
-        .textField {
-          //flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+
+        .phone-field {
+          display: flex;
+          position: relative;
+          z-index: 9;
+          align-items: center;
           width: 100%;
-          height: 65px;
-          margin-bottom: 18px;
-          padding: 22px 22px;
-          border-radius: 18px;
+          border-radius: 12px;
           background-color: #fff;
           box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+          gap: 8px;
 
-          .md-password-btn.md-text-field-inline-indicator {
-            top: 23px;
-            right: 30px;
+          .sep {
+            width: 2px;
+            height: 30px;
+            background-color: #ddd;
           }
 
-          .md-divider {
-            display: none;
+          .customSelect_wrapper_list,
+          .customSelect_wrapper {
+            position: unset;
           }
 
-          .md-text-field {
-            color: #7c7c7c;
-            font-size: 16px;
-            font-weight: 500;
-          }
+          .list-itemMultiPick {
+            margin-top: -11px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
 
-          .md-text-field--margin {
-            margin-top: 5px;
-          }
-
-          .md-paper--1 {
-            display: none;
-          }
-
-          &.selectField {
-            padding: 15px 10px;
-
-            &[aria-expanded='true'] {
-              border-radius: 18px 18px 0 0;
+            &::-webkit-scrollbar {
+              visibility: visible;
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 15px;
+              height: 100%;
+              transition: all 400ms;
+              opacity: 1;
             }
 
-            .md-select-field--btn.md-select-field--btn {
-              padding-left: 10px;
+            &::-webkit-scrollbar-track {
+              visibility: visible;
+              height: 100%;
+              border: 5px solid #fff;
+              border-radius: 12px;
+              opacity: 1;
+              background-color: #d0d0d0;
+              box-shadow: none;
             }
 
-            .md-text {
-              text-align: left;
+            &::-webkit-scrollbar-thumb {
+              visibility: visible;
+              border: 5px solid transparent;
+              border-radius: 12px;
+              background-color: #7c7c7c;
+              box-shadow: none;
+              background-clip: content-box;
             }
 
-            .md-list {
-              overflow-y: auto;
-              border-radius: 0 0 18px 18px;
-
-              // &:hover {
-
-              //   &::-webkit-scrollbar-track,
-              //   &::-webkit-scrollbar,
-              //   &::-webkit-scrollbar-thumb {
-              //     visibility: visible;
-              //     opacity: 1;
-
-              //   }
-              // }
-            }
-          }
-
-          .md-icon-separator {
-            .hide-when-selected {
-              display: none;
-            }
-          }
-
-          &.phone-field {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-
-            .countries-dropdown {
-              &:hover {
-                cursor: pointer;
+            &:hover {
+              &::-webkit-scrollbar-track,
+              &::-webkit-scrollbar,
+              &::-webkit-scrollbar-thumb {
+                visibility: visible;
+                opacity: 1;
               }
-
-              display: flex;
-              flex-direction: row;
-              padding: 5px;
-              gap: 10px;
-            }
-
-            .sep {
-              width: 2px;
-              height: 30px;
-              background-color: #ddd;
-            }
-
-            .country-code {
-              flex-grow: 1;
             }
           }
         }
