@@ -47,7 +47,11 @@ export const configs = (
           Edit Location
         </Button>
       ) : (
-        <Button flat primary onClick={() => setLinkVisible(row?.link)}>
+        <Button
+          flat
+          primary
+          onClick={() => setLinkVisible({ link: row?.link } || true)}
+        >
           Add Link
         </Button>
       )
@@ -123,6 +127,8 @@ export const dummyDataMht = [
     time: '',
     note: 'test',
     link: 'link here',
+    xLocation: 1,
+    yLocation: 1.1,
   },
   {
     id: '1',
@@ -132,6 +138,6 @@ export const dummyDataMht = [
     appointmentType: 'Online',
     data: '',
     time: '',
-    link: 'link here',
+    link: '',
   },
 ]

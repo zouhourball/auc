@@ -15,6 +15,7 @@ const DrawOnMap = ({
   readOnly,
   longitude,
   latitude,
+  customActions,
 }) => {
   const mapRef = useRef(null)
   const [newCoordinates, setNewCoordinates] = useState(null)
@@ -128,7 +129,7 @@ const DrawOnMap = ({
       onHide={onClose}
       focusOnMount={false}
       className="drawOnMap"
-      actions={actions}
+      actions={customActions?.length ? customActions : actions}
       portal={true}
       lastChild={true}
       disableScrollLocking={true}
@@ -143,6 +144,7 @@ const DrawOnMap = ({
           // onDrawingComplete={setNewCoordinates}
           onReverseGeocoding={(addressInfo) => {
             setNewCoordinates(addressInfo)
+            customActions && onSetAddress(addressInfo)
             // console.log('Reverse GeoCoding', addressInfo?.['display_name'])
           }}
           // addWKTGeometries={wkt}
