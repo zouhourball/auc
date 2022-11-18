@@ -259,7 +259,7 @@ const RegistrationPage = () => {
                       // onClick={() => setValues('countryCode', el?.value)}
                       key={el?.value}
                     >
-                      <img width={20} src={el?.flag} />
+                      <img width={25} src={el?.flag} />
                       <span className="hide-when-selected">{el?.label}</span>
                       {el?.value}
                     </div>
@@ -273,14 +273,16 @@ const RegistrationPage = () => {
                 setListVisibility={handleShowListCountryCodes}
                 selectedItem={
                   countriesCodes?.find((el) => el?.value === countryCode)
-                    ?.value || ''
+                    ?.value || '+968'
                 }
                 selectedItemFlag={
                   <img
-                    width={20}
+                    width={25}
                     src={
-                      countriesCodes?.find((el) => el?.value === countryCode)
-                        ?.flag
+                      countriesCodes?.find(
+                        (el) =>
+                          el?.value === countryCode || el?.value === '+968',
+                      )?.flag
                     }
                   />
                 }
@@ -439,7 +441,7 @@ const RegistrationPage = () => {
                       // onClick={() => setValues('countryCode', el?.value)}
                       key={el?.value}
                     >
-                      <img width={20} src={el?.flag} />
+                      <img width={25} src={el?.flag} />
                       <span className="hide-when-selected">{el?.label}</span>
                       {el?.value}
                     </div>
@@ -453,7 +455,18 @@ const RegistrationPage = () => {
                 setListVisibility={handleShowListCountryCodes}
                 selectedItem={
                   countriesCodes?.find((el) => el?.value === countryCode)
-                    ?.value || ''
+                    ?.value || '+968'
+                }
+                selectedItemFlag={
+                  <img
+                    width={25}
+                    src={
+                      countriesCodes?.find(
+                        (el) =>
+                          el?.value === countryCode || el?.value === '+968',
+                      )?.flag
+                    }
+                  />
                 }
                 searchPlaceholder={t('country_code')}
                 onClickItem={(itemSelected) => {
@@ -467,7 +480,7 @@ const RegistrationPage = () => {
                 searchableKey={'name'}
                 searchItemPlaceHolder={t('search_country_code')}
                 singleSelect
-                className="selectField-withShadow"
+                // className="selectField-withShadow"
               />
               <div className="sep"></div>
               <TextField

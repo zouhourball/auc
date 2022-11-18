@@ -69,6 +69,7 @@
           color: #ddd;
           font-size: 16px;
           font-weight: 700;
+          cursor: pointer;
 
           &.active {
             position: relative;
@@ -112,6 +113,12 @@
           background-color: #fff;
           box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
           gap: 8px;
+
+          .countries-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+          }
 
           .sep {
             width: 2px;
