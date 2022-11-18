@@ -258,7 +258,7 @@ export const auctionsRequest = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}&limit=${queryKey[3]?.limit}&offset=${queryKey[3]?.offset}`,
+      `${appUrl}/api/v1/auctions/requests?q=${queryKey[1]}&auction_status=${queryKey[2]}&limit=${queryKey[3]?.limit}&page=${queryKey[3]?.offset}`,
       {
         method: 'GET',
       },
