@@ -240,6 +240,22 @@ import usVirginIslands from 'images/country-flag/us-virgin-islands.png'
 import wakeIsland from 'images/country-flag/wake-island.png'
 import wallisAndFutuna from 'images/country-flag/wallis-and-futuna.png'
 import zanzibar from 'images/country-flag/zanzibar.png'
+import guernsey from 'images/country-flag/guernsey.png'
+import heard from 'images/country-flag/heard_island.png'
+import jersey from 'images/country-flag/jersey.png'
+import pitcairn from 'images/country-flag/pitcairn.png'
+import sainthelena from 'images/country-flag/saint_helena.png'
+import SaintKitts from 'images/country-flag/saint-Kitts-Nevis.png'
+import islman from 'images/country-flag/isle-of-man.png'
+import bouvetIsland from 'images/country-flag/bouvet_island.png'
+import antarctica from 'images/country-flag/antarctica.png'
+import unitedStatesMinorOutlying from 'images/country-flag/united_states_minor_outlying_islands.png'
+import westernSahara from 'images/country-flag/western_sahara.png'
+import saintVincent from 'images/country-flag/saint-Vincent-the-Grenadines.png'
+import svalbard from 'images/country-flag/svalbard_and_jan_mayen.png'
+import yugoslavia from 'images/country-flag/yugoslavia.png'
+import saintLucia from 'images/country-flag/saintLucia.png'
+import saintPierreMiquelon from 'images/country-flag/saint_pierre_and_miquelon.png'
 
 export const countriesCodes = [
   {
@@ -278,7 +294,7 @@ export const countriesCodes = [
     label: 'Anguilla',
   },
   {
-    flag: Samoa,
+    flag: antarctica,
     value: '+',
     label: 'Antarctica',
   },
@@ -328,7 +344,7 @@ export const countriesCodes = [
     label: 'Azerbaijan',
   },
   {
-    flag: Samoa,
+    flag: bouvetIsland,
     value: '+',
     label: 'Bouvet Island',
   },
@@ -683,7 +699,7 @@ export const countriesCodes = [
     label: 'Germany',
   },
   {
-    flag: Germany,
+    flag: guernsey,
     value: '+',
     label: 'Guernsey',
   },
@@ -748,7 +764,7 @@ export const countriesCodes = [
     label: 'Haiti',
   },
   {
-    flag: Haiti,
+    flag: heard,
     value: '+',
     label: 'Heard Island and McDonald Islands',
   },
@@ -773,7 +789,7 @@ export const countriesCodes = [
     label: 'Iceland',
   },
   {
-    flag: Iceland,
+    flag: islman,
     value: '+',
     label: 'Isle of Man',
   },
@@ -823,7 +839,7 @@ export const countriesCodes = [
     label: 'Jamaica',
   },
   {
-    flag: Jamaica,
+    flag: jersey,
     value: '+',
     label: 'Jersey',
   },
@@ -1119,7 +1135,7 @@ export const countriesCodes = [
     label: 'Pakistan',
   },
   {
-    flag: Pakistan,
+    flag: pitcairn,
     value: '+',
     label: 'Pitcairn',
   },
@@ -1204,32 +1220,32 @@ export const countriesCodes = [
     label: 'Samoa',
   },
   {
-    flag: Samoa,
+    flag: sainthelena,
     value: '+',
     label: 'Saint Helena',
   },
   {
-    flag: Samoa,
+    flag: SaintKitts,
     value: '+',
     label: 'Saint Kitts And Nevis',
   },
   {
-    flag: Samoa,
+    flag: saintLucia,
     value: '+',
     label: 'Saint Lucia',
   },
   {
-    flag: Samoa,
+    flag: saintPierreMiquelon,
     value: '+',
     label: 'Saint Pierre and Miquelon',
   },
   {
-    flag: Samoa,
+    flag: saintVincent,
     value: '+',
     label: 'Saint Vincent And The Grenadines',
   },
   {
-    flag: Samoa,
+    flag: svalbard,
     value: '+',
     label: 'Svalbard and Jan Mayen',
   },
@@ -1431,7 +1447,7 @@ export const countriesCodes = [
     label: 'Virgin Islands (US)',
   },
   {
-    flag: usVirginIslands,
+    flag: unitedStatesMinorOutlying,
     value: '+',
     label: 'United States Minor Outlying Islands',
   },
@@ -1497,7 +1513,7 @@ export const countriesCodes = [
     label: 'Wake Island',
   },
   {
-    flag: wakeIsland,
+    flag: westernSahara,
     value: '+',
     label: 'Western Sahara',
   },
@@ -1507,7 +1523,7 @@ export const countriesCodes = [
     label: 'Wallis and Futuna',
   },
   {
-    flag: Samoa,
+    flag: yugoslavia,
     value: '+',
     label: 'Yugoslavia',
   },
