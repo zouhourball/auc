@@ -278,6 +278,11 @@ export const countriesCodes = [
     label: 'Anguilla',
   },
   {
+    flag: Samoa,
+    value: '+',
+    label: 'Antarctica',
+  },
+  {
     flag: antigua,
     value: '+1 268',
     label: 'Antigua And Barbuda',
@@ -321,6 +326,11 @@ export const countriesCodes = [
     flag: Azerbaijan,
     value: '+994',
     label: 'Azerbaijan',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Bouvet Island',
   },
   {
     flag: Bahamas,
@@ -638,6 +648,11 @@ export const countriesCodes = [
     label: 'French Antilles',
   },
   {
+    flag: frenchAntilles,
+    value: '+',
+    label: 'French Southern Territories',
+  },
+  {
     flag: frenchGuiana,
     value: '+594',
     label: 'French Guiana',
@@ -666,6 +681,11 @@ export const countriesCodes = [
     flag: Germany,
     value: '+49',
     label: 'Germany',
+  },
+  {
+    flag: Germany,
+    value: '+',
+    label: 'Guernsey',
   },
   {
     flag: Ghana,
@@ -728,6 +748,11 @@ export const countriesCodes = [
     label: 'Haiti',
   },
   {
+    flag: Haiti,
+    value: '+',
+    label: 'Heard Island and McDonald Islands',
+  },
+  {
     flag: Honduras,
     value: '+504',
     label: 'Honduras',
@@ -746,6 +771,11 @@ export const countriesCodes = [
     flag: Iceland,
     value: '+354',
     label: 'Iceland',
+  },
+  {
+    flag: Iceland,
+    value: '+',
+    label: 'Isle of Man',
   },
   {
     flag: India,
@@ -791,6 +821,11 @@ export const countriesCodes = [
     flag: Jamaica,
     value: '+1 876',
     label: 'Jamaica',
+  },
+  {
+    flag: Jamaica,
+    value: '+',
+    label: 'Jersey',
   },
   {
     flag: Japan,
@@ -1084,6 +1119,11 @@ export const countriesCodes = [
     label: 'Pakistan',
   },
   {
+    flag: Pakistan,
+    value: '+',
+    label: 'Pitcairn',
+  },
+  {
     flag: Palau,
     value: '+680',
     label: 'Palau',
@@ -1162,6 +1202,36 @@ export const countriesCodes = [
     flag: Samoa,
     value: '+685',
     label: 'Samoa',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Saint Helena',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Saint Kitts And Nevis',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Saint Lucia',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Saint Pierre and Miquelon',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Saint Vincent And The Grenadines',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Svalbard and Jan Mayen',
   },
   {
     flag: Marino,
@@ -1361,6 +1431,11 @@ export const countriesCodes = [
     label: 'Virgin Islands (US)',
   },
   {
+    flag: usVirginIslands,
+    value: '+',
+    label: 'United States Minor Outlying Islands',
+  },
+  {
     flag: Uganda,
     value: '+256',
     label: 'Uganda',
@@ -1422,9 +1497,19 @@ export const countriesCodes = [
     label: 'Wake Island',
   },
   {
+    flag: wakeIsland,
+    value: '+',
+    label: 'Western Sahara',
+  },
+  {
     flag: wallisAndFutuna,
     value: '+681',
     label: 'Wallis and Futuna',
+  },
+  {
+    flag: Samoa,
+    value: '+',
+    label: 'Yugoslavia',
   },
   {
     flag: Yemen,

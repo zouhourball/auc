@@ -181,14 +181,14 @@ const Admin = ({ logged, auctionId, currentTab }) => {
   //     phone: '+968 245 375 65',
   //     status: 'Pending',
   //   }))
-  const getTotalElements =
-    useMemo(() => {
-      if (currentTab === 1) {
-        return getApprovalsList?.response?.total
-      } else if (currentTab === 0) {
-        return auctionsRequestsData?.pagination?.total
-      } else return auctionsRequestsData?.pagination?.total
-    }, [currentTab]) || auctionsRequestsData?.pagination?.total
+  const getTotalElements = useMemo(() => {
+    if (currentTab === 1) {
+      return getApprovalsList?.response?.total
+    } else if (currentTab === 0) {
+      return auctionsRequestsData?.pagination?.total
+    } else return auctionsRequestsData?.pagination?.total
+  }, [getApprovalsList, auctionsRequestsData])
+
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
   const selectedRowBroker = selectedRowSelector.map(
     (id) => renderApprovalsData()?.[id],
@@ -366,7 +366,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
               </span>
 
               {+getTotalElements > limit && (
-                <div className="pagination-numbers">
+                <div className="table-paginator">
                   <Button
                     onClick={() => setOffset((prev) => prev - 1)}
                     disabled={offset === 0}
