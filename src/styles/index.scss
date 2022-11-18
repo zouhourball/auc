@@ -118,6 +118,7 @@ body {
     .md-text-field-inline-indicator {
       top: 20px;
       right: 18px;
+      font-size: 23px;
     }
 
     .md-text-field-message-container {
@@ -142,6 +143,13 @@ body {
       padding: 15px 16px;
       font-size: 16px;
       font-weight: 400;
+    }
+
+    .md-text-field-message-container {
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      transform: translateY(100%);
     }
 
     &.customSelect_wrapper .list-itemMultiPick,

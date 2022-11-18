@@ -98,7 +98,7 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
       <div className="empty-content">
         <img className="empty-content-logo" src={noResult} />
         <div className="empty-content-title">{t('no_result')}</div>
-        <div className="empty-content-text">{t('We_couldnt_find')}</div>
+        <div className="empty-content-text">{t('result_not_found')}</div>
       </div>
     )
   let limitOfNumberShowing = 5
