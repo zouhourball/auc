@@ -310,7 +310,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {company && (
         <div className="md-cell md-cell--6">
-          <div className="label">Company Description*</div>
+          <div className="label">{t('Company_Description')}*</div>
           <TextField
             className={`textField ${edit ? 'disabled' : 'active'}`}
             rows={5}

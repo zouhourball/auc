@@ -381,5 +381,7 @@
   "Company_Name": "Company Name",
   "Logo": "Logo",
   "result_not_found": "We couldn't find what you're looking for!",
-  "No_Upcoming_Auctions": "No Upcoming Auctions"
+  "No_Upcoming_Auctions": "No Upcoming Auctions",
+  "Company_Description": "Company Description",
+  "back_to_upcoming_auctions": "back to upcoming auctions"
 }

@@ -736,7 +736,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               </label>
               <TextField
                 id={'starting-price'}
-                value={auctionEditData?.startingPrice}
+                value={auctionEditData?.startingPrice + ' OMR'}
                 onChange={(v) =>
                   setAuctionEditData({ ...auctionEditData, startingPrice: v })
                 }
@@ -747,11 +747,12 @@ const MyAuctionDetails = ({ auctionId }) => {
             </div>
             <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
-                {t('incremental_price_label')}
+                <span>{t('incremental_price_label')}</span>
               </label>
+
               <TextField
                 id={'incremental-price'}
-                value={auctionEditData?.incrementalPrice}
+                value={auctionEditData?.incrementalPrice + ' OMR'}
                 onChange={(v) =>
                   setAuctionEditData({
                     ...auctionEditData,
