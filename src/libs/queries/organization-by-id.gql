@@ -8,6 +8,9 @@ query organisationByID($orgId: String) {
     webSite
     link
     bgURL
+    companyLogo {
+      aPIID
+    }
     country {
       id
       countryName

@@ -5,8 +5,26 @@ import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { get } from 'lodash-es'
 import { useState } from 'react'
+import {
+  Avatar,
+  Button,
+  DialogContainer,
+  CircularProgress,
+  FileInput,
+  FontIcon,
+} from 'react-md'
+// import { useDropzone } from 'react-dropzone'
 
-import { Avatar, Button, DialogContainer } from 'react-md'
+import updateUserProfiles from 'libs/queries/update-profile.gql'
+import updateCompany from 'libs/queries/update-organization.gql'
+import uploadUserDocuments from 'libs/queries/upload-user-documents.gql'
+import uploadCompanyDocuments from 'libs/queries/upload-company-documents.gql'
+import { useMutation } from 'react-apollo'
+import { useDispatch } from 'react-redux'
+import { addToast } from 'modules/app/actions'
+import ToastMsg from 'components/toast-msg'
+import { fileManagerUpload } from 'libs/api/api-file-manager'
+// import CropImage from 'components/crop-image'
 
 import companyEnabled from 'images/company_enable.svg'
 import companyDisabled from 'images/company_disable.svg'
@@ -24,16 +42,126 @@ import signOutDisabled from 'images/sign_out_disable.svg'
 
 import './style.scss'
 
-const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
+const ProfileMenu = ({
+  currentView,
+  setCurrentView,
+  company,
+  userInfo,
+  refetch,
+}) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
+  const [currentFile, setFile] = useState({})
+  const [loading, setLoading] = useState(false)
+  const updateCompanyInfo = (id) => {
+    // console.log('res 4')
+    const input = company
+      ? {
+        organisationID: userInfo?.organisationID,
+        id: userInfo?.id,
+        companyLogo: id,
+        videoCv: null,
+      }
+      : {
+        userID: userInfo?.userID,
+        photo: id,
+        videoCv: null,
+      }
+    updateMutation({
+      context: { uri: `${PRODUCT_APP_URL_PROFILE}/graphql` },
+      variables: {
+        input,
+      },
+    })
+  }
+  const [uploadDocMutation] = useMutation(
+    company ? uploadCompanyDocuments : uploadUserDocuments,
+  )
+  const [updateMutation] = useMutation(
+    !company ? updateUserProfiles : updateCompany,
+    {
+      onCompleted: (res) => {
+        if (res?.updateUserProfiles || res?.updateCompanies) {
+          dispatch(
+            addToast(
+              <ToastMsg text={'Changes done successfully '} type="success" />,
+            ),
+          )
+          setFile({})
+        } else {
+          dispatch(
+            addToast(<ToastMsg text={'Changes has failed'} type="error" />),
+          )
+        }
+        refetch && refetch()
+      },
+    },
+  )
+
+  const onNewImage = (file) => {
+    setLoading(true)
+    fileManagerUpload([file], true)
+      .then((res) => {
+        if (res?.files?.length > 0) {
+          /*         setImage(res?.files[0]) */
+          uploadDocMutation({
+            context: { uri: `${PRODUCT_APP_URL_PROFILE}/graphql` },
+            variables: {
+              input: [
+                {
+                  aPIID: res?.files[0]?.id,
+                  aPIURL: res?.files[0]?.url,
+                  aPISize: res?.files[0]?.size?.toString(),
+                  aPIBucket: res?.files[0]?.bucket,
+                  aPIObject: res?.files[0]?.object,
+                  aPIFilename: res?.files[0]?.filename,
+                  aPISubject: res?.files[0]?.subject,
+                  aPIContentType: res?.files[0]?.contentType,
+                  uploadDate: new Date(),
+                  documentTitle: res?.files[0]?.filename,
+                  documentDescription: res?.files[0]?.filename,
+                  ...(company
+                    ? { companyID: userInfo?.id }
+                    : { userID: userInfo?.userID }),
+                },
+              ],
+            },
+          }).then((res) => {
+            company
+              ? setFile(res?.data?.uploadCompanyDocuments[0]?.document)
+              : setFile(res?.data?.uploadUserDocuments[0]?.document)
+            setLoading(false)
+          })
+        }
+      })
+      .then(() => refetch())
+  }
 
   return (
     <div className="profile-menu">
       <div className="avatar-container">
-        <Button icon primary floating className="edit-btn">
+        <div className="">{loading && <CircularProgress />}</div>
+        <FileInput
+          id="basic-info"
+          className="edit-btn"
+          accept="image/jpeg, image/png"
+          label={<></>}
+          icon={
+            <FontIcon className="edit-btn">edit</FontIcon>
+            // image ? (
+            //   <img src={getPublicUrl(image)} width="120px" />
+            // ) : information?.image ? (
+            //   <img src={getPublicUrl(information?.image)} width="120px" />
+            // ) : (
+            //   <img src={img} width="120px" />
+            // )
+          }
+          onChange={onNewImage}
+        />
+        {/* <Button icon primary floating className="edit-btn">
           edit
-        </Button>
+        </Button> */}
         {!company && (
           <UserInfoBySubject
             key={userInfo?.subject}
@@ -44,9 +172,11 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
                 <Avatar
                   className="profile-menu-avatar"
                   src={
-                    get(res, 'photo.aPIURL', null)
-                      ? getPublicUrl(res?.photo?.aPIURL)
-                      : null
+                    currentFile?.id
+                      ? getPublicUrl(currentFile?.aPIID)
+                      : get(res, 'photo.aPIURL', null)
+                        ? getPublicUrl(res?.photo?.aPIURL)
+                        : null
                   }
                 >
                   {get(res, 'photo.aPIURL', null)
@@ -60,10 +190,22 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
         {company && (
           <Avatar
             className="profile-menu-avatar"
-            src={getPublicUrl(userInfo?.bgURL)}
+            src={
+              currentFile?.id
+                ? getPublicUrl(currentFile?.aPIID)
+                : getPublicUrl(userInfo?.companyLogo?.aPIID)
+            }
           ></Avatar>
         )}
       </div>
+      {currentFile?.id && (
+        <>
+          <Button onClick={() => updateCompanyInfo(currentFile?.id)}>
+            Update photo
+          </Button>
+          <Button onClick={() => setFile({})}>Discard</Button>
+        </>
+      )}
       <div className="profile-menu-fullName">
         {company ? userInfo?.name : userInfo?.fullName}
       </div>
@@ -133,6 +275,14 @@ const ProfileMenu = ({ currentView, setCurrentView, company, userInfo }) => {
           <h2 style={{ textAlign: 'center' }}>{t('are_you_sure')}</h2>
         </DialogContainer>
       )}
+      {/* {cropDialog && imgSrc && (
+        <CropImage
+          visible={cropDialog}
+          onHide={() => setCropDialog(false)}
+          imgSrc={imgSrc}
+          onNewImage={onNewImage}
+        />
+      )} */}
     </div>
   )
 }

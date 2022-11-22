@@ -5,6 +5,12 @@
   align-items: center;
   padding: 10px 0;
   //border-right: 2px solid #e3e3e3;
+  .drop-image {
+    width: 200px;
+    height: 200px;
+    background: red;
+  }
+
   .avatar-container {
     position: relative;
 

@@ -61,6 +61,10 @@ const ProfilePage = ({ company, companyId }) => {
           company={company}
           currentView={currentView}
           setCurrentView={setCurrentView}
+          refetch={() => {
+            refetchProfile()
+            refetchOrg()
+          }}
         />
         <div className="vertical-sep"></div>
       </div>

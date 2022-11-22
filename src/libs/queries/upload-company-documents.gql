@@ -1,0 +1,17 @@
+mutation uploadCompanyDocuments($input: [UploadCompanyDocumentInput!]!) {
+  uploadCompanyDocuments(input: $input) {
+    id
+    document {
+      id
+      aPIID
+      aPIURL
+      aPISize
+      aPIBucket
+      aPIBucket
+      aPIObject
+      aPIFilename
+      aPISubject
+      aPIContentType
+    }
+  }
+}

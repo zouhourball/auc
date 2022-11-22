@@ -79,7 +79,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
         offset,
       },
     ],
-    currentTab === 0 && auctionsRequest,
+    auctionsRequest,
   )
 
   const { data: getApprovalsList, refetch: refetchApprovalList } = useQuery(
@@ -90,7 +90,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
         offset,
       },
     ],
-    currentTab === 1 && getApprovals,
+    getApprovals,
   )
   useEffect(() => {
     setOffset(0)
@@ -122,7 +122,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
         email: el?.email,
         phone: el?.phone,
       })),
-    [getApprovalsList],
+    [getApprovalsList, currentTab],
   )
   const renderData = () =>
     auctionsRequestsData?.results?.map((el) => ({
@@ -187,7 +187,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
     } else if (currentTab === 0) {
       return auctionsRequestsData?.pagination?.total
     } else return auctionsRequestsData?.pagination?.total
-  }, [getApprovalsList, auctionsRequestsData])
+  }, [getApprovalsList, auctionsRequestsData, currentTab])
 
   const selectedRow = selectedRowSelector.map((id) => renderData()?.[id])
   const selectedRowBroker = selectedRowSelector.map(

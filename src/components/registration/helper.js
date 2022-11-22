@@ -161,7 +161,7 @@ import SouthAfrica from 'images/country-flag/South-Africa.png'
 import SouthSudan from 'images/country-flag/South-Sudan.png'
 import Spain from 'images/country-flag/Spain.png'
 import SriLanka from 'images/country-flag/Sri-Lanka.png'
-import Nevis from 'images/country-flag/St-Kitts-Nevis.png'
+// import Nevis from 'images/country-flag/St-Kitts-Nevis.png'
 // import Lucia from 'images/country-flag/St-Lucia.png'
 // import Grenadines from 'images/country-flag/St-Vincent-the-Grenadines.png'
 import Sudan from 'images/country-flag/Sudan.png'
@@ -254,8 +254,9 @@ import westernSahara from 'images/country-flag/western_sahara.png'
 import saintVincent from 'images/country-flag/saint-Vincent-the-Grenadines.png'
 import svalbard from 'images/country-flag/svalbard_and_jan_mayen.png'
 import yugoslavia from 'images/country-flag/yugoslavia.png'
-import saintLucia from 'images/country-flag/saintLucia.png'
+import saintLucia from 'images/country-flag/saint_Lucia.png'
 import saintPierreMiquelon from 'images/country-flag/saint_pierre_and_miquelon.png'
+import frenchSouthern from 'images/country-flag/Group 89.png'
 
 export const countriesCodes = [
   {
@@ -664,7 +665,7 @@ export const countriesCodes = [
     label: 'French Antilles',
   },
   {
-    flag: frenchAntilles,
+    flag: frenchSouthern,
     value: '+',
     label: 'French Southern Territories',
   },
@@ -1069,11 +1070,11 @@ export const countriesCodes = [
     value: '+599',
     label: 'Netherlands Antilles',
   },
-  {
-    flag: Nevis,
-    value: '+1 869',
-    label: 'Nevis',
-  },
+  // {
+  //   flag: SaintKitts,
+  //   value: '+1 869',
+  //   label: 'Nevis',
+  // },
   {
     flag: newCaledonia,
     value: '+687',
@@ -1226,7 +1227,7 @@ export const countriesCodes = [
   },
   {
     flag: SaintKitts,
-    value: '+',
+    value: '+1 869',
     label: 'Saint Kitts And Nevis',
   },
   {
