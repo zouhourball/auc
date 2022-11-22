@@ -211,20 +211,20 @@ export const propertyTypeList =
       value: 27,
     },
 
-    {
-      label: 'Plot',
-      value: 9,
-    },
+    // {
+    //   label: 'Plot',
+    //   value: 9,
+    // },
     <div
       key={'government'}
       text={'government'}
       className="md-divider-border md-divider-border--bottom"
     />,
 
-    {
-      label: 'Plot',
-      value: 9,
-    },
+    // {
+    //   label: 'Plot',
+    //   value: 9,
+    // },
     {
       label: 'Apartment',
       value: 3,

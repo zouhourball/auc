@@ -32,7 +32,7 @@ import { propertyTypeList } from 'components/helpers/index'
 
 import './style.scss'
 
-const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
+const BrokerProfile = ({ brokerId, user, logged, meOrgs, location }) => {
   const { t } = useTranslation()
   let currentLang = useCurrentLang()
   const [filterData, setFilterData] = useState({})
@@ -57,6 +57,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   //       return 'Closed'
   //   }
   // }
+  // console.log(location.state.cameFrom)
   const renderAuctionData = () => {
     switch (filter) {
       case 0:
@@ -320,8 +321,9 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
           }
           onClick={() => window.history.go(-1)}
         >
-          {/* {setBroker ?  : t('auction_detail')} */}
-          {t('broker_profile')}
+          {location.state.cameFrom === 'broker'
+            ? t('broker_profile')
+            : t('auction_detail')}
         </Button>
 
         <div className="title"></div>
@@ -367,7 +369,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                             iconChildren={
                               showMore ? 'expand_less' : 'expand_more'
                             }
-                            iconBefore={showMore}
+                            iconBefore={showMore && !showMore}
                             onClick={() => setShowMore(!showMore)}
                           >
                             {showMore ? 'Less' : 'More'}

@@ -595,16 +595,17 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
           </>
         )}
-
         <div
           className="owner-card md-cell md-cell--12"
           onClick={() =>
             logged
               ? navigate(
                   `/auctions/broker/${auctionData?.['configurator_organization_id']}`,
+                  { state: { cameFrom: 'detail' } },
                 )
               : navigate(
                   `/public/broker/${auctionData?.['configurator_organization_id']}`,
+                  { state: { cameFrom: 'detail' } },
                 )
           }
         >
