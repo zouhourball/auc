@@ -143,7 +143,7 @@ const AdminSection = () => {
       <Router>
         <Admin path={'/'} currentTab={currentTab} />
         <Notifications path={'/notifications/:admin'} />
-        <AuctionDetail path={'/detail/:auctionId/:admin'} logged />
+        <AuctionDetail path={'/detail/:auctionId'} logged />
       </Router>
     </div>
   )

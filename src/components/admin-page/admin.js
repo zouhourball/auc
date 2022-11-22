@@ -328,7 +328,9 @@ const Admin = ({ logged, auctionId, currentTab }) => {
                     className="admin-page-actionBtn"
                     flat
                     onClick={() =>
-                      navigate(`admin/detail/${selectedRow[0]?.id}/a`)
+                      navigate(`admin/detail/${selectedRow[0]?.id}`, {
+                        state: { admin: true },
+                      })
                     }
                   >
                     {t('view_details')}
