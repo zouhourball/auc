@@ -139,6 +139,7 @@ const Security = ({ userInfo }) => {
         <ChangeNumberDialog
           visible={dialogType === 'phone'}
           onHide={() => setDialogType('')}
+          userInfo={userInfo}
         />
       )}
       {dialogType === 'password' && (
@@ -408,7 +409,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
   )
 }
 
-const ChangeNumberDialog = ({ visible, onHide }) => {
+const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [step, setStep] = useState(0)
@@ -416,7 +417,7 @@ const ChangeNumberDialog = ({ visible, onHide }) => {
   const [key, setKey] = useState('')
   const [phoneNumber, setPhoneNumber] = useState({
     current: '',
-    currentCode: '',
+    currentCode: userInfo?.phoneMobile?.substring(0, 4),
     new: '',
     newCode: '',
   })

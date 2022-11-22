@@ -19,13 +19,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
   const lang = useCurrentLang()
   const dispatch = useDispatch()
   const [edit, setEdit] = useState(true)
-  const [information, setInformation] = useState({
-    ...userInfo,
-    phoneMobile: userInfo?.phoneMobile?.replace(
-      '+' + userInfo?.country?.phoneCode,
-      '',
-    ),
-  })
+  const [information, setInformation] = useState({})
 
   const [updateMutation] = useMutation(
     !company ? updateUserProfiles : updateCompany,
@@ -39,7 +33,12 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           )
         } else {
           dispatch(
-            addToast(<ToastMsg text={'Changes has failed'} type="error" />),
+            addToast(
+              <ToastMsg
+                text={res?.errors?.[0]?.message || 'Changes has failed'}
+                type="error"
+              />,
+            ),
           )
         }
         refetch && refetch()
@@ -49,12 +48,39 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
   )
 
   useEffect(() => {
+    const basicData = company
+      ? {
+        aboutUs: userInfo?.aboutUs,
+        city: userInfo?.city,
+        country: userInfo?.country,
+        description: userInfo?.description,
+        email: userInfo?.email,
+        fullName: userInfo?.fullName,
+        id: userInfo?.id,
+        link: userInfo?.link,
+        name: userInfo?.name,
+        organisationID: userInfo?.organisationID,
+        webSite: userInfo?.webSite,
+      }
+      : {
+        aboutMe: userInfo?.aboutMe,
+        email: userInfo?.email,
+        firstName: userInfo?.firstName,
+        lastName: userInfo?.lastName,
+        country: userInfo?.country,
+        subject: userInfo?.subject,
+        userID: userInfo?.userID,
+      }
     setInformation({
-      ...userInfo,
-      phoneMobile: userInfo?.phoneMobile?.replace(
-        '+' + userInfo?.country?.phoneCode,
-        '',
+      ...basicData,
+      phoneMobile: userInfo?.phoneMobile?.substr(
+        userInfo?.phoneMobile?.length - 8,
+        8,
       ),
+      // phoneMobile: userInfo?.phoneMobile?.replace(
+      //   '+' + userInfo?.country?.phoneCode,
+      //   '',
+      // ),
     })
   }, [userInfo])
   const {
@@ -347,7 +373,6 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
                     information[el]
                   ) {
                     myObject['phoneMobile'] =
-                      '+' +
                       information['country']?.phoneCode +
                       information['phoneMobile']
                   }
