@@ -32,15 +32,14 @@ import { propertyTypeList } from 'components/helpers/index'
 
 import './style.scss'
 
-const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
+const BrokerProfile = ({ brokerId, user, logged, meOrgs, location }) => {
   const { t } = useTranslation()
   let currentLang = useCurrentLang()
-
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
   const [showMore, setShowMore] = useState(false)
+  // const [broker, setBroker] = useState(false)
   const [offset, setOffset] = useState(0)
-
   const { data: allCountryStateCities } = useQuery(allCountryStateCitiesGql, {
     context: {
       uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
@@ -48,7 +47,6 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   })
   // const myOrgs = useSelector(({ app }) => app?.myOrgs)
 
-  // console.log(get(myOrgs, '0.ID', 0), 'myOrgs')
   // const renderAuctionStatus = () => {
   //   switch (filter) {
   //     case 0:
@@ -59,6 +57,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   //       return 'Closed'
   //   }
   // }
+  // console.log(location.state.cameFrom)
   const renderAuctionData = () => {
     switch (filter) {
       case 0:
@@ -304,17 +303,30 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
   return (
     <div className="broker-profile">
       <div className="broker-profile-header">
-        <FontIcon
-          onClick={() => {
-            navigate('/auctions/broker')
-            // window.history.go(-1)
-          }}
+        <Button
+          className="back-btn"
+          primary
+          iconBefore
+          iconEl={
+            <FontIcon
+            // onClick={() => {
+            //   //  navigate('/auctions/broker')
+            //   // window.history.go(-1)
+            // }}
+            >
+              {currentLang === 'ar-SA' || currentLang === 'ar'
+                ? 'arrow_forward'
+                : 'arrow_back'}
+            </FontIcon>
+          }
+          onClick={() => window.history.go(-1)}
         >
-          {currentLang === 'ar-SA' || currentLang === 'ar'
-            ? 'arrow_forward'
-            : 'arrow_back'}
-        </FontIcon>
-        <div className="title">{t('broker_profile')}</div>
+          {location.state.cameFrom === 'broker'
+            ? t('broker_profile')
+            : t('auction_detail')}
+        </Button>
+
+        <div className="title"></div>
       </div>
       <div className="broker-profile-body">
         <div className="broker-profile-body-card">
@@ -357,7 +369,7 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
                             iconChildren={
                               showMore ? 'expand_less' : 'expand_more'
                             }
-                            iconBefore={showMore}
+                            iconBefore={showMore && !showMore}
                             onClick={() => setShowMore(!showMore)}
                           >
                             {showMore ? 'Less' : 'More'}
@@ -369,7 +381,10 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs }) => {
 
                   {res?.webSite && (
                     <div
-                      onClick={() => window.open(res?.webSite)}
+                      onClick={() => {
+                        //  setBroker(!broker)
+                        window.open(res?.webSite)
+                      }}
                       className="website-link"
                     >
                       <FontIcon primary>language</FontIcon>
