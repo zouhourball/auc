@@ -159,7 +159,9 @@ const BrokerPage = ({ logged }) => {
         className="md-block-centered"
         key={el?.name}
         onClick={() =>
-          navigate(`/${logged ? 'auctions' : 'public'}/broker/${el.id}`)
+          navigate(`/${logged ? 'auctions' : 'public'}/broker/${el.id}`, {
+            state: { cameFrom: 'broker' },
+          })
         }
       >
         <CardTitle

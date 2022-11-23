@@ -395,10 +395,18 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             className="back-btn"
             primary
             iconBefore
-            iconEl={<FontIcon>arrow_back</FontIcon>}
+            iconEl={
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'arrow_forward'
+                  : 'arrow_back'}
+              </FontIcon>
+            }
             onClick={() => window.history.go(-1)}
           >
-            {t('back_to_live_auctions')}
+            {isActive
+              ? t('back_to_live_auctions')
+              : t('back_to_upcoming_auctions')}
           </Button>
         )}
         <div className="auction-details-header md-cell md-cell--12">
@@ -587,16 +595,17 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             </div>
           </>
         )}
-
         <div
           className="owner-card md-cell md-cell--12"
           onClick={() =>
             logged
               ? navigate(
                   `/auctions/broker/${auctionData?.['configurator_organization_id']}`,
+                  { state: { cameFrom: 'detail' } },
                 )
               : navigate(
                   `/public/broker/${auctionData?.['configurator_organization_id']}`,
+                  { state: { cameFrom: 'detail' } },
                 )
           }
         >

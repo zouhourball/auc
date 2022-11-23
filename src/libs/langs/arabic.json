@@ -201,5 +201,11 @@
   "delete_auction": "حذف",
 
   "OMR": " ريال عماني",
-  "We_couldnt_find": "لم نجد عما تبحث عنه ! "
+  "We_couldnt_find": "لم نجد عما تبحث عنه ! ",
+  "personal_information": "المعلومات الشخصية",
+  "payment": "الدفع",
+  "security": "الحماية",
+  "change": "تغيير",
+  "Company_Description": "وصف الشركة",
+  "back_to_upcoming_auctions": "العودة إلى المزادات القادمة"
 }
