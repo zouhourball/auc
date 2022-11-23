@@ -5,7 +5,7 @@ import { featuredAuctions, listAuction } from 'libs/api/auctions-api'
 import HomeSlider from 'components/home-slider'
 import UpcomingAuctions from 'components/upcoming-auctions/upcoming-auctions.js'
 
-const AuctionsPublic = ({ logged, user }) => {
+const AuctionsPublic = ({ logged }) => {
   const { t } = useTranslation()
 
   const { data: featAuctions } = useQuery(
@@ -41,7 +41,6 @@ const AuctionsPublic = ({ logged, user }) => {
       <UpcomingAuctions
         cards={upcomingAuctionsData?.results}
         logged={logged}
-        user={user}
         refetch={() => refetch()}
       />
     </>

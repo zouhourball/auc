@@ -1,6 +1,7 @@
 import { useState } from 'react'
 // import moment from 'moment'
 
+import { useSelector } from 'react-redux'
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
@@ -12,6 +13,7 @@ import './style.scss'
 
 const ParticipatedAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
 
   const [tab, setTab] = useState(0)
   const tabsData = [
@@ -49,11 +51,13 @@ const ParticipatedAuctions = ({ meOrgs }) => {
   const renderCards = () => {
     return myAuctions?.results?.map((el, i) => (
       <BiddingCard
+        user={user}
         className="md-cell md-cell--4"
         key={i}
         auctionData={el}
         status={tab === 0 && 'Active'}
         saveAuctionTag
+        participated
         logged
         meOrgs={meOrgs}
       />

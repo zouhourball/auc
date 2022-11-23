@@ -4,6 +4,7 @@ import moment from 'moment'
 
 import { useCurrentLang, useTranslation } from 'libs/langs'
 import { navigate } from '@reach/router'
+import { useSelector } from 'react-redux'
 
 import { moneyFormat } from 'libs/utils/hooks'
 import store from 'libs/store'
@@ -17,6 +18,8 @@ import defaultBg from './default-bg.jpeg'
 import './style.scss'
 
 const HomeSlider = ({ auctions, logged, defaultNode }) => {
+  const meOrgs = useSelector(({ app }) => app?.myOrgs)
+
   const { t } = useTranslation()
   const downloadToken = store?.getState()?.app?.dlToken
   let currentLang = useCurrentLang()
@@ -83,19 +86,17 @@ const HomeSlider = ({ auctions, logged, defaultNode }) => {
               +moment.utc(auction?.['auction_end_date']) > +moment() && (
               <AuctionTimer auctionData={auction} />
             )}
-            <Button
-              flat
-              primary
-              swapTheming
-              className="data-section-button"
-              onClick={() =>
-                navigate(
-                  `/${logged ? 'auctions' : 'public'}/detail/${auction?.uuid}`,
-                )
-              }
-            >
-              {t('bid_now')}
-            </Button>
+            {(!logged || (logged && !(meOrgs?.length > 0))) && (
+              <Button
+                flat
+                primary
+                swapTheming
+                className="data-section-button"
+                onClick={() => navigate(`/auctions/detail/${auction?.uuid}`)}
+              >
+                {t('bid_now')}
+              </Button>
+            )}
           </div>
         </div>
       ))}

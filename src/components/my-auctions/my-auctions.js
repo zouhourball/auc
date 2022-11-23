@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import moment from 'moment'
 import { navigate } from '@reach/router'
 import { Button } from 'react-md'
+import { useSelector } from 'react-redux'
 
 import { useTranslation } from 'libs/langs'
 import { useQuery } from 'react-query'
@@ -14,6 +15,7 @@ import './style.scss'
 
 const MyAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
   const [tab, setTab] = useState(0)
   const [statusTab, setStatusTab] = useState(0)
   const tabsData = [
@@ -71,6 +73,7 @@ const MyAuctions = ({ meOrgs }) => {
     auctionsData?.results?.map((el) => (
       <BiddingCard
         saveAuctionTag
+        user={user}
         className="md-cell md-cell--4"
         key={el?.uuid}
         auctionData={el}

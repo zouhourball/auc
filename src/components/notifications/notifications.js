@@ -109,19 +109,26 @@ const Notifications = ({ admin }) => {
     // },
   )
   // ||  ||
-  let beforeMark = moment(filterData?.dateRange?.startDate).format('YYYY-MM-DD')
-  let afterMark = moment(filterData?.dateRange?.endDate).format('YYYY-MM-DD')
+  let beforeMark = filterData?.dateRange?.startDate
+    ? moment(filterData?.dateRange?.startDate).format('YYYY-MM-DD')
+    : ''
+  let afterMark = filterData?.dateRange?.endDate
+    ? moment(filterData?.dateRange?.endDate).format('YYYY-MM-DD')
+    : ''
   const renderNotification = useMemo(() => {
     return Object.keys(filterData).length
-      ? notifications?.filter(
-          (el) =>
-            el?.formattedDate === filterData?.selectedItem ||
+      ? notifications?.filter((el) => {
+        return (
+            el?.formattedDate >= filterData?.selectedItem ||
             (!filterData?.dateRange?.endDate &&
-              el?.formattedDate > beforeMark) ||
+              filterData?.dateRange?.startDate &&
+              el?.formattedDate >= beforeMark) ||
             (!filterData?.dateRange?.startDate &&
-              el?.formattedDate < afterMark) ||
-            (el?.formattedDate > beforeMark && el?.formattedDate < afterMark),
+              filterData?.dateRange?.endDate &&
+              el?.formattedDate <= afterMark) ||
+            (el?.formattedDate >= beforeMark && el?.formattedDate < afterMark)
         )
+      })
       : search
         ? notifications?.filter((el) => el?.label?.toLowerCase().includes(search))
         : notifications
@@ -144,13 +151,13 @@ const Notifications = ({ admin }) => {
             {renderNotification?.map((item, index) => {
               return (
                 <NotificationCard
-                  key={item.index}
-                  icon={item.icon}
-                  label={item.label}
-                  date={item.date}
-                  withPoint={item.withPoint}
+                  key={item?.index}
+                  icon={item?.icon}
+                  label={item?.label}
+                  date={item?.date}
+                  withPoint={item?.withPoint}
                   cardHandler={() => {
-                    item.withPoint && markRead({ id: item?.id })
+                    item?.withPoint && markRead({ id: item?.id })
                     navigate(item?.url)
                   }}
                 />
@@ -163,6 +170,7 @@ const Notifications = ({ admin }) => {
                   swapTheming
                   onClick={() => {
                     fetchNextPage()
+                    setFilterData({})
                   }}
                   className="load-more"
                 >

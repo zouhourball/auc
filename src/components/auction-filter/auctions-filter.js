@@ -136,7 +136,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
   useEffect(() => {
     setFilterData({
       ...filterData,
-      auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
+      auctionEndingSoon: '', // status === 'Upcoming' ? 'ass' : 'aes',
     })
   }, [])
   // const { data: allCountryStateCities } = useQueryApollo(
@@ -232,7 +232,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       />
       <SelectField
         placeholder={t('type')}
-        className="md-cell md-cell--1 auctions-filter-selectField"
+        className={`md-cell md-cell--1 auctions-filter-selectField ${
+          filterData?.type?.length ? 'withCheck' : ''
+        }`}
         value={'type'}
         position={SelectField.Positions.BELOW}
         closeMenuOnSelect={false}
@@ -352,7 +354,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       </div>
       <SelectField
         placeholder={t('location')}
-        className={`md-cell md-cell--2 auctions-filter-selectField`}
+        className={`md-cell md-cell--2 auctions-filter-selectField ${
+          filterData?.location?.length ? 'withCheck' : ''
+        }`}
         value={'location'}
         dropdownIcon={
           filterData?.location?.length > 0 ? (
@@ -371,7 +375,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
 
       <SelectField
         placeholder={t('broker_company')}
-        className=" md-cell md-cell--2 auctions-filter-selectField"
+        className={`md-cell md-cell--2 auctions-filter-selectField ${
+          filterData?.brokerCompany?.length ? 'withCheck' : ''
+        }`}
         dropdownIcon={
           filterData?.brokerCompany?.length > 0 ? (
             <FontIcon>check</FontIcon>
@@ -447,7 +453,9 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
       {/* <div className="md-cell md-cell--1">{t('sort')}</div> */}
       <SelectField
         placeholder={t('auction_ending')}
-        className="md-cell md-cell--2 auctions-filter-selectField"
+        className={`md-cell md-cell--2 auctions-filter-selectField ${
+          filterData?.auctionEndingSoon ? 'withCheck' : ''
+        }`}
         dropdownIcon={
           filterData?.auctionEndingSoon ? (
             <FontIcon>check</FontIcon>
@@ -456,7 +464,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
           )
         }
         value={auctionEndingSoon}
-        defaultValue={status === 'Upcoming' ? 'ass' : 'aes'}
+        // defaultValue={status === 'Upcoming' ? 'ass' : 'aes'}
         onChange={(v) => {
           setFilterData({ ...filterData, auctionEndingSoon: v })
           setChips((prev) => [
@@ -489,7 +497,7 @@ const AuctionsFilter = ({ filterData, setFilterData, status }) => {
             className="auctions-filter-chip active"
             onClick={() => {
               setFilterData({
-                auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
+                // auctionEndingSoon: status === 'Upcoming' ? 'ass' : 'aes',
                 search: '',
               })
             }}

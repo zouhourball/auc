@@ -1,5 +1,6 @@
 import { Button } from 'react-md'
 import moment from 'moment'
+import { useSelector } from 'react-redux'
 
 import BiddingCard from 'components/bidding-card'
 import { useTranslation } from 'libs/langs'
@@ -8,8 +9,9 @@ import bidderIcon from 'images/my_activity_disable.svg'
 
 import './styles.scss'
 
-const UpcomingAuctions = ({ cards, logged, user, refetch, meOrgs }) => {
+const UpcomingAuctions = ({ cards, logged, refetch, meOrgs }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
 
   const renderStatus = (auction) => {
     if (

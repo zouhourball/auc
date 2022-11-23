@@ -7,6 +7,7 @@ import AuctionsFilter from 'components/auction-filter'
 import CardsWithMap from 'components/cards-with-map'
 
 import { useQuery } from 'react-query'
+import { useSelector } from 'react-redux'
 import {
   // listAuction,
   // featuredAuctions,
@@ -22,9 +23,10 @@ import noResult from 'images/no_result_found.svg'
 
 import './style.scss'
 
-const AuctionsList = ({ logged, user, meOrgs }) => {
+const AuctionsList = ({ logged, meOrgs }) => {
   const { t } = useTranslation()
   let currentLang = useCurrentLang()
+  const user = useSelector(({ app }) => app?.userInfos)
 
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const [filterData, setFilterData] = useState({})
@@ -57,15 +59,17 @@ const AuctionsList = ({ logged, user, meOrgs }) => {
           // },
           // property_type_id: { $in: filterData?.type?.filter(el => el !== undefined) },
         },
-        sort: [
-          type === 'Upcoming'
-            ? filterData?.auctionEndingSoon === 'ass'
-              ? 'auction_start_date'
-              : '-auction_start_date'
-            : filterData?.auctionEndingSoon === 'aes'
-              ? 'auction_end_date'
-              : '-auction_end_date',
-        ],
+        sort: filterData?.auctionEndingSoon
+          ? [
+            type === 'Upcoming'
+              ? filterData?.auctionEndingSoon === 'ass'
+                ? 'auction_start_date'
+                : '-auction_start_date'
+              : filterData?.auctionEndingSoon === 'aes'
+                ? 'auction_end_date'
+                : '-auction_end_date',
+          ]
+          : [],
         limit,
         offset,
       },
