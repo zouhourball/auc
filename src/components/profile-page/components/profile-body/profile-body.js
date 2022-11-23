@@ -12,11 +12,17 @@ const ProfileBody = ({ currentView, userInfo, refetch }) => {
       case 'Payment':
         return <Payment />
       case 'Security':
-        return <Security userInfo={userInfo} />
+        return <Security refetch={refetch} userInfo={userInfo} />
       case 'Support':
         return <Support />
       case 'PersonalInformationCompany':
-        return <PersonalInformation company={true} userInfo={userInfo} />
+        return (
+          <PersonalInformation
+            refetch={refetch}
+            company={true}
+            userInfo={userInfo}
+          />
+        )
       default:
         break
     }

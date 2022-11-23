@@ -1,0 +1,20 @@
+mutation uploadUserDocuments($input: [UploadUserDocumentInput!]!) {
+  uploadUserDocuments(input: $input) {
+    id
+    document {
+      id
+      aPIID
+      aPIURL
+      aPISize
+      aPIBucket
+      aPIBucket
+      aPIObject
+      aPIFilename
+      aPISubject
+      aPIContentType
+    }
+    user {
+      userID
+    }
+  }
+}

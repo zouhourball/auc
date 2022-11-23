@@ -64,7 +64,7 @@ import DrawOnMap from 'components/draw-on-map'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
+const AuctionDetail = ({ auctionId, location, logged, user, meOrgs }) => {
   let currentLang = useCurrentLang()
 
   const { t } = useTranslation()
@@ -72,7 +72,7 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
-
+  const { admin } = location.state
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
 
@@ -505,13 +505,13 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
             in {auctionPropertyData?.address}
           </div>
           <div className="auction-details-card-details">
-            {auctionPropertyData?.['count_bedrooms'] && (
+            {auctionPropertyData?.['count_bedrooms'] > 0 && (
               <div className="auction-details-card-details-item">
                 <img src={icon1} /> {auctionPropertyData?.['count_bedrooms']}{' '}
                 {t('bedrooms')}
               </div>
             )}
-            {auctionPropertyData?.['count_bathrooms'] && (
+            {auctionPropertyData?.['count_bathrooms'] > 0 && (
               <div className="auction-details-card-details-item">
                 <img src={icon2} />
                 {auctionPropertyData?.['count_bathrooms']} {t('bathrooms')}
@@ -728,11 +728,9 @@ const AuctionDetail = ({ auctionId, admin, logged, user, meOrgs }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive && (
-                // temporarly commented BEGIN
-                // !(auctionData?.['submitted_by'] === user?.subject) &&
-                // !(meOrgs?.length > 0) &&
-                // temporarly commented END
+              isActive &&
+              !(auctionData?.['submitted_by'] === user?.subject) &&
+              !(meOrgs?.length > 0) && (
                 <div className="actionWrapper">
                   <Button
                     flat
