@@ -54,10 +54,18 @@
   }
 
   &-cards {
+    flex-grow: 1;
+    align-items: flex-start;
     width: 100%;
 
+    &.empty {
+      display: grid;
+      place-items: center;
+    }
+
     .empty-content {
-      margin: 50px auto;
+      margin: auto;
+      padding: 50px 0;
       text-align: center;
 
       &-title {

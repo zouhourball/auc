@@ -669,7 +669,7 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
               separator={<span>-</span>}
             />
             <div>
-              {t("didn't_receive_a_code")}
+              {t("didn't_receive_a_code?")}
               <span>
                 <Button
                   className="confirmBtn"

@@ -21,7 +21,7 @@ import { propertyTypeList } from 'components/helpers'
 import './style.scss'
 
 const BiddingCard = ({
-  detailsUrl,
+  participated = false,
   auctionData,
   className,
   status,
@@ -89,15 +89,14 @@ const BiddingCard = ({
       uuid,
     })
   }
+
   return (
     <div
       className={`bidding-card ${className || ''}`}
       onClick={() =>
-        detailsUrl
-          ? detailsUrl()
-          : navigate(
-            `/${logged ? 'auctions' : 'public'}/detail/${auctionData?.uuid}`,
-          )
+        navigate(
+          `/${logged ? 'auctions' : 'public'}/detail/${auctionData?.uuid}`,
+        )
       }
     >
       <img
@@ -195,24 +194,25 @@ const BiddingCard = ({
             {status === 'Active' && <AuctionTimer auctionData={auctionData} />}
           </div>
         )}
-        {!detailsUrl &&
-          !(user?.subject === auctionData?.['last_bid']?.['member_subject']) &&
-          !(auctionData?.['submitted_by'] === user?.subject) &&
-          status === 'Active' &&
-          !(meOrgs?.length > 0) && (
+        {(!logged ||
+          (!participated &&
+            !(
+              user?.subject === auctionData?.['last_bid']?.['member_subject']
+            ) &&
+            !(auctionData?.['submitted_by'] === user?.subject) &&
+            status === 'Active' &&
+            !(meOrgs?.length > 0))) && (
           <Button
             flat
             primary
             swapTheming
             className="bidding-card-btn"
             onClick={() =>
-              detailsUrl
-                ? detailsUrl()
-                : navigate(
-                  `/${logged ? 'auctions' : 'public'}/detail/${
-                        auctionData?.uuid
-                  }`,
-                )
+              navigate(
+                `/${logged ? 'auctions' : 'public'}/detail/${
+                  auctionData?.uuid
+                }`,
+              )
             }
           >
             {renderBtnTitle()}

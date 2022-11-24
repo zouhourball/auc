@@ -59,7 +59,11 @@ const Home = () => {
       type: 'APP_SET_MY_ORGS',
       payload: { myOrgs: myOrgs?.meOrganizations },
     })
-  }, [myOrgs])
+    store.dispatch({
+      type: 'APP_SET_USERINFOS',
+      payload: { userInfos: currentUser?.mev2?.user },
+    })
+  }, [myOrgs, currentUser])
   const modules = location.pathname.split('/').filter((v) => v !== '')
   const modulesList = [
     { label: t('broker'), key: 'broker', linkToNewTab: 'broker' },
@@ -142,33 +146,17 @@ const Home = () => {
           modulesList={meOrgs?.length > 0 ? modulesListUser : modulesList}
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
-          user={currentUser?.mev2?.user}
           broker={meOrgs?.length > 0 ? meOrgs?.[0]?.ID : ''}
         />
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />
           {/* <Auctions path={'/add-auction'} /> */}
-          <AuctionsPublic
-            user={currentUser?.mev2?.user}
-            path={'/home'}
-            logged
-          />
+          <AuctionsPublic path={'/home'} logged />
           {['/live-auctions', '/upcoming-auctions'].map((page, i) => (
-            <AuctionsList
-              meOrgs={meOrgs}
-              user={currentUser?.mev2?.user}
-              logged
-              key={i}
-              path={page}
-            />
+            <AuctionsList meOrgs={meOrgs} logged key={i} path={page} />
           ))}
           <BrokerPage path={'/broker'} logged />
-          <BrokerProfile
-            path={'/broker/:brokerId'}
-            user={currentUser?.mev2?.user}
-            logged
-            meOrgs={meOrgs}
-          />
+          <BrokerProfile path={'/broker/:brokerId'} logged meOrgs={meOrgs} />
           <ProfilePage path={'/profile'} />
           <ProfilePage path={'/company-profile/:companyId'} company />
           {['/my-auctions', '/saved-auctions'].map((page, i) => (
@@ -182,13 +170,7 @@ const Home = () => {
             '/detail/:auctionId/public/:callback',
             '/detail/:auctionId/:admin',
           ].map((page, i) => (
-            <AuctionDetail
-              user={currentUser?.mev2?.user}
-              key={i}
-              path={page}
-              logged
-              meOrgs={meOrgs}
-            />
+            <AuctionDetail key={i} path={page} logged meOrgs={meOrgs} />
           ))}
           <AuctionRequestAppointment path={'/appointment/:auctionId'} />
           <AppointmentsRequests path={'/requests'} />

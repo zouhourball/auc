@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-md'
 import { getPublicUrl } from 'libs/utils/custom-function'
-import { navigate } from '@reach/router'
+// import { navigate } from '@reach/router'
 import { useCallback, useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
@@ -18,6 +18,7 @@ import { useTranslation, useCurrentLang } from 'libs/langs'
 
 import allCountryStateCitiesGql from 'libs/queries/all-countries.gql'
 import { filterFeatureAuctions } from 'libs/api/auctions-api'
+import { useSelector } from 'react-redux'
 
 import BrokerHeader from 'components/broker-header'
 import BiddingCard from 'components/bidding-card'
@@ -32,8 +33,9 @@ import { propertyTypeList } from 'components/helpers/index'
 
 import './style.scss'
 
-const BrokerProfile = ({ brokerId, user, logged, meOrgs, location }) => {
+const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
   let currentLang = useCurrentLang()
   const [filterData, setFilterData] = useState({})
   const [filter, setFilter] = useState(0)
@@ -249,11 +251,11 @@ const BrokerProfile = ({ brokerId, user, logged, meOrgs, location }) => {
         live={filter === 0}
         saveAuctionTag
         refetch={() => refetch()}
-        detailsUrl={() =>
-          logged
-            ? navigate(`/auctions/detail/${el?.uuid}`)
-            : navigate(`/public/detail/${el?.uuid}`)
-        }
+        // detailsUrl={() =>
+        //   logged
+        //     ? navigate(`/auctions/detail/${el?.uuid}`)
+        //     : navigate(`/public/detail/${el?.uuid}`)
+        // }
         meOrgs={meOrgs}
         logged={logged}
       />

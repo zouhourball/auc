@@ -33,6 +33,7 @@ import {
   useCurrentLang,
 } from 'libs/langs'
 import moment from 'moment'
+import { useSelector } from 'react-redux'
 
 import { useNotificationsContext } from 'libs/hooks/notification-provider'
 import bidPlace from 'images/bid_place_successfully.svg'
@@ -53,10 +54,11 @@ const TopBar = ({
   logged,
   clear,
   showUpdatePassword,
-  user,
   broker,
 }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
+
   const langs = useSupportedLangs()
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)

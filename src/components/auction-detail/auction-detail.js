@@ -5,7 +5,7 @@ import { Avatar, Button, FontIcon } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 // import store from 'libs/store'
 import moment from 'moment'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { get } from 'lodash-es'
 import {
   useSubscription,
@@ -64,8 +64,9 @@ import DrawOnMap from 'components/draw-on-map'
 
 import './style.scss'
 
-const AuctionDetail = ({ auctionId, location, logged, user, meOrgs }) => {
+const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   let currentLang = useCurrentLang()
+  const user = useSelector(({ app }) => app?.userInfos)
 
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -456,7 +457,7 @@ const AuctionDetail = ({ auctionId, location, logged, user, meOrgs }) => {
           isBookMarked={auctionData?.['is_bookmarked']}
           images={auctionData?.listing?.images}
           startDate={auctionData?.['auction_start_date']}
-          status={!isActive}
+          status={+moment.utc(auctionData?.['auction_start_date']) > +moment()}
         />
       </div>
       <div className="auction-details-info md-cell md-cell--4 md-grid">

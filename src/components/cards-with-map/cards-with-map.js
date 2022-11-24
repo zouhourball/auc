@@ -4,6 +4,7 @@ import '@target-energysolutions/gis-map/styles.css'
 // import { Button } from 'react-md'
 import store from 'libs/store'
 import { navigate } from '@reach/router'
+import { useSelector } from 'react-redux'
 
 import SideAuctionCard from 'components/side-auction-card'
 import { propertyTypeList } from 'components/helpers'
@@ -11,8 +12,9 @@ import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const CardsWithMap = ({ cardsData, live, type, user, refetch, className }) => {
+const CardsWithMap = ({ cardsData, live, type, refetch, className }) => {
   const { t } = useTranslation()
+  const user = useSelector(({ app }) => app?.userInfos)
 
   const downloadToken = store?.getState()?.app?.dlToken
 
