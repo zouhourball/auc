@@ -3,22 +3,22 @@ import { fetchJSON } from 'libs/fetch'
 // import { encode as btoa } from 'base-64'
 
 const appUrl = `${PRODUCT_APP_URL_API}/auction`
-
-export const addAvailability = async ({ queryKey }) => {
-  let res
-  try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
-      {
-        method: 'POST',
-        body: JSON.stringify(queryKey[2]),
-      },
-    )
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
-}
+// *************** UNNECESSARY API
+// export const addAvailability = async ({ queryKey }) => {
+//   let res
+//   try {
+//     res = await fetchJSON(
+//       `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
+//       {
+//         method: 'POST',
+//         body: JSON.stringify(queryKey[2]),
+//       },
+//     )
+//   } catch (e) {
+//     res = { error: e }
+//   }
+//   return res
+// }
 export const sendAppointmentsRequest = async ({ queryKey }) => {
   let res
   try {

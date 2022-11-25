@@ -1,19 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Checkbox, DialogContainer } from 'react-md'
 import './style.scss'
 
-// const [days, setDays] = useState(['Sunday', 'Monday', 'Tuesday'])
 const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
 ]
 
-const ContactInfoDialogdays = ({ visible, onHide }) => {
+const ContactInfoDialogdays = ({ visible, onHide, onConfirm, checkedDays }) => {
   const [checked, setChecked] = useState([])
   const handleChange = (day) => {
     // test if day in checked ? // remove : //
@@ -23,7 +22,9 @@ const ContactInfoDialogdays = ({ visible, onHide }) => {
       prev?.includes(day) ? prev.filter((el) => el !== day) : [...prev, day],
     )
   }
-
+  useEffect(() => {
+    checkedDays?.length > 0 && setChecked(checkedDays)
+  }, [checkedDays])
   // const handleChange = (day) => {
   //   // test if day in checked ? // remove : //
 
@@ -70,7 +71,10 @@ const ContactInfoDialogdays = ({ visible, onHide }) => {
             primary
             swapTheming
             className="auction-details-btn"
-            onClick={onHide}
+            onClick={() => {
+              onConfirm(checked)
+              onHide()
+            }}
           >
             Confirm
           </Button>
