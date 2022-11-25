@@ -146,7 +146,7 @@ const Notifications = ({ admin }) => {
         <span className="blue-text">({renderNotification?.length})</span>
       </div>
       <div className="notifications-container md-grid">
-        {renderNotification?.length > 0 ? (
+        {!renderNotification?.length > 0 ? (
           <div className="notifications-container-content md-cell md-cell--6">
             {renderNotification?.map((item, index) => {
               return (
@@ -180,7 +180,9 @@ const Notifications = ({ admin }) => {
             )}
           </div>
         ) : (
-          <div>{t('no_notifications')}</div>
+          <div className="no-notification md-cell md-cell--6 md-grid">
+            {t('no_notifications')}
+          </div>
         )}
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField

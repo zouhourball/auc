@@ -145,10 +145,10 @@ const ProfileMenu = ({
         <FileInput
           id="basic-info"
           className="edit-btn"
+          labelClassName="hidden-label"
           accept="image/jpeg, image/png"
-          label={<></>}
           icon={
-            <FontIcon className="edit-btn">edit</FontIcon>
+            <FontIcon>edit_square</FontIcon>
             // image ? (
             //   <img src={getPublicUrl(image)} width="120px" />
             // ) : information?.image ? (
