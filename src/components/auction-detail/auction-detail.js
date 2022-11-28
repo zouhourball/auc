@@ -73,7 +73,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
-  const { admin } = location.state
+  const { admin } = location?.state
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
 

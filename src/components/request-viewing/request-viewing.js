@@ -10,6 +10,7 @@ import propTypes from 'prop-types'
 import { useState } from 'react'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
+
 // import { propertyTypeList } from 'components/helpers'
 import locationIcon from 'images/location_icon.svg'
 

@@ -56,6 +56,7 @@ dependencies:
   react-apollo: 3.1.5_2a7d8fe60e845d0a2172bca489b4c337
   react-apollo-hooks: 0.5.0_2c96c9933ebd2915398bd36f5b1ded38
   react-big-calendar: 1.5.1_react-dom@18.0.0+react@18.0.0
+  react-calendar: 4.0.0_react-dom@18.0.0+react@18.0.0
   react-color: 2.19.3_react@18.0.0
   react-day-picker: 7.4.10_react@18.0.0
   react-dom: 18.0.0_react@18.0.0
@@ -298,7 +299,7 @@ packages:
       graphql: 15.8.0
       graphql-tag: 2.12.6_graphql@15.8.0
       hoist-non-react-statics: 3.3.2
-      optimism: 0.16.1
+      optimism: 0.16.2
       prop-types: 15.8.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -6429,6 +6430,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-2J0nE95rHXHyQ24cWjMKJ1tqB/ds8z/cyeOZxJhcb+rW+SQASVjuznUSmdz5GpVJTzU8JkhYut0D3siFDD6wsA==
+  /@wojtekmaj/date-utils/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-1VPkkTBk07gMR1fjpBtse4G+oJqpmE+0gUFB0dg3VIL7qJmUVaBoD/vlzMm/jNeOPfvlmerl1lpnsZyBUFIRuw==
   /@wry/context/0.4.4:
     dependencies:
       '@types/node': 18.0.6
@@ -6436,13 +6441,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-LrKVLove/zw6h2Md/KZyWxIkFM6AoyKp71OqpH9Hiip1csjPVoD3tPxlbQUNxEnHENks3UGgNpSBCAfq9KWuag==
-  /@wry/context/0.6.1:
-    dependencies:
-      tslib: 2.4.1
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-LOmVnY1iTU2D8tv4Xf6MVMZZ+juIJ87Kt/plMijjN20NMAXGmH4u8bS1t0uT74cZ5gwpocYueV58YwyI8y+GKw==
   /@wry/context/0.7.0:
     dependencies:
       tslib: 2.4.1
@@ -11468,6 +11466,12 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-2EmdH1YvIQiZpltCNgkuiUnyukzxM/R6NDJX31Ke3BG1Nq5b0S2PhX59UKi9vZpPDQVdqn+1IcaAwnzTT5vCjw==
+  /get-user-locale/1.5.1:
+    dependencies:
+      lodash.memoize: 4.1.2
+    dev: false
+    resolution:
+      integrity: sha512-WiNpoFRcHn1qxP9VabQljzGwkAQDrcpqUtaP0rNBEkFxJdh4f3tik6MfZsMYZc+UgQJdGCxWEjL9wnCUlRQXag==
   /get-value/2.0.6:
     dev: true
     engines:
@@ -14261,7 +14265,6 @@ packages:
     resolution:
       integrity: sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==
   /lodash.memoize/4.1.2:
-    dev: true
     resolution:
       integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
   /lodash.merge/4.6.2:
@@ -15793,12 +15796,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9A5pqGoQk49H6Vhjb9kPgAeeECfUDF6aIICbMDL23kDLStBn1MWk3YvcZ4xWF9CsSf6XEgvRLkXy4xof/56vVw==
-  /optimism/0.16.1:
+  /optimism/0.16.2:
     dependencies:
-      '@wry/context': 0.6.1
+      '@wry/context': 0.7.0
       '@wry/trie': 0.3.2
     resolution:
-      integrity: sha512-64i+Uw3otrndfq5kaoGNoY7pvOhSsjFEN4bdEFh80MWVk/dbgJfMv7VFDeCT8LxNAlEVhQmdVEbfE7X2nWNIIg==
+      integrity: sha512-zWNbgWj+3vLEjZNIh/okkY2EUfX+vB9TJopzIZwT1xxaMqC5hRLLraePod4c5n4He08xuXNH+zhKFFCu390wiQ==
   /optimist/0.6.1:
     dependencies:
       minimist: 0.0.10
@@ -17967,6 +17970,20 @@ packages:
       react-dom: ^16.14.0 || ^17 || ^18
     resolution:
       integrity: sha512-6sHIzJMQVz2X+WavwZovmgRwY4LZAuHXogKLgDQCDGjro4jc85PG4Ty8AO0l05U73PFauWYTnvun9ASncVCqcA==
+  /react-calendar/4.0.0_react-dom@18.0.0+react@18.0.0:
+    dependencies:
+      '@wojtekmaj/date-utils': 1.0.3
+      clsx: 1.2.1
+      get-user-locale: 1.5.1
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-y9Q5Oo3Mq869KExbOCP3aJ3hEnRZKZ0TqUa9QU1wJGgDZFrW1qTaWp5v52oZpmxTTrpAMTUcUGaC0QJcO1f8Nw==
   /react-color/2.19.3_react@18.0.0:
     dependencies:
       '@icons/material': 0.2.4_react@18.0.0
@@ -22951,6 +22968,7 @@ specifiers:
   react-apollo: ^3.1.5
   react-apollo-hooks: ^0.5.0
   react-big-calendar: ^1.5.1
+  react-calendar: ^4.0.0
   react-color: ^2.19.3
   react-day-picker: ^7.4.10
   react-dom: 18.0.0
