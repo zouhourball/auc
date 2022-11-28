@@ -73,7 +73,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
-  const { admin } = location?.state
+  const { admin } = !!location?.state
   // const [successDialog, setSuccessDialog] = useState(false)
   // const downloadToken = store?.getState()?.app?.dlToken
 
@@ -313,7 +313,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
         <img src={tick} /> {el?.feature?.name}
       </div>
     ))
-  const ableToRequestViewing = true
+  const ableToRequestViewing =
+    auctionData?.['viewing_appointements_config']?.length > 0
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       {/*
@@ -729,41 +730,53 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
                 {t('documents')}
               </Button>
             ) : (
-              isActive &&
-              !(auctionData?.['submitted_by'] === user?.subject) &&
-              !(meOrgs?.length > 0) && (
-                <div className="actionWrapper">
-                  <Button
-                    flat
-                    primary
-                    swapTheming
-                    className="auction-details-btn"
-                    onClick={
-                      () =>
-                        logged
-                          ? isParticipant
-                            ? setBidDialog(true)
-                            : setTermsDialog(true)
-                          : navigate(`/auctions/detail/${auctionData?.uuid}`)
-                      // setBidDialog(true)
-                    }
-                  >
-                    {t('bid_now')}
-                  </Button>
-                  {ableToRequestViewing && (
+              (isActive &&
+                !(auctionData?.['submitted_by'] === user?.subject) &&
+                !(meOrgs?.length > 0) && (
+                  <div className="actionWrapper">
                     <Button
                       flat
                       primary
+                      swapTheming
                       className="auction-details-btn"
-                      onClick={() =>
-                        navigate(`/auctions/appointment/${auctionData?.uuid}`)
+                      onClick={
+                        () =>
+                          logged
+                            ? isParticipant
+                              ? setBidDialog(true)
+                              : setTermsDialog(true)
+                            : navigate(`/auctions/detail/${auctionData?.uuid}`)
+                        // setBidDialog(true)
                       }
                     >
-                      {t('request_viewing_label')}
+                      {t('bid_now')}
                     </Button>
-                  )}
-                </div>
-              )
+                    {ableToRequestViewing && (
+                      <Button
+                        flat
+                        primary
+                        className="auction-details-btn"
+                        onClick={() =>
+                          navigate(`/auctions/appointment/${auctionData?.uuid}`)
+                        }
+                      >
+                        {t('request_viewing_label')}
+                      </Button>
+                    )}
+                  </div>
+                )) ||
+              (ableToRequestViewing && !(meOrgs?.length > 0) && (
+                <Button
+                  flat
+                  primary
+                  className="auction-details-btn"
+                  onClick={() =>
+                    navigate(`/auctions/appointment/${auctionData?.uuid}`)
+                  }
+                >
+                  {t('request_viewing_label')}
+                </Button>
+              ))
             )
 
             // ) : (

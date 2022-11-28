@@ -4,21 +4,21 @@ import { fetchJSON } from 'libs/fetch'
 
 const appUrl = `${PRODUCT_APP_URL_API}/auction`
 
-export const addAvailability = async ({ queryKey }) => {
-  let res
-  try {
-    res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
-      {
-        method: 'POST',
-        body: JSON.stringify(queryKey[2]),
-      },
-    )
-  } catch (e) {
-    res = { error: e }
-  }
-  return res
-}
+// export const addAvailability = async ({ queryKey }) => {
+//   let res
+//   try {
+//     res = await fetchJSON(
+//       `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
+//       {
+//         method: 'POST',
+//         body: JSON.stringify(queryKey[2]),
+//       },
+//     )
+//   } catch (e) {
+//     res = { error: e }
+//   }
+//   return res
+// }
 export const sendAppointmentsRequest = async ({ key, id, body }) => {
   let res
   try {

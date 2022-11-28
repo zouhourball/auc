@@ -102,8 +102,8 @@ const AuctionRequestAppointment = ({ auctionId }) => {
         start_at: '2022-11-02T13:42:28.550897Z',
         end_at: '2022-11-02T14:12:28.550897Z',
         notes: appointmentData?.note,
-        'appointment_date': '2022-11-02T00:00:00Z',
-        'bidders_subject': user?.subject,
+        appointment_date: '2022-11-02T00:00:00Z',
+        bidders_subject: user?.subject,
       },
     })
   }
