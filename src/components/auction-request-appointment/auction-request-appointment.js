@@ -10,8 +10,8 @@ import moment from 'moment'
 import {
   getAvailabilitiesConfig,
   sendAppointmentsRequest,
+  getAvailability,
 } from 'libs/api/appointment-api'
-import { DatePicker } from '@target-energysolutions/date-picker'
 import Calendar from 'react-calendar'
 import ToastMsg from 'components/toast-msg'
 
@@ -28,52 +28,78 @@ const AuctionRequestAppointment = ({ auctionId }) => {
   const user = useSelector(({ app }) => app?.userInfos)
 
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
-  const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
+  const [selectedTime, setTime] = useState('')
   const [successRequestVisible, setSuccessRequestVisible] = useState(false)
 
   // const [startDate, setStartDate] = useState(moment().valueOf())
   const [appointmentData, setAppointmentData] = useState({
-    location: 'Main Office',
     value: moment().valueOf(),
     time: moment().valueOf(),
   })
+  const [month, setMonth] = useState(moment().toISOString())
   // const [month, setMonth] = useState(moment().toISOString())
 
   // const [availabilitiesData, setAvailabilitiesData] = useState({})
-  const { type, location, date, time, notes } = appointmentData
+  const { type, date, notes } = appointmentData
   // const [value, onChange] = useState(new Date())
 
   const sendRequest = () => {
-    setSuccessRequestVisible(true)
+    onSendAppointment()
   }
-
+  const { data: getAvailabilityData } = useQuery(
+    [
+      'getAvailability',
+      auctionId,
+      {
+        from_date: moment(month).startOf('month').toISOString(),
+        to_date: moment(month).endOf('month').toISOString(),
+      },
+    ],
+    getAvailability,
+  )
   const { data: availabilitiesConfig } = useQuery(
     ['getAvailabilitiesConfig', auctionId],
     getAvailabilitiesConfig,
   )
   const renderType =
-    availabilitiesConfig?.type === 'In-person'
-      ? [{ label: 'In-person', value: 'In-person' }]
-      : availabilitiesConfig?.type === 'On-line'
-        ? [{ label: 'online', value: 'online' }]
-        : [{ label: 'both', value: 'both' }]
-  const days = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ]
-  const activeDays = availabilitiesConfig?.['selected_days']?.split(',')
-  const renderActiveDays = () => {
-    return activeDays?.map((elem) => days?.indexOf(elem))
+    availabilitiesConfig?.type === 'Both'
+      ? [
+        { label: 'In-person', value: 'In-person' },
+        { label: 'On-line', value: 'On-line' },
+      ]
+      : [
+        {
+          label: availabilitiesConfig?.type,
+          value: availabilitiesConfig?.type,
+        },
+      ]
+
+  const lastDayOfMonth = new Date(
+    new Date(month).getFullYear(),
+    new Date(month).getMonth() + 1,
+    0,
+  ).getDate()
+  let daysOfCurrentMont = []
+  for (let i = 0; i < lastDayOfMonth; i++) {
+    daysOfCurrentMont = [
+      ...daysOfCurrentMont,
+      new Date(
+        new Date(month).getFullYear(),
+        new Date(month).getMonth(),
+        i + 1,
+      ),
+    ]
   }
+  const getAvailabilityDataFormatted = getAvailabilityData?.map((el) =>
+    new Date(el?.['appointment_date']).getDate(),
+  )
+  const disabledDates = daysOfCurrentMont?.filter(
+    (el) => !getAvailabilityDataFormatted?.includes(new Date(el).getDate()),
+  )
 
   const addRequestAppointmentMutation = useMutation(sendAppointmentsRequest, {
     onSuccess: (res) => {
-      if (res?.success) {
+      if (res?.id) {
         dispatch(
           addToast(
             <ToastMsg
@@ -82,6 +108,8 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             />,
           ),
         )
+        setSuccessRequestVisible(true)
+        setAppointmentData({})
       } else {
         dispatch(
           addToast(<ToastMsg text={'Something is wrong'} type="error" />),
@@ -95,18 +123,45 @@ const AuctionRequestAppointment = ({ auctionId }) => {
       id: auctionId,
       body: {
         type: appointmentData?.type,
-        appointment_link: '',
-        appointment_address: appointmentData?.location,
-        general_location_x: 0,
-        general_location_y: 0,
-        start_at: '2022-11-02T13:42:28.550897Z',
-        end_at: '2022-11-02T14:12:28.550897Z',
-        notes: appointmentData?.note,
-        appointment_date: '2022-11-02T00:00:00Z',
-        bidders_subject: user?.subject,
+        appointment_link: availabilitiesConfig?.['appointment_link'],
+        appointment_address: availabilitiesConfig?.['appointment_address'],
+        general_location_x: availabilitiesConfig?.['general_location_x'],
+        general_location_y: availabilitiesConfig?.['general_location_y'],
+        start_at: moment(moment(appointmentData?.time).toISOString()),
+        end_at: moment(moment(appointmentData?.time).toISOString()).add(
+          moment.duration(1, 'hours'),
+        ), // '2022-11-28T14:00:00.000Z',
+        notes: appointmentData?.notes,
+        appointment_date: `${moment(appointmentData?.date).format(
+          'YYYY-MM-DD',
+        )}T00:00:00.000Z`, // '2022-11-02T00:00:00Z',
+        bidder_name: user?.profile?.fullName,
       },
     })
   }
+  let renderTimeSlots = []
+  for (
+    let i = 0;
+    i <
+    moment(getAvailabilityData?.[0]?.['end_at']).format('HH') -
+      moment(getAvailabilityData?.[0]?.['start_at']).format('HH');
+    i++
+  ) {
+    renderTimeSlots = [
+      ...renderTimeSlots,
+      {
+        label: `${moment(getAvailabilityData?.[0]?.['start_at'])
+          .add(i, 'hours')
+          .format('HH:mm')} - ${moment(getAvailabilityData?.[0]?.['start_at'])
+          .add(i + 1, 'hours')
+          .format('HH:mm')}`,
+        value: moment(getAvailabilityData?.[0]?.['start_at'])
+          .add(i, 'hours')
+          .valueOf(),
+      },
+    ]
+  }
+
   return (
     <>
       <div className="request-appointment">
@@ -139,7 +194,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
           />
         </div>
-        {type === '0' && (
+        {type === 'In-person' && (
           <div className="dateWrapper">
             <label className="auction-details-form-label">
               {t('location')}
@@ -150,7 +205,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
               onChange={(v) => {
                 setAppointmentData((prev) => ({ ...prev, location: v }))
               }}
-              value={location}
+              value={availabilitiesConfig?.['appointment_address']}
               disabled
               block
               className="textField-withShadow"
@@ -169,53 +224,61 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             rightIcon={
               <FontIcon className="dateRangeIcon">date_range</FontIcon>
             }
-            value={`${moment(date).format('DD/MM/YYYY')}`}
+            value={`${moment(date).format('DD-MM-YYYY')}`}
             onClick={() => setVisibleDatePicker(!visibleDatePicker)}
           />
 
           {visibleDatePicker && (
             <Calendar
-              minDate={new Date()}
-              maxDate={
-                new Date(new Date().getFullYear(), new Date().getMonth() + 2, 0)
-              }
+              activeStartDate={new Date(moment(month).startOf('month'))}
+              onActiveStartDateChange={(e) => {
+                e?.action === 'next' &&
+                  setMonth((prev) => moment(prev).add(1, 'month').toISOString())
+                e?.action === 'prev' &&
+                  setMonth((prev) =>
+                    moment(prev).subtract(1, 'month').toISOString(),
+                  )
+              }}
               onChange={(timestamp) => {
                 setAppointmentData((prev) => ({ ...prev, date: timestamp }))
                 setVisibleDatePicker(false)
               }}
-              tileDisabled={({ activeStartDate, date, view }) =>
-                (view === 'month' &&
-                  date.getDay() === renderActiveDays()[0] &&
-                  renderActiveDays()[1]) ||
-                date.getDay() === 6
-              }
+              tileDisabled={({ activeStartDate, date, view }) => {
+                return disabledDates?.some(
+                  (el) =>
+                    date.getFullYear() === el.getFullYear() &&
+                    date.getMonth() === el.getMonth() &&
+                    date.getDate() === el.getDate(),
+                )
+              }}
               value={date}
             />
-            // <DatePicker
-
-          //   singlePick
-          //   translation={{ update: 'select' }}
-          //   onUpdate={({ timestamp }) => {
-          //     setAppointmentData((prev) => ({ ...prev, date: timestamp }))
-          //     setVisibleDatePicker(false)
-          //   }}
-          //   onCancel={() => setVisibleDatePicker(false)}
-          //   // minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
-          //   startView="year"
-          //   endView="day"
-          //   onReset={() => {
-          //     setAppointmentData((prev) => ({
-          //       ...prev,
-          //       date: moment().valueOf(),
-          //     }))
-          //     setVisibleDatePicker(false)
-          //   }}
-          // />
           )}
         </div>
         <div className="dateWrapper">
           <label className="auction-details-form-label">{t('time')}*</label>
-          <TextField
+          <SelectField
+            id="select-field-3-1"
+            menuItems={renderTimeSlots}
+            simplifiedMenu={false}
+            onChange={(v) => {
+              // must be timestamp
+              setTime(v)
+              setAppointmentData((prev) => ({
+                ...prev,
+                time: moment(date)
+                  .hour(moment(v).hour())
+                  .minute(moment(v).minute())
+                  .valueOf(),
+              }))
+            }}
+            placeholder="Select Time of Appointment"
+            position={SelectField.Positions.BELOW}
+            value={selectedTime}
+            className="selectField-withShadow"
+            dropdownIcon={<FontIcon>expand_more</FontIcon>}
+          />
+          {/* <TextField
             id="time-start"
             placeholder={'Select from'}
             block
@@ -225,8 +288,8 @@ const AuctionRequestAppointment = ({ auctionId }) => {
               .add(moment.duration(2, 'hours'))
               .format('HH:mm')}`}
             className="textField-withShadow"
-          />
-          {visibleStartTimePicker && (
+          /> */}
+          {/* {visibleStartTimePicker && (
             <DatePicker
               startView="time"
               endView="time"
@@ -234,7 +297,12 @@ const AuctionRequestAppointment = ({ auctionId }) => {
               minuteInterval={5}
               timeFormat={null}
               onUpdate={({ timestamp }) => {
-                setAppointmentData((prev) => ({ ...prev, time: timestamp }))
+                setAppointmentData((prev) => ({ ...prev,
+                  time:
+                  moment(date)
+                    .hour(moment(timestamp).hour())
+                    .minute(moment(timestamp).minute())
+                    .valueOf() }))
                 setVisibleStartTimePicker(false)
               }}
               onCancel={() => setVisibleStartTimePicker(false)}
@@ -247,7 +315,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
                 setVisibleStartTimePicker(false)
               }}
             />
-          )}
+          )} */}
         </div>
         <div className="dateWrapper">
           <label className="auction-details-form-label">{t('notes')}*</label>
@@ -265,7 +333,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             rows={5}
           />
         </div>
-        {type === '1' && (
+        {type === 'On-line' && (
           <div className="request-appointment-note">
             <span className="blueText">{t('note')}</span>
             {t('online_link_note')}
@@ -294,7 +362,6 @@ const AuctionRequestAppointment = ({ auctionId }) => {
         </div>
       </div>
       <ConfirmDialog
-        onConfirm={() => onSendAppointment()}
         title={t('request_for_viewing_success')}
         description={t('wait_for_approval')}
         visible={successRequestVisible}

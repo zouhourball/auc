@@ -11,7 +11,12 @@ import DrawOnMap from 'components/draw-on-map'
 
 import './style.scss'
 
-const AppointmentsForm = ({ appointmentDetails, setAppointmentDetails }) => {
+const AppointmentsForm = ({
+  appointmentDetails,
+  setAppointmentDetails,
+  auctionEndDate,
+}) => {
+  // const auctionEndDate = 'Sat Dec 31 2022 15:00:59 GMT+0100 (Central European Standard Time)'
   const { t } = useTranslation()
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
@@ -190,7 +195,13 @@ const AppointmentsForm = ({ appointmentDetails, setAppointmentDetails }) => {
             minuteInterval={5}
             timeFormat={null}
             onUpdate={({ timestamp }) => {
-              onSetFormDetails('end_at', moment(timestamp).toISOString())
+              onSetFormDetails(
+                'end_at',
+                moment(auctionEndDate)
+                  .hour(moment(timestamp).hour())
+                  .minute(moment(timestamp).minute())
+                  .toISOString(),
+              )
               setVisibleEndTimePicker(false)
             }}
             onCancel={() => setVisibleEndTimePicker(false)}

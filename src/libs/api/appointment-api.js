@@ -35,10 +35,16 @@ export const sendAppointmentsRequest = async ({ key, id, body }) => {
   return res
 }
 export const getAvailability = async ({ queryKey }) => {
+  const queryParams = []
+  for (const [key, value] of Object.entries(queryKey[2])) {
+    queryParams.push(`${key}=${value}`)
+  }
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
+      `${appUrl}/api/v1/auctions/${
+        queryKey[1]
+      }/viewing-appointments/availabilities?${queryParams.join('&')}`,
       {
         method: 'GET',
       },
