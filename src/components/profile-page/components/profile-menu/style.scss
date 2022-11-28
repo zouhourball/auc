@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   padding: 10px 0;
+
   //border-right: 2px solid #e3e3e3;
   .drop-image {
     width: 200px;
@@ -21,8 +22,27 @@
       left: 0;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+
+      .md-btn {
+        all: inherit;
+        background-color: #5078e1;
+      }
+
+      .md-icon-text {
+        display: none;
+      }
+
+      .md-icon {
+        color: #fff;
+        font-size: 14px;
+      }
+
+      // .hidden-label {
+      //   display: none;
+      // }
     }
   }
 

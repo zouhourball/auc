@@ -180,7 +180,9 @@ const Notifications = ({ admin }) => {
             )}
           </div>
         ) : (
-          <div>{t('no_notifications')}</div>
+          <div className="no-notification md-cell md-cell--6 md-grid">
+            {t('no_notifications')}
+          </div>
         )}
         <div className="notifications-container-filter md-cell md-cell--3">
           <TextField
