@@ -45,8 +45,8 @@ const AppointmentsCalendar = () => {
       meOrgs?.length > 0 ? 'getAppointments' : 'getBidderAppointments',
       {
         ...(meOrgs?.length > 0 && { broker_organization_id: meOrgs?.[0]?.ID }),
-        from_date: moment(month).startOf('month').toISOString(),
-        to_date: moment(month).endOf('month').toISOString(),
+        from_date: moment(moment().month(month)).startOf('month').toISOString(),
+        to_date: moment(moment().month(month)).endOf('month').toISOString(),
         search_key: search,
       },
     ],
@@ -102,7 +102,7 @@ const AppointmentsCalendar = () => {
     })
   }
   const renderAppointments = () =>
-    calendarAppointments?.results?.map((el) => {
+    calendarAppointments?.map((el) => {
       return (
         <UserInfoBySubject
           key={el?.uuid}
