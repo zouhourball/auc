@@ -3,6 +3,7 @@ import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 const ConfirmDialog = ({
+  onConfirm,
   title,
   description,
   btnTitle,
@@ -45,7 +46,7 @@ const ConfirmDialog = ({
         primary
         className="confirm-dialog-button"
         onClick={(e) => {
-          e.stopPropagation()
+          onConfirm()
           onHide && onHide()
         }}
       >

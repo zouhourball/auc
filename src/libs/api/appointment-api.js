@@ -3,7 +3,7 @@ import { fetchJSON } from 'libs/fetch'
 // import { encode as btoa } from 'base-64'
 
 const appUrl = `${PRODUCT_APP_URL_API}/auction`
-// *************** UNNECESSARY API
+
 // export const addAvailability = async ({ queryKey }) => {
 //   let res
 //   try {
@@ -19,14 +19,14 @@ const appUrl = `${PRODUCT_APP_URL_API}/auction`
 //   }
 //   return res
 // }
-export const sendAppointmentsRequest = async ({ queryKey }) => {
+export const sendAppointmentsRequest = async ({ key, id, body }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/requests`,
+      `${appUrl}/api/v1/auctions/${id}/viewing-appointments/requests`,
       {
         method: 'POST',
-        body: JSON.stringify(queryKey[2]),
+        body: JSON.stringify(body),
       },
     )
   } catch (e) {
