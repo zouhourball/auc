@@ -364,7 +364,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           footerTemplate={
             <>
               <span>
-                {t('Total_Pages')} {getTotalElements}
+                {t('Total_elements')} {getTotalElements}
               </span>
 
               {+getTotalElements > limit && (
@@ -439,7 +439,7 @@ const Admin = ({ logged, auctionId, currentTab }) => {
           footerTemplate={
             <>
               <span>
-                {t('Total_Pages')} {getTotalElements}
+                {t('Total_elements')} {getTotalElements}
               </span>
               {+getTotalElements > limit && (
                 <div className="table-paginator">
