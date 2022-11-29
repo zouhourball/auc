@@ -9,20 +9,23 @@ import './style.scss'
 import propTypes from 'prop-types'
 import { useState } from 'react'
 import moment from 'moment'
-import { DatePicker } from '@target-energysolutions/date-picker'
+import Calendar from 'react-calendar'
 
 const ContactInfoDialogreschedule = ({
   visible,
   onHide,
-  setVisibleSuccessReschedule,
   rescheduleData,
   onConfirm,
+  disabledDates,
+  setRescheduleData,
+  calendarDate,
+  setCalendarDate,
+  renderTimeSlots,
 }) => {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
-  const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
 
   const [startTime, setStartTime] = useState(moment().valueOf())
-  const [startDate, setStartDate] = useState(moment().valueOf())
+  const { date, type } = rescheduleData
 
   // console.log(startTime, 'startTime')
 
@@ -55,17 +58,21 @@ const ContactInfoDialogreschedule = ({
         <SelectField
           id="select-field-3-1"
           menuItems={[
-            { label: 'In-person', value: '0' },
-            { label: 'Online', value: '1' },
+            { label: 'In-person', value: 'In-person' },
+            { label: 'Online', value: 'Online' },
           ]}
           required
           simplifiedMenu={false}
           onChange={(v) => {
             // location.reload()
+            setRescheduleData((prev) => ({
+              ...prev,
+              type: v,
+            }))
           }}
           placeholder="Select type of Appointment"
           position={SelectField.Positions.BELOW}
-          value={''}
+          value={type}
           className="langSelector"
           dropdownIcon={<FontIcon>expand_more</FontIcon>}
         />
@@ -81,58 +88,77 @@ const ContactInfoDialogreschedule = ({
             block
             required
             rightIcon={<FontIcon className="dateRangeIcon">date</FontIcon>}
-            value={`${moment(startDate).format('DD/MM/YYYY')}`}
+            value={`${moment(date).format('DD-MM-YYYY')}`}
             onClick={() => setVisibleDatePicker(true)}
           />
 
           {visibleDatePicker && (
-            <DatePicker
-              singlePick
-              translation={{ update: 'select' }}
-              onUpdate={({ timestamp }) => {
-                setStartDate(timestamp)
+            <Calendar
+              activeStartDate={new Date(moment(calendarDate).startOf('month'))}
+              onActiveStartDateChange={(e) => {
+                e?.action === 'next' &&
+                  setCalendarDate((prev) =>
+                    moment(prev).add(1, 'month').toISOString(),
+                  )
+                e?.action === 'prev' &&
+                  setCalendarDate((prev) =>
+                    moment(prev).subtract(1, 'month').toISOString(),
+                  )
+              }}
+              onChange={(timestamp) => {
+                setRescheduleData((prev) => ({ ...prev, date: timestamp }))
                 setVisibleDatePicker(false)
               }}
-              onCancel={() => setVisibleDatePicker(false)}
-              minValidDate={{ timestamp: rescheduleData?.dateRange?.startDate }}
-              startView="year"
-              endView="day"
+              tileDisabled={({ activeStartDate, date, view }) => {
+                return disabledDates?.some(
+                  (el) =>
+                    date.getFullYear() === el.getFullYear() &&
+                    date.getMonth() === el.getMonth() &&
+                    date.getDate() === el.getDate(),
+                )
+              }}
+              value={date}
             />
+            // <DatePicker
+            //   singlePick
+            //   translation={{ update: 'select' }}
+            //   onUpdate={({ timestamp }) => {
+            //     setStartDate(timestamp)
+            //     setVisibleDatePicker(false)
+            //   }}
+            //   onCancel={() => setVisibleDatePicker(false)}
+            //   minValidDate={{ timestamp: rescheduleData?.dateRange?.startDate }}
+            //   startView="year"
+            //   endView="day"
+            // />
           )}
         </div>
       </div>
 
       <div className="dateWrapper md-cell md-cell--12">
         <label className="auction-details-form-label">Time*</label>
-        <TextField
-          className="textField-withShadow"
-          required
-          id="time-start"
-          placeholder={'Select from'}
-          block
-          inlineIndicator={<FontIcon primary>schedule</FontIcon>}
-          onClick={() => setVisibleStartTimePicker(true)}
-          value={`${moment(startTime).format('HH:mm')}`}
+
+        <SelectField
+          id="select-field-3-1"
+          menuItems={renderTimeSlots}
+          simplifiedMenu={false}
+          onChange={(v) => {
+            // must be timestamp
+            setStartTime(v)
+            setRescheduleData((prev) => ({
+              ...prev,
+              appointment_date: moment(date)
+                .hour(moment(v).hour())
+                .minute(moment(v).minute())
+                .valueOf(),
+            }))
+          }}
+          placeholder="Select Time of Appointment"
+          position={SelectField.Positions.BELOW}
+          value={startTime}
+          className="selectField-withShadow"
+          dropdownIcon={<FontIcon>expand_more</FontIcon>}
         />
-        {visibleStartTimePicker && (
-          <DatePicker
-            startView="time"
-            endView="time"
-            singlePick={true}
-            minuteInterval={5}
-            timeFormat={null}
-            onUpdate={({ timestamp }) => {
-              setStartTime(timestamp)
-              setVisibleStartTimePicker(false)
-            }}
-            onCancel={() => setVisibleStartTimePicker(false)}
-            translation={{ date: 'Time' }}
-            onReset={() => {
-              setStartTime(moment().valueOf())
-              setVisibleStartTimePicker(false)
-            }}
-          />
-        )}
       </div>
 
       <Button
@@ -152,7 +178,6 @@ const ContactInfoDialogreschedule = ({
         onClick={() => {
           onConfirm(rescheduleData)
           onHide && onHide()
-          setVisibleSuccessReschedule(true)
         }}
       >
         Reschedule

@@ -4,10 +4,11 @@ import { useQuery, useMutation } from 'react-query'
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
 import { addToast } from 'modules/app/actions'
-import { getPublicUrl } from 'libs/utils/custom-function'
+// import { getPublicUrl } from 'libs/utils/custom-function'
 
 import {
   getRequestsForBrokerCalendar,
+  getAvailability,
   cancelRequest,
   rescheduleRequest,
   getAppointmentsRequest,
@@ -19,7 +20,7 @@ import ContactInfoDialogappointment from 'components/contact-info-dialog-appoint
 import ContactInfoDialogreschedule from 'components/contact-info-dialog-reschedule'
 import ContactInfoDialogaddreschedule from 'components/contact-info-dialog-addreschedule'
 import ConfirmDialog from 'components/confirm-dialog'
-import UserInfoBySubject from 'components/user-info-by-subject'
+// import UserInfoBySubject from 'components/user-info-by-subject'
 
 import successRegister from 'images/successfully-register.png'
 
@@ -34,9 +35,11 @@ const AppointmentsCalendar = () => {
   const [visibleSuccessReschedule, setVisibleSuccessReschedule] =
     useState(false)
   const [visibleAddAppointment, setVisibleAddAppointment] = useState(false)
-  const [month, setMonth] = useState(moment().toISOString())
+  // const [month, setMonth] = useState(moment().toISOString())
   const [selectedEvent, setSelectedEvent] = useState({ hide: true })
   const [search, setSearch] = useState('')
+  const [rescheduleData, setRescheduleData] = useState({})
+  const [calendarDate, setCalendarDate] = useState(moment().toISOString())
 
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
 
@@ -45,13 +48,25 @@ const AppointmentsCalendar = () => {
       meOrgs?.length > 0 ? 'getAppointments' : 'getBidderAppointments',
       {
         ...(meOrgs?.length > 0 && { broker_organization_id: meOrgs?.[0]?.ID }),
-        from_date: moment(moment().month(month)).startOf('month').toISOString(),
-        to_date: moment(moment().month(month)).endOf('month').toISOString(),
+        from_date: moment(calendarDate).startOf('month').toISOString(),
+        to_date: moment(calendarDate).endOf('month').toISOString(),
         search_key: search,
       },
     ],
     meOrgs?.length > 0 ? getRequestsForBrokerCalendar : getAppointmentsRequest,
   )
+  const { data: getAvailabilityData } = useQuery(
+    [
+      'getAvailability',
+      selectedEvent?.auctionId,
+      {
+        from_date: moment(calendarDate).startOf('month').toISOString(),
+        to_date: moment(calendarDate).endOf('month').toISOString(),
+      },
+    ],
+    selectedEvent?.auctionId && getAvailability,
+  )
+
   const cancelMutation = useMutation(cancelRequest, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -73,7 +88,7 @@ const AppointmentsCalendar = () => {
   })
   const rescheduleMutation = useMutation(rescheduleRequest, {
     onSuccess: (res) => {
-      if (res?.success) {
+      if (res?.id) {
         dispatch(
           addToast(
             <ToastMsg
@@ -82,12 +97,22 @@ const AppointmentsCalendar = () => {
             />,
           ),
         )
+        setVisibleSuccessReschedule(true)
         refetchAppointments()
       } else {
         dispatch(
-          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
+          addToast(
+            <ToastMsg text={res?.error || 'Something is wrong'} type="error" />,
+          ),
         )
       }
+    },
+    onError: (res) => {
+      dispatch(
+        addToast(
+          <ToastMsg text={res?.error || 'Something is wrong'} type="error" />,
+        ),
+      )
     },
   })
   const onCancel = () => {
@@ -98,37 +123,108 @@ const AppointmentsCalendar = () => {
   const onReschedule = () => {
     rescheduleMutation.mutate({
       reqUuid: selectedEvent?.id,
-      body: {},
+      body: {
+        type: rescheduleData?.type,
+        appointment_date: rescheduleData?.date,
+        start_at: rescheduleData?.date,
+        end_at: moment(rescheduleData?.date).add(1, 'hours'),
+      },
     })
   }
+
   const renderAppointments = () =>
     calendarAppointments?.map((el) => {
-      return (
-        <UserInfoBySubject
-          key={el?.uuid}
-          subject={
-            meOrgs?.length > 0
-              ? el?.['bidders_subject']
-              : el?.['to_broker_subject']
-          }
-        >
-          {(res) => ({
-            id: el?.uuid,
-            title: res?.fullName,
-            // allDay: true,
-            start: new Date(el?.['start_at']), // new Date(2015, 3, 0),
-            end: new Date(el?.['end_at']), // new Date(2015, 3, 1),
-            status: el?.status,
-            avatar: getPublicUrl(res?.photo?.aPIURL),
-            type: el?.type,
-            location:
-              el?.type === 'In-person'
-                ? el?.['appointment_address']
-                : el?.['appointment_link'],
-          })}
-        </UserInfoBySubject>
-      )
+      let publicUrl = ''
+      // const tt = <UserInfoBySubject
+      //   key={el?.uuid}
+      //   subject={
+      //     meOrgs?.length > 0
+      //       ? el?.['bidders_subject']
+      //       : el?.['to_broker_subject']
+      //   }
+      // >
+      //   {(res) => (
+      //     publicUrl = getPublicUrl(res?.photo?.aPIURL)
+      //   )}
+      // </UserInfoBySubject>
+
+      return {
+        id: el?.uuid,
+        title: el?.['bidder_name'],
+        auctionId: el?.auction?.uuid,
+        // allDay: true,
+        start: new Date(el?.['start_at']), // new Date(2015, 3, 0),
+        end: new Date(el?.['end_at']), // new Date(2015, 3, 1),
+        status:
+          el?.status === 'Approved'
+            ? 'confirmed'
+            : el?.status === 'Rejected'
+              ? 'cancelled'
+              : 'pending',
+        avatar: publicUrl,
+        type: el?.type,
+        location:
+          el?.type === 'In-person'
+            ? el?.['appointment_address']
+            : el?.['appointment_link'],
+      }
     })
+  const lastDayOfMonth = new Date(
+    new Date(calendarDate).getFullYear(),
+    new Date(calendarDate).getMonth() + 1,
+    0,
+  ).getDate()
+  let daysOfCurrentMonth = []
+  for (let i = 0; i < lastDayOfMonth; i++) {
+    daysOfCurrentMonth = [
+      ...daysOfCurrentMonth,
+      new Date(
+        new Date(calendarDate).getFullYear(),
+        new Date(calendarDate).getMonth(),
+        i + 1,
+      ),
+    ]
+  }
+  let getAvailabilityDataFormatted = getAvailabilityData?.map((el) =>
+    new Date(el?.['appointment_date']).getDate(),
+  )
+  getAvailabilityDataFormatted = getAvailabilityDataFormatted?.filter(
+    (item, index) => getAvailabilityDataFormatted?.indexOf(item) === index,
+  )
+  const disabledDates = daysOfCurrentMonth?.filter(
+    (el) => !getAvailabilityDataFormatted?.includes(new Date(el).getDate()),
+  )
+  // console.log(disabledDates, 'disabledDates', calendarDate)
+  let renderTimeSlots = []
+  const targetedDay = getAvailabilityData?.filter(
+    (el) =>
+      new Date(el?.['appointment_date']).getDate() ===
+      new Date(rescheduleData?.date).getDate(),
+  )
+  for (let j = 0; j < targetedDay?.length; j++) {
+    for (
+      let i = 0;
+      i <
+      moment(targetedDay?.[j]?.['end_at']).format('HH') -
+        moment(targetedDay?.[j]?.['start_at']).format('HH');
+      i++
+    ) {
+      renderTimeSlots = [
+        ...renderTimeSlots,
+        {
+          label: `${moment(targetedDay?.[j]?.['start_at'])
+            .add(i, 'hours')
+            .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+            .add(i + 1, 'hours')
+            .format('HH:mm')}`,
+          value: moment(targetedDay?.[j]?.['start_at'])
+            .add(i, 'hours')
+            .valueOf(),
+        },
+      ]
+    }
+  }
+
   return (
     <div className="appointments-calendar-page">
       <div className="appointments-calendar-page-title">Appointments</div>
@@ -136,15 +232,16 @@ const AppointmentsCalendar = () => {
         setVisibleAreYouSure={setVisibleAreYouSure}
         setVisibleReschedule={setVisibleReschedule}
         setVisibleAddAppointment={setVisibleAddAppointment}
-        setMonth={setMonth}
-        calendarAppointments={renderAppointments()}
+        // setMonth={setMonth}
+        calendarAppointments={renderAppointments() || []}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
         broker={meOrgs?.length > 0}
         setSearch={setSearch}
         search={search}
+        setCalendarDate={setCalendarDate}
       />
-      {visibleAreYouSure && selectedEvent?.status !== 'Cancelled' && (
+      {visibleAreYouSure && selectedEvent?.status !== 'cancelled' && (
         <ContactInfoDialogappointment
           visible={visibleAreYouSure}
           onHide={() => {
@@ -159,8 +256,13 @@ const AppointmentsCalendar = () => {
           onHide={() => {
             setVisibleReschedule(false)
           }}
-          setVisibleSuccessReschedule={setVisibleSuccessReschedule}
           onConfirm={onReschedule}
+          rescheduleData={rescheduleData}
+          disabledDates={disabledDates}
+          setRescheduleData={setRescheduleData}
+          calendarDate={calendarDate}
+          setCalendarDate={setCalendarDate}
+          renderTimeSlots={renderTimeSlots}
         />
       )}
       {visibleSuccessReschedule && (

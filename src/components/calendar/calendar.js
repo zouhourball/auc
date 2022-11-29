@@ -20,13 +20,14 @@ const CalendarCustom = ({
   setVisibleAreYouSure,
   setVisibleReschedule,
   setVisibleAddAppointment,
-  setMonth,
+  // setMonth,
   calendarAppointments,
   setSelectedEvent,
   selectedEvent,
   broker,
   setSearch,
   search,
+  setCalendarDate,
 }) => {
   const localizer = momentLocalizer(moment)
   const ref = useRef()
@@ -36,7 +37,14 @@ const CalendarCustom = ({
 
     const onNavigatee = (action) => {
       props.onNavigate(action)
-      setMonth(moment(date).format('MM'))
+      if (action === 'NEXT') {
+        // setMonth(moment(date).add(1, 'month').format('MM'))
+        setCalendarDate(moment(date).add(1, 'month').toISOString())
+      }
+      if (action === 'PREV') {
+        // setMonth(moment(date).subtract(1, 'month').format('MM'))
+        setCalendarDate(moment(date).subtract(1, 'month').toISOString())
+      }
     }
     return (
       <div className="toolbar">
@@ -139,7 +147,9 @@ const CalendarCustom = ({
       <div className="event-item" ref={myRef}>
         <div
           className={`event-item-status ${event.status}`}
-          onClick={(e) => onSelectEvent(event, e)}
+          onClick={(e) => {
+            onSelectEvent(event, e)
+          }}
         />
         {event.title}
       </div>
@@ -149,7 +159,6 @@ const CalendarCustom = ({
   const popupRef = useClickOutside(() => {
     setSelectedEvent((prev) => ({ ...prev, hide: true }))
   })
-
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar

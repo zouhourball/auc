@@ -65,7 +65,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
     availabilitiesConfig?.type === 'Both'
       ? [
         { label: 'In-person', value: 'In-person' },
-        { label: 'On-line', value: 'On-line' },
+        { label: 'Online', value: 'Online' },
       ]
       : [
         {
@@ -79,10 +79,10 @@ const AuctionRequestAppointment = ({ auctionId }) => {
     new Date(month).getMonth() + 1,
     0,
   ).getDate()
-  let daysOfCurrentMont = []
+  let daysOfCurrentMonth = []
   for (let i = 0; i < lastDayOfMonth; i++) {
-    daysOfCurrentMont = [
-      ...daysOfCurrentMont,
+    daysOfCurrentMonth = [
+      ...daysOfCurrentMonth,
       new Date(
         new Date(month).getFullYear(),
         new Date(month).getMonth(),
@@ -93,21 +93,21 @@ const AuctionRequestAppointment = ({ auctionId }) => {
   const getAvailabilityDataFormatted = getAvailabilityData?.map((el) =>
     new Date(el?.['appointment_date']).getDate(),
   )
-  const disabledDates = daysOfCurrentMont?.filter(
+  const disabledDates = daysOfCurrentMonth?.filter(
     (el) => !getAvailabilityDataFormatted?.includes(new Date(el).getDate()),
   )
 
   const addRequestAppointmentMutation = useMutation(sendAppointmentsRequest, {
     onSuccess: (res) => {
       if (res?.id) {
-        dispatch(
-          addToast(
-            <ToastMsg
-              text={'Appointment Canceled Successfully'}
-              type="success"
-            />,
-          ),
-        )
+        // dispatch(
+        //   addToast(
+        //     <ToastMsg
+        //       text={'Appointment Canceled Successfully'}
+        //       type="success"
+        //     />,
+        //   ),
+        // )
         setSuccessRequestVisible(true)
         setAppointmentData({})
       } else {
@@ -333,7 +333,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             rows={5}
           />
         </div>
-        {type === 'On-line' && (
+        {type === 'Online' && (
           <div className="request-appointment-note">
             <span className="blueText">{t('note')}</span>
             {t('online_link_note')}
