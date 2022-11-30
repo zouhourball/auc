@@ -314,7 +314,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       </div>
     ))
   const ableToRequestViewing =
-    auctionData?.['viewing_appointements_config']?.length > 0
+    auctionData?.['viewing_appointements_config']?.length > 0 &&
+    auctionData?.['allow_viewing_request']
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       {/*

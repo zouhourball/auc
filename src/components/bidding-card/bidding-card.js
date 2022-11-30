@@ -30,6 +30,7 @@ const BiddingCard = ({
   refetch,
   logged,
   meOrgs,
+  detailsUrl,
 }) => {
   const { t } = useTranslation()
   const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
@@ -94,6 +95,7 @@ const BiddingCard = ({
     <div
       className={`bidding-card ${className || ''}`}
       onClick={() =>
+        (detailsUrl && detailsUrl()) ||
         navigate(
           `/${logged ? 'auctions' : 'public'}/detail/${auctionData?.uuid}`,
         )

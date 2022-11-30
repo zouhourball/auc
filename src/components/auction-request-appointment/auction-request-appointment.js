@@ -139,29 +139,36 @@ const AuctionRequestAppointment = ({ auctionId }) => {
       },
     })
   }
-  let renderTimeSlots = []
-  for (
-    let i = 0;
-    i <
-    moment(getAvailabilityData?.[0]?.['end_at']).format('HH') -
-      moment(getAvailabilityData?.[0]?.['start_at']).format('HH');
-    i++
-  ) {
-    renderTimeSlots = [
-      ...renderTimeSlots,
-      {
-        label: `${moment(getAvailabilityData?.[0]?.['start_at'])
-          .add(i, 'hours')
-          .format('HH:mm')} - ${moment(getAvailabilityData?.[0]?.['start_at'])
-          .add(i + 1, 'hours')
-          .format('HH:mm')}`,
-        value: moment(getAvailabilityData?.[0]?.['start_at'])
-          .add(i, 'hours')
-          .valueOf(),
-      },
-    ]
-  }
+  const renderTimeSlots = () => {
+    let renderTimeSlots = []
+    const targetedDay = getAvailabilityData?.filter(
+      (el) =>
+        new Date(el?.['appointment_date']).getDate() ===
+        new Date(appointmentData?.date).getDate(),
+    )
 
+    for (let j = 0; j < targetedDay?.length; j++) {
+      const timeInterval =
+        moment(targetedDay?.[j]?.['end_at']).format('HH') -
+        moment(targetedDay?.[j]?.['start_at']).format('HH')
+      for (let i = 0; i < timeInterval; i++) {
+        renderTimeSlots = [
+          ...renderTimeSlots,
+          {
+            label: `${moment(targetedDay?.[j]?.['start_at'])
+              .add(i, 'hours')
+              .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+              .add(i + 1, 'hours')
+              .format('HH:mm')}`,
+            value: moment(targetedDay?.[j]?.['start_at'])
+              .add(i, 'hours')
+              .valueOf(),
+          },
+        ]
+      }
+    }
+    return renderTimeSlots
+  }
   return (
     <>
       <div className="request-appointment">
@@ -259,7 +266,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
           <label className="auction-details-form-label">{t('time')}*</label>
           <SelectField
             id="select-field-3-1"
-            menuItems={renderTimeSlots}
+            menuItems={renderTimeSlots()}
             simplifiedMenu={false}
             onChange={(v) => {
               // must be timestamp
