@@ -14,9 +14,9 @@ import { addToast } from 'modules/app/actions'
 import { Button, DialogContainer, TextField } from 'react-md'
 import DrawOnMap from 'components/draw-on-map'
 
-import UserInfoBySubject from 'components/user-info-by-subject'
+// import UserInfoBySubject from 'components/user-info-by-subject'
 
-import { configs, dummyDataMht } from './helper'
+import { configs } from './helper'
 
 import './style.scss'
 
@@ -26,6 +26,7 @@ const AppointmentsRequests = () => {
   const [notesVisible, setNotesVisible] = useState(false)
   const [locationVisible, setLocationVisible] = useState(false)
   const [linkVisible, setLinkVisible] = useState(false)
+  const [editMap, setEditMap] = useState(false)
 
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
 
@@ -41,7 +42,7 @@ const AppointmentsRequests = () => {
   )
   const updateRequestMutation = useMutation(updateRequest, {
     onSuccess: (res) => {
-      if (res?.success) {
+      if (res?.success || res?.id) {
         dispatch(
           addToast(
             <ToastMsg
@@ -52,6 +53,7 @@ const AppointmentsRequests = () => {
         )
         setLocationVisible(false)
         setLinkVisible(false)
+        setEditMap(false)
         refetchAppointments()
       } else {
         dispatch(
@@ -74,9 +76,14 @@ const AppointmentsRequests = () => {
         refetchAppointments()
       } else {
         dispatch(
-          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
+          addToast(
+            <ToastMsg text={res?.error || 'Something is wrong'} type="error" />,
+          ),
         )
       }
+    },
+    onError: (res) => {
+      dispatch(addToast(<ToastMsg text={res?.error} type="error" />))
     },
   })
   const approveMutation = useMutation(approveRequest, {
@@ -93,51 +100,59 @@ const AppointmentsRequests = () => {
         refetchAppointments()
       } else {
         dispatch(
-          addToast(<ToastMsg text={'Something is wrong'} type="error" />),
+          addToast(
+            <ToastMsg text={res?.error || 'Something is wrong'} type="error" />,
+          ),
         )
       }
+    },
+    onError: (res) => {
+      dispatch(addToast(<ToastMsg text={res?.error} type="error" />))
     },
   })
   const onApprove = (id, uuid) => {
     approveMutation.mutate({
       reqUuid: id,
-      uuid,
+      // uuid,
     })
   }
   const onReject = (id, uuid) => {
     rejectMutation.mutate({
       reqUuid: id,
-      uuid,
+      // uuid,
     })
   }
-  const onUpdateRequest = (id, uuid, body) => {
+  const onUpdateRequest = (id, body) => {
     updateRequestMutation.mutate({
       reqUuid: id,
-      uuid,
+      // uuid,
       body,
     })
   }
 
   const renderAppointments = () =>
-    requestsAppointments?.results?.map((el) => (
-      <UserInfoBySubject key={el?.uuid} subject={el?.['bidders_subject']}>
-        {(res) => ({
-          id: el?.uuid,
-          status: el?.status,
-          title: 'test',
-          name: res?.fullName,
-          appointmentType: el?.type,
-          date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
-          time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
-            el?.['end_at'],
-          ).format('HH:mm')}`,
-          note: el?.notes,
-          xLocation: el?.['general_location_x'],
-          yLocation: el?.['general_location_y'],
-          link: el?.['appointment_link'],
-        })}
-      </UserInfoBySubject>
-    ))
+    requestsAppointments?.results?.map((el) =>
+      // <UserInfoBySubject key={el?.uuid} subject={el?.['bidders_subject']}>
+      // {(res) => (
+      ({
+        id: el?.uuid,
+        status: el?.status,
+        title: el?.['auction_title'],
+        auctionId: el?.auction?.uuid,
+        name: el?.['bidder_name'],
+        appointmentType: el?.type,
+        date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
+        time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
+          el?.['end_at'],
+        ).format('HH:mm')}`,
+        note: el?.notes,
+        xLocation: el?.['general_location_x'],
+        yLocation: el?.['general_location_y'],
+        link: el?.['appointment_link'],
+        // })
+      }),
+      // </UserInfoBySubject>
+    )
   return (
     <div className="admin-page-mht">
       <Mht
@@ -149,7 +164,7 @@ const AppointmentsRequests = () => {
           setLocationVisible,
           setLinkVisible,
         )}
-        tableData={dummyDataMht || renderAppointments()}
+        tableData={renderAppointments() || []}
         withChecked
         singleSelect
         withSearch
@@ -173,38 +188,74 @@ const AppointmentsRequests = () => {
           onClose={() => {
             setLocationVisible(false)
           }}
-          // readOnly={true}
+          readOnly={!editMap}
           visible={locationVisible}
-          layers={[
-            {
-              type: 'symbol',
-              id: 'Symbol-Layer-Id',
-              items: [],
-            },
-          ]}
+          zoom={50}
+          layers={
+            //   !editMap ? [
+            //   {
+            //     type: 'symbol',
+            //     id: 'pin',
+            //     items: [
+            //       {
+            //         id: 'Pinned',
+            //         longitude: locationVisible?.x,
+            //         latitude: locationVisible?.y,
+            //       },
+            //     ],
+            //   },
+            // ] :
+            [
+              {
+                type: 'symbol',
+                id: 'Symbol-Layer-Id',
+                items: [],
+              },
+            ]
+          }
           onSetAddress={(newCoordinates) => {
-            setLocationVisible({
+            setLocationVisible((prev) => ({
+              id: prev?.id,
               y: newCoordinates?.['lat'],
               x: newCoordinates?.['lon'],
               address: newCoordinates?.['display_name'],
-            })
+            }))
           }}
           longitude={locationVisible?.x}
           latitude={locationVisible?.y}
-          customActions={[
-            <Button
-              onClick={() =>
-                onUpdateRequest('1', '3', {
-                  general_location_y: locationVisible?.y,
-                  general_location_x: locationVisible?.x,
-                  appointment_address: locationVisible?.address,
-                })
-              }
-              key={'update-btn'}
-            >
-              Update
-            </Button>,
-          ]}
+          customActions={
+            !editMap
+              ? [
+                <Button
+                  onClick={() => setEditMap(!editMap)}
+                  key={'update-btn'}
+                >
+                    Edit Location
+                </Button>,
+              ]
+              : [
+                <Button
+                  onClick={() =>
+                    onUpdateRequest(locationVisible?.id, {
+                      general_location_y: +locationVisible?.y,
+                      general_location_x: +locationVisible?.x,
+                      appointment_address: locationVisible?.address,
+                      type: 'In-person',
+                    })
+                  }
+                  key={'update-btn'}
+                >
+                    Update
+                </Button>,
+
+                <Button
+                  onClick={() => setEditMap(!editMap)}
+                  key={'update-btn'}
+                >
+                    Edit Location
+                </Button>,
+              ]
+          }
         />
       )}
       {linkVisible && (
@@ -216,8 +267,9 @@ const AppointmentsRequests = () => {
           actions={[
             <Button
               onClick={() =>
-                onUpdateRequest('1', '3', {
+                onUpdateRequest(linkVisible?.id, {
                   appointment_link: linkVisible?.link,
+                  type: 'Online',
                 })
               }
               key={'update-btn'}
@@ -231,7 +283,9 @@ const AppointmentsRequests = () => {
             placeholder={'Appointment Link Here'}
             block
             value={linkVisible?.link}
-            onChange={(v) => setLinkVisible({ link: v })}
+            onChange={(v) =>
+              setLinkVisible((prev) => ({ id: prev?.id, link: v }))
+            }
             className="textField-withShadow"
           />
         </DialogContainer>

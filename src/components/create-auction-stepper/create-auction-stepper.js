@@ -33,6 +33,7 @@ const CreateAuctionStepper = ({
   setDocuments,
   appointmentDetails,
   setAppointmentDetails,
+  auctionEndDate,
 }) => {
   const { t } = useTranslation()
 
@@ -103,6 +104,7 @@ const CreateAuctionStepper = ({
           <AppointmentsForm
             appointmentDetails={appointmentDetails}
             setAppointmentDetails={setAppointmentDetails}
+            auctionEndDate={auctionEndDate}
           />
         )
       default:

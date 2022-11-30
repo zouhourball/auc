@@ -35,10 +35,16 @@ export const sendAppointmentsRequest = async ({ key, id, body }) => {
   return res
 }
 export const getAvailability = async ({ queryKey }) => {
+  const queryParams = []
+  for (const [key, value] of Object.entries(queryKey[2])) {
+    queryParams.push(`${key}=${value}`)
+  }
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${queryKey[1]}/viewing-appointments/availabilities`,
+      `${appUrl}/api/v1/auctions/${
+        queryKey[1]
+      }/viewing-appointments/availabilities?${queryParams.join('&')}`,
       {
         method: 'GET',
       },
@@ -140,7 +146,7 @@ export const updateRequest = async ({ uuid, reqUuid, body }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/requests/${reqUuid}`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}`,
       {
         method: 'PUT',
         body: JSON.stringify(body),
@@ -155,27 +161,30 @@ export const approveRequest = async ({ uuid, reqUuid }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/requests/${reqUuid}/approve`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}/approve`,
       {
         method: 'PUT',
       },
     )
   } catch (e) {
     res = { error: e }
+    throw e
   }
   return res
 }
-export const rescheduleRequest = async ({ reqUuid }) => {
+export const rescheduleRequest = async ({ reqUuid, body }) => {
   let res
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}/reschedule`,
       {
         method: 'PUT',
+        body: JSON.stringify(body),
       },
     )
   } catch (e) {
     res = { error: e }
+    throw e
   }
   return res
 }
@@ -197,13 +206,14 @@ export const rejectRequest = async ({ uuid, reqUuid }) => {
   let res
   try {
     res = await fetchJSON(
-      `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/requests/${reqUuid}/reject`,
+      `${appUrl}/api/v1/auctions/viewing-appointments/requests/${reqUuid}/reject`,
       {
         method: 'PUT',
       },
     )
   } catch (e) {
     res = { error: e }
+    throw e
   }
   return res
 }

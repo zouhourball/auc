@@ -105,6 +105,7 @@ const Auctions = () => {
         setDocuments={setDocuments}
         appointmentDetails={appointmentDetails}
         setAppointmentDetails={setAppointmentDetails}
+        auctionEndDate={auctionDetails?.endDate}
       />
     </div>
   )

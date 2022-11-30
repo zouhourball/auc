@@ -41,7 +41,11 @@ export const configs = (
           flat
           primary
           onClick={() =>
-            setLocationVisible({ x: row?.xLocation, y: row?.yLocation })
+            setLocationVisible({
+              x: row?.xLocation,
+              y: row?.yLocation,
+              id: row?.id,
+            })
           }
         >
           Edit Location
@@ -50,9 +54,11 @@ export const configs = (
         <Button
           flat
           primary
-          onClick={() => setLinkVisible({ link: row?.link } || true)}
+          onClick={() =>
+            setLinkVisible({ link: row?.link, id: row?.id } || true)
+          }
         >
-          Add Link
+          {row?.link ? 'View Link' : 'Add Link'}
         </Button>
       )
     },
@@ -97,14 +103,14 @@ export const configs = (
         <>
           <Button
             flat
-            onClick={() => onApprove(row?.id, 'auctionId')}
+            onClick={() => onApprove(row?.id, row?.auctionId)}
             className="status Approved"
           >
             Approve
           </Button>
           <Button
             flat
-            onClick={() => onReject(row?.id, 'auctionId')}
+            onClick={() => onReject(row?.id, row?.auctionId)}
             className="status Rejected"
           >
             Reject
