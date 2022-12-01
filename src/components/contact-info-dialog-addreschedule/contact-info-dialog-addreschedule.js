@@ -153,7 +153,7 @@ const ContactInfoDialogaddreschedule = ({
     return renderTimeSlots()?.map((el) => (
       <div
         key={el?.value}
-        className={`${selectedTime === el?.value ? 'selected-time' : ''}`}
+        className={`time-chip ${selectedTime === el?.value ? 'selected' : ''}`}
         onClick={() => {
           setTime(el?.value)
           setAppointmentData((prev) => ({
@@ -224,129 +224,85 @@ const ContactInfoDialogaddreschedule = ({
       title={
         <div className="add-appointment-dialog-title">Add Appointment</div>
       }
-    >
-      <div className="dateWrapper">
-        <div className="label">Auction Title*</div>
-        <SelectField
-          id="select-field-3-1"
-          menuItems={listAuctions()?.map((el) => ({
-            value: el?.uuid,
-            label: <div> {el?.listing?.title}</div>,
-          }))}
-          simplifiedMenu={false}
-          onChange={(v) => {
-            setAppointmentData((prev) => ({ ...prev, title: v }))
-          }}
-          placeholder="Select auction title"
-          position={SelectField.Positions.BELOW}
-          value={appointmentData?.title}
-          className="selectField"
-          dropdownIcon={<FontIcon>expand_more</FontIcon>}
-        />
-      </div>
-      <div className="dateWrapper">
-        <div className="label">Type of Appointment</div>
-        <SelectField
-          id="select-field-3-1"
-          menuItems={renderType}
-          simplifiedMenu={false}
-          onChange={(v) => {
-            setAppointmentData((prev) => ({ ...prev, type: v }))
-          }}
-          placeholder="Select type of Appointment"
-          position={SelectField.Positions.BELOW}
-          value={appointmentData?.type}
-          className="selectField"
-          dropdownIcon={<FontIcon>expand_more</FontIcon>}
-        />
-      </div>
-      <div className="dateWrapper">
-        <div className="label">Date*</div>
-        <div className="date">
-          <Calendar
-            activeStartDate={new Date(moment(month).startOf('month'))}
-            onActiveStartDateChange={(e) => {
-              e?.action === 'next' &&
-                setMonth((prev) => moment(prev).add(1, 'month').toISOString())
-              e?.action === 'prev' &&
-                setMonth((prev) =>
-                  moment(prev).subtract(1, 'month').toISOString(),
-                )
-            }}
-            onChange={(timestamp) => {
-              setAppointmentData((prev) => ({ ...prev, date: timestamp }))
-            }}
-            tileDisabled={({ activeStartDate, date, view }) => {
-              return disabledDates?.some(
-                (el) =>
-                  date.getFullYear() === el.getFullYear() &&
-                  date.getMonth() === el.getMonth() &&
-                  date.getDate() === el.getDate(),
-              )
-            }}
-            showNeighboringMonth={false}
-            value={appointmentData?.date}
-          />
-          {/* <TextField
-            className="textField"
-            id="date"
-            placeholder="select date"
-            block
-            required
-            rightIcon={
-              <FontIcon className="dateRangeIcon">date_range</FontIcon>
-            }
-            value={`${moment(startDate).format('DD/MM/YYYY')}`}
-            onClick={() =>
-              setVisibleDatePicker({ ...visibleDatePicker, endDate: true })
-            }
-          /> */}
-
-          {/* {visibleDatePicker?.endDate && (
-            <DatePicker
-              singlePick
-              translation={{ update: 'select' }}
-              onUpdate={({ timestamp }) => {
-                setStartDate(timestamp)
-                setVisibleDatePicker(false)
-              }}
-              onCancel={() => setVisibleDatePicker(false)}
-              minValidDate={{ timestamp: filterData?.dateRange?.startDate }}
-              startView="year"
-              endView="day"
-            />
-          )} */}
-        </div>
-      </div>
-      <div className="dateWrapper">
-        <div className="label">Time*</div>
-        {appointmentData?.date && (
-          <div className="dateWrapper">
-            <label className="auction-details-form-label">Time*</label>
-            {renderChips()}{' '}
-          </div>
-        )}
-      </div>
-      <div className="actions">
-        <Button
-          flat
-          primary
-          swapTheming
-          className="cancel-btn"
-          onClick={onHide}
-        >
+      actions={[
+        <Button key={1} flat onClick={onHide}>
           Cancel
-        </Button>
-        <Button
-          flat
-          primary
-          swapTheming
-          className="reschedule-btn"
-          onClick={() => sendRequest()}
-        >
+        </Button>,
+        <Button key={2} flat primary swapTheming onClick={() => sendRequest()}>
           Add Appointment
-        </Button>
+        </Button>,
+      ]}
+    >
+      <div className="auction-details-form-label md-cell md-cell--12">
+        Auction Title*
       </div>
+      <SelectField
+        id="select-field-3-1"
+        menuItems={listAuctions()?.map((el) => ({
+          value: el?.uuid,
+          label: <div> {el?.listing?.title}</div>,
+        }))}
+        simplifiedMenu={false}
+        onChange={(v) => {
+          setAppointmentData((prev) => ({ ...prev, title: v }))
+        }}
+        placeholder="Select auction title"
+        position={SelectField.Positions.BELOW}
+        value={appointmentData?.title}
+        className="selectField-withShadow  md-cell md-cell--12"
+        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+      />
+      <div className="auction-details-form-label md-cell md-cell--12">
+        Type of Appointment
+      </div>
+      <SelectField
+        id="select-field-3-1"
+        menuItems={renderType}
+        simplifiedMenu={false}
+        onChange={(v) => {
+          setAppointmentData((prev) => ({ ...prev, type: v }))
+        }}
+        placeholder="Select type of Appointment"
+        position={SelectField.Positions.BELOW}
+        value={appointmentData?.type}
+        className="selectField-withShadow  md-cell md-cell--12"
+        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+      />
+      <div className="auction-details-form-label md-cell md-cell--12">
+        Date *
+      </div>
+      <div className="date md-cell md-cell--12">
+        <Calendar
+          activeStartDate={new Date(moment(month).startOf('month'))}
+          onActiveStartDateChange={(e) => {
+            e?.action === 'next' &&
+              setMonth((prev) => moment(prev).add(1, 'month').toISOString())
+            e?.action === 'prev' &&
+              setMonth((prev) =>
+                moment(prev).subtract(1, 'month').toISOString(),
+              )
+          }}
+          onChange={(timestamp) => {
+            setAppointmentData((prev) => ({ ...prev, date: timestamp }))
+          }}
+          tileDisabled={({ activeStartDate, date, view }) => {
+            return disabledDates?.some(
+              (el) =>
+                date.getFullYear() === el.getFullYear() &&
+                date.getMonth() === el.getMonth() &&
+                date.getDate() === el.getDate(),
+            )
+          }}
+          showNeighboringMonth={false}
+          value={appointmentData?.date}
+        />
+      </div>
+      <div className="auction-details-form-label md-cell md-cell--12">
+        Time*
+      </div>
+      {appointmentData?.date && (
+        <div className="time-chip-wrapper">{renderChips()} </div>
+      )}
       <ConfirmDialog
         title={t('request_for_viewing_success')}
         description={t('wait_for_approval')}
