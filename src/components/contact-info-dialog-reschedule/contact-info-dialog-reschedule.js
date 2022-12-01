@@ -95,6 +95,7 @@ const ContactInfoDialogreschedule = ({
           {visibleDatePicker && (
             <Calendar
               activeStartDate={new Date(moment(calendarDate).startOf('month'))}
+              showNeighboringMonth={false}
               onActiveStartDateChange={(e) => {
                 e?.action === 'next' &&
                   setCalendarDate((prev) =>
