@@ -197,6 +197,7 @@
     }
 
     &-subTitle {
+      margin: 8px 0;
       color: #3d3d3e;
       font-size: 18px;
       font-weight: bold;
@@ -205,6 +206,7 @@
     &-imagesWrapper {
       display: flex;
       gap: 25px;
+      margin: 8px 0;
     }
 
     &-img {

@@ -1074,209 +1074,228 @@ const MyAuctionDetails = ({ auctionId }) => {
             </>
           )}
           {/* APPOINTMENT PART */}
-          <div>
-            <h3>{t('appointments')}</h3>
-            <Checkbox
-              id={`request-viewing`}
-              name={`request-viewing-checkboxes`}
-              label={t('request_viewing')}
-              disabled={!editMode}
-              checked={auctionEditData?.allowAppointment}
-              onChange={() => onDisableAppointment()}
-            />
-            <label className="auction-details-form-label">
-              {t('type_of_appointment')}:
-            </label>
-            <SelectField
-              id={'auctionEditData'}
-              onClick={() => setTest(1)}
-              placeholder={`${
-                appointmentType?.length
-                  ? appointmentType?.join('-')
-                  : 'Select appointment type'
-              }`}
-              listClassName="country-list"
-              menuItems={appointmentsTypeList}
-              value={appointmentType?.join('-')}
-              fullWidth
-              disabled={!editMode}
-              position={SelectField.Positions.BELOW}
-              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-              className="selectField-lined"
-            />
-            {appointmentType?.includes('In-person') && (
-              <div className=" map">
+          <div className="auction-details-subTitle">{t('appointments')}</div>
+          <Checkbox
+            id={`request-viewing`}
+            name={`request-viewing-checkboxes`}
+            label={t('request_viewing')}
+            disabled={!editMode}
+            checked={auctionEditData?.allowAppointment}
+            onChange={() => onDisableAppointment()}
+          />
+          <div className="auction-details-form">
+            <div className="column">
+              <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
                 <label className="auction-details-form-label">
-                  {t('location')}:
+                  {t('type_of_appointment')}:
                 </label>
-                <TextField
-                  id="auctionAddress"
-                  placeholder={t('auction_position')}
-                  value={
-                    auctionEditData?.appointmentDetails?.['appointment_address']
-                  }
-                  disabled={
-                    !auctionEditData?.appointmentDetails?.[
-                      'appointment_address'
-                    ] || !editMode
-                  }
-                  onChange={(value) =>
-                    onSetFormDetails(
-                      'appointmentDetails',
-                      value,
-                      'appointment_address',
-                    )
-                  }
-                  className="textField-map"
-                  block
-                />
-                <Button
-                  icon
-                  primary
-                  className="save-btn"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    setAddressView(!addressView)
-                  }}
+                <SelectField
+                  id={'auctionEditData'}
+                  onClick={() => setTest(1)}
+                  placeholder={`${
+                    appointmentType?.length
+                      ? appointmentType?.join(', ')
+                      : 'Select appointment type'
+                  }`}
+                  listClassName="country-list"
+                  menuItems={appointmentsTypeList}
+                  value={appointmentType?.join(', ')}
+                  fullWidth
+                  disabled={!editMode}
+                  position={SelectField.Positions.BELOW}
+                  dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+                  className="selectField-lined"
                 />
               </div>
-            )}
-            <TextField
-              id="time-start"
-              placeholder={'Select from'}
-              block
-              inlineIndicator={<FontIcon primary>schedule</FontIcon>}
-              value={
-                auctionEditData?.appointmentDetails?.['start_at'] &&
-                moment(
-                  auctionEditData?.appointmentDetails?.['start_at'],
-                ).format('HH:mm')
-              }
-              disabled={!editMode}
-              onClick={() => editMode && setTiming(true)}
-              className="textField-withShadow"
-            />
-            {timing && (
-              <DatePicker
-                startView="time"
-                endView="time"
-                singlePick={true}
-                minuteInterval={5}
-                timeFormat={null}
-                onUpdate={({ timestamp }) => {
-                  onSetFormDetails(
-                    'appointmentDetails',
-                    moment(timestamp).toISOString(),
-                    'start_at',
-                  )
-                  setTiming(false)
-                }}
-                onCancel={() => setTiming(false)}
-                translation={{ date: 'Time' }}
-                onReset={() => {
-                  onSetFormDetails(
-                    'appointmentDetails',
-                    moment().toISOString(),
-                    'start_at',
-                  )
-                  setTiming(false)
-                }}
-              />
-            )}
-            <TextField
-              id="time-start"
-              placeholder={'Select from'}
-              block
-              disabled={!editMode}
-              inlineIndicator={<FontIcon primary>schedule</FontIcon>}
-              value={
-                auctionEditData?.appointmentDetails?.['end_at'] &&
-                moment(auctionEditData?.appointmentDetails?.['end_at']).format(
-                  'HH:mm',
-                )
-              }
-              onClick={() => editMode && setVisibleEndTimePicker(true)}
-              className="textField-withShadow"
-            />
-            {visibleEndTimePicker && (
-              <DatePicker
-                startView="time"
-                endView="time"
-                singlePick={true}
-                minuteInterval={5}
-                timeFormat={null}
-                onUpdate={({ timestamp }) => {
-                  onSetFormDetails(
-                    'appointmentDetails',
-
-                    moment(auctionEditData?.endDate)
-                      .hour(moment(timestamp).hour())
-                      .minute(moment(timestamp).minute())
-                      .toISOString(),
-                    'end_at',
-                  )
-                  setVisibleEndTimePicker(false)
-                }}
-                onCancel={() => setVisibleEndTimePicker(false)}
-                translation={{ date: 'Time' }}
-                onReset={() => {
-                  onSetFormDetails(
-                    'appointmentDetails',
-                    moment().toISOString(),
-                    'end_at',
-                  )
-                  setVisibleEndTimePicker(false)
-                }}
-              />
-            )}
-            <SelectField
-              id="select-field-with-elements-country-spinner"
-              placeholder={`${
-                auctionEditData?.appointmentDetails?.['selected_days']?.length
-                  ? auctionEditData?.appointmentDetails?.[
-                      'selected_days'
-                    ]?.join('-')
-                  : 'Select Days type'
-              }`}
-              listClassName="country-list"
-              menuItems={weekDays?.map((day) => (
-                <Checkbox
-                  key={day}
-                  id={day}
-                  label={day}
-                  onChange={() => {
-                    onSetFormDetails(
-                      'appointmentDetails',
-                      auctionEditData?.appointmentDetails?.[
-                        'selected_days'
-                      ]?.includes(day)
-                        ? auctionEditData?.appointmentDetails?.[
-                            'selected_days'
-                          ]?.filter((el) => el !== day)
-                        : [
-                          ...auctionEditData?.appointmentDetails?.[
-                              'selected_days'
-                            ],
-                          day,
-                        ],
-                      'selected_days',
-                    )
-                  }}
-                  checked={auctionEditData?.appointmentDetails?.[
-                    'selected_days'
-                  ]?.includes(day)}
+              <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
+                <label className="auction-details-form-label">
+                  {t('timing')}:
+                </label>
+                <TextField
+                  id="time-start"
+                  placeholder={'Select from'}
+                  block
+                  value={
+                    auctionEditData?.appointmentDetails?.['start_at'] &&
+                    moment(
+                      auctionEditData?.appointmentDetails?.['start_at'],
+                    ).format('HH:mm')
+                  }
+                  disabled={!editMode}
+                  onClick={() => editMode && setTiming(true)}
+                  className="auction-details-form-textField"
                 />
-              ))}
-              value={auctionEditData?.appointmentDetails?.[
-                'selected_days'
-              ]?.join('-')}
-              fullWidth
-              position={SelectField.Positions.BELOW}
-              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
-              className="selectField-withShadow"
-              disabled={!editMode}
-            />
-            {/* <TextField
+                {timing && (
+                  <DatePicker
+                    startView="time"
+                    endView="time"
+                    singlePick={true}
+                    minuteInterval={5}
+                    timeFormat={null}
+                    onUpdate={({ timestamp }) => {
+                      onSetFormDetails(
+                        'appointmentDetails',
+                        moment(timestamp).toISOString(),
+                        'start_at',
+                      )
+                      setTiming(false)
+                    }}
+                    onCancel={() => setTiming(false)}
+                    translation={{ date: 'Time' }}
+                    onReset={() => {
+                      onSetFormDetails(
+                        'appointmentDetails',
+                        moment().toISOString(),
+                        'start_at',
+                      )
+                      setTiming(false)
+                    }}
+                  />
+                )}
+                <TextField
+                  id="time-start"
+                  placeholder={'Select from'}
+                  block
+                  disabled={!editMode}
+                  value={
+                    auctionEditData?.appointmentDetails?.['end_at'] &&
+                    moment(
+                      auctionEditData?.appointmentDetails?.['end_at'],
+                    ).format('HH:mm')
+                  }
+                  onClick={() => editMode && setVisibleEndTimePicker(true)}
+                  className="auction-details-form-textField"
+                />
+                {visibleEndTimePicker && (
+                  <DatePicker
+                    startView="time"
+                    endView="time"
+                    singlePick={true}
+                    minuteInterval={5}
+                    timeFormat={null}
+                    onUpdate={({ timestamp }) => {
+                      onSetFormDetails(
+                        'appointmentDetails',
+
+                        moment(auctionEditData?.endDate)
+                          .hour(moment(timestamp).hour())
+                          .minute(moment(timestamp).minute())
+                          .toISOString(),
+                        'end_at',
+                      )
+                      setVisibleEndTimePicker(false)
+                    }}
+                    onCancel={() => setVisibleEndTimePicker(false)}
+                    translation={{ date: 'Time' }}
+                    onReset={() => {
+                      onSetFormDetails(
+                        'appointmentDetails',
+                        moment().toISOString(),
+                        'end_at',
+                      )
+                      setVisibleEndTimePicker(false)
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="column">
+              {appointmentType?.includes('In-person') && (
+                <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
+                  <label className="auction-details-form-label">
+                    {t('location')}:
+                  </label>
+                  <TextField
+                    id="auctionAddress"
+                    placeholder={t('auction_position')}
+                    value={
+                      auctionEditData?.appointmentDetails?.[
+                        'appointment_address'
+                      ]
+                    }
+                    disabled={
+                      !auctionEditData?.appointmentDetails?.[
+                        'appointment_address'
+                      ] || !editMode
+                    }
+                    onChange={(value) =>
+                      onSetFormDetails(
+                        'appointmentDetails',
+                        value,
+                        'appointment_address',
+                      )
+                    }
+                    className="auction-details-form-textField"
+                    block
+                  />
+                  <Button
+                    icon
+                    primary
+                    className="save-btn"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setAddressView(!addressView)
+                    }}
+                  />
+                </div>
+              )}
+              <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
+                <label className="auction-details-form-label">
+                  {t('daysFull')}:
+                </label>
+                <SelectField
+                  id="select-field-with-elements-country-spinner"
+                  placeholder={`${
+                    auctionEditData?.appointmentDetails?.['selected_days']
+                      ?.length
+                      ? auctionEditData?.appointmentDetails?.[
+                          'selected_days'
+                        ]?.join('-')
+                      : 'Select Days type'
+                  }`}
+                  listClassName="country-list"
+                  menuItems={weekDays?.map((day) => (
+                    <Checkbox
+                      key={day}
+                      id={day}
+                      label={day}
+                      onChange={() => {
+                        onSetFormDetails(
+                          'appointmentDetails',
+                          auctionEditData?.appointmentDetails?.[
+                            'selected_days'
+                          ]?.includes(day)
+                            ? auctionEditData?.appointmentDetails?.[
+                                'selected_days'
+                              ]?.filter((el) => el !== day)
+                            : [
+                              ...auctionEditData?.appointmentDetails?.[
+                                  'selected_days'
+                                ],
+                              day,
+                            ],
+                          'selected_days',
+                        )
+                      }}
+                      checked={auctionEditData?.appointmentDetails?.[
+                        'selected_days'
+                      ]?.includes(day)}
+                    />
+                  ))}
+                  value={auctionEditData?.appointmentDetails?.[
+                    'selected_days'
+                  ]?.join('-')}
+                  fullWidth
+                  position={SelectField.Positions.BELOW}
+                  dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+                  className="selectField-lined"
+                  disabled={!editMode}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* <TextField
               id="days"
               placeholder={'Select days'}
               block
@@ -1300,7 +1319,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                 }
               />
             )} */}
-          </div>
         </div>
       )}
       <div className="auction-details-buttonWrapper">
