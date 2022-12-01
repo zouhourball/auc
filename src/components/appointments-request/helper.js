@@ -117,7 +117,7 @@ export const configs = (
           </Button>
         </>
       ) : (
-        <div className="status Pending">{row?.status}</div>
+        <div className="status">{row?.status}</div>
       )
     },
   },
