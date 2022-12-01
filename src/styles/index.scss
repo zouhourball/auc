@@ -152,6 +152,14 @@ body {
       transform: translateY(100%);
     }
 
+    .md-ink-container {
+      display: none;
+    }
+
+    .md-paper--1 {
+      box-shadow: none;
+    }
+
     &.customSelect_wrapper .list-itemMultiPick,
     .md-list {
       margin-top: -11px;
@@ -199,6 +207,36 @@ body {
     }
   }
 
+  .react-calendar {
+    .react-calendar__tile {
+      color: #000;
+
+      > abbr {
+        display: block;
+        width: 20px;
+        margin: auto;
+        border-radius: 50%;
+        line-height: 20px;
+        text-align: center;
+      }
+    }
+
+    .react-calendar__tile:disabled {
+      background: none;
+      color: #adadad;
+    }
+
+    .react-calendar__tile--active,
+    .react-calendar__tile:hover:not(:disabled) {
+      background: none;
+      color: #fff;
+
+      > abbr {
+        background: #1979ff;
+      }
+    }
+  }
+
   .dateWrapper {
     position: relative;
 
@@ -207,6 +245,15 @@ body {
       bottom: 12px;
       width: 100%;
       transform: translateY(100%);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .react-calendar {
+      position: relative;
+      margin-top: -10px;
+      margin-bottom: 16px;
+      border: none;
       border-radius: 0 0 12px 12px;
       box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.18);
     }
@@ -323,10 +370,11 @@ body,
   border-top: 1px solid #eee;
   border-radius: 0 0 20px 20px;
   background: #fff;
+  gap: 16px;
 
   .md-btn--text {
     height: auto;
-    margin-left: 16px !important;
+    margin-left: 0 !important;
     padding: 16px 24px;
     border-radius: 10px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
