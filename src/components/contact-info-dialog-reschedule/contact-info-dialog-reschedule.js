@@ -26,7 +26,26 @@ const ContactInfoDialogreschedule = ({
 
   const [startTime, setStartTime] = useState(moment().valueOf())
   const { date, type } = rescheduleData
-
+  const renderChips = () => {
+    return renderTimeSlots?.map((el) => (
+      <div
+        key={el?.value}
+        className={`${startTime === el?.value ? 'selected-time' : ''}`}
+        onClick={() => {
+          setStartTime(el?.value)
+          setRescheduleData((prev) => ({
+            ...prev,
+            appointment_date: moment(date)
+              .hour(moment(el?.value).hour())
+              .minute(moment(el?.value).minute())
+              .valueOf(),
+          }))
+        }}
+      >
+        {el?.label}
+      </div>
+    ))
+  }
   // console.log(startTime, 'startTime')
 
   // const onHandleDate = (date, key) => {
@@ -136,10 +155,11 @@ const ContactInfoDialogreschedule = ({
         </div>
       </div>
 
-      <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Time*</label>
-
-        <SelectField
+      {date && (
+        <div className="dateWrapper md-cell md-cell--12">
+          <label className="auction-details-form-label">Time*</label>
+          {renderChips()}
+          {/* <SelectField
           id="select-field-3-1"
           menuItems={renderTimeSlots}
           simplifiedMenu={false}
@@ -159,8 +179,9 @@ const ContactInfoDialogreschedule = ({
           value={startTime}
           className="selectField-withShadow"
           dropdownIcon={<FontIcon>expand_more</FontIcon>}
-        />
-      </div>
+        /> */}
+        </div>
+      )}
 
       <Button
         flat

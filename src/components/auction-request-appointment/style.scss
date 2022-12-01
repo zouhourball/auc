@@ -16,6 +16,11 @@
     max-width: 500px;
   }
 
+  .selected-time {
+    color: red;
+    cursor: pointer;
+  }
+
   &-note {
     display: flex;
     gap: 10px;

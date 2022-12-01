@@ -169,6 +169,26 @@ const AuctionRequestAppointment = ({ auctionId }) => {
     }
     return renderTimeSlots
   }
+  const renderChips = () => {
+    return renderTimeSlots()?.map((el) => (
+      <div
+        key={el?.value}
+        className={`${selectedTime === el?.value ? 'selected-time' : ''}`}
+        onClick={() => {
+          setTime(el?.value)
+          setAppointmentData((prev) => ({
+            ...prev,
+            time: moment(date)
+              .hour(moment(el?.value).hour())
+              .minute(moment(el?.value).minute())
+              .valueOf(),
+          }))
+        }}
+      >
+        {el?.label}
+      </div>
+    ))
+  }
   return (
     <>
       <div className="request-appointment">
@@ -263,9 +283,11 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             />
           )}
         </div>
-        <div className="dateWrapper">
-          <label className="auction-details-form-label">{t('time')}*</label>
-          <SelectField
+        {date && (
+          <div className="dateWrapper">
+            <label className="auction-details-form-label">{t('time')}*</label>
+            {renderChips()}
+            {/* <SelectField
             id="select-field-3-1"
             menuItems={renderTimeSlots()}
             simplifiedMenu={false}
@@ -285,46 +307,9 @@ const AuctionRequestAppointment = ({ auctionId }) => {
             value={selectedTime}
             className="selectField-withShadow"
             dropdownIcon={<FontIcon>expand_more</FontIcon>}
-          />
-          {/* <TextField
-            id="time-start"
-            placeholder={'Select from'}
-            block
-            inlineIndicator={<FontIcon primary>schedule</FontIcon>}
-            onClick={() => setVisibleStartTimePicker(true)}
-            value={`${moment(time).format('HH:mm')} - ${moment(time)
-              .add(moment.duration(2, 'hours'))
-              .format('HH:mm')}`}
-            className="textField-withShadow"
           /> */}
-          {/* {visibleStartTimePicker && (
-            <DatePicker
-              startView="time"
-              endView="time"
-              singlePick={true}
-              minuteInterval={5}
-              timeFormat={null}
-              onUpdate={({ timestamp }) => {
-                setAppointmentData((prev) => ({ ...prev,
-                  time:
-                  moment(date)
-                    .hour(moment(timestamp).hour())
-                    .minute(moment(timestamp).minute())
-                    .valueOf() }))
-                setVisibleStartTimePicker(false)
-              }}
-              onCancel={() => setVisibleStartTimePicker(false)}
-              translation={{ date: 'Time' }}
-              onReset={() => {
-                setAppointmentData((prev) => ({
-                  ...prev,
-                  time: moment().valueOf(),
-                }))
-                setVisibleStartTimePicker(false)
-              }}
-            />
-          )} */}
-        </div>
+          </div>
+        )}
         <div className="dateWrapper">
           <label className="auction-details-form-label">{t('notes')}*</label>
 
