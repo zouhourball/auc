@@ -23,7 +23,7 @@ import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
-import ContactInfoDialogdays from 'components/contact-info-dialog-days'
+// import ContactInfoDialogdays from 'components/contact-info-dialog-days'
 import {
   getAuction,
   updateAuction,
@@ -65,7 +65,6 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [confirmDialog, setConfirmDialog] = useState(false)
   const [appointmentType, setAppointmentType] = useState([])
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
-  const [visibleDaysPicker, setVisibleDaysPicker] = useState(false)
 
   const [auctionEditData, setAuctionEditData] = useState({})
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -539,6 +538,15 @@ const MyAuctionDetails = ({ auctionId }) => {
   //   })
   //   setShowDatePicker({ ...showDatePicker, [key]: false })
   // }
+  const weekDays = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ]
   const onDisableAppointment = () => {
     setAuctionEditData((prev) => ({
       ...prev,
@@ -1221,7 +1229,54 @@ const MyAuctionDetails = ({ auctionId }) => {
                 }}
               />
             )}
-            <TextField
+            <SelectField
+              id="select-field-with-elements-country-spinner"
+              placeholder={`${
+                auctionEditData?.appointmentDetails?.['selected_days']?.length
+                  ? auctionEditData?.appointmentDetails?.[
+                      'selected_days'
+                    ]?.join('-')
+                  : 'Select Days type'
+              }`}
+              listClassName="country-list"
+              menuItems={weekDays?.map((day) => (
+                <Checkbox
+                  key={day}
+                  id={day}
+                  label={day}
+                  onChange={() => {
+                    onSetFormDetails(
+                      'appointmentDetails',
+                      auctionEditData?.appointmentDetails?.[
+                        'selected_days'
+                      ]?.includes(day)
+                        ? auctionEditData?.appointmentDetails?.[
+                            'selected_days'
+                          ]?.filter((el) => el !== day)
+                        : [
+                          ...auctionEditData?.appointmentDetails?.[
+                              'selected_days'
+                            ],
+                          day,
+                        ],
+                      'selected_days',
+                    )
+                  }}
+                  checked={auctionEditData?.appointmentDetails?.[
+                    'selected_days'
+                  ]?.includes(day)}
+                />
+              ))}
+              value={auctionEditData?.appointmentDetails?.[
+                'selected_days'
+              ]?.join('-')}
+              fullWidth
+              position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+              className="selectField-withShadow"
+              disabled={!editMode}
+            />
+            {/* <TextField
               id="days"
               placeholder={'Select days'}
               block
@@ -1244,7 +1299,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   auctionEditData?.appointmentDetails?.['selected_days'] || []
                 }
               />
-            )}
+            )} */}
           </div>
         </div>
       )}
@@ -1273,43 +1328,45 @@ const MyAuctionDetails = ({ auctionId }) => {
           </Button>
         </div>
       )}
-      <div className="auction-details-bidderWrapper">
-        <div className="auction-details-subTitle">{t('bidders_list')}</div>
-        <div className="auction-details-table">
-          <div className="auction-details-table-header">
-            <div>{t('bidder_name')}</div>
-            <div>{t('email')}</div>
-            <div>{t('phone_number')}</div>
-            <div>{t('bid_date')}</div>
-            <div>{t('bid_time')}</div>
-            <div>{t('bid_amount')}</div>
+      {renderBidders()?.length > 0 && (
+        <div className="auction-details-bidderWrapper">
+          <div className="auction-details-subTitle">{t('bidders_list')}</div>
+          <div className="auction-details-table">
+            <div className="auction-details-table-header">
+              <div>{t('bidder_name')}</div>
+              <div>{t('email')}</div>
+              <div>{t('phone_number')}</div>
+              <div>{t('bid_date')}</div>
+              <div>{t('bid_time')}</div>
+              <div>{t('bid_amount')}</div>
+            </div>
+            {renderBidders()}
           </div>
-          {renderBidders()}
+          {+biddersList?.bids?.total > size && (
+            <div className="table-paginator">
+              <Button
+                onClick={() => setPage((prev) => prev - 1)}
+                disabled={page === 0}
+                icon
+                className="table-paginator-arrowBtn"
+              >
+                {lang === 'ar' ? 'arrow_right' : 'arrow_left'}
+              </Button>
+              {page < 3
+                ? renderPaginationButtons()
+                : renderPaginationButtons(page + 1)}
+              <Button
+                onClick={() => setPage((prev) => prev + 1)}
+                icon
+                className="table-paginator-arrowBtn"
+                disabled={!(+biddersList?.bids?.total - (page + 1) * size > 0)}
+              >
+                {lang === 'ar' ? 'arrow_left' : 'arrow_right'}
+              </Button>
+            </div>
+          )}
         </div>
-        {+biddersList?.bids?.total > size && (
-          <div className="table-paginator">
-            <Button
-              onClick={() => setPage((prev) => prev - 1)}
-              disabled={page === 0}
-              icon
-              className="table-paginator-arrowBtn"
-            >
-              {lang === 'ar' ? 'arrow_right' : 'arrow_left'}
-            </Button>
-            {page < 3
-              ? renderPaginationButtons()
-              : renderPaginationButtons(page + 1)}
-            <Button
-              onClick={() => setPage((prev) => prev + 1)}
-              icon
-              className="table-paginator-arrowBtn"
-              disabled={!(+biddersList?.bids?.total - (page + 1) * size > 0)}
-            >
-              {lang === 'ar' ? 'arrow_left' : 'arrow_right'}
-            </Button>
-          </div>
-        )}
-      </div>
+      )}
       <DialogContainer
         className="confirm-dialog"
         visible={confirmDialog}

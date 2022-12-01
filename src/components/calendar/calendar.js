@@ -8,6 +8,7 @@ import { eventsList } from './helper'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './style.scss'
+import { useSelector } from 'react-redux'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -32,6 +33,7 @@ const CalendarCustom = ({
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
+  const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const CustomToolbar = (props) => {
     let { label, date } = props
 
@@ -61,12 +63,14 @@ const CalendarCustom = ({
           />
 
           <div className="btn-group">
-            <Button
-              className="nav-btn add-btn"
-              onClick={() => setVisibleAddAppointment(true)}
-            >
-              Add Appointment
-            </Button>
+            {!(meOrgs?.length > 0) && (
+              <Button
+                className="nav-btn add-btn"
+                onClick={() => setVisibleAddAppointment(true)}
+              >
+                Add Appointment
+              </Button>
+            )}
             <Button
               className="nav-btn"
               icon

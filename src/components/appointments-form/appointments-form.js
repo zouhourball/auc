@@ -6,7 +6,6 @@ import locationIcon from './location_icon.svg'
 
 import { DatePicker } from '@target-energysolutions/date-picker'
 
-import ContactInfoDialogdays from 'components/contact-info-dialog-days'
 import DrawOnMap from 'components/draw-on-map'
 
 import './style.scss'
@@ -20,12 +19,13 @@ const AppointmentsForm = ({
   const { t } = useTranslation()
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
-  const [visibleDaysPicker, setVisibleDaysPicker] = useState(false)
   const [appointmentType, setAppointmentType] = useState([])
   const [addressView, setAddressView] = useState(false)
 
   const errorText = t('please_fill_in_missing_details')
-
+  useEffect(() => {
+    onSetFormDetails('selected_days', [])
+  }, [])
   useEffect(() => {
     appointmentType?.length > 0
       ? setAppointmentDetails((prev) => {
@@ -84,6 +84,15 @@ const AppointmentsForm = ({
       checked={appointmentType?.includes('Online')}
     />,
   ]
+  const weekDays = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ]
   return (
     <div className="appointments-form md-grid">
       <div className="appointments-form-title md-cell md-cell--12">
@@ -92,7 +101,6 @@ const AppointmentsForm = ({
       <div className="md-cell md-cell--6">
         <label className="appointments-form-label">Appointment Type</label>
         <SelectField
-          // onClick={() => setTest(1)}
           id="select-field-with-elements-country-spinner"
           placeholder={`${
             appointmentType?.length
@@ -216,7 +224,39 @@ const AppointmentsForm = ({
 
       <div className="dateWrapper md-cell md-cell--6">
         <label className="appointments-form-form-label">Days</label>
-        <TextField
+        <SelectField
+          id="select-field-with-elements-country-spinner"
+          placeholder={`${
+            appointmentDetails?.['selected_days']?.length
+              ? appointmentDetails?.['selected_days']?.join('-')
+              : 'Select Days type'
+          }`}
+          listClassName="country-list"
+          menuItems={weekDays?.map((day) => (
+            <Checkbox
+              key={day}
+              id={day}
+              label={day}
+              onChange={() => {
+                onSetFormDetails(
+                  'selected_days',
+                  appointmentDetails?.['selected_days']?.includes(day)
+                    ? appointmentDetails?.['selected_days']?.filter(
+                        (el) => el !== day,
+                      )
+                    : [...appointmentDetails?.['selected_days'], day],
+                )
+              }}
+              checked={appointmentDetails?.['selected_days']?.includes(day)}
+            />
+          ))}
+          value={appointmentDetails?.['selected_days']?.join('-')}
+          fullWidth
+          position={SelectField.Positions.BELOW}
+          dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+          className="selectField-withShadow"
+        />
+        {/* <TextField
           id="days"
           placeholder={'Select days'}
           block
@@ -224,8 +264,8 @@ const AppointmentsForm = ({
           value={appointmentDetails?.['selected_days']?.join('-')}
           onClick={() => setVisibleDaysPicker(true)}
           className="textField-withShadow"
-        />
-        {visibleDaysPicker && (
+        /> */}
+        {/* {visibleDaysPicker && (
           <ContactInfoDialogdays
             visible={visibleDaysPicker}
             onHide={() => setVisibleDaysPicker(false)}
@@ -242,7 +282,7 @@ const AppointmentsForm = ({
           //   startView="day"
           //   endView="day"
           // />
-        )}
+        )} */}
 
         {addressView && (
           <DrawOnMap
