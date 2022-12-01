@@ -23,6 +23,7 @@ import store from 'libs/store'
 import getBids from 'libs/queries/auction/get-bids.gql'
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
 import subscribeTimeExtension from 'libs/queries/auction/subscription-time-extension.gql'
+import ContactInfoDialogdays from 'components/contact-info-dialog-days'
 import {
   getAuction,
   updateAuction,
@@ -32,7 +33,10 @@ import {
   getCity,
   deleteAuctionById,
 } from 'libs/api/auctions-api'
-
+import {
+  disableAppointments,
+  enableAppointments,
+} from 'libs/api/appointment-api'
 // import { dummyData } from './helpers'
 
 import DrawOnMap from 'components/draw-on-map'
@@ -56,8 +60,12 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [editMode, setEditMode] = useState(false)
   const [images, setImages] = useState([])
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
+  const [timing, setTiming] = useState(false)
   const [addressView, setAddressView] = useState(false)
   const [confirmDialog, setConfirmDialog] = useState(false)
+  const [appointmentType, setAppointmentType] = useState([])
+  const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
+  const [visibleDaysPicker, setVisibleDaysPicker] = useState(false)
 
   const [auctionEditData, setAuctionEditData] = useState({})
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -111,6 +119,8 @@ const MyAuctionDetails = ({ auctionId }) => {
     },
   })
   useEffect(() => {
+    const appointmentConfig = auctionDetails?.['viewing_appointements_config']
+
     setAuctionEditData({
       title: auctionDetails?.listing?.title,
       propertyType: auctionDetails?.listing?.property?.['property_type_id'],
@@ -125,8 +135,36 @@ const MyAuctionDetails = ({ auctionId }) => {
       address: {
         meta: { display_name: auctionDetails?.listing?.property?.address },
       },
+      allowAppointment: auctionDetails?.['allow_viewing_request'],
+      appointmentDetails: {
+        selected_days:
+          appointmentConfig?.[appointmentConfig?.length - 1]?.[
+            'selected_days'
+          ]?.split(','),
+        start_at:
+          appointmentConfig?.[appointmentConfig?.length - 1]?.['start_at'],
+        end_at: appointmentConfig?.[appointmentConfig?.length - 1]?.['end_at'],
+        type: appointmentConfig?.[appointmentConfig?.length - 1]?.['type'],
+        general_location_x:
+          +appointmentConfig?.[appointmentConfig?.length - 1]?.[
+            'general_location_x'
+          ],
+        general_location_y:
+          +appointmentConfig?.[appointmentConfig?.length - 1]?.[
+            'general_location_y'
+          ],
+        appointment_address:
+          appointmentConfig?.[appointmentConfig?.length - 1]?.[
+            'appointment_address'
+          ],
+      },
     })
     setImages(auctionDetails?.listing?.images)
+    const type =
+      appointmentConfig?.[appointmentConfig?.length - 1]?.type === 'Both'
+        ? ['In-person', 'Online']
+        : [appointmentConfig?.[appointmentConfig?.length - 1]?.type]
+    setAppointmentType(type)
   }, [auctionDetails])
   const { data: getCityList } = useQuery(
     ['getCity', auctionEditData?.country?.id],
@@ -153,8 +191,16 @@ const MyAuctionDetails = ({ auctionId }) => {
   //   })
   // }, [dummyBiddersData])
 
-  const onSetFormDetails = (property, value) => {
-    setAuctionEditData({ ...auctionEditData, [property]: value })
+  const onSetFormDetails = (property, value, subkey) => {
+    subkey
+      ? setAuctionEditData((prev) => ({
+        ...prev,
+        [property]: {
+          ...prev?.[property],
+          [subkey]: value,
+        },
+      }))
+      : setAuctionEditData({ ...auctionEditData, [property]: value })
   }
   const handleRemoveKey = (key) => {
     onSetFormDetails(
@@ -310,6 +356,60 @@ const MyAuctionDetails = ({ auctionId }) => {
     }
   }
   // update auction details
+  const disableAppointment = useMutation(
+    disableAppointments,
+    // {
+    //   onSuccess: (res) => {
+    //     if (!res.error) {
+    //       refetchAuction()
+    //       dispatch(
+    //         addToast(
+    //           <ToastMsg
+    //             text={'Appointment feature has been disabled' || 'success'}
+    //             type="success"
+    //           />,
+    //         ),
+    //       )
+    //     } else {
+    //       dispatch(
+    //         addToast(
+    //           <ToastMsg
+    //             text={res.error?.body?.message || 'An Error has occurred'}
+    //             type="error"
+    //           />,
+    //         ),
+    //       )
+    //     }
+    //   },
+    // },
+  )
+  const enableAppointment = useMutation(
+    enableAppointments,
+    // {
+    //   onSuccess: (res) => {
+    //     if (!res.error) {
+    //       refetchAuction()
+    //       dispatch(
+    //         addToast(
+    //           <ToastMsg
+    //             text={'Appointment feature has been enabled' || 'success'}
+    //             type="success"
+    //           />,
+    //         ),
+    //       )
+    //     } else {
+    //       dispatch(
+    //         addToast(
+    //           <ToastMsg
+    //             text={res.error?.body?.message || 'An Error has occurred'}
+    //             type="error"
+    //           />,
+    //         ),
+    //       )
+    //     }
+    //   },
+    // },
+  )
   const updateAuctionData = useMutation(
     auctionDetails?.status === 'Approved'
       ? updateApprovedAuction
@@ -366,8 +466,17 @@ const MyAuctionDetails = ({ auctionId }) => {
         address: auctionEditData?.address?.meta?.['display_name'],
         general_location_x: +auctionDetails?.address?.['general_location_x'],
         general_location_y: +auctionDetails?.address?.['general_location_y'],
+        // appointment_config: { ...auctionEditData?.appointmentDetails },
       },
     })
+    auctionEditData?.allowAppointment
+      ? disableAppointment.mutate({
+        uuid: auctionId,
+      })
+      : enableAppointment.mutate({
+        uuid: auctionId,
+        body: { ...auctionEditData?.appointmentDetails },
+      })
     updateImages.mutate({
       uuid: auctionId,
       body: images,
@@ -430,6 +539,15 @@ const MyAuctionDetails = ({ auctionId }) => {
   //   })
   //   setShowDatePicker({ ...showDatePicker, [key]: false })
   // }
+  const onDisableAppointment = () => {
+    setAuctionEditData((prev) => ({
+      ...prev,
+      allowAppointment: !prev?.allowAppointment,
+    }))
+    //  enableAppointment.mutate({
+    //   uuid: auctionId,
+    // })
+  }
   const onSetDate = (start, end) => {
     setAuctionEditData({
       ...auctionEditData,
@@ -437,6 +555,69 @@ const MyAuctionDetails = ({ auctionId }) => {
       endDate: end,
     })
   }
+  useEffect(() => {
+    appointmentType?.length > 0
+      ? setAuctionEditData((prev) => {
+        return appointmentType?.length === 2
+          ? {
+            ...prev,
+            appointmentDetails: {
+              ...prev?.appointmentDetails,
+              type: 'Both',
+            },
+          }
+          : (appointmentType?.includes('In-person') && {
+            ...prev,
+            appointmentDetails: {
+              ...prev?.appointmentDetails,
+              type: 'In-person',
+            },
+          }) ||
+                (appointmentType?.includes('Online') && {
+                  ...prev,
+                  appointmentDetails: {
+                    ...prev?.appointmentDetails,
+                    type: 'Online',
+                  },
+                })
+      })
+      : setAuctionEditData((prev) => ({
+        ...prev,
+        appointmentDetails: {
+          ...prev?.appointmentDetails,
+          type: '',
+        },
+      }))
+  }, [appointmentType])
+
+  const appointmentsTypeList = [
+    <Checkbox
+      key={'in-person'}
+      id={`in-person`}
+      label={'In-person'}
+      onChange={() => {
+        setAppointmentType((prev) =>
+          prev?.includes('In-person')
+            ? prev?.filter((el) => el !== 'In-person')
+            : [...prev, 'In-person'],
+        )
+      }}
+      checked={appointmentType?.includes('In-person')}
+    />,
+    <Checkbox
+      key={'online'}
+      id={`online`}
+      label={'Online'}
+      onChange={() => {
+        setAppointmentType((prev) =>
+          prev?.includes('Online')
+            ? prev?.filter((el) => el !== 'Online')
+            : [...prev, 'Online'],
+        )
+      }}
+      checked={appointmentType?.includes('Online')}
+    />,
+  ]
   return (
     <div className="auction-list">
       <div className="auction-list-header">
@@ -884,15 +1065,187 @@ const MyAuctionDetails = ({ auctionId }) => {
               </div>
             </>
           )}
-          <h3>{t('appointments')}</h3>
-          <Checkbox
-            id={`request-viewing`}
-            name={`request-viewing-checkboxes`}
-            label={t('request_viewing')}
-            onChange={() => {}}
-            disabled={!editMode}
-            checked={true}
-          />
+          {/* APPOINTMENT PART */}
+          <div>
+            <h3>{t('appointments')}</h3>
+            <Checkbox
+              id={`request-viewing`}
+              name={`request-viewing-checkboxes`}
+              label={t('request_viewing')}
+              disabled={!editMode}
+              checked={auctionEditData?.allowAppointment}
+              onChange={() => onDisableAppointment()}
+            />
+            <label className="auction-details-form-label">
+              {t('type_of_appointment')}:
+            </label>
+            <SelectField
+              id={'auctionEditData'}
+              onClick={() => setTest(1)}
+              placeholder={`${
+                appointmentType?.length
+                  ? appointmentType?.join('-')
+                  : 'Select appointment type'
+              }`}
+              listClassName="country-list"
+              menuItems={appointmentsTypeList}
+              value={appointmentType?.join('-')}
+              fullWidth
+              disabled={!editMode}
+              position={SelectField.Positions.BELOW}
+              dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
+              className="selectField-lined"
+            />
+            {appointmentType?.includes('In-person') && (
+              <div className=" map">
+                <label className="auction-details-form-label">
+                  {t('location')}:
+                </label>
+                <TextField
+                  id="auctionAddress"
+                  placeholder={t('auction_position')}
+                  value={
+                    auctionEditData?.appointmentDetails?.['appointment_address']
+                  }
+                  disabled={
+                    !auctionEditData?.appointmentDetails?.[
+                      'appointment_address'
+                    ] || !editMode
+                  }
+                  onChange={(value) =>
+                    onSetFormDetails(
+                      'appointmentDetails',
+                      value,
+                      'appointment_address',
+                    )
+                  }
+                  className="textField-map"
+                  block
+                />
+                <Button
+                  icon
+                  primary
+                  className="save-btn"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setAddressView(!addressView)
+                  }}
+                />
+              </div>
+            )}
+            <TextField
+              id="time-start"
+              placeholder={'Select from'}
+              block
+              inlineIndicator={<FontIcon primary>schedule</FontIcon>}
+              value={
+                auctionEditData?.appointmentDetails?.['start_at'] &&
+                moment(
+                  auctionEditData?.appointmentDetails?.['start_at'],
+                ).format('HH:mm')
+              }
+              disabled={!editMode}
+              onClick={() => editMode && setTiming(true)}
+              className="textField-withShadow"
+            />
+            {timing && (
+              <DatePicker
+                startView="time"
+                endView="time"
+                singlePick={true}
+                minuteInterval={5}
+                timeFormat={null}
+                onUpdate={({ timestamp }) => {
+                  onSetFormDetails(
+                    'appointmentDetails',
+                    moment(timestamp).toISOString(),
+                    'start_at',
+                  )
+                  setTiming(false)
+                }}
+                onCancel={() => setTiming(false)}
+                translation={{ date: 'Time' }}
+                onReset={() => {
+                  onSetFormDetails(
+                    'appointmentDetails',
+                    moment().toISOString(),
+                    'start_at',
+                  )
+                  setTiming(false)
+                }}
+              />
+            )}
+            <TextField
+              id="time-start"
+              placeholder={'Select from'}
+              block
+              disabled={!editMode}
+              inlineIndicator={<FontIcon primary>schedule</FontIcon>}
+              value={
+                auctionEditData?.appointmentDetails?.['end_at'] &&
+                moment(auctionEditData?.appointmentDetails?.['end_at']).format(
+                  'HH:mm',
+                )
+              }
+              onClick={() => editMode && setVisibleEndTimePicker(true)}
+              className="textField-withShadow"
+            />
+            {visibleEndTimePicker && (
+              <DatePicker
+                startView="time"
+                endView="time"
+                singlePick={true}
+                minuteInterval={5}
+                timeFormat={null}
+                onUpdate={({ timestamp }) => {
+                  onSetFormDetails(
+                    'appointmentDetails',
+
+                    moment(auctionEditData?.endDate)
+                      .hour(moment(timestamp).hour())
+                      .minute(moment(timestamp).minute())
+                      .toISOString(),
+                    'end_at',
+                  )
+                  setVisibleEndTimePicker(false)
+                }}
+                onCancel={() => setVisibleEndTimePicker(false)}
+                translation={{ date: 'Time' }}
+                onReset={() => {
+                  onSetFormDetails(
+                    'appointmentDetails',
+                    moment().toISOString(),
+                    'end_at',
+                  )
+                  setVisibleEndTimePicker(false)
+                }}
+              />
+            )}
+            <TextField
+              id="days"
+              placeholder={'Select days'}
+              block
+              inlineIndicator={<FontIcon primary>schedule</FontIcon>}
+              value={auctionEditData?.appointmentDetails?.[
+                'selected_days'
+              ]?.join('-')}
+              onClick={() => editMode && setVisibleDaysPicker(true)}
+              className="textField-withShadow"
+              disabled={!editMode}
+            />
+            {visibleDaysPicker && (
+              <ContactInfoDialogdays
+                visible={visibleDaysPicker}
+                onHide={() => setVisibleDaysPicker(false)}
+                onConfirm={(days) =>
+                  onSetFormDetails('appointmentDetails', days, 'selected_days')
+                }
+                checkedDays={
+                  auctionEditData?.appointmentDetails?.['selected_days'] || []
+                }
+              />
+            )}
+          </div>
         </div>
       )}
       <div className="auction-details-buttonWrapper">

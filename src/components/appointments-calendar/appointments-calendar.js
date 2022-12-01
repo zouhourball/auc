@@ -195,36 +195,37 @@ const AppointmentsCalendar = () => {
     (el) => !getAvailabilityDataFormatted?.includes(new Date(el).getDate()),
   )
   // console.log(disabledDates, 'disabledDates', calendarDate)
-  let renderTimeSlots = []
-  const targetedDay = getAvailabilityData?.filter(
-    (el) =>
-      new Date(el?.['appointment_date']).getDate() ===
-      new Date(rescheduleData?.date).getDate(),
-  )
-  for (let j = 0; j < targetedDay?.length; j++) {
-    for (
-      let i = 0;
-      i <
-      moment(targetedDay?.[j]?.['end_at']).format('HH') -
-        moment(targetedDay?.[j]?.['start_at']).format('HH');
-      i++
-    ) {
-      renderTimeSlots = [
-        ...renderTimeSlots,
-        {
-          label: `${moment(targetedDay?.[j]?.['start_at'])
-            .add(i, 'hours')
-            .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
-            .add(i + 1, 'hours')
-            .format('HH:mm')}`,
-          value: moment(targetedDay?.[j]?.['start_at'])
-            .add(i, 'hours')
-            .valueOf(),
-        },
-      ]
-    }
-  }
 
+  const renderTimeSlots = () => {
+    let renderTimeSlots = []
+    const targetedDay = getAvailabilityData?.filter(
+      (el) =>
+        new Date(el?.['appointment_date']).getDate() ===
+        new Date(rescheduleData?.date).getDate(),
+    )
+
+    for (let j = 0; j < targetedDay?.length; j++) {
+      const timeInterval =
+        moment(targetedDay?.[j]?.['end_at']).format('HH') -
+        moment(targetedDay?.[j]?.['start_at']).format('HH')
+      for (let i = 0; i < timeInterval; i++) {
+        renderTimeSlots = [
+          ...renderTimeSlots,
+          {
+            label: `${moment(targetedDay?.[j]?.['start_at'])
+              .add(i, 'hours')
+              .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+              .add(i + 1, 'hours')
+              .format('HH:mm')}`,
+            value: moment(targetedDay?.[j]?.['start_at'])
+              .add(i, 'hours')
+              .valueOf(),
+          },
+        ]
+      }
+    }
+    return renderTimeSlots
+  }
   return (
     <div className="appointments-calendar-page">
       <div className="appointments-calendar-page-title">Appointments</div>
@@ -262,7 +263,7 @@ const AppointmentsCalendar = () => {
           setRescheduleData={setRescheduleData}
           calendarDate={calendarDate}
           setCalendarDate={setCalendarDate}
-          renderTimeSlots={renderTimeSlots}
+          renderTimeSlots={renderTimeSlots()}
         />
       )}
       {visibleSuccessReschedule && (

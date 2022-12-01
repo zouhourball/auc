@@ -217,13 +217,14 @@ export const rejectRequest = async ({ uuid, reqUuid }) => {
   }
   return res
 }
-export const enableAppointments = async ({ uuid }) => {
+export const enableAppointments = async ({ uuid, body }) => {
   let res
   try {
     res = await fetchJSON(
       `${appUrl}/api/v1/auctions/${uuid}/viewing-appointments/enable`,
       {
         method: 'PUT',
+        body: JSON.stringify(body),
       },
     )
   } catch (e) {
