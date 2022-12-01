@@ -258,6 +258,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
                     date.getDate() === el.getDate(),
                 )
               }}
+              showNeighboringMonth={false}
               value={date}
             />
           )}
