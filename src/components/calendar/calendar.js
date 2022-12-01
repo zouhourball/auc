@@ -218,7 +218,10 @@ const CalendarCustom = ({
                 <Button
                   flat
                   className="popup-actions-reschedule"
-                  onClick={() => setVisibleReschedule(true)}
+                  onClick={() => {
+                    setVisibleReschedule(true)
+                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                  }}
                 >
                   Reschedule Appointment
                 </Button>
@@ -228,14 +231,20 @@ const CalendarCustom = ({
                 <Button
                   flat
                   className="popup-actions-cancel"
-                  onClick={() => setVisibleAreYouSure(true)}
+                  onClick={() => {
+                    setVisibleAreYouSure(true)
+                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                  }}
                 >
                   Cancel Appointment
                 </Button>
                 <Button
                   flat
                   className="popup-actions-reschedule"
-                  onClick={() => setVisibleReschedule(true)}
+                  onClick={() => {
+                    setVisibleReschedule(true)
+                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                  }}
                 >
                   Reschedule Appointment
                 </Button>
