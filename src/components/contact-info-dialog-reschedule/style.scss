@@ -1,6 +1,6 @@
 .contact-info-dialog {
   .md-dialog {
-    width: auto;
+    width: 450px;
     border-radius: 12px;
   }
 
@@ -36,6 +36,31 @@
     .md-icon {
       color: #5078e1;
       font-size: 22px;
+    }
+  }
+
+  .time-chip {
+    flex: 1 0 30%;
+    padding: 8px 10px;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.18);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+
+    &.selected {
+      border-color: #5078e1;
+      color: #5078e1;
+    }
+
+    &-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      padding: 8px;
+      overflow: auto;
+      gap: 10px;
     }
   }
 }

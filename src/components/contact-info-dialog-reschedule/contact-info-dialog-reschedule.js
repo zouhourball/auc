@@ -30,7 +30,7 @@ const ContactInfoDialogreschedule = ({
     return renderTimeSlots?.map((el) => (
       <div
         key={el?.value}
-        className={`${startTime === el?.value ? 'selected-time' : ''}`}
+        className={`time-chip ${startTime === el?.value ? 'selected' : ''}`}
         onClick={() => {
           setStartTime(el?.value)
           setRescheduleData((prev) => ({
@@ -46,18 +46,6 @@ const ContactInfoDialogreschedule = ({
       </div>
     ))
   }
-  // console.log(startTime, 'startTime')
-
-  // const onHandleDate = (date, key) => {
-  //   setrescheduleData({
-  //     // ...rescheduleData,
-  //     dateRange: {
-  //       ...rescheduleData?.dateRange,
-  //       [key]: date?.timestamp,
-  //     },
-  //   })
-  //   setVisibleDatePicker({ ...visibleDatePicker, [key]: false })
-  // }
 
   return (
     <DialogContainer
@@ -154,18 +142,6 @@ const ContactInfoDialogreschedule = ({
             }}
             value={date}
           />
-          // <DatePicker
-          //   singlePick
-          //   translation={{ update: 'select' }}
-          //   onUpdate={({ timestamp }) => {
-          //     setStartDate(timestamp)
-          //     setVisibleDatePicker(false)
-          //   }}
-          //   onCancel={() => setVisibleDatePicker(false)}
-          //   minValidDate={{ timestamp: rescheduleData?.dateRange?.startDate }}
-          //   startView="year"
-          //   endView="day"
-          // />
         )}
       </div>
 
@@ -173,33 +149,7 @@ const ContactInfoDialogreschedule = ({
         Time*
       </label>
 
-      {date && (
-        <div className="dateWrapper md-cell md-cell--12">
-          <label className="auction-details-form-label">Time*</label>
-          {renderChips()}
-          {/* <SelectField
-          id="select-field-3-1"
-          menuItems={renderTimeSlots}
-          simplifiedMenu={false}
-          onChange={(v) => {
-            // must be timestamp
-            setStartTime(v)
-            setRescheduleData((prev) => ({
-              ...prev,
-              appointment_date: moment(date)
-                .hour(moment(v).hour())
-                .minute(moment(v).minute())
-                .valueOf(),
-            }))
-          }}
-          placeholder="Select Time of Appointment"
-          position={SelectField.Positions.BELOW}
-          value={startTime}
-          className="selectField-withShadow"
-          dropdownIcon={<FontIcon>expand_more</FontIcon>}
-        /> */}
-        </div>
-      )}
+      {date && <div className="time-chip-wrapper">{renderChips()}</div>}
     </DialogContainer>
   )
 }
