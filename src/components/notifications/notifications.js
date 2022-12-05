@@ -194,7 +194,7 @@ const Notifications = ({ admin }) => {
             onChange={(v) => {
               setSearch(v)
             }}
-            placeholder="Search for a notification"
+            placeholder={t('search_for_notification')}
             fullWidth={false}
           />
           <FilterBox
