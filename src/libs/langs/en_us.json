@@ -386,5 +386,7 @@
   "Company_Description": "Company Description",
   "back_to_upcoming_auctions": "back to upcoming auctions",
   "timing": "Timing",
-  "daysFull": "days"
+  "daysFull": "days",
+  "filter_date": "Filter Date",
+  "search_for_notification": "Search for a notification"
 }
