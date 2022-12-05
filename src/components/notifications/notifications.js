@@ -189,12 +189,12 @@ const Notifications = ({ admin }) => {
             id="search_textField"
             className="searchTextField"
             block
-            rightIcon={<FontIcon>{t('search')}</FontIcon>}
+            rightIcon={<FontIcon>search</FontIcon>}
             value={search}
             onChange={(v) => {
               setSearch(v)
             }}
-            placeholder="Search for a notification"
+            placeholder={t('search_for_notification')}
             fullWidth={false}
           />
           <FilterBox
