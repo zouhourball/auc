@@ -14,7 +14,13 @@ import add from 'images/Added New Auction.svg'
 
 import './style.scss'
 
-const NotifPanel = ({ notifications, markRead, admin, onHide }) => {
+const NotifPanel = ({
+  notifications,
+  markRead,
+  admin,
+  onHide,
+  setCurrentTab = false,
+}) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
   NotifPanel.handleClickOutside = () => onHide()
@@ -53,6 +59,7 @@ const NotifPanel = ({ notifications, markRead, admin, onHide }) => {
                 : admin
                   ? navigate('/admin/notifications/a')
                   : navigate('/auctions/notifications')
+              admin && setCurrentTab('other')
               onHide()
             }}
           >
@@ -83,6 +90,7 @@ const NotifPanel = ({ notifications, markRead, admin, onHide }) => {
               ? navigate('/admin/notifications/a')
               : navigate('/auctions/notifications')
             onHide()
+            admin && setCurrentTab('other')
           }}
           className="load-more"
         >

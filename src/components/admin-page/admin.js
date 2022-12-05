@@ -40,7 +40,7 @@ import DocumentsContainer from 'components/docs-dialog'
 
 import './style.scss'
 
-const Admin = ({ logged, auctionId, currentTab }) => {
+const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   let currentLang = useCurrentLang()
@@ -327,11 +327,12 @@ const Admin = ({ logged, auctionId, currentTab }) => {
                   <Button
                     className="admin-page-actionBtn"
                     flat
-                    onClick={() =>
-                      navigate(`admin/detail/${selectedRow[0]?.id}`, {
+                    onClick={() => {
+                      navigate(`/admin/detail/${selectedRow[0]?.id}`, {
                         state: { admin: true },
                       })
-                    }
+                      setCurrentTab('other')
+                    }}
                   >
                     {t('view_details')}
                   </Button>

@@ -26,7 +26,7 @@ import RegistrationPage from 'components/registration'
 import Notifications from 'components/notifications'
 import AdminTopBar from 'components/admin-top-bar'
 import AuctionDetail from 'components/auction-detail'
-
+import { countNotifications } from 'libs/api/auctions-api'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -123,6 +123,10 @@ const Private = withOAuth()(({ ssoCallback }) => {
 })
 const AdminSection = () => {
   const { t } = useTranslation()
+  const { data: notifNumber, refetch: refetchCount } = useQuery(
+    ['getCount'],
+    countNotifications,
+  )
   const modulesList = [
     { label: t('auctions') },
     {
@@ -138,11 +142,20 @@ const AdminSection = () => {
         modules={modulesList}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
+        notifNumber={notifNumber}
+        refetchCount={() => refetchCount()}
       />
 
       <Router>
-        <Admin path={'/'} currentTab={currentTab} />
-        <Notifications path={'/notifications/:admin'} />
+        <Admin
+          path={'/'}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+        />
+        <Notifications
+          path={'/notifications/:admin'}
+          refetchCount={() => refetchCount()}
+        />
         <AuctionDetail path={'/detail/:auctionId'} logged />
       </Router>
     </div>

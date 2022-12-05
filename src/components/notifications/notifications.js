@@ -8,6 +8,7 @@ import { navigate } from '@reach/router'
 import {
   getNotifications,
   markAsReadNotifications,
+  markAllReadNotif,
 } from 'libs/api/auctions-api'
 
 import NotificationCard from 'components/notification-card'
@@ -23,7 +24,7 @@ import add from 'images/Added New Auction.svg'
 
 import './style.scss'
 
-const Notifications = ({ admin }) => {
+const Notifications = ({ admin, refetchCount }) => {
   const { t } = useTranslation()
   const lang = useCurrentLang()
   const [search, setSearch] = useState('')
@@ -46,6 +47,13 @@ const Notifications = ({ admin }) => {
   const { mutate: markRead } = useMutation(markAsReadNotifications, {
     onSuccess: () => {
       refetchNotifs()
+      refetchCount()
+    },
+  })
+  const { mutate: markAllRead } = useMutation(markAllReadNotif, {
+    onSuccess: () => {
+      refetchNotifs()
+      refetchCount()
     },
   })
 
@@ -133,12 +141,12 @@ const Notifications = ({ admin }) => {
         ? notifications?.filter((el) => el?.label?.toLowerCase().includes(search))
         : notifications
   }, [filterData, listNotifications, search])
-  const onMarkRead = () =>
-    Promise.all(
-      renderNotification
-        ?.filter((el) => el?.withPoint)
-        ?.map((el) => markRead({ id: el?.id })),
-    ).then((values) => {})
+  const onMarkRead = () => markAllRead()
+  // Promise.all(
+  //   renderNotification
+  //     ?.filter((el) => el?.withPoint)
+  //     ?.map((el) => markRead({ id: el?.id })),
+  // ).then((values) => {})
   return (
     <div className="notifications">
       <div className="notifications-title">

@@ -141,6 +141,20 @@ export const markAsReadNotifications = async ({ id }) => {
   }
   return res
 }
+export const markAllReadNotif = async () => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${PRODUCT_APP_URL_API}/chat/api/v2/notifications/all/clear`,
+      {
+        method: 'PUT',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
 export const allBrokers = async () => {
   let res
   try {

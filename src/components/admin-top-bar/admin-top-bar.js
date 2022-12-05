@@ -12,7 +12,7 @@ import {
 import {
   getNotifications,
   markAsReadNotifications,
-  countNotifications,
+  // countNotifications,
 } from 'libs/api/auctions-api'
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
@@ -21,22 +21,30 @@ import './style.scss'
 
 import bidPlace from 'images/bid_place_successfully.svg'
 
-const AdminTopBar = ({ modules, currentTab, setCurrentTab }) => {
+const AdminTopBar = ({
+  modules,
+  currentTab,
+  setCurrentTab,
+  notifNumber,
+  refetchCount,
+}) => {
   const { t } = useTranslation()
   const changeLang = useChangeLanguage()
   const langs = useSupportedLangs()
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
+  // useEffect(() => {
+  // setCurrentTab(0)
+  // }, [])
   useEffect(() => {
-    setCurrentTab(0)
-  }, [])
+    const shouldRedirect =
+      window.location.pathname.split('/')?.filter((el) => el !== '')?.length > 1
+    shouldRedirect && currentTab !== 'other' && navigate('/admin')
+  }, [currentTab])
   const { data: notifications, refetch: refetchNotifs } = useQuery(
     ['getNotifications', 3],
     getNotifications,
   )
-  const { data: notifNumber, refetch: refetchCount } = useQuery(
-    ['getCount'],
-    countNotifications,
-  )
+
   const { mutate: markRead } = useMutation(markAsReadNotifications, {
     onSuccess: () => {
       refetchNotifs()
@@ -127,6 +135,7 @@ const AdminTopBar = ({ modules, currentTab, setCurrentTab }) => {
                 notifications={notifications?.content || []} // ?.filter(el => el?.sentTo?.sub === currentUser?.mev2?.user?.subject
                 markRead={(id) => markRead({ id })}
                 admin
+                setCurrentTab={setCurrentTab}
                 onHide={() => setVisible(false)}
               />
             </div>

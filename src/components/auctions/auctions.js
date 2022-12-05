@@ -64,7 +64,9 @@ const Auctions = () => {
         total_area: +propertyDetails?.area,
         general_location_x: +auctionDetails?.address?.['general_location_x'],
         general_location_y: +auctionDetails?.address?.['general_location_y'],
-        appointment_config: { ...appointmentDetails },
+        ...(appointmentDetails?.type
+          ? { appointment_config: appointmentDetails }
+          : {}),
         features: propertyDetails?.keyFeatures?.map((el) => {
           return {
             // uuid: uuidv4(),

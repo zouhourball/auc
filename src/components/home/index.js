@@ -4,7 +4,11 @@ import { Router, Redirect } from '@reach/router'
 import { useTranslation } from 'libs/langs'
 import { useSelector } from 'react-redux'
 
-import { QueryClient, QueryClientProvider } from 'react-query'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery as useQueryReact,
+} from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { useQuery } from 'react-apollo'
 
@@ -28,7 +32,7 @@ import Notifications from 'components/notifications'
 import AuctionRequestAppointment from 'components/auction-request-appointment'
 import AppointmentsRequests from 'components/appointments-request'
 import AppointmentsCalendar from 'components/appointments-calendar'
-
+import { countNotifications } from 'libs/api/auctions-api'
 import './style.scss'
 import store from 'libs/store'
 import ProfilePage from 'components/profile-page'
@@ -50,6 +54,10 @@ const Home = () => {
       uri: `${PRODUCT_WORKSPACE_URL}/graphql`,
     },
   })
+  const { data: notifNumber, refetch: refetchCount } = useQueryReact(
+    ['getCount'],
+    countNotifications,
+  )
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   useEffect(() => {
     refetch()
@@ -147,6 +155,8 @@ const Home = () => {
           logged
           clear={modules && [modules[0], modules[1]].includes('home')}
           broker={meOrgs?.length > 0 ? meOrgs?.[0]?.ID : ''}
+          notifNumber={notifNumber}
+          refetchCount={() => refetchCount()}
         />
         <Router>
           <Redirect from="/" to={`/auctions/home`} noThrow />
@@ -164,7 +174,10 @@ const Home = () => {
           ))}
           <ParticipatedAuctions path={'/my-participation'} meOrgs={meOrgs} />
           <HowItWorks path={'/how-it-works'} />
-          <Notifications path={'/notifications'} />
+          <Notifications
+            path={'/notifications'}
+            refetchCount={() => refetchCount()}
+          />
           {[
             '/detail/:auctionId',
             '/detail/:auctionId/public/:callback',

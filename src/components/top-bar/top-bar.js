@@ -4,7 +4,7 @@ import { get } from 'lodash-es'
 import { useQuery, useMutation } from 'react-query'
 
 import {
-  countNotifications,
+  // countNotifications,
   getNotifications,
   markAsReadNotifications,
 } from 'libs/api/auctions-api'
@@ -55,6 +55,8 @@ const TopBar = ({
   clear,
   showUpdatePassword,
   broker,
+  notifNumber,
+  refetchCount,
 }) => {
   const { t } = useTranslation()
   const user = useSelector(({ app }) => app?.userInfos)
@@ -70,13 +72,13 @@ const TopBar = ({
   //   ? user?.profile?.fullName.match(/\b(\w)/g)?.join('')
   //   : null
   const modules = location.pathname.split('/').filter((v) => v !== '')
-  const { data: notifNumber, refetch: refetchCount } = useQuery(
-    ['getCount'],
-    countNotifications,
-    {
-      enabled: logged,
-    },
-  )
+  // const { data: notifNumber, refetch: refetchCount } = useQuery(
+  //   ['getCount'],
+  //   countNotifications,
+  //   {
+  //     enabled: logged,
+  //   },
+  // )
   const { data: notifications, refetch: refetchNotifs } = useQuery(
     ['getNotifications', 3],
     getNotifications,

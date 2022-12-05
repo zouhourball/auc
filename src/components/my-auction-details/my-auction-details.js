@@ -137,32 +137,47 @@ const MyAuctionDetails = ({ auctionId }) => {
       allowAppointment: auctionDetails?.['allow_viewing_request'],
       appointmentDetails: {
         selected_days:
-          appointmentConfig?.[appointmentConfig?.length - 1]?.[
-            'selected_days'
-          ]?.split(','),
+          appointmentConfig?.length > 0
+            ? appointmentConfig?.[appointmentConfig?.length - 1]?.[
+                'selected_days'
+              ]?.split(',')
+            : [],
         start_at:
-          appointmentConfig?.[appointmentConfig?.length - 1]?.['start_at'],
-        end_at: appointmentConfig?.[appointmentConfig?.length - 1]?.['end_at'],
+          appointmentConfig?.length > 0
+            ? appointmentConfig?.[appointmentConfig?.length - 1]?.['start_at']
+            : '',
+        end_at:
+          appointmentConfig?.length > 0
+            ? appointmentConfig?.[appointmentConfig?.length - 1]?.['end_at']
+            : '',
         type: appointmentConfig?.[appointmentConfig?.length - 1]?.['type'],
         general_location_x:
-          +appointmentConfig?.[appointmentConfig?.length - 1]?.[
-            'general_location_x'
-          ],
+          appointmentConfig?.length > 0
+            ? +appointmentConfig?.[appointmentConfig?.length - 1]?.[
+                'general_location_x'
+              ]
+            : 0,
         general_location_y:
-          +appointmentConfig?.[appointmentConfig?.length - 1]?.[
-            'general_location_y'
-          ],
+          appointmentConfig?.length > 0
+            ? +appointmentConfig?.[appointmentConfig?.length - 1]?.[
+                'general_location_y'
+              ]
+            : 0,
         appointment_address:
-          appointmentConfig?.[appointmentConfig?.length - 1]?.[
-            'appointment_address'
-          ],
+          appointmentConfig?.length > 0
+            ? appointmentConfig?.[appointmentConfig?.length - 1]?.[
+                'appointment_address'
+              ]
+            : '',
       },
     })
     setImages(auctionDetails?.listing?.images)
     const type =
-      appointmentConfig?.[appointmentConfig?.length - 1]?.type === 'Both'
-        ? ['In-person', 'Online']
-        : [appointmentConfig?.[appointmentConfig?.length - 1]?.type]
+      appointmentConfig?.length > 0
+        ? appointmentConfig?.[appointmentConfig?.length - 1]?.type === 'Both'
+          ? ['In-person', 'Online']
+          : [appointmentConfig?.[appointmentConfig?.length - 1]?.type]
+        : []
     setAppointmentType(type)
   }, [auctionDetails])
   const { data: getCityList } = useQuery(
@@ -695,7 +710,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 value={auctionEditData?.address?.meta?.['display_name']}
                 disabled={!editMode}
                 className="auction-details-form-textField"
-                onClick={() => setAddressView(!addressView)}
+                onClick={() => setAddressView(true)}
                 block
               />
 
@@ -1214,9 +1229,10 @@ const MyAuctionDetails = ({ auctionId }) => {
                       ]
                     }
                     disabled={
-                      !auctionEditData?.appointmentDetails?.[
-                        'appointment_address'
-                      ] || !editMode
+                      // !auctionEditData?.appointmentDetails?.[
+                      //   'appointment_address'
+                      // ] ||
+                      !editMode
                     }
                     onChange={(value) =>
                       onSetFormDetails(
@@ -1257,7 +1273,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   menuItems={weekDays?.map((day) => (
                     <Checkbox
                       key={day}
-                      id={day}
+                      id={`day-${day}`}
                       label={day}
                       onChange={() => {
                         onSetFormDetails(
