@@ -51,7 +51,7 @@ const FilterBox = ({ className, items, setFilterData, filterData }) => {
   return (
     <div className={cls('filter-box', className)}>
       <div className="filter-box-header">
-        <div>Filter Date</div>
+        <div>{t('filter_date')}</div>
       </div>
       <div className="filter-box-content">{renderItems()}</div>
       <div className="filter-box-label">{t('custom_range')}</div>
