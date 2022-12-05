@@ -7,28 +7,22 @@ const ContactInfoDialog = ({ visible, onHide }) => {
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
-      className="contact-info-dialog"
-      title={
-        <div className="contact-info-dialog-title">
-          {visible?.type === 'phone' && <h3>Phone Number</h3>}
-          {visible?.type === 'email' && <h3>Email Adress</h3>}
-        </div>
-      }
+      className="contact-info"
     >
-      <div className="contact-info-dialog-content">
-        {visible?.type === 'phone' && <h4>{visible?.email}</h4>}
-        {visible?.type === 'email' && <h4>{visible?.phoneMobile}</h4>}
-        <div>{visible?.contact}</div>
+      <div className="contact-info-content">
+        <div className="title">
+          {visible?.type === 'phone' && <span>Phone Number</span>}
+          {visible?.type === 'email' && <span>Email Adress</span>}
+        </div>
+        <div>
+          {visible?.type === 'phone' && <span>{visible?.email}</span>}
+          {visible?.type === 'email' && <span>{visible?.phoneMobile}</span>}
+          <div>{visible?.contact}</div>
+        </div>
+        <Button flat primary className="contact-info-btn" onClick={onHide}>
+          Done
+        </Button>
       </div>
-      <Button
-        flat
-        primary
-        swapTheming
-        className="auction-details-btn"
-        onClick={onHide}
-      >
-        Done
-      </Button>
     </DialogContainer>
   )
 }

@@ -653,9 +653,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
                   />
                   <Button
                     floating
-                    primary
                     iconEl={<img src={phoneIcon} />}
-                    className="owner-card-btn"
+                    className="owner-card-btn blue"
                     onClick={(e) => {
                       // eslint-disable-next-line no-unused-expressions
                       e?.stopPropagation()

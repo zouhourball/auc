@@ -300,6 +300,10 @@
     width: auto;
     height: auto;
     border-radius: 16px;
+
+    &.blue {
+      background-color: #5078e1;
+    }
   }
 
   &-info {
