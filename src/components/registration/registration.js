@@ -519,6 +519,15 @@ const RegistrationPage = () => {
       },
     })
   }
+  const errorMsg = [
+    {
+      msg: 'invalid mobile',
+      msgFormatted: t(
+        'The phone number you add is invalid please enter the correct number',
+      ),
+    },
+    { msg: 'CompanyName', msgFormatted: t('invalid company name') },
+  ]
   return (
     <div className="registration-page">
       {confirmDialogVisible && (
@@ -526,7 +535,11 @@ const RegistrationPage = () => {
           title={t('Successfully_Registered')}
           description={t('you_can')}
           visible={confirmDialogVisible}
-          msg={confirmDialogVisible?.error}
+          msg={
+            errorMsg?.find((el) =>
+              confirmDialogVisible?.error?.includes(el?.msg),
+            )?.msgFormatted || confirmDialogVisible?.error
+          }
           imgCard={successRegister}
           onHide={() => {
             setConfirmDialogVisible(false)

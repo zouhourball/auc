@@ -983,7 +983,7 @@ const MyAuctionDetails = ({ auctionId }) => {
               <Button onClick={() => onDisableEdit()}>
                 {t('edit_details')}
               </Button>
-              {+biddersList?.bids?.total > 0 && (
+              {!(+biddersList?.bids?.total > 0) && (
                 <Button onClick={() => setConfirmDialog(true)}>
                   {t('delete_auction')}
                 </Button>
