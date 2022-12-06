@@ -483,7 +483,7 @@ const MyAuctionDetails = ({ auctionId }) => {
         // appointment_config: { ...auctionEditData?.appointmentDetails },
       },
     })
-    auctionEditData?.allowAppointment
+    !auctionEditData?.allowAppointment
       ? disableAppointment.mutate({
         uuid: auctionId,
       })

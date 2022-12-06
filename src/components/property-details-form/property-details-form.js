@@ -172,7 +172,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
                 flat
                 primary
                 className="add-btn"
-                onClick={addKeyFeature}
+                onClick={() => keyFeature && addKeyFeature()}
                 disabled={!keyFeature}
                 iconChildren="add"
               >
