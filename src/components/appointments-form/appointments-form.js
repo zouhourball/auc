@@ -307,6 +307,12 @@ const AppointmentsForm = ({
           />
         )}
       </div>
+      {appointmentType?.includes('Online') && (
+        <div className="request-appointment-note">
+          <span className="blueText">{t('note')}</span>
+          {t('online_link_note_broker')}
+        </div>
+      )}
     </div>
   )
 }

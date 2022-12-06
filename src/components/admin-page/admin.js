@@ -364,9 +364,9 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           hideTotal
           footerTemplate={
             <>
-              <span>
+              {/* <span>
                 {t('Total_elements')} {getTotalElements}
-              </span>
+              </span> */}
 
               {+getTotalElements > limit && (
                 <div className="table-paginator">
@@ -439,9 +439,9 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           hideTotal
           footerTemplate={
             <>
-              <span>
+              {/* <span>
                 {t('Total_elements')} {getTotalElements}
-              </span>
+              </span> */}
               {+getTotalElements > limit && (
                 <div className="table-paginator">
                   <Button

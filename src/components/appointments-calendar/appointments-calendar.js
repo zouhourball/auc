@@ -134,7 +134,6 @@ const AppointmentsCalendar = () => {
 
   const renderAppointments = () =>
     calendarAppointments?.map((el) => {
-      let publicUrl = ''
       // const tt = <UserInfoBySubject
       //   key={el?.uuid}
       //   subject={
@@ -152,6 +151,7 @@ const AppointmentsCalendar = () => {
         id: el?.uuid,
         title: el?.['bidder_name'],
         auctionId: el?.auction?.uuid,
+        auctionTitle: el?.['auction_title'],
         // allDay: true,
         start: new Date(el?.['start_at']), // new Date(2015, 3, 0),
         end: new Date(el?.['end_at']), // new Date(2015, 3, 1),
@@ -161,12 +161,12 @@ const AppointmentsCalendar = () => {
             : el?.status === 'Rejected'
               ? 'cancelled'
               : 'pending',
-        avatar: publicUrl,
+        avatar: el?.['broker_organization_id'],
+        // ? el?.['bidders_subject']
+        // : el?.['to_broker_subject'],
         type: el?.type,
-        location:
-          el?.type === 'In-person'
-            ? el?.['appointment_address']
-            : el?.['appointment_link'],
+        location: el?.['appointment_address'],
+        link: el?.['appointment_link'],
       }
     })
   const lastDayOfMonth = new Date(
