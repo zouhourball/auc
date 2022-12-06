@@ -315,9 +315,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
 
           <TextField
             className="textField-withShadow"
-            placeholder={
-              'Reason for the rejection of invoice will be written here'
-            }
+            placeholder={t('type_message_here')}
             value={notes}
             onChange={(v) =>
               setAppointmentData((prev) => ({ ...prev, notes: v }))

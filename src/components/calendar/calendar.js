@@ -3,6 +3,8 @@ import moment from 'moment'
 import { useClickOutside } from 'libs/utils/useclickoutside'
 import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef } from 'react'
+import CompanyInfoById from 'components/company-info-by-id'
+import { getPublicUrl } from 'libs/utils/custom-function'
 
 import { eventsList } from './helper'
 
@@ -63,7 +65,7 @@ const CalendarCustom = ({
           />
 
           <div className="btn-group">
-            {!(meOrgs?.length > 0) && (
+            {meOrgs?.length > 0 && (
               <Button
                 className="nav-btn add-btn"
                 onClick={() => setVisibleAddAppointment(true)}
@@ -155,7 +157,7 @@ const CalendarCustom = ({
             onSelectEvent(event, e)
           }}
         />
-        {event.title}
+        {event?.auctionTitle}
       </div>
     )
   }
@@ -193,68 +195,149 @@ const CalendarCustom = ({
             width: '250px',
           }}
         >
-          <div className="popup-top">
-            {!broker && (
-              <Avatar className="avatar" src={selectedEvent?.avatar}>
-                {selectedEvent?.title[0]}
-              </Avatar>
-            )}
-            {broker && <div className="label">Name</div>}
-            <div className="title">{selectedEvent?.title}</div>
-          </div>
-          <div className="info">
-            <div className="label">Type of Appointment</div>
-            <div className="value">{selectedEvent?.type}</div>
-          </div>
-          <div className="info">
-            <div className="label">Location</div>
-            <div className="value">{selectedEvent?.location}</div>
-          </div>
-          <div className="info">
-            <div className="label">Time</div>
-            <div className="value">{`${moment(selectedEvent?.start).format(
-              'hh:mm',
-            )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
-          </div>
-          <div className="popup-actions">
-            {selectedEvent?.status === 'cancelled' ? (
-              <>
-                <Button
-                  flat
-                  className="popup-actions-reschedule"
-                  onClick={() => {
-                    setVisibleReschedule(true)
-                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
-                  }}
-                >
-                  Reschedule Appointment
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  flat
-                  className="popup-actions-cancel"
-                  onClick={() => {
-                    setVisibleAreYouSure(true)
-                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
-                  }}
-                >
-                  Cancel Appointment
-                </Button>
-                <Button
-                  flat
-                  className="popup-actions-reschedule"
-                  onClick={() => {
-                    setVisibleReschedule(true)
-                    setSelectedEvent((prev) => ({ ...prev, hide: true }))
-                  }}
-                >
-                  Reschedule Appointment
-                </Button>
-              </>
-            )}
-          </div>
+          {broker ? (
+            <>
+              <div className="info">
+                <div className="label">Auction Title</div>
+                <div className="title">{selectedEvent?.auctionTitle}</div>
+              </div>
+              <div className="info">
+                <div className="label">Name</div>
+                <div className="title">{selectedEvent?.title}</div>
+              </div>
+              <div className="info">
+                <div className="label">Type of Appointment</div>
+                <div className="value">{selectedEvent?.type}</div>
+              </div>
+
+              {selectedEvent?.type === 'In-person' && (
+                <div className="info">
+                  {' '}
+                  <div className="label">Location</div>
+                  <div className="value">{selectedEvent?.location}</div>
+                </div>
+              )}
+              {selectedEvent?.type === 'Online' && (
+                <div className="info">
+                  {' '}
+                  <div className="label">Link</div>
+                  <div className="value">
+                    {selectedEvent?.link || 'No link yet'}
+                  </div>
+                </div>
+              )}
+
+              <div className="info">
+                <div className="label">Time</div>
+                <div className="value">{`${moment(selectedEvent?.start).format(
+                  'hh:mm',
+                )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+              </div>
+              <div className="popup-actions">
+                {!(selectedEvent?.status === 'cancelled') && (
+                  <>
+                    <Button
+                      flat
+                      className="popup-actions-cancel"
+                      onClick={() => {
+                        setVisibleAreYouSure(true)
+                        setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                      }}
+                    >
+                      Cancel Appointment
+                    </Button>
+                  </>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="popup-top">
+                <CompanyInfoById orgId={selectedEvent?.avatar}>
+                  {(res) => (
+                    <>
+                      <Avatar
+                        className="avatar"
+                        src={getPublicUrl(res?.companyLogo?.aPIID)}
+                      >
+                        {selectedEvent?.title[0]}
+                      </Avatar>
+                      <div className="title">{res?.name}</div>
+                    </>
+                  )}
+                </CompanyInfoById>
+              </div>
+              <div className="info">
+                <div className="label">Type of Appointment</div>
+                <div className="value">{selectedEvent?.type}</div>
+              </div>
+              {selectedEvent?.type === 'In-person' && (
+                <div className="info">
+                  {' '}
+                  <div className="label">Location</div>
+                  <div className="value">{selectedEvent?.location}</div>
+                </div>
+              )}
+              {selectedEvent?.type === 'Online' && (
+                <div className="info">
+                  {' '}
+                  <div className="label">Link</div>
+                  <div className="value">
+                    {selectedEvent?.link || 'No link yet'}
+                  </div>
+                </div>
+              )}
+              <div className="info">
+                <div className="label">Time</div>
+                <div className="value">{`${moment(selectedEvent?.start).format(
+                  'hh:mm',
+                )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+              </div>
+              <div className="popup-actions">
+                {selectedEvent?.status === 'cancelled' ? (
+                  <>
+                    {!broker && (
+                      <Button
+                        flat
+                        className="popup-actions-reschedule"
+                        onClick={() => {
+                          setVisibleReschedule(true)
+                          setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                        }}
+                      >
+                        Reschedule Appointment
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      flat
+                      className="popup-actions-cancel"
+                      onClick={() => {
+                        setVisibleAreYouSure(true)
+                        setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                      }}
+                    >
+                      Cancel Appointment
+                    </Button>
+                    {!broker && (
+                      <Button
+                        flat
+                        className="popup-actions-reschedule"
+                        onClick={() => {
+                          setVisibleReschedule(true)
+                          setSelectedEvent((prev) => ({ ...prev, hide: true }))
+                        }}
+                      >
+                        Reschedule Appointment
+                      </Button>
+                    )}
+                  </>
+                )}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

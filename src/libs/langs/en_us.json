@@ -154,7 +154,7 @@
   "select_dates": "Select start date - end date",
   "sort": "Sort By",
   "property_select": "Select property type",
-  "participation_fee": "Deposit amount",
+  "participation_fee": "Deposit amount ",
   "part_price_enter": "Enter Deposit Amount",
   "guar_fee_enter": "Enter guarantee fee *",
   "discard": "Discard",
@@ -352,6 +352,8 @@
   "notes": "Notes",
   "note": "Note",
   "online_link_note": "Online link will appear in 'Appointments' once it is approved by the broker",
+  "online_link_note_broker": "Online link should be sent manually once you approve appointment request",
+  "type_message_here": "Type message here",
   "request_for_viewing_success": "Request for Viewing Sent Successfully",
   "wait_for_approval": "Please wait for approval from the broker",
   "requests": "Requests",
@@ -388,5 +390,6 @@
   "timing": "Timing",
   "daysFull": "days",
   "filter_date": "Filter Date",
-  "search_for_notification": "Search for a notification"
+  "search_for_notification": "Search for a notification",
+  "search_country_code": "search country code"
 }
