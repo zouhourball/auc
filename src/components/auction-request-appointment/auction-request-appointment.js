@@ -173,7 +173,9 @@ const AuctionRequestAppointment = ({ auctionId }) => {
     return renderTimeSlots()?.map((el) => (
       <div
         key={el?.value}
-        className={`${selectedTime === el?.value ? 'selected-time' : ''}`}
+        className={`time-chip ${
+          selectedTime === el?.value ? 'selected-time' : ''
+        }`}
         onClick={() => {
           setTime(el?.value)
           setAppointmentData((prev) => ({
@@ -210,7 +212,6 @@ const AuctionRequestAppointment = ({ auctionId }) => {
           <SelectField
             id="select-field-3-1"
             menuItems={renderType}
-            simplifiedMenu={false}
             onChange={(v) => {
               setAppointmentData((prev) => ({ ...prev, type: v }))
             }}
@@ -286,7 +287,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
         {date && (
           <div className="dateWrapper">
             <label className="auction-details-form-label">{t('time')}*</label>
-            {renderChips()}
+            <div className="time-chip-wrapper">{renderChips()}</div>
             {/* <SelectField
             id="select-field-3-1"
             menuItems={renderTimeSlots()}

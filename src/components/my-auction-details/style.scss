@@ -21,6 +21,28 @@
     }
   }
 
+  .top-bar-menu {
+    .md-btn {
+      padding: 0;
+    }
+
+    .md-icon {
+      color: #5078e1;
+      font-size: 40px;
+    }
+  }
+
+  .edit-list {
+    padding: 8px;
+    border-radius: 12px;
+
+    .md-text {
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
   .auction-details {
     &-info {
       display: flex;

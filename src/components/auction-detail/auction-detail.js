@@ -710,9 +710,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
               auctionData?.['last_bid']?.['member_subject'] ===
                 user?.subject ? (
               <Button
-                primary
+                // primary
                 flat
-                swapTheming
+                // swapTheming
                 // onClick={() => setDocAction(true)}
                 className="auction-highest-btn"
                 disabled
