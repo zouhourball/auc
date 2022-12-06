@@ -189,7 +189,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
       </div>
       <div className="md-cell md-cell--12">
         <label className="auction-details-form-label">
-          {t('property_images')}
+          {t('property_images')} *
         </label>
 
         <UploadImages

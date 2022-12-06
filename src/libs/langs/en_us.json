@@ -154,7 +154,7 @@
   "select_dates": "Select start date - end date",
   "sort": "Sort By",
   "property_select": "Select property type",
-  "participation_fee": "Deposit amount",
+  "participation_fee": "Deposit amount ",
   "part_price_enter": "Enter Deposit Amount",
   "guar_fee_enter": "Enter guarantee fee *",
   "discard": "Discard",
@@ -390,5 +390,6 @@
   "timing": "Timing",
   "daysFull": "days",
   "filter_date": "Filter Date",
-  "search_for_notification": "Search for a notification"
+  "search_for_notification": "Search for a notification",
+  "search_country_code": "search country code"
 }
