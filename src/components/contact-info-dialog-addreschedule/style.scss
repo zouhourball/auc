@@ -5,7 +5,7 @@
 
   .md-dialog {
     width: 450px;
-    border-radius: 18px;
+    border-radius: 35px;
   }
 
   .md-title--dialog {
@@ -19,7 +19,7 @@
 
   &-title {
     color: #3d3d3e;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
   }
 
@@ -37,6 +37,10 @@
       color: #5078e1;
       font-size: 22px;
     }
+  }
+
+  .auction-details-form-label {
+    margin: 8px;
   }
 
   .dateWrapper {
@@ -76,6 +80,10 @@
     .md-icon {
       color: #5078e1;
     }
+  }
+
+  .md-dialog-footer {
+    justify-content: center;
   }
 
   .actions {

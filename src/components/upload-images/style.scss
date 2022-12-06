@@ -271,19 +271,21 @@
         color: #7c7c7c;
       }
 
-      &.opacity {
-        > img {
-          opacity: 0.5;
-        }
-      }
-
       .close-btn {
         position: absolute;
         top: 8px;
         right: 16px;
         order: 2;
+        height: 30px;
+        opacity: 1;
         color: #5078e1;
         font-size: 20px;
+      }
+
+      &.opacity {
+        .image {
+          opacity: 0.5;
+        }
       }
 
       .box {

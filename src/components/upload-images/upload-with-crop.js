@@ -10,7 +10,6 @@ import { useTranslation } from 'libs/langs'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
 import store from 'libs/store'
 import ImageCrop from 'components/image-crop'
-
 import './style.scss'
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker
