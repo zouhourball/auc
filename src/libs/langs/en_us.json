@@ -391,5 +391,10 @@
   "daysFull": "days",
   "filter_date": "Filter Date",
   "search_for_notification": "Search for a notification",
-  "search_country_code": "search country code"
+  "search_country_code": "search country code",
+
+  "add_appointment": "Add Appointment",
+  "search_for_an_appointment": "Search for an appointment",
+  "confirmed": "Confirmed",
+  "canclled": "Canclled"
 }

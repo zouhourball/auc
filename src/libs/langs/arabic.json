@@ -211,5 +211,11 @@
   "back_to_upcoming_auctions": "العودة إلى المزادات القادمة",
   "load_more_notifications": "تحميل المزيد من الإشعارات",
   "search_for_notification": "ابحث عن الإشعارات",
-  "search_country_code": "البحث عن رمز البلد"
+  "search_country_code": "البحث عن رمز البلد",
+
+  "search_for_an_appointment": "البحث عن موعد ",
+  "appointments": "المواعيد",
+  "confirmed": "مؤكد",
+  "canclled": "ملغي",
+  "today": "اليوم"
 }
