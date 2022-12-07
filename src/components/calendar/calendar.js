@@ -5,12 +5,14 @@ import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef } from 'react'
 import CompanyInfoById from 'components/company-info-by-id'
 import { getPublicUrl } from 'libs/utils/custom-function'
+import { useTranslation } from 'libs/langs'
 
 import { eventsList } from './helper'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './style.scss'
 import { useSelector } from 'react-redux'
+// import 'moment/locale/ar'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -32,13 +34,19 @@ const CalendarCustom = ({
   search,
   setCalendarDate,
 }) => {
+  const { t } = useTranslation()
+
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const CustomToolbar = (props) => {
     let { label, date } = props
+    // const messages = {
+    //   Thu: 'tuersday',
+    //   Mon: 'Précédent',
 
+    // }
     const onNavigatee = (action) => {
       props.onNavigate(action)
       if (action === 'NEXT') {
@@ -54,7 +62,7 @@ const CalendarCustom = ({
       <div className="toolbar">
         <div className="toolbar-top">
           <TextField
-            placeholder={'Search for an appointment'}
+            placeholder={t('search_for_an_appointment')}
             className="toolbar-textField"
             value={search}
             onChange={(v) => {
@@ -70,7 +78,7 @@ const CalendarCustom = ({
                 className="nav-btn add-btn"
                 onClick={() => setVisibleAddAppointment(true)}
               >
-                Add Appointment
+                {t('add_appointment')}
               </Button>
             )}
             <Button
@@ -84,7 +92,7 @@ const CalendarCustom = ({
               onClick={() => onNavigatee(navigate.TODAY)}
               className="toolbar-label nav-btn"
             >
-              Today
+              {t('today')}
             </span>
             <Button
               className="nav-btn"
@@ -100,15 +108,15 @@ const CalendarCustom = ({
           <div className="toolbar-bottom-legend">
             <div className="event-item">
               <div className={`event-item-status pending`} />
-              <div className="label">Pending</div>
+              <div className="label">{t('pending')}</div>
             </div>
             <div className="event-item">
               <div className={`event-item-status confirmed`} />
-              <div className="label">Confirmed</div>
+              <div className="label">{t('confirmed')}</div>
             </div>
             <div className="event-item">
               <div className={`event-item-status cancelled`} />
-              <div className="label">Cancelled</div>
+              <div className="label">{t('canclled')}</div>
             </div>
           </div>
         </div>
