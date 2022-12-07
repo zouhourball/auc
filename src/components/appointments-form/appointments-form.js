@@ -85,13 +85,13 @@ const AppointmentsForm = ({
     />,
   ]
   const weekDays = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
   ]
   return (
     <div className="appointments-form md-grid">
@@ -223,7 +223,7 @@ const AppointmentsForm = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--6">
-        <label className="appointments-form-form-label">Days</label>
+        <label className="auction-details-form-label">Days</label>
         <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={`${
@@ -309,7 +309,7 @@ const AppointmentsForm = ({
       </div>
       {appointmentType?.includes('Online') && (
         <div className="request-appointment-note">
-          <span className="blueText">{t('note')}</span>
+          <span className="blueText">{t('note')}:</span>
           {t('online_link_note_broker')}
         </div>
       )}

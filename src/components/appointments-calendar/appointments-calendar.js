@@ -231,6 +231,7 @@ const AppointmentsCalendar = () => {
       <div className="appointments-calendar-page-title">
         {t('appointments')}
       </div>
+      <div className="appointments-calendar-page-title">Calendar</div>
       <CalendarCustom
         setVisibleAreYouSure={setVisibleAreYouSure}
         setVisibleReschedule={setVisibleReschedule}

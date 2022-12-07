@@ -62,7 +62,7 @@ const CalendarCustom = ({
       <div className="toolbar">
         <div className="toolbar-top">
           <TextField
-            placeholder={t('search_for_an_appointment')}
+            placeholder={t('search_for_an_appointment...')}
             className="toolbar-textField"
             value={search}
             onChange={(v) => {
@@ -173,9 +173,15 @@ const CalendarCustom = ({
   const popupRef = useClickOutside(() => {
     setSelectedEvent((prev) => ({ ...prev, hide: true }))
   })
+  const formats = {
+    weekdayFormat: (date, culture, localizer) => {
+      return localizer.format(date, 'dddd', 'ar')
+    },
+  }
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar
+        formats={formats}
         localizer={localizer}
         events={calendarAppointments || eventsList}
         step={60}

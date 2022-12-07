@@ -42,13 +42,14 @@
 
     .toolbar-textField {
       width: 300px;
+      height: 40px;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 12px;
       background-color: #fff;
       box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 
       .md-text-field {
-        font-size: 10px;
+        font-size: 12px;
       }
 
       .md-icon {
@@ -71,33 +72,37 @@
       gap: 8px;
 
       .nav-btn {
+        height: 40px;
         border-radius: 8px;
         background-color: #fff;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
         &.add-btn {
-          padding: 7px 10px;
+          padding: 7px 20px;
           background-color: #5078e1;
           color: #fff;
-          font-size: 11px;
-          font-weight: bold;
+          font-size: 16px;
+          font-weight: 500;
         }
 
         &.md-btn--icon {
-          width: 30px;
-          height: 30px;
+          width: 40px;
+          height: 40px;
           padding: 4px;
 
           .md-icon {
             color: #5078e1;
-            font-size: 22px;
+            font-size: 30px;
+            font-weight: 500;
           }
         }
       }
 
       .toolbar-label {
-        padding: 7px 10px;
-        font-size: 11px;
+        padding: 8px 20px;
+        color: #7c7c7c;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
       }
     }
@@ -114,7 +119,7 @@
 
     &-label {
       color: #707070;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 500;
     }
 
@@ -125,7 +130,8 @@
       gap: 8px;
 
       .label {
-        font-size: 10px;
+        color: #7c7c7c;
+        font-size: 12px;
         font-weight: 500;
       }
     }
@@ -157,8 +163,10 @@
       border: none;
       color: #707070;
       font-size: 100%;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: normal;
       text-align: right;
+      text-transform: uppercase;
     }
 
     & + .rbc-month-row {
@@ -169,6 +177,12 @@
   .rbc-date-cell {
     padding-right: 10px;
     text-align: right;
+
+    > button {
+      color: #7c7c7c;
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 }
 

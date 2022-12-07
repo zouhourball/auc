@@ -131,26 +131,27 @@ const AppointmentsRequests = () => {
   }
 
   const renderAppointments = () =>
-    requestsAppointments?.results?.map((el) =>
-      // <UserInfoBySubject key={el?.uuid} subject={el?.['bidders_subject']}>
-      // {(res) => (
-      ({
-        id: el?.uuid,
-        status: el?.status,
-        title: el?.['auction_title'],
-        auctionId: el?.auction?.uuid,
-        name: el?.['bidder_name'],
-        appointmentType: el?.type,
-        date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
-        time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
-          el?.['end_at'],
-        ).format('HH:mm')}`,
-        note: el?.notes,
-        xLocation: el?.['general_location_x'],
-        yLocation: el?.['general_location_y'],
-        link: el?.['appointment_link'],
-        // })
-      }),
+    requestsAppointments?.results?.map(
+      (el) =>
+        // <UserInfoBySubject key={el?.uuid} subject={el?.['bidders_subject']}>
+        // {(res) => (
+        ({
+          id: el?.uuid,
+          status: el?.status,
+          title: el?.['auction_title'],
+          auctionId: el?.auction?.uuid,
+          name: el?.['bidder_name'],
+          appointmentType: el?.type,
+          date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
+          time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
+            el?.['end_at'],
+          ).format('HH:mm')}`,
+          note: el?.notes,
+          xLocation: el?.['general_location_x'],
+          yLocation: el?.['general_location_y'],
+          link: el?.['appointment_link'],
+          // })
+        }),
       // </UserInfoBySubject>
     )
   return (
@@ -165,11 +166,10 @@ const AppointmentsRequests = () => {
           setLinkVisible,
         )}
         tableData={renderAppointments() || []}
-        withChecked
+        withChecked={false}
         singleSelect
         withSearch
         commonActions
-        withFooter
         hideTotal
       />
       {notesVisible && (
