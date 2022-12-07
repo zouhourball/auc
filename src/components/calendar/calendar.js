@@ -165,9 +165,15 @@ const CalendarCustom = ({
   const popupRef = useClickOutside(() => {
     setSelectedEvent((prev) => ({ ...prev, hide: true }))
   })
+  const formats = {
+    weekdayFormat: (date, culture, localizer) => {
+      return localizer.format(date, 'dddd', 'ar')
+    },
+  }
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar
+        formats={formats}
         localizer={localizer}
         events={calendarAppointments || eventsList}
         step={60}
