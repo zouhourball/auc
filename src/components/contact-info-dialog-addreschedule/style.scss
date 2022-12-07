@@ -84,21 +84,14 @@
 
   .md-dialog-footer {
     justify-content: center;
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12px;
-    gap: 8px;
+    border-top: none;
 
     .md-btn {
-      width: 120px;
-      height: 40px;
+      flex: 0 1 40%;
+      height: 60px;
       padding: 8px;
-      border-radius: 8px;
-      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      border-radius: 18px;
+      // box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
       font-size: 12px;
       font-weight: bold;
 
@@ -109,18 +102,27 @@
     }
   }
 
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    gap: 8px;
+  }
+
   .time-chip {
     flex: 1 0 30%;
     padding: 8px 10px;
-    border: 1px solid #fff;
-    border-radius: 8px;
+    // border: 1px solid #fff;
+    border-radius: 12px;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.18);
+    color: #7c7c7c;
     font-weight: 600;
     text-align: center;
     cursor: pointer;
 
     &.selected {
-      border-color: #5078e1;
+      border: 1px solid #5078e1;
       color: #5078e1;
     }
 
