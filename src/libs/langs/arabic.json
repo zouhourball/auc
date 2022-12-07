@@ -217,5 +217,8 @@
   "appointments": "المواعيد",
   "confirmed": "مؤكد",
   "canclled": "ملغي",
-  "today": "اليوم"
+  "today": "اليوم",
+  "submit": "تقديم",
+  "calendar": "التقويم",
+  "save": "حفظ"
 }
