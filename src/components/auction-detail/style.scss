@@ -37,7 +37,7 @@
   &-gallery {
     .details-slider {
       width: 100%;
-      height: 540px;
+      height: 640px;
     }
 
     .back-btn {
@@ -53,7 +53,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      height: 30px;
+      height: 50px;
 
       &-status {
         padding: 4px 14px;
@@ -80,6 +80,8 @@
 
       .auction-details-btn {
         flex: 1;
+        height: 60px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
       }
     }
   }

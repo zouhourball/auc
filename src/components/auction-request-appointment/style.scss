@@ -6,7 +6,8 @@
 
   &-title {
     margin: 16px 0 8px;
-    color: #000;
+    color: #3d3d3e;
+    font-size: 18px;
     font-weight: bold;
   }
 
@@ -32,6 +33,10 @@
     color: #5078e1;
   }
 
+  .react-calendar {
+    max-width: 500px;
+  }
+
   &-actions {
     display: flex;
     justify-content: flex-end;
@@ -44,5 +49,31 @@
     height: auto;
     border: 2px solid #5078e1;
     border-radius: 8px;
+  }
+
+  .time-chip {
+    flex: 1 0 30%;
+    padding: 14px 10px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+
+    &.selected-time {
+      border: solid 1px #527bde;
+      color: #5078e1;
+    }
+
+    &-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      max-width: 500px;
+      padding: 8px;
+      overflow: auto;
+      gap: 10px;
+    }
   }
 }

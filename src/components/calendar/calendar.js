@@ -54,7 +54,7 @@ const CalendarCustom = ({
       <div className="toolbar">
         <div className="toolbar-top">
           <TextField
-            placeholder={'Search for an appointment'}
+            placeholder={'Search for an appointment...'}
             className="toolbar-textField"
             value={search}
             onChange={(v) => {

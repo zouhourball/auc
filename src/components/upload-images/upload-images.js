@@ -9,6 +9,7 @@ import { uploadFileTus, fileDownloadTus } from 'libs/api/tus-upload'
 import { useTranslation } from 'libs/langs'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
 import store from 'libs/store'
+import deleteIcon from './Delete.svg'
 
 import './style.scss'
 
@@ -273,16 +274,25 @@ const UploadImages = ({
             </FontIcon>
           )}
         {iconDelete && (
-          <FontIcon
-            icon
+          // <FontIcon
+          //   icon
+          //   onClick={(e) => {
+          //     e.stopPropagation()
+          //     onRemove(index, file)
+          //   }}
+          //   className="close-btn"
+          // >
+          //   cancel
+          // </FontIcon>
+          <img
+            height={20}
+            src={deleteIcon}
             onClick={(e) => {
               e.stopPropagation()
               onRemove(index, file)
             }}
             className="close-btn"
-          >
-            cancel
-          </FontIcon>
+          />
         )}
         {cover && file?.cover && <div className="cover-tag">Cover</div>}
         {onSelectDefault && (
@@ -340,7 +350,10 @@ const UploadImages = ({
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? ( // .xlsx
                     <FontIcon className="xlsx-doc">file_present</FontIcon>
                   ) : (
-                    <img src={`${file?.url}?token=${downloadToken}&view=true`} />
+                    <img
+                      src={`${file?.url}?token=${downloadToken}&view=true`}
+                      className="image"
+                    />
                   )}
               </>
               )}

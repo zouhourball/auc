@@ -225,7 +225,7 @@ const ContactInfoDialogaddreschedule = ({
         <div className="add-appointment-dialog-title">Add Appointment</div>
       }
       actions={[
-        <Button key={1} flat onClick={onHide}>
+        <Button key={1} className="cancel-btn" flat onClick={onHide}>
           Cancel
         </Button>,
         <Button key={2} flat primary swapTheming onClick={() => sendRequest()}>
@@ -242,7 +242,6 @@ const ContactInfoDialogaddreschedule = ({
           value: el?.uuid,
           label: <div> {el?.listing?.title}</div>,
         }))}
-        simplifiedMenu={false}
         onChange={(v) => {
           setAppointmentData((prev) => ({ ...prev, title: v }))
         }}
@@ -258,7 +257,6 @@ const ContactInfoDialogaddreschedule = ({
       <SelectField
         id="select-field-3-1"
         menuItems={renderType}
-        simplifiedMenu={false}
         onChange={(v) => {
           setAppointmentData((prev) => ({ ...prev, type: v }))
         }}
