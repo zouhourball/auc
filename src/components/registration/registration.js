@@ -538,32 +538,32 @@ const RegistrationPage = () => {
       },
     })
   }
-  const errorMsg = [
-    // { msg: 'invalid mobile', msgFormatted: t('phone_number_neded') },
+  // const errorMsg = [
+  //   { msg: 'invalid mobile', msgFormatted: t('phone_number_neded') },
 
-    { msg: 'CompanyName', msgFormatted: t('invalid_company_name') },
+  //   { msg: 'CompanyName', msgFormatted: t('invalid_company_name') },
 
-    { msg: 'InvalidEmailFormat', msgFormatted: t('invalid_email_format') },
-    { msg: 'invalid email format', msgFormatted: t('invalid_email_format') },
+  //    { msg: 'InvalidEmailFormat', msgFormatted: t('invalid_email_format') },
+  //    { msg: 'invalid email format', msgFormatted: t('invalid_email_format') },
 
-    { msg: 'Email already exists', msgFormatted: t('email_exists') },
-    { msg: 'email already exists', msgFormatted: t('email_exists') },
+  //    { msg: 'Email already exists', msgFormatted: t('email_exists') },
+  //    { msg: 'email already exists', msgFormatted: t('email_exists') },
 
-    { msg: 'Organization', msgFormatted: t('Organization_already_exists') },
+  //    { msg: 'Organization', msgFormatted: t('Organization_already_exists') },
 
-    { msg: 'password length', msgFormatted: t('password_length') },
+  //   { msg: 'password length', msgFormatted: t('password_length') },
 
-    { msg: 'mobile already exists', msgFormatted: t('mobile_exists') },
-    { msg: 'Mobile Already Exits.', msgFormatted: t('mobile_exists') },
+  //    { msg: 'mobile already exists', msgFormatted: t('mobile_exists') },
+  //    { msg: 'Mobile Already Exits.', msgFormatted: t('mobile_exists') },
 
-    { msg: 'Mobile format error', msgFormatted: t('mobile_format_error') },
-    { msg: 'invalid mobile', msgFormatted: t('mobile_format_error') },
+  //   { msg: 'Mobile format error', msgFormatted: t('mobile_format_error') },
+  //    { msg: 'invalid mobile', msgFormatted: t('mobile_format_error') },
 
-    {
-      msg: 'Organization already exists',
-      msgFormatted: t('organization_already_exists'),
-    },
-  ]
+  //   {
+  //     msg: 'Organization already exists',
+  //     msgFormatted: t('organization_already_exists'),
+  //   },
+  // ]
 
   return (
     <div className="registration-page">
@@ -573,9 +573,11 @@ const RegistrationPage = () => {
           description={t('you_can')}
           visible={confirmDialogVisible}
           msg={
-            errorMsg?.find((el) =>
-              confirmDialogVisible?.error?.includes(el?.msg),
-            )?.msgFormatted || confirmDialogVisible?.error
+            // errorMsg?.find((el) =>
+            //   confirmDialogVisible?.error?.includes(el?.msg),
+            // )?.msgFormatted ||
+
+            confirmDialogVisible?.error
           }
           imgCard={successRegister}
           onHide={() => {
