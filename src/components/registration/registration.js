@@ -573,11 +573,10 @@ const RegistrationPage = () => {
           description={t('you_can')}
           visible={confirmDialogVisible}
           msg={
-            // errorMsg?.find((el) =>
-            //   confirmDialogVisible?.error?.includes(el?.msg),
-            // )?.msgFormatted ||
-
             confirmDialogVisible?.error
+            // || errorMsg?.find((el) =>
+            //   confirmDialogVisible?.error?.includes(el?.msg),
+            // )?.msgFormatted
           }
           imgCard={successRegister}
           onHide={() => {
