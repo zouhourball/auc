@@ -5,7 +5,7 @@ import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef } from 'react'
 import CompanyInfoById from 'components/company-info-by-id'
 import { getPublicUrl } from 'libs/utils/custom-function'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang, useSupportedLangs } from 'libs/langs'
 
 import { eventsList } from './helper'
 
@@ -20,7 +20,7 @@ export let navigate = {
   TODAY: 'TODAY',
   DATE: 'DATE',
 }
-
+let day = ''
 const CalendarCustom = ({
   setVisibleAreYouSure,
   setVisibleReschedule,
@@ -35,6 +35,20 @@ const CalendarCustom = ({
   setCalendarDate,
 }) => {
   const { t } = useTranslation()
+  const langs = useSupportedLangs()
+  const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
+  // console.log(localizer.format(date, 'dddd', 'ar'), 'weekdayFormat')
+
+  // const lang = () => {
+  // if (currentLang.key === 'ar') {
+  // return (localizer.format(date, 'dddd', 'ar')
+  // )
+  // } else {
+  // return (localizer.format(date, 'dddd', 'en-US'))
+  // }
+  // }
+
+  // console.log(day, 'day')
 
   const localizer = momentLocalizer(moment)
   const ref = useRef()
@@ -175,7 +189,14 @@ const CalendarCustom = ({
   })
   const formats = {
     weekdayFormat: (date, culture, localizer) => {
-      return localizer.format(date, 'dddd', 'ar')
+      if (currentLang.key === 'ar') {
+        day = localizer.format(date, 'dddd', 'ar')
+      } else {
+        day = localizer.format(date, 'ddd', 'en-US')
+      }
+      return day
+
+      // return localizer.format(date, 'dddd', 'ar')
     },
   }
   return (
