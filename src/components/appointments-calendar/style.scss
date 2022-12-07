@@ -7,4 +7,32 @@
     font-size: 18px;
     font-weight: bold;
   }
+
+  .rbc-calendar {
+    .rbc-row-bg {
+      .rbc-day-bg {
+        &.rbc-today {
+          background-color: #fff;
+        }
+      }
+
+      & + .rbc-row-content {
+        .rbc-row {
+          .rbc-date-cell {
+            padding-top: 5px;
+
+            &.rbc-now.rbc-current {
+              .rbc-button-link {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: #5078e1;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
