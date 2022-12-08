@@ -78,7 +78,7 @@ const AppointmentsCalendar = () => {
         dispatch(
           addToast(
             <ToastMsg
-              text={'Appointment Canceled Successfully'}
+              text={t('appointment_canceled_successfully')}
               type="success"
             />,
           ),

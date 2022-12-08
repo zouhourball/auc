@@ -1,9 +1,12 @@
 import { Button, DialogContainer } from 'react-md'
 import closeIcon from './Auction Ended.svg'
+import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
 const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
+  const { t } = useTranslation()
+
   return (
     <DialogContainer
       visible={visible}
@@ -13,7 +16,7 @@ const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
       title={
         <div className="title">
           <img height={40} src={closeIcon} />
-          <div>Are you sure you want to cancel the appointment ?</div>
+          <div>{t('are_you_sure_you_want_cancel')}</div>
         </div>
       }
     >
