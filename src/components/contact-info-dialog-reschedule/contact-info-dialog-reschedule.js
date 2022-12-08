@@ -21,6 +21,7 @@ const ContactInfoDialogreschedule = ({
   calendarDate,
   setCalendarDate,
   renderTimeSlots,
+  availabilitiesConfig,
 }) => {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
 
@@ -35,10 +36,18 @@ const ContactInfoDialogreschedule = ({
           setStartTime(el?.value)
           setRescheduleData((prev) => ({
             ...prev,
-            appointment_date: moment(date)
+            appointment_date: `${moment(date).format(
+              'YYYY-MM-DD',
+            )}T00:00:00.000Z`,
+            time: moment(date)
               .hour(moment(el?.value).hour())
               .minute(moment(el?.value).minute())
               .valueOf(),
+
+            // moment(date)
+            //   .hour(moment(el?.value).hour())
+            //   .minute(moment(el?.value).minute())
+            //   .valueOf(),
           }))
         }}
       >
@@ -46,7 +55,18 @@ const ContactInfoDialogreschedule = ({
       </div>
     ))
   }
-
+  const renderType =
+    availabilitiesConfig?.type === 'Both'
+      ? [
+        { label: 'In-person', value: 'In-person' },
+        { label: 'Online', value: 'Online' },
+      ]
+      : [
+        {
+          label: availabilitiesConfig?.type,
+          value: availabilitiesConfig?.type,
+        },
+      ]
   return (
     <DialogContainer
       visible={visible}
@@ -79,10 +99,7 @@ const ContactInfoDialogreschedule = ({
       </label>
       <SelectField
         id="select-field-3-1"
-        menuItems={[
-          { label: 'In-person', value: 'In-person' },
-          { label: 'Online', value: 'Online' },
-        ]}
+        menuItems={renderType}
         required
         simplifiedMenu={false}
         onChange={(v) => {

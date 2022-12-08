@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { cls } from 'reactutils'
 import { get } from 'lodash-es'
 import { useQuery, useMutation } from 'react-query'
+import { useQuery as useQueryApollo } from 'react-apollo-hooks'
+import signOutEnabled from 'images/sign_out_enable.svg'
+import organisationByID from 'libs/queries/organization-by-id.gql'
 
 import {
   // countNotifications,
@@ -23,6 +26,7 @@ import {
   MenuButton,
   Avatar,
   Badge,
+  DialogContainer,
 } from 'react-md'
 import { Link, navigate } from '@reach/router'
 // import meera from './images/meera-logo.svg'
@@ -64,6 +68,7 @@ const TopBar = ({
   const langs = useSupportedLangs()
   const changeLang = useChangeLanguage()
   const [openMenu, setOpenMenu] = useState(false)
+  const [signOutDialog, setSignOutdialog] = useState(false)
   const [currentModule, setCurrentModule] = useState('')
   const [newNotif, setNewNotif] = useState('')
   // const [auctionsMenu, setAuctionsMenu] = useState(false)
@@ -79,6 +84,18 @@ const TopBar = ({
   //     enabled: logged,
   //   },
   // )
+  const { data: organization } = useQueryApollo(organisationByID, {
+    context: {
+      uri: `${PRODUCT_APP_URL_PROFILE}/graphql`,
+      // skip: !orgId,
+    },
+    variables: {
+      orgId: broker,
+    },
+  })
+  useEffect(() => {
+    setTimeout(() => setNewNotif(''), 5000)
+  }, [newNotif?.id])
   const { data: notifications, refetch: refetchNotifs } = useQuery(
     ['getNotifications', 3],
     getNotifications,
@@ -183,7 +200,6 @@ const TopBar = ({
       })
     )
   }
-
   return (
     <div className={cls(`top-bar`, clear && 'clear', className)}>
       <div className="top-bar-content">
@@ -482,8 +498,7 @@ const TopBar = ({
                       <p
                         className="top-bar-profile-avatar-actions-sign-out"
                         onClick={() => {
-                          cleanUp()
-                          navigate('/public/home')
+                          setSignOutdialog(true)
                         }}
                       >
                         {t('sign_out')}
@@ -499,23 +514,34 @@ const TopBar = ({
                 }}
                 position={MenuButton.Positions.BOTTOM}
               >
-                <UserInfoBySubject key={user?.subject} subject={user?.subject}>
-                  {(res) => {
-                    return (
-                      <Avatar
-                        src={
-                          get(res, 'photo.aPIURL', null)
-                            ? getPublicUrl(res?.photo?.aPIURL)
-                            : null
-                        }
-                      >
-                        {get(res, 'photo.aPIURL', null)
-                          ? null
-                          : get(res, 'fullName.0', '')}
-                      </Avatar>
-                    )
-                  }}
-                </UserInfoBySubject>
+                {broker ? (
+                  <Avatar
+                    src={getPublicUrl(
+                      organization?.companyByOrganisationID?.companyLogo?.aPIID,
+                    )}
+                  />
+                ) : (
+                  <UserInfoBySubject
+                    key={user?.subject}
+                    subject={user?.subject}
+                  >
+                    {(res) => {
+                      return (
+                        <Avatar
+                          src={
+                            get(res, 'photo.aPIURL', null)
+                              ? getPublicUrl(res?.photo?.aPIURL)
+                              : null
+                          }
+                        >
+                          {get(res, 'photo.aPIURL', null)
+                            ? null
+                            : get(res, 'fullName.0', '')}
+                        </Avatar>
+                      )
+                    }}
+                  </UserInfoBySubject>
+                )}
               </MenuButton>
             </div>
           )}
@@ -578,6 +604,41 @@ const TopBar = ({
           )}
         </Drawer>
       </div>
+      {signOutDialog && (
+        <DialogContainer
+          visible={signOutDialog}
+          dialogClassName="change-email-dialog"
+          focusOnMount={false}
+          onHide={() => setSignOutdialog(false)}
+          actions={[
+            <Button key={'2'} flat onClick={() => setSignOutdialog(false)}>
+              {t('cancel')}
+            </Button>,
+            <Button
+              key={'3'}
+              flat
+              primary
+              swapTheming
+              onClick={() => {
+                cleanUp()
+                navigate('/public/home')
+              }}
+            >
+              {t('confirm')}
+            </Button>,
+          ]}
+        >
+          <div style={{ margin: '20px auto', textAlign: 'center' }}>
+            <img
+              src={signOutEnabled}
+              width={50}
+              height={50}
+              className="success-image"
+            />
+          </div>
+          <h2 style={{ textAlign: 'center' }}>{t('are_you_sure')}</h2>
+        </DialogContainer>
+      )}
     </div>
   )
 }
