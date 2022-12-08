@@ -137,11 +137,11 @@ const CalendarCustom = ({
             </div>
             <div className="event-item">
               <div className={`event-item-status confirmed`} />
-              <div className="label">{t('confirmed')}</div>
+              <div className="label">{t('confirm')}</div>
             </div>
             <div className="event-item">
               <div className={`event-item-status cancelled`} />
-              <div className="label">{t('canclled')}</div>
+              <div className="label">{t('cancel')}</div>
             </div>
           </div>
         </div>
@@ -253,21 +253,21 @@ const CalendarCustom = ({
                 <div className="title">{selectedEvent?.title}</div>
               </div>
               <div className="info">
-                <div className="label">Type of Appointment</div>
+                <div className="label">{t('type_of_appointment')}</div>
                 <div className="value">{selectedEvent?.type}</div>
               </div>
 
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Location</div>
+                  <div className="label">{t('location')}</div>
                   <div className="value">{selectedEvent?.location}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Link</div>
+                  <div className="label">{t('link')}</div>
                   <div className="value">
                     {selectedEvent?.link || 'No link yet'}
                   </div>
@@ -275,7 +275,7 @@ const CalendarCustom = ({
               )}
 
               <div className="info">
-                <div className="label">Time</div>
+                <div className="label">{t('time')}</div>
                 <div className="value">{`${moment(selectedEvent?.start).format(
                   'hh:mm',
                 )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
@@ -315,27 +315,27 @@ const CalendarCustom = ({
                 </CompanyInfoById>
               </div>
               <div className="info">
-                <div className="label">Type of Appointment</div>
+                <div className="label">{t('type_of_appointment')}</div>
                 <div className="value">{selectedEvent?.type}</div>
               </div>
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Location</div>
+                  <div className="label">{t('location')}</div>
                   <div className="value">{selectedEvent?.location}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Link</div>
+                  <div className="label">{t('link')}</div>
                   <div className="value">
                     {selectedEvent?.link || 'No link yet'}
                   </div>
                 </div>
               )}
               <div className="info">
-                <div className="label">Time</div>
+                <div className="label">{t('time')}</div>
                 <div className="value">{`${moment(selectedEvent?.start).format(
                   'hh:mm',
                 )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
@@ -352,7 +352,7 @@ const CalendarCustom = ({
                           setSelectedEvent((prev) => ({ ...prev, hide: true }))
                         }}
                       >
-                        Reschedule Appointment
+                        {t('reschedule_appointment')}
                       </Button>
                     )}
                   </>
@@ -366,7 +366,7 @@ const CalendarCustom = ({
                         setSelectedEvent((prev) => ({ ...prev, hide: true }))
                       }}
                     >
-                      Cancel Appointment
+                      {t('cancel_appointment')}
                     </Button>
                     {!broker && (
                       <Button
@@ -377,7 +377,7 @@ const CalendarCustom = ({
                           setSelectedEvent((prev) => ({ ...prev, hide: true }))
                         }}
                       >
-                        Reschedule Appointment
+                        {t('reschedule_appointment')}
                       </Button>
                     )}
                   </>
