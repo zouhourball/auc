@@ -104,18 +104,60 @@
 
 .change-email-dialog {
   &.md-background--card {
-    width: 320px;
+    width: 400px;
     border-radius: 30px;
   }
 
   .md-dialog-content--padded {
     padding: 24px 24px;
+    // height: 300px;
+
+    &::-webkit-scrollbar {
+      visibility: visible;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 42px;
+      height: 100%;
+      transition: all 400ms;
+      opacity: 1;
+    }
+
+    &::-webkit-scrollbar-track {
+      visibility: visible;
+      height: 100%;
+      border: 15px solid #fff;
+      border-radius: 30px;
+      opacity: 1;
+      background-color: #d0d0d0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      visibility: visible;
+      border: 15px solid transparent;
+      border-radius: 30px;
+      background-color: #7c7c7c;
+      background-clip: content-box;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar-track,
+      &::-webkit-scrollbar,
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
   }
 
   .md-dialog-footer {
     justify-content: center;
-    padding-top: 0;
+    padding-top: 10px;
     border-top: none;
+
+    span {
+      margin: 0;
+    }
   }
 
   h2 {

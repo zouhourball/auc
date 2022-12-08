@@ -3,7 +3,7 @@ import {
   Button,
   Checkbox,
   DialogContainer,
-  SelectField,
+  // SelectField,
   TextField,
 } from 'react-md'
 
@@ -30,6 +30,7 @@ import { useMutation } from 'react-query'
 import ToastMsg from 'components/toast-msg'
 import { addToast } from 'modules/app/actions'
 import { useDispatch } from 'react-redux'
+import CustomSelectWithSearch from 'components/custom-select-with-search'
 
 const Security = ({ userInfo }) => {
   const { t } = useTranslation()
@@ -421,6 +422,11 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
     new: '',
     newCode: '',
   })
+
+  const [countryCodeSearch, setCountryCodeSearch] = useState('')
+  const [showListCountryCodes, handleShowListCountryCodes] = useState('')
+  const [showListCountryCodesNew, handleShowListCountryCodesNew] = useState('')
+
   const { mutate: changePhoneNumberOTP } = useMutation(sendVerifiedCode, {
     onSuccess: (res) => {
       if (res?.code === 'ok') {
@@ -430,7 +436,7 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
         dispatch(
           addToast(
             <ToastMsg
-              text={res?.message || 'Something went wrong'}
+              text={res?.error?.message || 'Something went wrong'}
               type="error"
             />,
             'hide',
@@ -541,7 +547,7 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
               style={{ display: 'flex', marginBottom: 8 }}
               className="change-num-selectField"
             >
-              <SelectField
+              {/* <SelectField
                 id={'country-code'}
                 className="country-code"
                 block
@@ -571,6 +577,61 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
                 }
                 simplifiedMenu={false}
                 position={SelectField.Positions.BELOW}
+              /> */}
+
+              <CustomSelectWithSearch
+                items={countriesCodes?.map((el) => ({
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      // onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={25} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
+                      {el?.value}
+                    </div>
+                  ),
+                  value: el?.value,
+                  name: el?.label,
+                }))}
+                label={t('country_code')}
+                hideSecondaryLabel={false}
+                listVisibility={showListCountryCodes}
+                setListVisibility={handleShowListCountryCodes}
+                selectedItem={
+                  countriesCodes?.find(
+                    (el) => el?.value === phoneNumber?.currentCode,
+                  )?.value || '+968'
+                }
+                selectedItemFlag={
+                  <img
+                    width={25}
+                    src={
+                      countriesCodes?.find(
+                        (el) =>
+                          el?.value === phoneNumber?.currentCode ||
+                          el?.value === '+968',
+                      )?.flag
+                    }
+                  />
+                }
+                searchPlaceholder={t('country_code')}
+                onClickItem={(itemSelected) => {
+                  setPhoneNumber((prev) => ({
+                    ...prev,
+                    currentCode: itemSelected?.value,
+                  }))
+                  setCountryCodeSearch('')
+                }}
+                hideAvatar={true}
+                withHeader={true}
+                searchItem={countryCodeSearch || ''}
+                setSearchItem={setCountryCodeSearch}
+                searchableKey={'name'}
+                searchItemPlaceHolder={t('search_country_code')}
+                singleSelect
+                // className="selectField-withShadow"
               />
               <div className="sep"></div>
               <TextField
@@ -592,7 +653,61 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
           <>
             <div className="gray-label">New Phone Number</div>
             <div style={{ display: 'flex' }} className="selectField">
-              <SelectField
+              <CustomSelectWithSearch
+                items={countriesCodes?.map((el) => ({
+                  label: (
+                    <div
+                      className="countries-dropdown"
+                      // onClick={() => setValues('countryCode', el?.value)}
+                      key={el?.value}
+                    >
+                      <img width={25} src={el?.flag} />
+                      <span className="hide-when-selected">{el?.label}</span>
+                      {el?.value}
+                    </div>
+                  ),
+                  value: el?.value,
+                  name: el?.label,
+                }))}
+                label={t('country_code')}
+                hideSecondaryLabel={false}
+                listVisibility={showListCountryCodesNew}
+                setListVisibility={handleShowListCountryCodesNew}
+                selectedItem={
+                  countriesCodes?.find(
+                    (el) => el?.value === phoneNumber?.newCode,
+                  )?.value || '+968'
+                }
+                selectedItemFlag={
+                  <img
+                    width={25}
+                    src={
+                      countriesCodes?.find(
+                        (el) =>
+                          el?.value === phoneNumber?.newCode ||
+                          el?.value === '+968',
+                      )?.flag
+                    }
+                  />
+                }
+                searchPlaceholder={t('country_code')}
+                onClickItem={(itemSelected) => {
+                  setPhoneNumber((prev) => ({
+                    ...prev,
+                    newCode: itemSelected?.value,
+                  }))
+                  setCountryCodeSearch('')
+                }}
+                hideAvatar={true}
+                withHeader={true}
+                searchItem={countryCodeSearch || ''}
+                setSearchItem={setCountryCodeSearch}
+                searchableKey={'name'}
+                searchItemPlaceHolder={t('search_country_code')}
+                singleSelect
+                // className="selectField-withShadow"
+              />
+              {/* <SelectField
                 id={'country-code'}
                 menuItems={countriesCodes?.map((el) => ({
                   value: el?.value,
@@ -622,7 +737,7 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
                 className="country-code"
                 simplifiedMenu={false}
                 position={SelectField.Positions.BELOW}
-              />
+              /> */}
               <div className="sep"></div>
               <TextField
                 id={'phone'}
