@@ -126,7 +126,6 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       hasNextPage && fetchNextPage()
     }
   }
-  // console.log(information, 'information')
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
@@ -212,12 +211,9 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       </div>
       <div className="md-cell md-cell--6">
         <div className="label">{t('phone_number')}*</div>
-        <div
-          className={`selectField ${edit ? 'disabled' : 'active'}`}
-          style={{ display: 'flex' }}
-        >
+        <div className={`selectField disabled`} style={{ display: 'flex' }}>
           <SelectField
-            disabled={edit}
+            disabled
             id={'country-code'}
             dropdownIcon={<FontIcon primary>expand_more</FontIcon>}
             menuItems={countriesCodes?.map((el) => ({
@@ -369,20 +365,20 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
               let keys = Object.keys(information) || []
               keys.forEach((el) => {
                 if (el === 'phoneMobile') {
-                  if (
-                    el === 'phoneMobile' &&
-                    information['country']?.phoneCode &&
-                    information[el]
-                  ) {
-                    myObject['phoneMobile'] = information[
-                      'country'
-                    ]?.phoneCode?.includes('+')
-                      ? information['country']?.phoneCode +
-                        information['phoneMobile']
-                      : '+' +
-                        information['country']?.phoneCode +
-                        information['phoneMobile']
-                  }
+                  //   if (
+                  //     el === 'phoneMobile' &&
+                  //     information['country']?.phoneCode &&
+                  //     information[el]
+                  //   ) {
+                  //     myObject['phoneMobile'] = information[
+                  //       'country'
+                  //     ]?.phoneCode?.includes('+')
+                  //       ? information['country']?.phoneCode +
+                  //         information['phoneMobile']
+                  //       : '+' +
+                  //         information['country']?.phoneCode +
+                  //         information['phoneMobile']
+                  //   }
                 } else if (el === 'country') {
                   myObject['countryID'] = information['country']?.id
                 } else if (information[el]) {

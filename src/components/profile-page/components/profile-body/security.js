@@ -35,6 +35,7 @@ import CustomSelectWithSearch from 'components/custom-select-with-search'
 const Security = ({ userInfo }) => {
   const { t } = useTranslation()
   const [dialogType, setDialogType] = useState('')
+
   const [informations, setInformations] = useState({
     email: userInfo?.email
       ? userInfo?.email?.substring(0, 2) +
@@ -847,7 +848,6 @@ const ChangePasswordDialog = ({ visible, onHide, subject }) => {
       }
     },
   })
-
   const [step, setStep] = useState(0)
   return (
     <DialogContainer

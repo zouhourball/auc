@@ -50,13 +50,14 @@ const ProfilePage = ({ company, companyId }) => {
       <div className="profile-page-left md-cell md-cell--2">
         <ProfileMenu
           userInfo={
-            !company
-              ? {
-                // ...userInfo?.seeUserProfileBySubject?.user,
-                subject: currentUser?.mev2?.user?.subject,
-                ...data?.me?.userProfile,
-              }
-              : organization?.companyByOrganisationID
+            // !company
+            //   ?
+            {
+              // ...userInfo?.seeUserProfileBySubject?.user,
+              subject: currentUser?.mev2?.user?.subject,
+              ...data?.me?.userProfile,
+            }
+            // : organization?.companyByOrganisationID
           }
           company={company}
           currentView={currentView}
@@ -77,7 +78,10 @@ const ProfilePage = ({ company, companyId }) => {
                 subject: currentUser?.mev2?.user?.subject,
                 ...data?.me?.userProfile,
               }
-              : organization?.companyByOrganisationID
+              : {
+                subject: currentUser?.mev2?.user?.subject,
+                ...organization?.companyByOrganisationID,
+              }
           }
           currentView={currentView}
           refetch={() => {
