@@ -158,7 +158,7 @@ const CalendarCustom = ({
       const eventX = e.clientX
 
       const positionY = eventY - top + scrollTop + 100
-      const positionX = eventX - left + scrollLeft + 200
+      const positionX = eventX - left + scrollLeft + 100
 
       const elementHeight = myRef.current ? myRef.current.offsetHeight : 240
       const elementWidth = myRef.current ? myRef.current.offsetWidth : 300
