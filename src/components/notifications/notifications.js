@@ -2,7 +2,7 @@ import { Button, FontIcon, TextField } from 'react-md'
 import { useMemo, useState } from 'react'
 import { useInfiniteQuery, useMutation } from 'react-query'
 import moment from 'moment'
-import { useCurrentLang, useTranslation } from 'libs/langs'
+import { useCurrentLang, useTranslation, useSupportedLangs } from 'libs/langs'
 import { navigate } from '@reach/router'
 
 import {
@@ -30,6 +30,9 @@ const Notifications = ({ admin, refetchCount }) => {
   const [search, setSearch] = useState('')
   const [filterData, setFilterData] = useState({})
   const size = 7
+  const langs = useSupportedLangs()
+
+  const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
 
   const {
     data: listNotifications,
@@ -99,7 +102,9 @@ const Notifications = ({ admin, refetchCount }) => {
         id: el?.id,
         icon: renderIcon(el?.data?.icon),
         label: lang === 'ar' ? el?.data?.['title_ar'] : el?.title,
-        date: moment(el.createdAt).fromNow(),
+        date: moment(el.createdAt)
+          .locale(currentLang.key === 'ar' ? 'ar' : 'en')
+          .fromNow(),
         withPoint: !el.viewed,
         formattedDate: moment(el.createdAt).format('YYYY-MM-DD'),
         url: el?.data?.url,
