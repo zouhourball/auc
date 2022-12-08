@@ -8,6 +8,8 @@ import {
 import './style.scss'
 import propTypes from 'prop-types'
 import { useState } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import moment from 'moment'
 import Calendar from 'react-calendar'
 
@@ -23,6 +25,8 @@ const ContactInfoDialogreschedule = ({
   renderTimeSlots,
   availabilitiesConfig,
 }) => {
+  const { t } = useTranslation()
+
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
 
   const [startTime, setStartTime] = useState(moment().valueOf())
@@ -78,7 +82,7 @@ const ContactInfoDialogreschedule = ({
       }
       actions={[
         <Button key={1} flat onClick={onHide}>
-          Cancel
+          {t('cancel')}
         </Button>,
         <Button
           key={2}
