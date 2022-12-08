@@ -78,7 +78,9 @@ const ContactInfoDialogreschedule = ({
       focusOnMount={false}
       className="contact-info-dialog"
       title={
-        <div className="contact-info-dialog-title">reschedule Appointment</div>
+        <div className="contact-info-dialog-title">
+          {t('reschedule_appointment')}
+        </div>
       }
       actions={[
         <Button key={1} flat onClick={onHide}>
@@ -91,10 +93,10 @@ const ContactInfoDialogreschedule = ({
           swapTheming
           onClick={() => {
             onConfirm(rescheduleData)
-            onHide && onHide()
+            // onHide && onHide()
           }}
         >
-          Reschedule
+          {t('reschedule_appointment')}
         </Button>,
       ]}
     >
@@ -113,14 +115,14 @@ const ContactInfoDialogreschedule = ({
             type: v,
           }))
         }}
-        placeholder="Select type of Appointment"
+        placeholder={t('type_of_appointment')}
         position={SelectField.Positions.BELOW}
         value={type}
         className="selectField-withShadow md-cell md-cell--12"
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
       <label className="auction-details-form-label md-cell md-cell--12">
-        Date*{' '}
+        {t('date')}*{' '}
       </label>
 
       <div className="dateWrapper md-cell md-cell--12">
@@ -167,7 +169,7 @@ const ContactInfoDialogreschedule = ({
       </div>
 
       <label className="auction-details-form-label  md-cell md-cell--12">
-        Time*
+        {t('time')}*
       </label>
 
       {date && <div className="time-chip-wrapper">{renderChips()}</div>}

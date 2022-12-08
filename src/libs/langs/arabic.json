@@ -231,5 +231,6 @@
   "confirm": "تاكيد",
   "appointment_canceled_successfully": "تم الغاء الموعد بنجاح ",
 
-  "request_viewing_label": "طلب موعد"
+  "request_viewing_label": "طلب موعد",
+  "reschedule": " الموعد "
 }

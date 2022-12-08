@@ -27,7 +27,7 @@ const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
           className="cancel-btn"
           onClick={() => onHide()}
         >
-          cancel
+          {t('cancel')}
         </Button>
         <Button
           flat
@@ -39,7 +39,7 @@ const ContactInfoDialogappointment = ({ visible, onHide, onConfirm }) => {
             onHide()
           }}
         >
-          Confirm
+          {t('confirm')}
         </Button>
       </div>
     </DialogContainer>
