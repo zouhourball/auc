@@ -65,7 +65,7 @@ const CalendarCustom = ({
     let momentInstance = moment(date)
     let momentmonth =
       momentInstance
-        .locale(currentLang.key === 'ar' ? 'ar' : 'en-US')
+        .locale(currentLang.key === 'ar' ? 'ar' : 'en')
         .format('MMMM') +
       '    ' +
       moment(date).format('YYYY')
@@ -203,13 +203,14 @@ const CalendarCustom = ({
       if (currentLang.key === 'ar') {
         day = localizer.format(date, 'dddd', 'ar')
       } else {
-        day = localizer.format(date, 'ddd', 'en-US')
+        day = localizer.format(date, 'ddd', 'en')
       }
       return day
 
       // return localizer.format(date, 'dddd', 'ar')
     },
   }
+
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar
