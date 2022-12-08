@@ -126,6 +126,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       hasNextPage && fetchNextPage()
     }
   }
+  // console.log(information, 'information')
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
       <div className="personal-information-header md-cell md-cell--12">
@@ -194,9 +195,10 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       <div className="md-cell md-cell--6">
         <div className="label">{t('email_address')}*</div>
         <TextField
-          className={`textField ${edit ? 'disabled' : 'active'}`}
+          className={`textField 'disabled'`}
           block
-          disabled={edit}
+          disabled
+          // disabled={edit}
           id={'email'}
           placeholder={t('enter_email')}
           value={information?.email}
@@ -258,7 +260,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
           <div className="sep"></div>
           <TextField
             className="phoneField"
-            disabled={edit}
+            disabled
             id={'phone'}
             block
             placeholder={t('enter_phone_number')}
@@ -372,9 +374,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
                     information['country']?.phoneCode &&
                     information[el]
                   ) {
-                    myObject['phoneMobile'] =
-                      information['country']?.phoneCode +
-                      information['phoneMobile']
+                    myObject['phoneMobile'] = information[
+                      'country'
+                    ]?.phoneCode?.includes('+')
+                      ? information['country']?.phoneCode +
+                        information['phoneMobile']
+                      : '+' +
+                        information['country']?.phoneCode +
+                        information['phoneMobile']
                   }
                 } else if (el === 'country') {
                   myObject['countryID'] = information['country']?.id

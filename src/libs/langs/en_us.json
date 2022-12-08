@@ -391,5 +391,6 @@
   "daysFull": "days",
   "filter_date": "Filter Date",
   "search_for_notification": "Search for a notification",
-  "search_country_code": "search country code"
+  "search_country_code": "search country code",
+  "reschedule_success": "Reschedule done successfully"
 }
