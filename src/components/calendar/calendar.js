@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import CompanyInfoById from 'components/company-info-by-id'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { useTranslation, useCurrentLang, useSupportedLangs } from 'libs/langs'
+// import { formatRelative, subDays } from 'date-fns'
 
 import { eventsList } from './helper'
 
@@ -21,6 +22,7 @@ export let navigate = {
   DATE: 'DATE',
 }
 let day = ''
+
 const CalendarCustom = ({
   setVisibleAreYouSure,
   setVisibleReschedule,
@@ -48,19 +50,28 @@ const CalendarCustom = ({
   // }
   // }
 
-  // console.log(day, 'day')
-
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const CustomToolbar = (props) => {
-    let { label, date } = props
+    let { date } = props
     // const messages = {
     //   Thu: 'tuersday',
     //   Mon: 'Précédent',
 
     // }
+
+    let momentInstance = moment(date)
+    let momentmonth =
+      momentInstance
+        .locale(currentLang.key === 'ar' ? 'ar' : 'en-US')
+        .format('MMMM') +
+      '    ' +
+      moment(date).format('YYYY')
+
+    // console.log(momentmonth, 'calendarDate')
+
     const onNavigatee = (action) => {
       props.onNavigate(action)
       if (action === 'NEXT') {
@@ -118,7 +129,7 @@ const CalendarCustom = ({
           </div>
         </div>
         <div className="toolbar-bottom">
-          <span className="toolbar-bottom-label">{label}</span>
+          <span className="toolbar-bottom-label">{momentmonth}</span>
           <div className="toolbar-bottom-legend">
             <div className="event-item">
               <div className={`event-item-status pending`} />
