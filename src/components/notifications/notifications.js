@@ -144,8 +144,9 @@ const Notifications = ({ admin, refetchCount }) => {
       })
       : search
         ? notifications?.filter((el) => el?.label?.toLowerCase().includes(search))
-        : notifications
+        : notifications?.filter((el) => el)
   }, [filterData, listNotifications, search])
+  // console.log(renderNotification, notifications, 'render')
   const onMarkRead = () => markAllRead()
   // Promise.all(
   //   renderNotification
