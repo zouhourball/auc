@@ -978,6 +978,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           className="top-bar-menu"
           icon
           iconChildren={<FontIcon>more_vert</FontIcon>}
+          listClassName={'edit-list'}
           menuItems={
             <div className="top-bar-menu-items">
               <Button onClick={() => onDisableEdit()}>
@@ -990,13 +991,12 @@ const MyAuctionDetails = ({ auctionId }) => {
               )}
             </div>
           }
-          listInline
           centered
           anchor={{
             x: MenuButton.HorizontalAnchors.CENTER,
             y: MenuButton.VerticalAnchors.CENTER,
           }}
-          position={MenuButton.Positions.BOTTOM}
+          position={MenuButton.Positions.BOTTOM_RIGHT}
         ></MenuButton>
       </div>
       {showMore && (

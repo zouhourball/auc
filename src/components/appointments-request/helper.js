@@ -25,7 +25,7 @@ export const configs = (
   {
     label: 'Appointment Type',
     key: 'appointmentType',
-    width: '300',
+    width: '200',
     type: 'text',
     displayInCsv: true,
   },

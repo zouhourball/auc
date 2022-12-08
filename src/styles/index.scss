@@ -111,6 +111,13 @@ body {
       margin-bottom: 20px;
     }
 
+    .md-text--error {
+      color: #fc0d1b;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
     .md-text-field {
       font-size: 16px;
     }
@@ -150,6 +157,10 @@ body {
       bottom: -7px;
       left: 0;
       transform: translateY(100%);
+      color: #fc0d1b;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
     }
 
     .md-ink-container {
@@ -328,6 +339,7 @@ body,
 .addressBook-root {
   height: 100%;
   overflow-x: hidden;
+  font-family: Roboto, sans-serif;
 
   > div[tabindex='-1'][style='outline: none;'] {
     height: 100%;

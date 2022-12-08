@@ -150,8 +150,15 @@
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     }
 
-    .xeena-table-body,
     .xeena-table-header {
+      .xeena-cell {
+        &:nth-child(1) {
+          color: #f1f1f1;
+        }
+      }
+    }
+
+    .xeena-table-body {
       border: none;
 
       .xeena-row {
