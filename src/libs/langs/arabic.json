@@ -79,7 +79,7 @@
   "terms_condition": "الشروط والأحكام",
   "contact": "اتصل بنا",
   "services": "الخدمات",
-  "how_it_works": "كيف تعمل",
+  "how_it_works": "اسئلة مكررة",
   "my_activity": "نشاطي",
   "saved_auctions": "المزادات المحفوظة",
   "my_participation": "مشاركتي",
@@ -221,5 +221,16 @@
   "submit": "تقديم",
   "calendar": "التقويم",
   "save": "حفظ",
-  "no_notifications": "لا توجد إشعارات"
+
+  "no_notifications": "لا توجد إشعارات",
+  "cancel_appointment": "الغاء الموعد ",
+  "reschedule_appointment": "تغيير الموعد ",
+  "time": "الوقت",
+  "type_of_appointment": "نوع الموعد",
+  "are_you_sure_you_want_cancel": "هل انت متاكد من انك تريد الغاء الموعد؟ ",
+  "confirm": "تاكيد",
+  "appointment_canceled_successfully": "تم الغاء الموعد بنجاح ",
+
+  "request_viewing_label": "طلب موعد",
+  "reschedule": " الموعد "
 }
