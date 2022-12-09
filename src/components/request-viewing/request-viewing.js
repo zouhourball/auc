@@ -159,7 +159,7 @@ const RequestViewing = ({
         <TextField
           className="textField-withShadow"
           // label={t('enter_reason_here')}
-          placeholder={t('reason_for_the_rejection')}
+          placeholder={t('type_message_here')}
           // value={description}
           // onChange={setDescription}
           rows={5}

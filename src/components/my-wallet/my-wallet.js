@@ -3,14 +3,13 @@ import { Button, TextField } from 'react-md'
 
 import './style.scss'
 const MyWallet = ({
-  totalAmount,
-  committed,
-  nbrAuction,
-  available,
+  myWalletData,
+  refetchWallet,
   amount,
   setAmount,
   onContinue,
 }) => {
+  const { balance, currency } = myWalletData
   const [tab, setTab] = useState(1)
   const [type, setType] = useState('card')
   return (
@@ -18,21 +17,21 @@ const MyWallet = ({
       <div>My Wallet</div>
       <div className="my-wallet-card">
         <div>Total Amount </div>
-        <div>{totalAmount} AED</div>
-        <div>Committed</div>
         <div>
-          {committed}AED ({nbrAuction + 'auctions'})
+          {balance} {currency?.name}
         </div>
+        <div>Committed</div>
+        <div>0{currency?.name}</div>
         <div>Available</div>
-        <div>{available} AED</div>
+        <div>0 {currency?.name}</div>
       </div>
       <div className="my-wallet-tab">
-        <div onClick={() => setTab(1)}> Deposit</div>
-        <div onClick={() => setTab(2)}>withdraw</div>
+        <Button onClick={() => setTab(1)}> Deposit</Button>
+        <Button onClick={() => setTab(2)}>withdraw</Button>
       </div>
       {tab === 1 && (
         <>
-          <div className="title">Deposit Amount</div>
+          {/* <div className="title">Deposit Amount</div>
           <TextField
             id="auctionTitle"
             placeholder={'Enter Amount'}
@@ -41,8 +40,33 @@ const MyWallet = ({
             className="textField-withShadow"
             required
             block
-          />
+          /> */}
 
+          <div>Payment Method</div>
+          <Button
+            onClick={() => {
+              setType('card')
+            }}
+            className={`${type === 'card' ? 'blue-border' : ''}`}
+          >
+            Credit/Debit Card
+          </Button>
+          <Button
+            onClick={() => {
+              setType('deposit')
+            }}
+            className={`${type === 'deposit' ? 'blue-border' : ''}`}
+          >
+            Bank Deposit{' '}
+          </Button>
+          <Button
+            onClick={() => {
+              setType('wire')
+            }}
+            className={`${type === 'wire' ? 'blue-border' : ''}`}
+          >
+            Bank Transfer{' '}
+          </Button>
           <div>
             <span>Note:</span>
             <span>
@@ -50,28 +74,6 @@ const MyWallet = ({
               your deposit hes been processed,you will be able to participate in
               the auction.{' '}
             </span>
-          </div>
-          <div>Payment Method</div>
-          <div
-            onClick={() => {
-              setType('card')
-            }}
-          >
-            Credit/Debit Card
-          </div>
-          <div
-            onClick={() => {
-              setType('deposit')
-            }}
-          >
-            Bank Deposit{' '}
-          </div>
-          <div
-            onClick={() => {
-              setType('wire')
-            }}
-          >
-            Wire Transfer{' '}
           </div>
         </>
       )}
@@ -88,7 +90,7 @@ const MyWallet = ({
             required
             block
           />
-          <div>Maximum withdraw Amount is 2,500 AED</div>
+          <div>Maximum withdraw Amount is 2,500 {currency?.name}</div>
         </>
       )}
       <Button
@@ -107,10 +109,10 @@ const MyWallet = ({
         className="top-up-dialog-button"
         onClick={(e) => {
           e.stopPropagation()
-          onContinue && onContinue({ type, amount })
+          onContinue && onContinue()
         }}
       >
-        Continue{' '}
+        Next{' '}
       </Button>
     </div>
   )

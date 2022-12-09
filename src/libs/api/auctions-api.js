@@ -876,3 +876,55 @@ export const deleteAuctionById = async ({ auctionId }) => {
   }
   return res
 }
+
+export const myWalletBalance = async () => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/my-wallet`, {
+      method: 'GET',
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const depositAmount = async ({ body }) => {
+  let res
+  try {
+    res = await fetchJSON(`${appUrl}/api/v1/wallet/payments/deposit/init`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const paymentRedirection = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/wallet/payments/status?order_id=${queryKey[1]}`,
+      {
+        method: 'GET',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
+export const walletHistory = async ({ queryKey }) => {
+  let res
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/my-wallet/history?page=${queryKey[1]?.page}&limit=${queryKey[1]?.limit}`,
+      {
+        method: 'GET',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}

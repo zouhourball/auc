@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // import moment from 'moment'
 
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'libs/langs'
 
 import { Button } from 'react-md'
-import { useQuery } from 'react-query'
-import { getMyAuctions } from 'libs/api/auctions-api'
+import { useMutation, useQuery } from 'react-query'
+import {
+  getMyAuctions,
+  myWalletBalance,
+  depositAmount,
+} from 'libs/api/auctions-api'
 import BiddingCard from 'components/bidding-card'
+import MyWallet from 'components/my-wallet'
+import PaymentDetailsDialog from 'components/payment-details-dialog'
 
 import './style.scss'
 
@@ -16,12 +22,15 @@ const ParticipatedAuctions = ({ meOrgs }) => {
   const user = useSelector(({ app }) => app?.userInfos)
 
   const [tab, setTab] = useState(0)
+  const [paymentDetails, setPaymentDetails] = useState(false)
+  const [depositData, setDepositData] = useState({})
   const tabsData = [
     { id: 0, label: t('active') },
     { id: 1, label: t('won') },
     { id: 2, label: t('lost') },
     { id: 3, label: t('my_deposit') },
   ]
+
   const renderTabName = () => {
     switch (tab) {
       case 0:
@@ -47,7 +56,28 @@ const ParticipatedAuctions = ({ meOrgs }) => {
     ],
     getMyAuctions,
   )
-
+  const { data: myWalletData, refetch: refetchWallet } = useQuery(
+    ['myWalletBalance'],
+    myWalletBalance,
+  )
+  const depositAmountMutation = useMutation(depositAmount, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        refetchWallet()
+        setPaymentDetails(false)
+        window.open(res?.['payment_url'])
+      }
+    },
+  })
+  useEffect(() => {
+    setDepositData({
+      return_url: `${PRODUCT_APP_URL_AUCTION}/auctions/my-participation`,
+      wallet_id: myWalletData?.uuid,
+      amount: {
+        currency: myWalletData?.currency?.name,
+      },
+    })
+  }, [myWalletData])
   const renderCards = () => {
     return myAuctions?.results?.map((el, i) => (
       <BiddingCard
@@ -74,7 +104,11 @@ const ParticipatedAuctions = ({ meOrgs }) => {
         <span>{el.label}</span>
       </Button>
     ))
-
+  const onDepositAmount = () => {
+    depositAmountMutation.mutate({
+      body: depositData,
+    })
+  }
   // const renderStatus = (auction) => {
   //   if (
   //     +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
@@ -90,12 +124,50 @@ const ParticipatedAuctions = ({ meOrgs }) => {
   return (
     <div className="auction-participation-list">
       <div className="auction-participation-list-header">
+        {myWalletData && (
+          <MyWallet
+            myWalletData={myWalletData}
+            refetchWallet={refetchWallet}
+            amount={0}
+            setAmount={() => {}}
+            onContinue={() => {
+              setPaymentDetails(true)
+            }}
+          />
+        )}
         <div className="title">{t('my_participation')}</div>
         <div className="tabs-list">{renderTabs()}</div>
       </div>
+
       <div className="md-grid auction-participation-list-cards">
         {renderCards()}
       </div>
+      {paymentDetails && (
+        <PaymentDetailsDialog
+          visible={paymentDetails}
+          onHide={() => setPaymentDetails(false)}
+          depositData={depositData}
+          setDepositData={setDepositData}
+          actions={[
+            <Button
+              key={'cancel-btn'}
+              onClick={() => {
+                setPaymentDetails(false)
+              }}
+            >
+              Cancel
+            </Button>,
+            <Button
+              key={'deposit-btn'}
+              onClick={() => {
+                onDepositAmount()
+              }}
+            >
+              Deposit Amount
+            </Button>,
+          ]}
+        />
+      )}
     </div>
   )
 }
