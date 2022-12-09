@@ -111,15 +111,18 @@ body {
       margin-bottom: 20px;
     }
 
+    .md-text-field {
+      color: #7c7c7c;
+      font-family: Roboto, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
     .md-text--error {
       color: #fc0d1b;
       font-family: Roboto, sans-serif;
       font-size: 14px;
       font-weight: 500;
-    }
-
-    .md-text-field {
-      font-size: 16px;
     }
 
     .md-text-field-inline-indicator {

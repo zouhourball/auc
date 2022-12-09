@@ -1,4 +1,4 @@
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 import { Button, FontIcon, SelectField, TextField } from 'react-md'
 import { useState } from 'react'
 import { useQuery, useMutation } from 'react-query'
@@ -30,6 +30,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
   const [selectedTime, setTime] = useState('')
   const [successRequestVisible, setSuccessRequestVisible] = useState(false)
+  let currentLang = useCurrentLang()
 
   // const [startDate, setStartDate] = useState(moment().valueOf())
   const [appointmentData, setAppointmentData] = useState({
@@ -198,12 +199,20 @@ const AuctionRequestAppointment = ({ auctionId }) => {
           className="back-btn"
           primary
           iconBefore
-          iconEl={<FontIcon>arrow_back</FontIcon>}
+          iconEl={
+            <FontIcon>
+              {currentLang === 'ar-SA' || currentLang === 'ar'
+                ? 'arrow_forward'
+                : 'arrow_back'}
+            </FontIcon>
+          }
           onClick={() => window.history.go(-1)}
         >
           {t('back_to_auctions')}
         </Button>
-        <div className="request-appointment-title">{t('request_viewing')}</div>
+        <div className="request-appointment-title">
+          {t('request_viewing_label')}
+        </div>
         <div>{t('please_fill_the_information')}</div>
         <div className="dateWrapper">
           <label className="auction-details-form-label">
@@ -312,7 +321,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
           </div>
         )}
         <div className="dateWrapper">
-          <label className="auction-details-form-label">{t('notes')}*</label>
+          <label className="auction-details-form-label">{t('Note')}*</label>
 
           <TextField
             className="textField-withShadow"

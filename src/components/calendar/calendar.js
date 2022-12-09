@@ -83,6 +83,7 @@ const CalendarCustom = ({
         setCalendarDate(moment(date).subtract(1, 'month').toISOString())
       }
     }
+
     return (
       <div className="toolbar">
         <div className="toolbar-top">
@@ -111,7 +112,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.PREVIOUS)}
             >
-              <FontIcon>chevron_left</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_right'
+                  : 'chevron_left'}
+              </FontIcon>
             </Button>
             <span
               onClick={() => onNavigatee(navigate.TODAY)}
@@ -124,7 +129,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.NEXT)}
             >
-              <FontIcon>chevron_right</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_left'
+                  : 'chevron_right'}
+              </FontIcon>
             </Button>
           </div>
         </div>
@@ -245,11 +254,11 @@ const CalendarCustom = ({
           {broker ? (
             <>
               <div className="info">
-                <div className="label">Auction Title</div>
+                <div className="label">{t('auction_title')}</div>
                 <div className="title">{selectedEvent?.auctionTitle}</div>
               </div>
               <div className="info">
-                <div className="label">Name</div>
+                <div className="label">{t('name')}</div>
                 <div className="title">{selectedEvent?.title}</div>
               </div>
               <div className="info">
@@ -291,7 +300,7 @@ const CalendarCustom = ({
                         setSelectedEvent((prev) => ({ ...prev, hide: true }))
                       }}
                     >
-                      Cancel Appointment
+                      {t('cancel_appointment')}
                     </Button>
                   </>
                 )}
@@ -316,7 +325,7 @@ const CalendarCustom = ({
               </div>
               <div className="info">
                 <div className="label">{t('type_of_appointment')}</div>
-                <div className="value">{selectedEvent?.type}</div>
+                <div className="value">{t(selectedEvent?.type)}</div>
               </div>
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">

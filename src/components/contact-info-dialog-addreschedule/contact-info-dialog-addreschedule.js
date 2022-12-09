@@ -83,8 +83,8 @@ const ContactInfoDialogaddreschedule = ({
   const renderType =
     availabilitiesConfig?.type === 'Both'
       ? [
-        { label: 'In-person', value: 'In-person' },
-        { label: 'Online', value: 'Online' },
+        { label: t('In-person'), value: 'In-person' },
+        { label: t('Online'), value: 'Online' },
       ]
       : [
         {
