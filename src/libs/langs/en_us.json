@@ -86,7 +86,7 @@
   "fourth_term": "Bidding shall be on each site individually electronically.",
   "fifth_term": "  The value of participation in the auction is (500) five hundred Omani riyals that are refundable for those who did not win the auction, in addition to (100) one hundred riyals that are non-refundable, and this does not include the registration fees on the electronic platform.",
   "services": "Services",
-  "how_it_works": "How it works",
+  "how_it_works": "FAQ",
   "my_activity": "My activity",
   "my_auctions": "My Auctions",
   "saved_auctions": "Saved Auctions",
@@ -384,12 +384,24 @@
   "Company_Name": "Company Name",
   "Logo": "Logo",
   "result_not_found": "We couldn't find what you're looking for!",
-  "No_Upcoming_Auctions": "No Upcoming Auctions",
+  "no_upcoming_auctions": "No Upcoming Auctions",
   "Company_Description": "Company Description",
   "back_to_upcoming_auctions": "back to upcoming auctions",
   "timing": "Timing",
   "daysFull": "days",
   "filter_date": "Filter Date",
   "search_for_notification": "Search for a notification",
-  "search_country_code": "search country code"
+  "search_country_code": "search country code",
+  "reschedule_success": "Reschedule done successfully",
+
+  "add_appointment": "Add Appointment",
+  "search_for_an_appointment": "Search for an appointment",
+  "confirmed": "Confirmed",
+  "canclled": "Canclled",
+
+  "cancel_appointment": "Cancel Appointment ",
+  "reschedule_appointment": "Reschedule Appointment ",
+  "are_you_sure_you_want_cancel": "Are you sure you want to cancel the appointment ? ",
+  "appointment_canceled_successfully": "Appointment Canceled Successfully",
+  "link": "Link"
 }

@@ -63,7 +63,14 @@ const ContactInfoDialogaddreschedule = ({
     ],
     filterAuctions,
   )
-
+  const validrescheule = () => {
+    return (
+      appointmentData?.title &&
+      appointmentData?.type &&
+      appointmentData?.date &&
+      appointmentData?.time
+    )
+  }
   const listAuctions = () => {
     return auctionsData?.results?.filter(
       (elem) => elem.allow_viewing_request === true,
@@ -226,9 +233,18 @@ const ContactInfoDialogaddreschedule = ({
       }
       actions={[
         <Button key={1} className="cancel-btn" flat onClick={onHide}>
-          Cancel
+          {t('cancel')}
         </Button>,
-        <Button key={2} flat primary swapTheming onClick={() => sendRequest()}>
+        <Button
+          key={2}
+          flat
+          primary
+          swapTheming
+          onClick={() => sendRequest()}
+          disabled={!validrescheule()}
+
+          // disabled={!appointmentData?.title || !appointmentData?.type || !appointmentData?.date || !appointmentData?.time}
+        >
           Add Appointment
         </Button>,
       ]}

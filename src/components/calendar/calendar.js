@@ -5,13 +5,15 @@ import { Avatar, Button, FontIcon, TextField } from 'react-md'
 import { useRef } from 'react'
 import CompanyInfoById from 'components/company-info-by-id'
 import { getPublicUrl } from 'libs/utils/custom-function'
+import { useTranslation, useCurrentLang, useSupportedLangs } from 'libs/langs'
+// import { formatRelative, subDays } from 'date-fns'
 
 import { eventsList } from './helper'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './style.scss'
 import { useSelector } from 'react-redux'
-import { useCurrentLang, useTranslation } from 'libs/langs'
+// import 'moment/locale/ar'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -19,6 +21,7 @@ export let navigate = {
   TODAY: 'TODAY',
   DATE: 'DATE',
 }
+let day = ''
 
 const CalendarCustom = ({
   setVisibleAreYouSure,
@@ -33,12 +36,41 @@ const CalendarCustom = ({
   search,
   setCalendarDate,
 }) => {
+  const { t } = useTranslation()
+  const langs = useSupportedLangs()
+  const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
+  // console.log(localizer.format(date, 'dddd', 'ar'), 'weekdayFormat')
+
+  // const lang = () => {
+  // if (currentLang.key === 'ar') {
+  // return (localizer.format(date, 'dddd', 'ar')
+  // )
+  // } else {
+  // return (localizer.format(date, 'dddd', 'en-US'))
+  // }
+  // }
+
   const localizer = momentLocalizer(moment)
   const ref = useRef()
   const myRef = useRef()
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const CustomToolbar = (props) => {
-    let { label, date } = props
+    let { date } = props
+    // const messages = {
+    //   Thu: 'tuersday',
+    //   Mon: 'Précédent',
+
+    // }
+
+    let momentInstance = moment(date)
+    let momentmonth =
+      momentInstance
+        .locale(currentLang.key === 'ar' ? 'ar' : 'en')
+        .format('MMMM') +
+      '    ' +
+      moment(date).format('YYYY')
+
+    // console.log(momentmonth, 'calendarDate')
 
     const onNavigatee = (action) => {
       props.onNavigate(action)
@@ -51,8 +83,6 @@ const CalendarCustom = ({
         setCalendarDate(moment(date).subtract(1, 'month').toISOString())
       }
     }
-    let currentLang = useCurrentLang()
-    const { t } = useTranslation()
 
     return (
       <div className="toolbar">
@@ -74,7 +104,7 @@ const CalendarCustom = ({
                 className="nav-btn add-btn"
                 onClick={() => setVisibleAddAppointment(true)}
               >
-                Add Appointment
+                {t('add_appointment')}
               </Button>
             )}
             <Button
@@ -92,7 +122,7 @@ const CalendarCustom = ({
               onClick={() => onNavigatee(navigate.TODAY)}
               className="toolbar-label nav-btn"
             >
-              Today
+              {t('today')}
             </span>
             <Button
               className="nav-btn"
@@ -108,19 +138,19 @@ const CalendarCustom = ({
           </div>
         </div>
         <div className="toolbar-bottom">
-          <span className="toolbar-bottom-label">{label}</span>
+          <span className="toolbar-bottom-label">{momentmonth}</span>
           <div className="toolbar-bottom-legend">
             <div className="event-item">
               <div className={`event-item-status pending`} />
-              <div className="label">Pending</div>
+              <div className="label">{t('pending')}</div>
             </div>
             <div className="event-item">
               <div className={`event-item-status confirmed`} />
-              <div className="label">Confirmed</div>
+              <div className="label">{t('confirm')}</div>
             </div>
             <div className="event-item">
               <div className={`event-item-status cancelled`} />
-              <div className="label">Cancelled</div>
+              <div className="label">{t('cancel')}</div>
             </div>
           </div>
         </div>
@@ -137,7 +167,7 @@ const CalendarCustom = ({
       const eventX = e.clientX
 
       const positionY = eventY - top + scrollTop + 100
-      const positionX = eventX - left + scrollLeft + 200
+      const positionX = eventX - left + scrollLeft + 100
 
       const elementHeight = myRef.current ? myRef.current.offsetHeight : 240
       const elementWidth = myRef.current ? myRef.current.offsetWidth : 300
@@ -177,9 +207,23 @@ const CalendarCustom = ({
   const popupRef = useClickOutside(() => {
     setSelectedEvent((prev) => ({ ...prev, hide: true }))
   })
+  const formats = {
+    weekdayFormat: (date, culture, localizer) => {
+      if (currentLang.key === 'ar') {
+        day = localizer.format(date, 'dddd', 'ar')
+      } else {
+        day = localizer.format(date, 'ddd', 'en')
+      }
+      return day
+
+      // return localizer.format(date, 'dddd', 'ar')
+    },
+  }
+
   return (
     <div className="appointments-calendar" ref={ref}>
       <Calendar
+        formats={formats}
         localizer={localizer}
         events={calendarAppointments || eventsList}
         step={60}
@@ -218,21 +262,21 @@ const CalendarCustom = ({
                 <div className="title">{selectedEvent?.title}</div>
               </div>
               <div className="info">
-                <div className="label">Type of Appointment</div>
+                <div className="label">{t('type_of_appointment')}</div>
                 <div className="value">{selectedEvent?.type}</div>
               </div>
 
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Location</div>
+                  <div className="label">{t('location')}</div>
                   <div className="value">{selectedEvent?.location}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Link</div>
+                  <div className="label">{t('link')}</div>
                   <div className="value">
                     {selectedEvent?.link || 'No link yet'}
                   </div>
@@ -240,7 +284,7 @@ const CalendarCustom = ({
               )}
 
               <div className="info">
-                <div className="label">Time</div>
+                <div className="label">{t('time')}</div>
                 <div className="value">{`${moment(selectedEvent?.start).format(
                   'hh:mm',
                 )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
@@ -280,27 +324,27 @@ const CalendarCustom = ({
                 </CompanyInfoById>
               </div>
               <div className="info">
-                <div className="label">Type of Appointment</div>
+                <div className="label">{t('type_of_appointment')}</div>
                 <div className="value">{selectedEvent?.type}</div>
               </div>
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Location</div>
+                  <div className="label">{t('location')}</div>
                   <div className="value">{selectedEvent?.location}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
                 <div className="info">
                   {' '}
-                  <div className="label">Link</div>
+                  <div className="label">{t('link')}</div>
                   <div className="value">
                     {selectedEvent?.link || 'No link yet'}
                   </div>
                 </div>
               )}
               <div className="info">
-                <div className="label">Time</div>
+                <div className="label">{t('time')}</div>
                 <div className="value">{`${moment(selectedEvent?.start).format(
                   'hh:mm',
                 )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
@@ -317,7 +361,7 @@ const CalendarCustom = ({
                           setSelectedEvent((prev) => ({ ...prev, hide: true }))
                         }}
                       >
-                        Reschedule Appointment
+                        {t('reschedule_appointment')}
                       </Button>
                     )}
                   </>
@@ -331,7 +375,7 @@ const CalendarCustom = ({
                         setSelectedEvent((prev) => ({ ...prev, hide: true }))
                       }}
                     >
-                      Cancel Appointment
+                      {t('cancel_appointment')}
                     </Button>
                     {!broker && (
                       <Button
@@ -342,7 +386,7 @@ const CalendarCustom = ({
                           setSelectedEvent((prev) => ({ ...prev, hide: true }))
                         }}
                       >
-                        Reschedule Appointment
+                        {t('reschedule_appointment')}
                       </Button>
                     )}
                   </>

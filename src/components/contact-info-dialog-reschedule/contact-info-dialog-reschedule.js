@@ -8,6 +8,8 @@ import {
 import './style.scss'
 import propTypes from 'prop-types'
 import { useState } from 'react'
+import { useTranslation } from 'libs/langs'
+
 import moment from 'moment'
 import Calendar from 'react-calendar'
 
@@ -21,7 +23,10 @@ const ContactInfoDialogreschedule = ({
   calendarDate,
   setCalendarDate,
   renderTimeSlots,
+  availabilitiesConfig,
 }) => {
+  const { t } = useTranslation()
+
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
 
   const [startTime, setStartTime] = useState(moment().valueOf())
@@ -35,10 +40,18 @@ const ContactInfoDialogreschedule = ({
           setStartTime(el?.value)
           setRescheduleData((prev) => ({
             ...prev,
-            appointment_date: moment(date)
+            appointment_date: `${moment(date).format(
+              'YYYY-MM-DD',
+            )}T00:00:00.000Z`,
+            time: moment(date)
               .hour(moment(el?.value).hour())
               .minute(moment(el?.value).minute())
               .valueOf(),
+
+            // moment(date)
+            //   .hour(moment(el?.value).hour())
+            //   .minute(moment(el?.value).minute())
+            //   .valueOf(),
           }))
         }}
       >
@@ -46,7 +59,18 @@ const ContactInfoDialogreschedule = ({
       </div>
     ))
   }
-
+  const renderType =
+    availabilitiesConfig?.type === 'Both'
+      ? [
+        { label: 'In-person', value: 'In-person' },
+        { label: 'Online', value: 'Online' },
+      ]
+      : [
+        {
+          label: availabilitiesConfig?.type,
+          value: availabilitiesConfig?.type,
+        },
+      ]
   return (
     <DialogContainer
       visible={visible}
@@ -54,11 +78,13 @@ const ContactInfoDialogreschedule = ({
       focusOnMount={false}
       className="contact-info-dialog"
       title={
-        <div className="contact-info-dialog-title">reschedule Appointment</div>
+        <div className="contact-info-dialog-title">
+          {t('reschedule_appointment')}
+        </div>
       }
       actions={[
         <Button key={1} flat onClick={onHide}>
-          Cancel
+          {t('cancel')}
         </Button>,
         <Button
           key={2}
@@ -67,22 +93,19 @@ const ContactInfoDialogreschedule = ({
           swapTheming
           onClick={() => {
             onConfirm(rescheduleData)
-            onHide && onHide()
+            // onHide && onHide()
           }}
         >
-          Reschedule
+          {t('reschedule_appointment')}
         </Button>,
       ]}
     >
       <label className="auction-details-form-label md-cell md-cell--12">
-        Type of Appointment
+        {t('type_of_appointment')}
       </label>
       <SelectField
         id="select-field-3-1"
-        menuItems={[
-          { label: 'In-person', value: 'In-person' },
-          { label: 'Online', value: 'Online' },
-        ]}
+        menuItems={renderType}
         required
         simplifiedMenu={false}
         onChange={(v) => {
@@ -92,14 +115,14 @@ const ContactInfoDialogreschedule = ({
             type: v,
           }))
         }}
-        placeholder="Select type of Appointment"
+        placeholder={t('type_of_appointment')}
         position={SelectField.Positions.BELOW}
         value={type}
         className="selectField-withShadow md-cell md-cell--12"
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
       <label className="auction-details-form-label md-cell md-cell--12">
-        Date*{' '}
+        {t('date')}*{' '}
       </label>
 
       <div className="dateWrapper md-cell md-cell--12">
@@ -146,7 +169,7 @@ const ContactInfoDialogreschedule = ({
       </div>
 
       <label className="auction-details-form-label  md-cell md-cell--12">
-        Time*
+        {t('time')}*
       </label>
 
       {date && <div className="time-chip-wrapper">{renderChips()}</div>}

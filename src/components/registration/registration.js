@@ -204,6 +204,25 @@ const RegistrationPage = () => {
       hasNextPage && fetchNextPage()
     }
   }
+
+  const disablevalidData = () => {
+    switch (currentTab) {
+      case 0:
+        return fullName && acceptTerms && email && password && phoneNum
+      case 1:
+        return (
+          acceptTerms &&
+          email &&
+          password &&
+          phoneNum &&
+          address &&
+          countryId &&
+          companyName
+        )
+      default:
+        return false
+    }
+  }
   const renderView = () => {
     switch (currentTab) {
       case 1:
@@ -519,15 +538,33 @@ const RegistrationPage = () => {
       },
     })
   }
-  const errorMsg = [
-    {
-      msg: 'invalid mobile',
-      msgFormatted: t(
-        'The phone number you add is invalid please enter the correct number',
-      ),
-    },
-    { msg: 'CompanyName', msgFormatted: t('invalid company name') },
-  ]
+  // const errorMsg = [
+  //   { msg: 'invalid mobile', msgFormatted: t('phone_number_neded') },
+
+  //   { msg: 'CompanyName', msgFormatted: t('invalid_company_name') },
+
+  //    { msg: 'InvalidEmailFormat', msgFormatted: t('invalid_email_format') },
+  //    { msg: 'invalid email format', msgFormatted: t('invalid_email_format') },
+
+  //    { msg: 'Email already exists', msgFormatted: t('email_exists') },
+  //    { msg: 'email already exists', msgFormatted: t('email_exists') },
+
+  //    { msg: 'Organization', msgFormatted: t('Organization_already_exists') },
+
+  //   { msg: 'password length', msgFormatted: t('password_length') },
+
+  //    { msg: 'mobile already exists', msgFormatted: t('mobile_exists') },
+  //    { msg: 'Mobile Already Exits.', msgFormatted: t('mobile_exists') },
+
+  //   { msg: 'Mobile format error', msgFormatted: t('mobile_format_error') },
+  //    { msg: 'invalid mobile', msgFormatted: t('mobile_format_error') },
+
+  //   {
+  //     msg: 'Organization already exists',
+  //     msgFormatted: t('organization_already_exists'),
+  //   },
+  // ]
+
   return (
     <div className="registration-page">
       {confirmDialogVisible && (
@@ -536,9 +573,10 @@ const RegistrationPage = () => {
           description={t('you_can')}
           visible={confirmDialogVisible}
           msg={
-            errorMsg?.find((el) =>
-              confirmDialogVisible?.error?.includes(el?.msg),
-            )?.msgFormatted || confirmDialogVisible?.error
+            confirmDialogVisible?.error
+            // || errorMsg?.find((el) =>
+            //   confirmDialogVisible?.error?.includes(el?.msg),
+            // )?.msgFormatted
           }
           imgCard={successRegister}
           onHide={() => {
@@ -612,7 +650,7 @@ const RegistrationPage = () => {
               <div className="terms-checkbox">
                 <Checkbox
                   id={'accept-terms'}
-                  checked={acceptTerms}
+                  checked={!!acceptTerms}
                   onChange={(v) => setValues('acceptTerms', v)}
                   checkedIcon={<FontIcon className="checked">check</FontIcon>}
                   uncheckedIcon={
@@ -631,7 +669,7 @@ const RegistrationPage = () => {
               <Button
                 className="signUp-btn"
                 onClick={() => (currentTab === 1 ? register() : signUp())}
-                disabled={!acceptTerms}
+                disabled={!disablevalidData()}
               >
                 {isLoading || loading ? <CircularProgress /> : t('sign_up')}
               </Button>

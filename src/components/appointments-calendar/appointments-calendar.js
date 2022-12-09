@@ -12,6 +12,7 @@ import {
   cancelRequest,
   rescheduleRequest,
   getAppointmentsRequest,
+  getAvailabilitiesConfig,
 } from 'libs/api/appointment-api'
 import ToastMsg from 'components/toast-msg'
 
@@ -55,6 +56,10 @@ const AppointmentsCalendar = () => {
     ],
     meOrgs?.length > 0 ? getRequestsForBrokerCalendar : getAppointmentsRequest,
   )
+  const { data: availabilitiesConfig } = useQuery(
+    ['getAvailabilitiesConfig', selectedEvent?.auctionId],
+    selectedEvent?.auctionId && getAvailabilitiesConfig,
+  )
   const { data: getAvailabilityData } = useQuery(
     [
       'getAvailability',
@@ -73,7 +78,7 @@ const AppointmentsCalendar = () => {
         dispatch(
           addToast(
             <ToastMsg
-              text={'Appointment Canceled Successfully'}
+              text={t('appointment_canceled_successfully')}
               type="success"
             />,
           ),
@@ -125,9 +130,13 @@ const AppointmentsCalendar = () => {
       reqUuid: selectedEvent?.id,
       body: {
         type: rescheduleData?.type,
-        appointment_date: rescheduleData?.date,
-        start_at: rescheduleData?.date,
-        end_at: moment(rescheduleData?.date).add(1, 'hours'),
+        appointment_date: rescheduleData?.['appointment_date'],
+        start_at: moment(moment(rescheduleData?.time).toISOString()),
+        end_at: moment(moment(rescheduleData?.time).toISOString()).add(
+          moment.duration(1, 'hours'),
+        ),
+        // start_at: rescheduleData?.date,
+        // end_at: moment(rescheduleData?.date).add(1, 'hours'),
       },
     })
   }
@@ -156,9 +165,10 @@ const AppointmentsCalendar = () => {
         start: new Date(el?.['start_at']), // new Date(2015, 3, 0),
         end: new Date(el?.['end_at']), // new Date(2015, 3, 1),
         status:
-          el?.status === 'Approved'
+          el?.status?.toLowerCase() === 'approved'
             ? 'confirmed'
-            : el?.status === 'Rejected'
+            : el?.status?.toLowerCase() === 'rejected' ||
+              el?.status?.toLowerCase() === 'canceled'
               ? 'cancelled'
               : 'pending',
         avatar: el?.['broker_organization_id'],
@@ -228,7 +238,7 @@ const AppointmentsCalendar = () => {
   }
   return (
     <div className="appointments-calendar-page">
-      <div className="appointments-calendar-page-title">Calendar</div>
+      <div className="appointments-calendar-page-title">{t('calendar')}</div>
       <CalendarCustom
         setVisibleAreYouSure={setVisibleAreYouSure}
         setVisibleReschedule={setVisibleReschedule}
@@ -241,6 +251,7 @@ const AppointmentsCalendar = () => {
         setSearch={setSearch}
         search={search}
         setCalendarDate={setCalendarDate}
+        calendarDate={calendarDate}
       />
       {visibleAreYouSure && selectedEvent?.status !== 'cancelled' && (
         <ContactInfoDialogappointment
@@ -264,11 +275,12 @@ const AppointmentsCalendar = () => {
           calendarDate={calendarDate}
           setCalendarDate={setCalendarDate}
           renderTimeSlots={renderTimeSlots()}
+          availabilitiesConfig={availabilitiesConfig}
         />
       )}
       {visibleSuccessReschedule && (
         <ConfirmDialog
-          title={t('request_for_viewing_success')}
+          title={t('reschedule_success')}
           description={t('wait_for_approval')}
           visible={visibleSuccessReschedule}
           imgCard={successRegister}
