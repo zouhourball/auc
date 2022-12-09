@@ -352,7 +352,6 @@
   "note": "Note",
   "online_link_note": "Online link will appear in 'Appointments' once it is approved by the broker",
   "online_link_note_broker": "Online link should be sent manually once you approve appointment request",
-  "type_message_here": "Type message here",
   "request_for_viewing_success": "Request for Viewing Sent Successfully",
   "wait_for_approval": "Please wait for approval from the broker",
   "requests": "Requests",
@@ -414,5 +413,10 @@
   "action": "Action",
   "title_label": "Title",
   "Cancel": "Cancel",
-  "Canceled": "Canceled"
+  "Canceled": "Canceled",
+
+  "select_type_of_appointment": "Select Type of Appointment",
+  "reason_for_the_rejection": "Reason for the rejection of invoice will be written here",
+  "Note": "Note",
+  "type_message_here": "Reason for the rejection of the invoice will be written here"
 }

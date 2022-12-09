@@ -80,7 +80,7 @@ const RequestViewing = ({
           onChange={(v) => {
             // location.reload()
           }}
-          placeholder="Select type of Appointment"
+          placeholder={t('select_type_of_appointment')}
           position={SelectField.Positions.BELOW}
           value={''}
           className="langSelector"
@@ -159,9 +159,7 @@ const RequestViewing = ({
         <TextField
           className="textField-withShadow"
           // label={t('enter_reason_here')}
-          placeholder={
-            'Reason for the rejection of invoice will be written here'
-          }
+          placeholder={t('reason_for_the_rejection')}
           // value={description}
           // onChange={setDescription}
           rows={5}
