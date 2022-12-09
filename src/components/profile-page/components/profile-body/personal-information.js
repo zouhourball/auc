@@ -244,9 +244,11 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
             }))}
             defaultValue={'+968'}
             value={
-              information?.country?.phoneCode?.includes('+')
-                ? information?.country?.phoneCode
-                : '+' + information?.country?.phoneCode
+              information?.country
+                ? information?.country?.phoneCode?.includes('+')
+                  ? information?.country?.phoneCode
+                  : '+' + information?.country?.phoneCode
+                : userInfo?.phoneMobile?.substr(0, 4)
             }
             //   onChange={(value) => setInformation('countryCode', value)}
             className="country-code"

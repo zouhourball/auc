@@ -83,6 +83,7 @@ const CalendarCustom = ({
         setCalendarDate(moment(date).subtract(1, 'month').toISOString())
       }
     }
+
     return (
       <div className="toolbar">
         <div className="toolbar-top">
@@ -111,7 +112,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.PREVIOUS)}
             >
-              <FontIcon>chevron_left</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_right'
+                  : 'chevron_left'}
+              </FontIcon>
             </Button>
             <span
               onClick={() => onNavigatee(navigate.TODAY)}
@@ -124,7 +129,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.NEXT)}
             >
-              <FontIcon>chevron_right</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_left'
+                  : 'chevron_right'}
+              </FontIcon>
             </Button>
           </div>
         </div>

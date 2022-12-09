@@ -25,9 +25,14 @@
     }
 
     .langSelector {
+      .md-paper--1 {
+        box-shadow: none;
+      }
+
       .md-icon-text {
         padding-right: 6px;
         color: #5078e1;
+        font-family: Roboto, sans-serif;
         font-size: 16px;
         font-weight: 500;
 
@@ -43,6 +48,10 @@
       .md-icon {
         color: #5078e1;
         font-size: 24px;
+      }
+
+      .md-list {
+        border-radius: 6px;
       }
     }
   }
