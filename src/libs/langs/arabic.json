@@ -86,7 +86,6 @@
   "villa": "فيلا",
   "close": "إغلاق",
   "auctions_details": "مزاداتي-التفاصيل",
-  "title_label": "العنوان:",
   "property_type_label": "نوع العقار:",
   "address_label": "العنوان:",
   "city_label": "المدينة:",
@@ -194,8 +193,10 @@
   "New Request": "طلب جديد",
   "Approved": "تم الموافقة",
   "reject": "رفض",
+
   "approve": "موافقة",
   "approved": "تم الموافقة",
+
   "rejected": "مرفوض",
   "Pending": "في الإنتظار",
   "edit_details": "تعديل",
@@ -232,5 +233,17 @@
   "appointment_canceled_successfully": "تم الغاء الموعد بنجاح ",
 
   "request_viewing_label": "طلب موعد",
-  "reschedule": " الموعد "
+  "reschedule": " الموعد ",
+
+  "notes": "ملاحظة",
+  "name": "الاسم",
+  "date": "التاريخ",
+  "Edit_location": "تعديل الموقع",
+  "Add_link": "اضف رابط",
+  "View_link": " عرض رابط",
+  "In-person": "حضوري",
+  "Online": "اونلاين",
+  "action": "",
+  "Cancel": "إلغاء",
+  "Canceled": "ملغي"
 }

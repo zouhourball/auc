@@ -617,7 +617,7 @@ const MyAuctionDetails = ({ auctionId }) => {
     <Checkbox
       key={'in-person'}
       id={`in-person`}
-      label={'In-person'}
+      label={t('In-person')}
       onChange={() => {
         setAppointmentType((prev) =>
           prev?.includes('In-person')
@@ -651,7 +651,7 @@ const MyAuctionDetails = ({ auctionId }) => {
           <div className="column">
             <div className={`row  ${editMode ? 'underlined' : 'outlined'}`}>
               <label className="auction-details-form-label">
-                {t('title_label')}
+                {t('title_label')} :
               </label>
               <TextField
                 id={'title'}

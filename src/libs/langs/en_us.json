@@ -94,7 +94,6 @@
   "villa": "Villa",
   "close": "close",
   "auctions_details": "My Auctions - Details",
-  "title_label": "Title:",
   "property_type_label": "Property Type:",
   "address_label": "Address:",
   "city_label": "City:",
@@ -403,5 +402,17 @@
   "reschedule_appointment": "Reschedule Appointment ",
   "are_you_sure_you_want_cancel": "Are you sure you want to cancel the appointment ? ",
   "appointment_canceled_successfully": "Appointment Canceled Successfully",
-  "link": "Link"
+  "link": "Link",
+
+  "name": "Name",
+  "Edit_location": "Edit Location",
+  "Add_link": "Add Link",
+  "View_link": "View Link",
+  "In-person": "In-person",
+  "Online": "Online",
+  "Approved": "Approved",
+  "action": "Action",
+  "title_label": "Title",
+  "Cancel": "Cancel",
+  "Canceled": "Canceled"
 }

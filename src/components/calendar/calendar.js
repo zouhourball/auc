@@ -254,11 +254,11 @@ const CalendarCustom = ({
           {broker ? (
             <>
               <div className="info">
-                <div className="label">Auction Title</div>
+                <div className="label">{t('auction_title')}</div>
                 <div className="title">{selectedEvent?.auctionTitle}</div>
               </div>
               <div className="info">
-                <div className="label">Name</div>
+                <div className="label">{t('name')}</div>
                 <div className="title">{selectedEvent?.title}</div>
               </div>
               <div className="info">
@@ -300,7 +300,7 @@ const CalendarCustom = ({
                         setSelectedEvent((prev) => ({ ...prev, hide: true }))
                       }}
                     >
-                      Cancel Appointment
+                      {t('cancel_appointment')}
                     </Button>
                   </>
                 )}
@@ -325,7 +325,7 @@ const CalendarCustom = ({
               </div>
               <div className="info">
                 <div className="label">{t('type_of_appointment')}</div>
-                <div className="value">{selectedEvent?.type}</div>
+                <div className="value">{t(selectedEvent?.type)}</div>
               </div>
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">

@@ -6,9 +6,10 @@ export const configs = (
   setNotesVisible,
   setLocationVisible,
   setLinkVisible,
+  t,
 ) => [
   {
-    label: 'Title',
+    label: t('title_label'),
     key: 'title',
     width: '200',
     // icon: 'mdi mdi-spellcheck',
@@ -16,21 +17,21 @@ export const configs = (
     displayInCsv: true,
   },
   {
-    label: 'Name',
+    label: t('name'),
     key: 'name',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Appointment Type',
-    key: 'appointmentType',
+    label: t('type_of_appointment'),
+    key: 'appointmentTypeKey',
     width: '200',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Location',
+    label: t('location'),
     key: 'location',
     width: '200',
     type: 'text',
@@ -48,7 +49,7 @@ export const configs = (
             })
           }
         >
-          Edit Location
+          {t('Edit_location')}
         </Button>
       ) : (
         <Button
@@ -58,27 +59,27 @@ export const configs = (
             setLinkVisible({ link: row?.link, id: row?.id } || true)
           }
         >
-          {row?.link ? 'View Link' : 'Add Link'}
+          {row?.link ? t('View_link') : t('Add_link')}
         </Button>
       )
     },
   },
   {
-    label: 'Date',
+    label: t('date'),
     key: 'date',
     width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Time',
+    label: t('time'),
     key: 'time',
     width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
-    label: 'Notes',
+    label: t('notes'),
     key: 'status',
     width: '200',
     type: 'text',
@@ -86,7 +87,7 @@ export const configs = (
     render: (row) => {
       return row?.note ? (
         <Button flat primary onClick={() => setNotesVisible(row?.note)}>
-          View
+          {t('view')}
         </Button>
       ) : (
         <></>
@@ -94,7 +95,7 @@ export const configs = (
     },
   },
   {
-    label: 'Action',
+    label: t('action'),
     key: 'action',
     width: '220',
     type: 'text',
@@ -106,18 +107,18 @@ export const configs = (
             onClick={() => onApprove(row?.id, row?.auctionId)}
             className="status Approved"
           >
-            Approve
+            {t('approve')}
           </Button>
           <Button
             flat
             onClick={() => onReject(row?.id, row?.auctionId)}
             className="status Rejected"
           >
-            Reject
+            {t('reject')}
           </Button>
         </>
       ) : (
-        <div className="status">{row?.status}</div>
+        <div className="status">{t(row?.status)}</div>
       )
     },
   },
