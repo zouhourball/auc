@@ -403,5 +403,6 @@
   "reschedule_appointment": "Reschedule Appointment ",
   "are_you_sure_you_want_cancel": "Are you sure you want to cancel the appointment ? ",
   "appointment_canceled_successfully": "Appointment Canceled Successfully",
-  "link": "Link"
+  "link": "Link",
+  "select_type_of_appointment": "Select Type of Appointment"
 }

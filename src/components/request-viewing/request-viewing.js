@@ -10,6 +10,7 @@ import propTypes from 'prop-types'
 import { useState } from 'react'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
+import { useTranslation } from 'libs/langs'
 
 // import { propertyTypeList } from 'components/helpers'
 import locationIcon from 'images/location_icon.svg'
@@ -29,6 +30,7 @@ const RequestViewing = ({
 
   const [startTime, setStartTime] = useState(moment().valueOf())
   const [startDate, setStartDate] = useState(moment().valueOf())
+  const { t } = useTranslation()
 
   // const {
   //   address,
@@ -78,7 +80,7 @@ const RequestViewing = ({
           onChange={(v) => {
             // location.reload()
           }}
-          placeholder="Select type of Appointment"
+          placeholder={t('select_type_of_appointment')}
           position={SelectField.Positions.BELOW}
           value={''}
           className="langSelector"

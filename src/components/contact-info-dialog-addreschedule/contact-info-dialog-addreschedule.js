@@ -268,7 +268,7 @@ const ContactInfoDialogaddreschedule = ({
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
       <div className="auction-details-form-label md-cell md-cell--12">
-        Type of Appointment
+        {t('type_of_appointment')}
       </div>
       <SelectField
         id="select-field-3-1"
@@ -276,14 +276,14 @@ const ContactInfoDialogaddreschedule = ({
         onChange={(v) => {
           setAppointmentData((prev) => ({ ...prev, type: v }))
         }}
-        placeholder="Select type of Appointment"
+        placeholder={t('select_type_of_appointment')}
         position={SelectField.Positions.BELOW}
         value={appointmentData?.type}
         className="selectField-withShadow  md-cell md-cell--12"
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
       <div className="auction-details-form-label md-cell md-cell--12">
-        Date *
+        {t('date')} *
       </div>
       <div className="date md-cell md-cell--12">
         <Calendar
