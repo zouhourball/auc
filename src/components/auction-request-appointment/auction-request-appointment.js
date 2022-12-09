@@ -268,6 +268,7 @@ const AuctionRequestAppointment = ({ auctionId }) => {
           {visibleDatePicker && (
             <Calendar
               activeStartDate={new Date(moment(month).startOf('month'))}
+              locale={currentLang === 'ar' ? 'ar' : 'en'}
               onActiveStartDateChange={(e) => {
                 e?.action === 'next' &&
                   setMonth((prev) => moment(prev).add(1, 'month').toISOString())
