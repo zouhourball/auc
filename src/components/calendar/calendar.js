@@ -261,7 +261,7 @@ const CalendarCustom = ({
                 <div className="info">
                   {' '}
                   <div className="label">{t('location')}</div>
-                  <div className="value">{t(selectedEvent?.location)}</div>
+                  <div className="value">{selectedEvent?.location}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
@@ -316,7 +316,7 @@ const CalendarCustom = ({
               </div>
               <div className="info">
                 <div className="label">{t('type_of_appointment')}</div>
-                <div className="value">{selectedEvent?.type}</div>
+                <div className="value">{t(selectedEvent?.type)}</div>
               </div>
               {selectedEvent?.type === 'In-person' && (
                 <div className="info">
