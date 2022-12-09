@@ -1,6 +1,6 @@
 import { navigate } from '@reach/router'
 import { cleanUp } from '@target-energysolutions/hoc-oauth'
-import UserInfoBySubject from 'components/user-info-by-subject'
+// import UserInfoBySubject from 'components/user-info-by-subject'
 import { useTranslation } from 'libs/langs'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { get } from 'lodash-es'
@@ -137,7 +137,6 @@ const ProfileMenu = ({
       })
       .then(() => refetch())
   }
-
   return (
     <div className="profile-menu">
       <div className="avatar-container">
@@ -163,29 +162,29 @@ const ProfileMenu = ({
           edit
         </Button> */}
         {!company && (
-          <UserInfoBySubject
-            key={userInfo?.subject}
-            subject={userInfo?.subject}
+          // <UserInfoBySubject
+          //   key={userInfo?.subject}
+          //   subject={userInfo?.subject}
+          // >
+          //   {(res) => {
+          //     return (
+          <Avatar
+            className="profile-menu-avatar"
+            src={
+              currentFile?.id
+                ? getPublicUrl(currentFile?.aPIID)
+                : get(userInfo, 'photo.aPIID', null)
+                  ? getPublicUrl(userInfo?.photo?.aPIID)
+                  : null
+            }
           >
-            {(res) => {
-              return (
-                <Avatar
-                  className="profile-menu-avatar"
-                  src={
-                    currentFile?.id
-                      ? getPublicUrl(currentFile?.aPIID)
-                      : get(res, 'photo.aPIURL', null)
-                        ? getPublicUrl(res?.photo?.aPIURL)
-                        : null
-                  }
-                >
-                  {get(res, 'photo.aPIURL', null)
-                    ? null
-                    : get(res, 'fullName.0', '')}
-                </Avatar>
-              )
-            }}
-          </UserInfoBySubject>
+            {get(userInfo, 'photo.aPIID', null)
+              ? null
+              : get(userInfo, 'fullName.0', '')}
+          </Avatar>
+          //     )
+          //   }}
+          // </UserInfoBySubject>
         )}
         {company && (
           <Avatar

@@ -50,14 +50,17 @@ const ProfilePage = ({ company, companyId }) => {
       <div className="profile-page-left md-cell md-cell--2">
         <ProfileMenu
           userInfo={
-            // !company
-            //   ?
-            {
-              // ...userInfo?.seeUserProfileBySubject?.user,
-              subject: currentUser?.mev2?.user?.subject,
-              ...data?.me?.userProfile,
-            }
-            // : organization?.companyByOrganisationID
+            !company
+              ? {
+                // ...userInfo?.seeUserProfileBySubject?.user,
+                subject: currentUser?.mev2?.user?.subject,
+                ...data?.me?.userProfile,
+              }
+              : {
+                ...organization?.companyByOrganisationID,
+                subject: currentUser?.mev2?.user?.subject,
+                ...data?.me?.userProfile,
+              }
           }
           company={company}
           currentView={currentView}
