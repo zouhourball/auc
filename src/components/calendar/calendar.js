@@ -11,6 +11,7 @@ import { eventsList } from './helper'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './style.scss'
 import { useSelector } from 'react-redux'
+import { useCurrentLang, useTranslation } from 'libs/langs'
 
 export let navigate = {
   PREVIOUS: 'PREV',
@@ -50,11 +51,14 @@ const CalendarCustom = ({
         setCalendarDate(moment(date).subtract(1, 'month').toISOString())
       }
     }
+    let currentLang = useCurrentLang()
+    const { t } = useTranslation()
+
     return (
       <div className="toolbar">
         <div className="toolbar-top">
           <TextField
-            placeholder={'Search for an appointment...'}
+            placeholder={t('search_for_an_appointment')}
             className="toolbar-textField"
             value={search}
             onChange={(v) => {
@@ -78,7 +82,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.PREVIOUS)}
             >
-              <FontIcon>chevron_left</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_right'
+                  : 'chevron_left'}
+              </FontIcon>
             </Button>
             <span
               onClick={() => onNavigatee(navigate.TODAY)}
@@ -91,7 +99,11 @@ const CalendarCustom = ({
               icon
               onClick={() => onNavigatee(navigate.NEXT)}
             >
-              <FontIcon>chevron_right</FontIcon>
+              <FontIcon>
+                {currentLang === 'ar-SA' || currentLang === 'ar'
+                  ? 'chevron_left'
+                  : 'chevron_right'}
+              </FontIcon>
             </Button>
           </div>
         </div>

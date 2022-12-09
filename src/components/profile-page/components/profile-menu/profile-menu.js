@@ -332,6 +332,6 @@ const viewsCompany = [
     label: 'support',
     value: 'Support',
     iconEnabled: supportEnabled,
-    iconDisabled: securityDisabled,
+    iconDisabled: supportDisabled,
   },
 ]
