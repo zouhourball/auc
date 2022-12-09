@@ -60,7 +60,7 @@ const AppointmentsForm = ({
     <Checkbox
       key={'in-person'}
       id={`in-person`}
-      label={'In-person'}
+      label={t('In-person')}
       onChange={() => {
         setAppointmentType((prev) =>
           prev?.includes('In-person')
@@ -73,7 +73,7 @@ const AppointmentsForm = ({
     <Checkbox
       key={'online'}
       id={`online`}
-      label={'Online'}
+      label={t('Online')}
       onChange={() => {
         setAppointmentType((prev) =>
           prev?.includes('Online')

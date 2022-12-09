@@ -245,11 +245,11 @@ const CalendarCustom = ({
           {broker ? (
             <>
               <div className="info">
-                <div className="label">Auction Title</div>
+                <div className="label">{t('auction_title')}</div>
                 <div className="title">{selectedEvent?.auctionTitle}</div>
               </div>
               <div className="info">
-                <div className="label">Name</div>
+                <div className="label">{t('name')}</div>
                 <div className="title">{selectedEvent?.title}</div>
               </div>
               <div className="info">
@@ -261,7 +261,7 @@ const CalendarCustom = ({
                 <div className="info">
                   {' '}
                   <div className="label">{t('location')}</div>
-                  <div className="value">{selectedEvent?.location}</div>
+                  <div className="value">{t(selectedEvent?.location)}</div>
                 </div>
               )}
               {selectedEvent?.type === 'Online' && (
@@ -291,7 +291,7 @@ const CalendarCustom = ({
                         setSelectedEvent((prev) => ({ ...prev, hide: true }))
                       }}
                     >
-                      Cancel Appointment
+                      {t('cancel_appointment')}
                     </Button>
                   </>
                 )}

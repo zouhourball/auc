@@ -10,6 +10,7 @@ import propTypes from 'prop-types'
 import { useState } from 'react'
 import moment from 'moment'
 import { DatePicker } from '@target-energysolutions/date-picker'
+import { useTranslation } from 'libs/langs'
 
 // import { propertyTypeList } from 'components/helpers'
 import locationIcon from 'images/location_icon.svg'
@@ -29,6 +30,7 @@ const RequestViewing = ({
 
   const [startTime, setStartTime] = useState(moment().valueOf())
   const [startDate, setStartDate] = useState(moment().valueOf())
+  const { t } = useTranslation()
 
   // const {
   //   address,
@@ -65,7 +67,7 @@ const RequestViewing = ({
       }
     >
       <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">In-person </label>
+        <label className="auction-details-form-label">{t('In-person')} </label>
 
         <SelectField
           id="select-field-3-1"
@@ -87,7 +89,7 @@ const RequestViewing = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Date* </label>
+        <label className="auction-details-form-label">{t('date')}* </label>
         <div className="filter-box-date">
           <TextField
             className="textField"
@@ -121,7 +123,7 @@ const RequestViewing = ({
         </div>
       </div>
       <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Time*</label>
+        <label className="auction-details-form-label">{t('time')}*</label>
         <TextField
           id="time-start"
           placeholder={'Select from'}
@@ -152,7 +154,7 @@ const RequestViewing = ({
         )}
       </div>
       <div className="dateWrapper md-cell md-cell--12">
-        <label className="auction-details-form-label">Notes*</label>
+        <label className="auction-details-form-label">{t('notes')}*</label>
 
         <TextField
           className="textField-withShadow"

@@ -15,6 +15,7 @@ import { Button, DialogContainer, TextField } from 'react-md'
 import DrawOnMap from 'components/draw-on-map'
 
 // import UserInfoBySubject from 'components/user-info-by-subject'
+import { useTranslation } from 'libs/langs'
 
 import { configs } from './helper'
 
@@ -29,6 +30,7 @@ const AppointmentsRequests = () => {
   const [editMap, setEditMap] = useState(false)
 
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
+  const { t } = useTranslation()
 
   const { data: requestsAppointments, refetch: refetchAppointments } = useQuery(
     [
@@ -142,6 +144,7 @@ const AppointmentsRequests = () => {
           auctionId: el?.auction?.uuid,
           name: el?.['bidder_name'],
           appointmentType: el?.type,
+          appointmentTypeKey: t(el?.type),
           date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
           time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
             el?.['end_at'],
@@ -164,6 +167,7 @@ const AppointmentsRequests = () => {
           setNotesVisible,
           setLocationVisible,
           setLinkVisible,
+          t,
         )}
         tableData={renderAppointments() || []}
         withChecked={false}
