@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 15px;
+    padding: 16px;
 
     &-label {
       color: #7c7c7c;
@@ -30,6 +30,14 @@
         color: #5078e1;
         font-size: 16px;
         font-weight: 500;
+
+        &.md-drop-enter {
+          transform: none;
+
+          &.md-drop-enter-active {
+            transform: none;
+          }
+        }
       }
 
       .md-icon {

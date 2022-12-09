@@ -610,7 +610,7 @@ const RegistrationPage = () => {
               }
             })}
             getActiveLabel={getActiveLabel}
-            simplifiedMenu={false}
+            // simplifiedMenu={false}
             onChange={(v) => {
               // location.reload()
               changeLang(v)
