@@ -54,6 +54,11 @@
     .md-avatar-img {
       width: 100%;
     }
+
+    .md-avatar {
+      border: none;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    }
   }
 
   &-fullName {
