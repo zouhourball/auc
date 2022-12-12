@@ -1,5 +1,146 @@
 .my-wallet {
+  // border-right: 0.5px solid #b2b2b2;
+  padding: 0 20px;
+
+  &-title {
+    margin-bottom: 10px;
+    color: #3d3d3e;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &-card {
+    padding: 20px;
+    border-radius: 30px;
+    background-image: url('images/background_image.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    text-align: center;
+
+    &-amount {
+      color: #eef2fc;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    &-currency {
+      margin-bottom: 10px;
+      color: #eef2fc;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    &-child {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 8px 24px;
+      border-radius: 16px;
+      background-color: #f8f8f854;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      color: #eef2fc;
+      font-size: 14px;
+      font-weight: normal;
+      gap: 30px;
+      backdrop-filter: blur(50px);
+
+      .committed {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 5px;
+      }
+
+      .value {
+        font-weight: bold;
+      }
+    }
+  }
+
   &-tab {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+    gap: 20px;
+
+    &-btn {
+      display: flex;
+      flex: 1 0 auto;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      border-radius: 12px;
+      background-color: #fff;
+      box-shadow: 0 3px 6px 0 rgba(157, 157, 157, 0.16);
+      color: #5078e1;
+      font-size: 16px;
+      font-weight: 500;
+      gap: 8px;
+
+      &.active {
+        border: 1px solid #5078e1;
+      }
+    }
+  }
+
+  .payement-label {
+    margin-bottom: 10px;
+    color: #7c7c7c;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .payement-btn {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 12px;
+    padding: 20px;
+    border-radius: 18px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    color: #7c7c7c;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .note {
+    color: #7c7c7c;
+    font-size: 14px;
+    font-weight: normal;
+
+    .blue {
+      color: #5078e1;
+      font-weight: 500;
+    }
+  }
+
+  .error-text {
+    margin: 10px 0;
+    color: #fc0d1b;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px 0;
+    gap: 20px;
+
+    .md-btn {
+      width: 120px;
+      height: 50px;
+      border-radius: 14px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      font-size: 16px;
+      font-weight: bold;
+
+      &.cancel-btn {
+        color: #7c7c7c;
+      }
+    }
   }
 }

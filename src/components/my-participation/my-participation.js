@@ -122,8 +122,8 @@ const ParticipatedAuctions = ({ meOrgs }) => {
   // }
 
   return (
-    <div className="auction-participation-list">
-      <div className="auction-participation-list-header">
+    <div className="my-participation-page md-grid">
+      <div className="md-cell md-cell--3">
         {myWalletData && (
           <MyWallet
             myWalletData={myWalletData}
@@ -135,39 +135,44 @@ const ParticipatedAuctions = ({ meOrgs }) => {
             }}
           />
         )}
-        <div className="title">{t('my_participation')}</div>
-        <div className="tabs-list">{renderTabs()}</div>
       </div>
+      <div className="sep"></div>
+      <div className="auction-participation-list md-cell md-cell--8">
+        <div className="auction-participation-list-header">
+          <div className="title">{t('my_participation')}</div>
+          <div className="tabs-list">{renderTabs()}</div>
+        </div>
 
-      <div className="md-grid auction-participation-list-cards">
-        {renderCards()}
+        <div className="md-grid auction-participation-list-cards">
+          {renderCards()}
+        </div>
+        {paymentDetails && (
+          <PaymentDetailsDialog
+            visible={paymentDetails}
+            onHide={() => setPaymentDetails(false)}
+            depositData={depositData}
+            setDepositData={setDepositData}
+            actions={[
+              <Button
+                key={'cancel-btn'}
+                onClick={() => {
+                  setPaymentDetails(false)
+                }}
+              >
+                Cancel
+              </Button>,
+              <Button
+                key={'deposit-btn'}
+                onClick={() => {
+                  onDepositAmount()
+                }}
+              >
+                Deposit Amount
+              </Button>,
+            ]}
+          />
+        )}
       </div>
-      {paymentDetails && (
-        <PaymentDetailsDialog
-          visible={paymentDetails}
-          onHide={() => setPaymentDetails(false)}
-          depositData={depositData}
-          setDepositData={setDepositData}
-          actions={[
-            <Button
-              key={'cancel-btn'}
-              onClick={() => {
-                setPaymentDetails(false)
-              }}
-            >
-              Cancel
-            </Button>,
-            <Button
-              key={'deposit-btn'}
-              onClick={() => {
-                onDepositAmount()
-              }}
-            >
-              Deposit Amount
-            </Button>,
-          ]}
-        />
-      )}
     </div>
   )
 }
