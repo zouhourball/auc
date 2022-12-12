@@ -14,7 +14,8 @@
     border-radius: 30px;
     background-image: url('images/background_image.png');
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
+    background-size: contain;
     text-align: center;
 
     &-amount {
