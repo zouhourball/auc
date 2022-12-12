@@ -155,6 +155,8 @@ const ParticipatedAuctions = ({ meOrgs }) => {
             actions={[
               <Button
                 key={'cancel-btn'}
+                raised
+                className="cancel-btn"
                 onClick={() => {
                   setPaymentDetails(false)
                 }}
@@ -163,6 +165,9 @@ const ParticipatedAuctions = ({ meOrgs }) => {
               </Button>,
               <Button
                 key={'deposit-btn'}
+                raised
+                primary
+                className="confirm-btn"
                 onClick={() => {
                   onDepositAmount()
                 }}

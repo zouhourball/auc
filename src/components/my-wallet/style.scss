@@ -103,6 +103,10 @@
     font-size: 14px;
     font-weight: bold;
     text-align: left;
+
+    &.blue-border {
+      border: 1px solid #5078e1;
+    }
   }
 
   .note {
