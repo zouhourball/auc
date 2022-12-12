@@ -1,4 +1,5 @@
 import { DialogContainer, TextField } from 'react-md'
+import './style.scss'
 
 const PaymentDetailsDialog = ({
   visible,
@@ -10,13 +11,13 @@ const PaymentDetailsDialog = ({
   const { amount } = depositData
   return (
     <DialogContainer
-      className="confirm-dialog"
+      className="payment-dialog"
       visible={visible}
       onHide={() => onHide()}
       id="payment-details-dialog"
       actions={actions}
+      title={'Deposit Amount'}
     >
-      <div className="title">Deposit Amount</div>
       <TextField
         id="deposit-amount"
         placeholder={'Enter Amount'}

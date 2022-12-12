@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { Button, TextField } from 'react-md'
+import depositIcon from './images/deposit.svg'
+import withdrawIcon from './images/withdraw.svg'
+import committedIcon from './images/committed.svg'
+import availableIcon from './images/available.svg'
 
 import './style.scss'
 const MyWallet = ({
@@ -14,20 +18,44 @@ const MyWallet = ({
   const [type, setType] = useState('card')
   return (
     <div className="my-wallet">
-      <div>My Wallet</div>
+      <div className="my-wallet-title">My Wallet</div>
       <div className="my-wallet-card">
-        <div>Total Amount </div>
-        <div>
+        <div className="my-wallet-card-amount">Total Amount </div>
+        <div className="my-wallet-card-currency">
           {balance} {currency?.name}
         </div>
-        <div>Committed</div>
-        <div>0{currency?.name}</div>
-        <div>Available</div>
-        <div>0 {currency?.name}</div>
+        <div className="my-wallet-card-child">
+          <div className="committed">
+            <img src={committedIcon} />
+            <div>
+              <div className="label">Committed</div>
+              <div className="value">0{currency?.name}</div>
+            </div>
+          </div>
+          <div className="committed">
+            <img src={availableIcon} />
+            <div>
+              <div className="label">Available</div>
+              <div className="value">0 {currency?.name}</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="my-wallet-tab">
-        <Button onClick={() => setTab(1)}> Deposit</Button>
-        <Button onClick={() => setTab(2)}>withdraw</Button>
+        <Button
+          className={`my-wallet-tab-btn ${tab === 1 ? 'active' : ''}`}
+          onClick={() => setTab(1)}
+        >
+          <img src={depositIcon} />
+          <span>Deposit</span>
+        </Button>
+        <Button
+          className={`my-wallet-tab-btn ${tab === 2 ? 'active' : ''}`}
+          onClick={() => setTab(2)}
+        >
+          <img src={withdrawIcon} />
+          <span>withdraw</span>
+        </Button>
       </div>
       {tab === 1 && (
         <>
@@ -42,12 +70,12 @@ const MyWallet = ({
             block
           /> */}
 
-          <div>Payment Method</div>
+          <div className="payement-label">Payment Method</div>
           <Button
             onClick={() => {
               setType('card')
             }}
-            className={`${type === 'card' ? 'blue-border' : ''}`}
+            className={`payement-btn ${type === 'card' ? 'blue-border' : ''}`}
           >
             Credit/Debit Card
           </Button>
@@ -55,7 +83,9 @@ const MyWallet = ({
             onClick={() => {
               setType('deposit')
             }}
-            className={`${type === 'deposit' ? 'blue-border' : ''}`}
+            className={`payement-btn ${
+              type === 'deposit' ? 'blue-border' : ''
+            }`}
           >
             Bank Deposit{' '}
           </Button>
@@ -63,12 +93,12 @@ const MyWallet = ({
             onClick={() => {
               setType('wire')
             }}
-            className={`${type === 'wire' ? 'blue-border' : ''}`}
+            className={`payement-btn ${type === 'wire' ? 'blue-border' : ''}`}
           >
             Bank Transfer{' '}
           </Button>
-          <div>
-            <span>Note:</span>
+          <div className="note">
+            <span className="blue">Note: </span>
             <span>
               Please make a security deposit using any of the methods below.Once
               your deposit hes been processed,you will be able to participate in
@@ -80,7 +110,7 @@ const MyWallet = ({
       {tab === 2 && (
         <>
           {' '}
-          <div className="title">Withdraw Amount</div>
+          <div className="payement-label">Withdraw Amount</div>
           <TextField
             id="auctionTitle"
             placeholder={'Enter Amount'}
@@ -90,30 +120,27 @@ const MyWallet = ({
             required
             block
           />
-          <div>Maximum withdraw Amount is 2,500 {currency?.name}</div>
+          <div className="error-text">
+            Maximum withdraw Amount is 2,500 {currency?.name}
+          </div>
         </>
       )}
-      <Button
-        swapTheming
-        flat
-        primary
-        className="top-up-dialog-button"
-        onClick={(e) => {}}
-      >
-        cancel
-      </Button>
-      <Button
-        swapTheming
-        flat
-        primary
-        className="top-up-dialog-button"
-        onClick={(e) => {
-          e.stopPropagation()
-          onContinue && onContinue()
-        }}
-      >
-        Next{' '}
-      </Button>
+      <div className="my-wallet-footer">
+        <Button raised className="cancel-btn" onClick={(e) => {}}>
+          cancel
+        </Button>
+        <Button
+          raised
+          primary
+          className="confirm-btn"
+          onClick={(e) => {
+            e.stopPropagation()
+            onContinue && onContinue()
+          }}
+        >
+          Next{' '}
+        </Button>
+      </div>
     </div>
   )
 }
