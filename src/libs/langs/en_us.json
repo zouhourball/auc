@@ -344,7 +344,7 @@
   "appointments": "Appointments",
   "are_you_sure_you_want_to_delete_this_auction": "Are you sure you want to delete this auction?",
   "request_viewing_label": "Request Viewing",
-  "please_fill_the_information": "Please fill in the information to be able set an appointment to view asset",
+  "please_fill_the_information": "Please fill in the information to be able to set an appointment to view asset",
   "type_of_appointment": "Type of Appointment",
   "date": "Date",
   "time": "Time",
@@ -418,5 +418,5 @@
   "select_type_of_appointment": "Select Type of Appointment",
   "reason_for_the_rejection": "Reason for the rejection of invoice will be written here",
   "Note": "Note",
-  "type_message_here": "Reason for the rejection of the invoice will be written here"
+  "type_message_here": "Type Message Here"
 }

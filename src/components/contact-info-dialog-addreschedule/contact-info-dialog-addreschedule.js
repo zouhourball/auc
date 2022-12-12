@@ -136,18 +136,21 @@ const ContactInfoDialogaddreschedule = ({
 
     for (let j = 0; j < targetedDay?.length; j++) {
       const timeInterval =
-        moment(targetedDay?.[j]?.['end_at']).format('HH') -
-        moment(targetedDay?.[j]?.['start_at']).format('HH')
+        moment(targetedDay?.[j]?.['end_at']).utc().format('HH') -
+        moment(targetedDay?.[j]?.['start_at']).utc().format('HH')
       for (let i = 0; i < timeInterval; i++) {
         renderTimeSlots = [
           ...renderTimeSlots,
           {
             label: `${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i + 1, 'hours')
               .format('HH:mm')}`,
             value: moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .valueOf(),
           },

@@ -146,9 +146,11 @@ const AppointmentsRequests = () => {
           appointmentType: el?.type,
           appointmentTypeKey: t(el?.type),
           date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
-          time: `${moment(el?.['start_at']).format('HH:mm')} - ${moment(
+          time: `${moment(el?.['start_at']).utc().format('HH:mm')} - ${moment(
             el?.['end_at'],
-          ).format('HH:mm')}`,
+          )
+            .utc()
+            .format('HH:mm')}`,
           note: el?.notes,
           xLocation: el?.['general_location_x'],
           yLocation: el?.['general_location_y'],

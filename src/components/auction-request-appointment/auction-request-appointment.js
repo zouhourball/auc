@@ -1,6 +1,6 @@
 import { useTranslation, useCurrentLang } from 'libs/langs'
 import { Button, FontIcon, SelectField, TextField } from 'react-md'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useQuery, useMutation } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToast } from 'modules/app/actions'
@@ -91,8 +91,12 @@ const AuctionRequestAppointment = ({ auctionId }) => {
       ),
     ]
   }
-  const getAvailabilityDataFormatted = getAvailabilityData?.map((el) =>
-    new Date(el?.['appointment_date']).getDate(),
+  const getAvailabilityDataFormatted = useMemo(
+    () =>
+      getAvailabilityData?.map((el) =>
+        new Date(el?.['appointment_date']).getDate(),
+      ),
+    [getAvailabilityData],
   )
   const disabledDates = daysOfCurrentMonth?.filter(
     (el) => !getAvailabilityDataFormatted?.includes(new Date(el).getDate()),
@@ -150,18 +154,21 @@ const AuctionRequestAppointment = ({ auctionId }) => {
 
     for (let j = 0; j < targetedDay?.length; j++) {
       const timeInterval =
-        moment(targetedDay?.[j]?.['end_at']).format('HH') -
-        moment(targetedDay?.[j]?.['start_at']).format('HH')
+        moment(targetedDay?.[j]?.['end_at']).utc().format('HH') -
+        moment(targetedDay?.[j]?.['start_at']).utc().format('HH')
       for (let i = 0; i < timeInterval; i++) {
         renderTimeSlots = [
           ...renderTimeSlots,
           {
             label: `${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i + 1, 'hours')
               .format('HH:mm')}`,
             value: moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .valueOf(),
           },

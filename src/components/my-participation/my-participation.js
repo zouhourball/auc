@@ -78,6 +78,8 @@ const ParticipatedAuctions = ({ meOrgs }) => {
       },
     })
   }, [myWalletData])
+  // Payment callback goes here
+  useEffect(() => {}, [])
   const renderCards = () => {
     return myAuctions?.results?.map((el, i) => (
       <BiddingCard

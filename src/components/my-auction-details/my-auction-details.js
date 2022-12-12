@@ -1132,9 +1132,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                   block
                   value={
                     auctionEditData?.appointmentDetails?.['start_at'] &&
-                    moment(
-                      auctionEditData?.appointmentDetails?.['start_at'],
-                    ).format('HH:mm')
+                    moment(auctionEditData?.appointmentDetails?.['start_at'])
+                      .utc()
+                      .format('HH:mm')
                   }
                   disabled={!editMode}
                   onClick={() => editMode && setTiming(true)}
@@ -1174,9 +1174,9 @@ const MyAuctionDetails = ({ auctionId }) => {
                   disabled={!editMode}
                   value={
                     auctionEditData?.appointmentDetails?.['end_at'] &&
-                    moment(
-                      auctionEditData?.appointmentDetails?.['end_at'],
-                    ).format('HH:mm')
+                    moment(auctionEditData?.appointmentDetails?.['end_at'])
+                      .utc()
+                      .format('HH:mm')
                   }
                   onClick={() => editMode && setVisibleEndTimePicker(true)}
                   className="auction-details-form-textField"

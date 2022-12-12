@@ -223,11 +223,14 @@ const AppointmentsCalendar = () => {
           ...renderTimeSlots,
           {
             label: `${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .format('HH:mm')} - ${moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i + 1, 'hours')
               .format('HH:mm')}`,
             value: moment(targetedDay?.[j]?.['start_at'])
+              .utc()
               .add(i, 'hours')
               .valueOf(),
           },

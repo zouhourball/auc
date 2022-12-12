@@ -285,9 +285,11 @@ const CalendarCustom = ({
 
               <div className="info">
                 <div className="label">{t('time')}</div>
-                <div className="value">{`${moment(selectedEvent?.start).format(
-                  'hh:mm',
-                )} - ${moment(selectedEvent?.end).format('hh:mm')}`}</div>
+                <div className="value">{`${moment(selectedEvent?.start)
+                  .utc()
+                  .format('hh:mm')} - ${moment(selectedEvent?.end)
+                  .utc()
+                  .format('hh:mm')}`}</div>
               </div>
               <div className="popup-actions">
                 {!(selectedEvent?.status === 'cancelled') && (
