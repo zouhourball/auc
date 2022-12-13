@@ -23,12 +23,15 @@ const PaymentDetailsDialog = ({
         placeholder={'Enter Amount'}
         type={'number'}
         value={amount?.value}
-        onChange={(value) =>
+        onChange={(t) =>
           setDepositData((prev) => ({
             ...prev,
             amount: {
               ...prev?.amount,
-              value: +value,
+              value:
+                t.indexOf('.') >= 0
+                  ? t.substr(0, t.indexOf('.')) + t.substr(t.indexOf('.'), 6)
+                  : t,
             },
           }))
         }

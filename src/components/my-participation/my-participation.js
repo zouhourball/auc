@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 // import moment from 'moment'
 
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'libs/langs'
+import { addToast } from 'modules/app/actions'
 
 import { Button } from 'react-md'
 import { useMutation, useQuery } from 'react-query'
@@ -14,12 +14,15 @@ import {
 import BiddingCard from 'components/bidding-card'
 import MyWallet from 'components/my-wallet'
 import PaymentDetailsDialog from 'components/payment-details-dialog'
+import { useDispatch, useSelector } from 'react-redux'
+import ToastMsg from 'components/toast-msg'
 
 import './style.scss'
 
 const ParticipatedAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
   const user = useSelector(({ app }) => app?.userInfos)
+  const dispatch = useDispatch()
 
   const [tab, setTab] = useState(0)
   const [paymentDetails, setPaymentDetails] = useState(false)
@@ -65,10 +68,36 @@ const ParticipatedAuctions = ({ meOrgs }) => {
       if (!res.error) {
         refetchWallet()
         setPaymentDetails(false)
-        window.open(res?.['payment_url'])
+        window.location.href = res?.['payment_url']
       }
     },
   })
+  const paymentCallback = new URLSearchParams(location.search)
+  // .split('&')
+  // .filter((v) => v === 'success=true' || v === 'success=false')[0]
+  useEffect(() => {
+    if (paymentCallback.has('success') && paymentCallback.get('success')) {
+      // setSuccessDialog(true)
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+        ),
+      )
+
+      history.replaceState(null, null, `/auctions/my-participation`)
+    } else if (
+      paymentCallback.has('success') &&
+      !paymentCallback.get('success')
+    ) {
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment procedure has failed'} type="error" />,
+        ),
+      )
+      history.replaceState(null, null, `/auctions/my-participation`)
+    } else {
+    }
+  }, [location])
   useEffect(() => {
     setDepositData({
       return_url: `${PRODUCT_APP_URL_AUCTION}/auctions/my-participation`,

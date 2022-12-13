@@ -252,5 +252,6 @@
 
   "select_type_of_appointment": "اختر نوع الموعد",
   "back_to_auctions": "الرجوع الى المزادات",
-  "please_fill_in_missing_details": " رجاء قم بتعبئة البيانات ادناه لتتمكن من تحديد موعد للأصل "
+  "please_fill_in_missing_details": " رجاء قم بتعبئة البيانات ادناه لتتمكن من تحديد موعد للأصل ",
+  "result_not_found": "لم نجد عما تبحث عنه"
 }
