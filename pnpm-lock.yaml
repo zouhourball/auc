@@ -139,6 +139,7 @@ devDependencies:
   postcss-safe-parser: 4.0.2
   prettier: 2.6.2
   prettier-eslint-cli: 5.0.1
+  prettier-plugin-organize-imports: 3.2.1_prettier@2.6.2+typescript@3.9.10
   react-hot-loader: 4.13.0_77eee59412d5eb5eea5ef01c6d864380
   rimraf: 2.7.1
   sass-loader: 7.3.1_webpack@4.46.0
@@ -290,7 +291,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jCH+k2Vjlno4YWl6g535nHR09PwCEmTBKAG6VqF+rhkrSPRLfgpU2maagwbZPLjaHuU5Jd1DFQ2KJpQuI6uG8w==
-  /@apollo/client/3.7.1_2854535e62c5882a19e48f1dbe3d5aa9:
+  /@apollo/client/3.7.2_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
       '@graphql-typed-document-node/core': 3.1.1_graphql@15.8.0
       '@wry/context': 0.7.0
@@ -325,7 +326,7 @@ packages:
       subscriptions-transport-ws:
         optional: true
     resolution:
-      integrity: sha512-xu5M/l7p9gT9Fx7nF3AQivp0XukjB7TM7tOd5wifIpI8RskYveL4I+rpTijzWrnqCPZabkbzJKH7WEAKdctt9w==
+      integrity: sha512-ohAIpXl3mTa1Fd3GT/K37VwQJfTIuuJRp4aOlJ4q/hlx0Wxh+RqDrbn0awtVCOdhGDQN+CQQmVzIqFKn6GziXQ==
   /@apollo/react-common/3.1.4_71ede056ece51cd2923555111518fef1:
     dependencies:
       '@types/react': 18.0.9
@@ -416,7 +417,7 @@ packages:
       integrity: sha512-y0CJ393DLxIIkksRup4nt+vSjxalbZBXnnXxYbviq/woj+zKa431zy0yT4LqyRKpFy9ahMIwxBnBwfwIoupqLQ==
   /@apollo/react-hooks/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.1_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
     dev: false
     peerDependencies:
       graphql: '*'
@@ -444,7 +445,7 @@ packages:
       integrity: sha512-wuLPkKlctNn3u8EU8rlECyktpOUCeekFfb0KhIKknpGY6Lza2Qu0bThx7D9MIbVEzhKadNNrzLcpk0Y8/5UuWg==
   /@apollo/react-testing/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.1_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
     dev: true
     peerDependencies:
       graphql: '*'
@@ -16973,6 +16974,23 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-u6EQqxUhaGfra9gy9shcR7MT7r/2twwEfRGy1tfzyaJvLQwSg34M9IU5HuF7FsLW2QUgr5VIUc56EPWibw1pdw==
+  /prettier-plugin-organize-imports/3.2.1_prettier@2.6.2+typescript@3.9.10:
+    dependencies:
+      prettier: 2.6.2
+      typescript: 3.9.10
+    dev: true
+    peerDependencies:
+      '@volar/vue-language-plugin-pug': ^1.0.4
+      '@volar/vue-typescript': ^1.0.4
+      prettier: '>=2.0'
+      typescript: '>=2.9'
+    peerDependenciesMeta:
+      '@volar/vue-language-plugin-pug':
+        optional: true
+      '@volar/vue-typescript':
+        optional: true
+    resolution:
+      integrity: sha512-bty7C2Ecard5EOXirtzeCAqj4FU4epeuWrQt/Z+sh8UVEpBlBZ3m3KNPz2kFu7KgRTQx/C9o4/TdquPD1jOqjQ==
   /prettier/1.19.1:
     dev: true
     engines:
@@ -22963,6 +22981,7 @@ specifiers:
   postcss-safe-parser: ^4.0.1
   prettier: ^2.3.0
   prettier-eslint-cli: ^5.0.1
+  prettier-plugin-organize-imports: ^3.2.1
   prop-types: ^15.7.2
   react: 18.0.0
   react-apollo: ^3.1.5
