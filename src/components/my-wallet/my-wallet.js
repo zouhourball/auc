@@ -115,7 +115,7 @@ const MyWallet = ({
             id="auctionTitle"
             placeholder={'Enter Amount'}
             value={amount}
-            onChange={(v) => setAmount(v)}
+            onChange={(v) => setAmount(parseFloat(v.toFixed(6)))}
             className="textField-withShadow"
             required
             block
@@ -132,6 +132,7 @@ const MyWallet = ({
         <Button
           raised
           primary
+          disabled={!(type === 'card')}
           className="confirm-btn"
           onClick={(e) => {
             e.stopPropagation()
