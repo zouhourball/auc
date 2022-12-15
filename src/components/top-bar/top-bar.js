@@ -610,6 +610,10 @@ const TopBar = ({
           dialogClassName="change-email-dialog"
           focusOnMount={false}
           onHide={() => setSignOutdialog(false)}
+          portal={true}
+          lastChild={true}
+          disableScrollLocking={true}
+          renderNode={document.body}
           actions={[
             <Button key={'2'} flat onClick={() => setSignOutdialog(false)}>
               {t('cancel')}
