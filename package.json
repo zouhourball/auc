@@ -192,6 +192,7 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "postcss-safe-parser": "^4.0.1",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.3.0",
     "prettier-eslint-cli": "^5.0.1",
     "prettier-plugin-organize-imports": "^3.2.1",

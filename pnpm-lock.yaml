@@ -137,6 +137,7 @@ devDependencies:
   postcss-flexbugs-fixes: 4.2.1
   postcss-loader: 3.0.0
   postcss-safe-parser: 4.0.2
+  postinstall-postinstall: 2.1.0
   prettier: 2.6.2
   prettier-eslint-cli: 5.0.1
   prettier-plugin-organize-imports: 3.2.1_prettier@2.6.2+typescript@3.9.10
@@ -16917,6 +16918,11 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-yioayjNbHn6z1/Bywyb2Y4s3yvDAeXGOyxqD+LnVOinq6Mdmd++SW2wUNVzavyyHxd6+DxzWGIuosg6P1Rj8uA==
+  /postinstall-postinstall/2.1.0:
+    dev: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-7hQX6ZlZXIoRiWNrbMQaLzUUfH+sSx39u8EJ9HYuDc1kLo9IXKWjM5RSquZN1ad5GnH8CGFM78fsAAQi3OKEEQ==
   /prelude-ls/1.1.2:
     dev: true
     engines:
@@ -22979,6 +22985,7 @@ specifiers:
   postcss-loader: ^3.0.0
   postcss-rtl: ^1.7.3
   postcss-safe-parser: ^4.0.1
+  postinstall-postinstall: ^2.1.0
   prettier: ^2.3.0
   prettier-eslint-cli: ^5.0.1
   prettier-plugin-organize-imports: ^3.2.1
