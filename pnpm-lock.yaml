@@ -9633,7 +9633,7 @@ packages:
       integrity: sha512-gd3ypIPfOMr9h5jIKq8E3sHOTCjeirnl0WK5ZdS1AW0Odt0b1PaWaHdJ4Qk4klv+YB9aJBS7mESXjFoDQPu6DA==
   /dom-helpers/3.4.0:
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.20.1
     dev: false
     resolution:
       integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
@@ -18134,7 +18134,7 @@ packages:
       integrity: sha512-zxCMwhfPy1olUEbw3FLNPLhAm/HnaYH5aELIEglRbqabizKAdHs0h+WuyOpmA+v1JXn0++fpQDdNfUagWt5hJQ==
   /react-event-listener/0.6.6_react@18.0.0:
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.20.1
       prop-types: 15.8.1
       react: 18.0.0
       warning: 4.0.3
@@ -23003,7 +23003,7 @@ specifiers:
   react-hoc-timerfuncs: ^1.0.5
   react-hot-loader: ^4.13.0
   react-image-crop: 10.0.8
-  react-md: ^1.9.3
+  react-md: ^1.18.1
   react-onclickoutside: ^6.12.2
   react-otp-input: ^2.4.0
   react-pdf: ^5.3.0
