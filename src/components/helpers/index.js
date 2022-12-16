@@ -42,12 +42,11 @@ export const propertyTypeList =
   // Park                        = 27
   // )
   [
-    <Subheader
-      key="subheader-1"
-      primaryText="Items 1 - 5"
+    <div
+      key={'resident'}
+      text={'resident'}
       className="md-divider-border md-divider-border--bottom"
     />,
-    ,
     {
       label: 'Villa',
       value: 2,
