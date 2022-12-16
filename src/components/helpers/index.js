@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const propertyTypeList =
   // type PropertyCategory uint
   // const (
@@ -41,11 +42,12 @@ export const propertyTypeList =
   // Park                        = 27
   // )
   [
-    <div
-      key={'resident'}
-      text={'resident'}
+    <Subheader
+      key="subheader-1"
+      primaryText="Items 1 - 5"
       className="md-divider-border md-divider-border--bottom"
     />,
+    ,
     {
       label: 'Villa',
       value: 2,
