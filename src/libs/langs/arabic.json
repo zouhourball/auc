@@ -51,7 +51,6 @@
   "M": "د",
   "S": "ث",
   "live_auctions": "المزادات النشطة",
-  "broker_company": "شركة الوسيط",
   "Company_Broker": "وسيط الشركة",
   "location": "الموقع",
   "upcoming_auctions": "المزادات القادمة",
@@ -253,5 +252,12 @@
   "select_type_of_appointment": "اختر نوع الموعد",
   "back_to_auctions": "الرجوع الى المزادات",
   "please_fill_in_missing_details": " رجاء قم بتعبئة البيانات ادناه لتتمكن من تحديد موعد للأصل ",
+  "bathrooms": "دورات مياه",
+  "state-gov": "اختر الولاية",
+  "broker_company": " شركات الوساطة",
+  "please_fill_the_information": " رجاء قم بتعبئة البيانات ادناه لتتمكن من تحديد موعد للأصل",
+  "online_link_note": "سيظهر رابط الموعد بمجرد الموافقة عليه من قبل الوسيط",
+  "note": "ملاحظة",
+  "state_gov": "اختر الولاية",
   "result_not_found": "لم نجد عما تبحث عنه"
 }
