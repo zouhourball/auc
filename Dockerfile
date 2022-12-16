@@ -2,6 +2,7 @@
 FROM node:10 AS app-fe
 WORKDIR /fecode
 COPY . /fecode
+COPY patches /fecode
 
 ARG NPM_AUTH_TOKEN
 ARG BUILD_PROFILE_NAME
