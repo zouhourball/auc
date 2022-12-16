@@ -576,7 +576,6 @@ const UploadImages = ({
                 className="pdfObject"
                 src={`${fileSrc?.url}&view=true`}
                 type="application/pdf"
-                internalinstanceid="88"
               />
             ) : (
               <img
@@ -594,7 +593,6 @@ const UploadImages = ({
               className="pdfObject"
               src={`${fileSrc?.url}&view=true`}
               type="application/pdf"
-              internalinstanceid="88"
             />
           ) : (
             <img
