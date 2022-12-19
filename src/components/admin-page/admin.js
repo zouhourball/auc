@@ -45,6 +45,11 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
   const dispatch = useDispatch()
   let currentLang = useCurrentLang()
 
+  const lang = useCurrentLang()
+  const language = useMemo(
+    () => (!lang || lang === '' || lang === 'ar' ? 'ar' : null),
+    [lang],
+  )
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
@@ -319,6 +324,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           singleSelect
           withSearch
           commonActions
+          defaultLanguage={language}
           headerTemplate={
             selectedRow?.length === 1 && (
               <div className="admin-page-mht-header">
@@ -403,6 +409,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
+          // defaultLanguage={language}
           withSearch
           // withFooter
           commonActions

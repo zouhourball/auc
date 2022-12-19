@@ -4,7 +4,7 @@ import {
   rejectRequest,
   updateRequest,
 } from 'libs/api/appointment-api'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Mht from '@target-energysolutions/mht'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useMutation } from 'react-query'
@@ -15,7 +15,7 @@ import { Button, DialogContainer, TextField } from 'react-md'
 import DrawOnMap from 'components/draw-on-map'
 
 // import UserInfoBySubject from 'components/user-info-by-subject'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 
 import { configs } from './helper'
 
@@ -32,6 +32,12 @@ const AppointmentsRequests = () => {
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const { t } = useTranslation()
 
+  const lang = useCurrentLang()
+
+  const language = useMemo(
+    () => (!lang || lang === '' || lang === 'ar' ? 'ar' : null),
+    [lang],
+  )
   const { data: requestsAppointments, refetch: refetchAppointments } = useQuery(
     [
       'getAppointmentsRequests',
@@ -177,6 +183,7 @@ const AppointmentsRequests = () => {
         withSearch
         commonActions
         hideTotal
+        defaultLanguage={language}
       />
       {notesVisible && (
         <DialogContainer
