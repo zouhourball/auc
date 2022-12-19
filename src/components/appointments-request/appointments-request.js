@@ -151,7 +151,13 @@ const AppointmentsRequests = () => {
           name: el?.['bidder_name'],
           appointmentType: el?.type,
           appointmentTypeKey: t(el?.type),
-          date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
+          date:
+            moment(el?.['appointment_date']).format('DD ') +
+            moment(el?.['appointment_date'])
+              .locale(lang === 'ar' ? 'ar' : 'en')
+              .format('MMM ') +
+            moment(el?.['appointment_date']).format('YYYY '),
+
           time: `${moment(el?.['start_at']).utc().format('HH:mm')} - ${moment(
             el?.['end_at'],
           )
