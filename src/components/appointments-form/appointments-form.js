@@ -96,7 +96,7 @@ const AppointmentsForm = ({
   return (
     <div className="appointments-form md-grid">
       <div className="appointments-form-title md-cell md-cell--12">
-        {t('Appointments')} ({t('optional')})
+        {t('appointments')} ({t('optional')})
       </div>
       <div className="md-cell md-cell--6">
         <label className="appointments-form-label">Appointment Type</label>
