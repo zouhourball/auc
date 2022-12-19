@@ -19,6 +19,10 @@ const ConfirmDialog = ({
       visible={visible}
       onHide={() => onHide()}
       id="confirm-dialog"
+      portal={true}
+      lastChild={true}
+      disableScrollLocking={true}
+      renderNode={document.body}
     >
       <div className="confirm-dialog-information">
         {msg ? (
