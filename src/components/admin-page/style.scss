@@ -150,12 +150,23 @@
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
     }
 
-    .xeena-table-body,
     .xeena-table-header {
       border: none;
 
+      .xeena-cell {
+        &:not(:first-child) {
+          flex-grow: 1;
+        }
+      }
+    }
+
+    .xeena-table-body {
       .xeena-row {
         border-bottom-width: 1px;
+
+        .xeena-cell {
+          flex-grow: 1;
+        }
 
         .order-check-column .order-check-buttonWrapper .md-text--theme-secondary {
           color: #5078e1;

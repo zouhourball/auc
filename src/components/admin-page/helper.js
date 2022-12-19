@@ -26,28 +26,28 @@ export const configs = (t) => [
   {
     label: t('Bid_Open_Date'),
     key: 'bidOpenDate',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
     label: t('Bid_Close_Date'),
     key: 'bidCloseDate',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
     label: t('Submission_Date'),
     key: 'submissionDate',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
   },
   {
     label: t('Status'),
     key: 'status',
-    width: '200',
+    width: '150',
     type: 'text',
     displayInCsv: true,
     render: (row) => {

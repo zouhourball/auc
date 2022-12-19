@@ -545,41 +545,10 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
           <>
             <div className="grey-label">{t('current_phone_number')}</div>
             <div
-              style={{ display: 'flex', marginBottom: 8 }}
-              className="change-num-selectField"
+              className={`change-num-selectField phone-field ${
+                showListCountryCodes ? 'visible' : ''
+              }`}
             >
-              {/* <SelectField
-                id={'country-code'}
-                className="country-code"
-                block
-                menuItems={countriesCodes?.map((el) => ({
-                  value: el?.value,
-                  label: (
-                    <div
-                      className="countries-dropdown"
-                      //   onClick={() => setInformations(prev => ({
-                      //     ...informations,
-                      //     countryCode: el?.value,
-                      //   }))}
-                      key={el?.value}
-                    >
-                      <img width={20} src={el?.flag} />
-                      {el?.value}
-                    </div>
-                  ),
-                }))}
-                defaultValue={'+968'}
-                value={phoneNumber?.currentCode}
-                onChange={(value) =>
-                  setPhoneNumber((prev) => ({
-                    ...prev,
-                    currentCode: value,
-                  }))
-                }
-                simplifiedMenu={false}
-                position={SelectField.Positions.BELOW}
-              /> */}
-
               <CustomSelectWithSearch
                 items={countriesCodes?.map((el) => ({
                   label: (
@@ -652,8 +621,12 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
         )}
         {step === 1 && (
           <>
-            <div className="gray-label">New Phone Number</div>
-            <div style={{ display: 'flex' }} className="selectField">
+            <div className="grey-label">New Phone Number</div>
+            <div
+              className={`change-num-selectField phone-field ${
+                showListCountryCodesNew ? 'visible' : ''
+              }`}
+            >
               <CustomSelectWithSearch
                 items={countriesCodes?.map((el) => ({
                   label: (

@@ -1,14 +1,17 @@
 .registration-page {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(2, 50%);
   height: 100vh;
   overflow: auto;
 
   &-left {
+    flex: 1;
+    height: 100%;
+
     .background {
       width: 100%;
-      height: auto;
-      object-fit: fill;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
@@ -57,8 +60,9 @@
   }
 
   &-right {
-    padding: 100px 150px;
-    // height: auto;
+    flex: 1;
+    height: 100%;
+    overflow: auto;
     text-align: center;
 
     &-title {
@@ -75,6 +79,8 @@
     }
 
     .body {
+      margin: 0 150px;
+
       .tabs {
         display: flex;
         align-items: center;
@@ -117,8 +123,8 @@
       .view {
         display: flex;
         flex-direction: column;
-        gap: 16px;
         align-items: stretch;
+        gap: 16px;
 
         .phone-field {
           display: flex;
