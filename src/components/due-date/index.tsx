@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { endOfDay, startOfDay } from 'date-fns'
+import { useTranslation } from 'libs/langs'
 
 import DayPicker, { DateUtils } from 'react-day-picker'
 import 'react-day-picker/lib/style.css'
@@ -60,6 +61,8 @@ DueDateProps) {
     setRange({ from: startOfDay(new Date()), to: endOfDay(new Date()) })
     onDateChange(startOfDay(new Date()), endOfDay(new Date()))
   }, [onDateChange])
+  const { t } = useTranslation()
+
   return (
     <>
       {open && (
@@ -70,14 +73,14 @@ DueDateProps) {
               className="date-picker-today"
               onClick={handleClickToday}
             >
-              Today
+              {t('today')}
             </Button>
             <Button
               outlined
               className="date-picker-reset"
               onClick={handleReset}
             >
-              Reset
+              {t('reset')}
             </Button>
           </div>
 

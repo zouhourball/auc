@@ -99,13 +99,15 @@ const AppointmentsForm = ({
         {t('appointments')} ({t('optional')})
       </div>
       <div className="md-cell md-cell--6">
-        <label className="appointments-form-label">Appointment Type</label>
+        <label className="appointments-form-label">
+          {t('type_of_appointment')}
+        </label>
         <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={`${
             appointmentType?.length
               ? appointmentType?.join('-')
-              : 'Select appointment type'
+              : t('select_type_of_appointment')
           }`}
           listClassName="country-list"
           menuItems={appointmentsTypeList}
@@ -147,10 +149,10 @@ const AppointmentsForm = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--3">
-        <label className="auction-details-form-label">Start time</label>
+        <label className="auction-details-form-label">{t('Start_time')}</label>
         <TextField
           id="time-start"
-          placeholder={'Select from'}
+          placeholder={t('Select_Start_time')}
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
@@ -182,10 +184,10 @@ const AppointmentsForm = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--3">
-        <label className="auction-details-form-label">End time</label>
+        <label className="auction-details-form-label">{t('End_time')}</label>
         <TextField
           id="time-start"
-          placeholder={'Select from'}
+          placeholder={t('Select_End_time')}
           block
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
@@ -229,7 +231,7 @@ const AppointmentsForm = ({
           placeholder={`${
             appointmentDetails?.['selected_days']?.length
               ? appointmentDetails?.['selected_days']?.join('-')
-              : 'Select Days type'
+              : t('Select_Days_type')
           }`}
           listClassName="country-list"
           menuItems={weekDays?.map((day) => (
