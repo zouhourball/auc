@@ -4,7 +4,7 @@ import {
   rejectRequest,
   updateRequest,
 } from 'libs/api/appointment-api'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Mht from '@target-energysolutions/mht'
 import { useSelector, useDispatch } from 'react-redux'
 import { useQuery, useMutation } from 'react-query'
@@ -15,7 +15,7 @@ import { Button, DialogContainer, TextField } from 'react-md'
 import DrawOnMap from 'components/draw-on-map'
 
 // import UserInfoBySubject from 'components/user-info-by-subject'
-import { useTranslation } from 'libs/langs'
+import { useTranslation, useCurrentLang } from 'libs/langs'
 
 import { configs } from './helper'
 
@@ -32,6 +32,12 @@ const AppointmentsRequests = () => {
   const meOrgs = useSelector(({ app }) => app?.myOrgs)
   const { t } = useTranslation()
 
+  const lang = useCurrentLang()
+
+  const language = useMemo(
+    () => (!lang || lang === '' || lang === 'ar' ? 'ar' : null),
+    [lang],
+  )
   const { data: requestsAppointments, refetch: refetchAppointments } = useQuery(
     [
       'getAppointmentsRequests',
@@ -145,7 +151,13 @@ const AppointmentsRequests = () => {
           name: el?.['bidder_name'],
           appointmentType: el?.type,
           appointmentTypeKey: t(el?.type),
-          date: moment(el?.['appointment_date']).format('DD MMM YYYY'),
+          date:
+            moment(el?.['appointment_date']).format('DD ') +
+            moment(el?.['appointment_date'])
+              .locale(lang === 'ar' ? 'ar' : 'en')
+              .format('MMM ') +
+            moment(el?.['appointment_date']).format('YYYY '),
+
           time: `${moment(el?.['start_at']).utc().format('HH:mm')} - ${moment(
             el?.['end_at'],
           )
@@ -177,6 +189,7 @@ const AppointmentsRequests = () => {
         withSearch
         commonActions
         hideTotal
+        defaultLanguage={language}
       />
       {notesVisible && (
         <DialogContainer
