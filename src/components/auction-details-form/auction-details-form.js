@@ -27,8 +27,8 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false)
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [startTime, setStartTime] = useState(moment())
-  const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [endTime, setEndTime] = useState(moment())
+  const [visibleEndTimePicker, setVisibleEndTimePicker] = useState(false)
   const [addressView, setAddressView] = useState(false)
   const [showListCountry, handleShowListCountry] = useState('')
   const [showListCities, handleShowListCities] = useState('')
@@ -130,15 +130,14 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
     // guaranteeFee,
   } = auctionDetails
 
-  const ref = document.getElementsByClassName('country-list')
-  const [test] = useState(0)
+  const ref = document.getElementsByClassName('list-itemMultiPick')
 
   useEffect(() => {
     ref[0] && ref[0].addEventListener('scroll', updateOffsetAndRefetch)
 
     return () =>
       ref[0] && ref[0].removeEventListener('scroll', updateOffsetAndRefetch)
-  }, [test])
+  }, [showListCountry])
 
   const updateOffsetAndRefetch = () => {
     if (ref[0].scrollHeight - ref[0].scrollTop <= ref[0].clientHeight) {

@@ -242,7 +242,7 @@ const ContactInfoDialogaddreschedule = ({
           key={2}
           flat
           primary
-          swapTheming
+          swapTheming={validrescheule()}
           onClick={() => sendRequest()}
           disabled={!validrescheule()}
 
@@ -271,7 +271,7 @@ const ContactInfoDialogaddreschedule = ({
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
       <div className="auction-details-form-label md-cell md-cell--12">
-        {t('type_of_appointment')}
+        {t('type_of_appointment')} *
       </div>
       <SelectField
         id="select-field-3-1"
