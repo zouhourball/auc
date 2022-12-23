@@ -602,10 +602,9 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo, refetch }) => {
                     width={25}
                     src={
                       countriesCodes?.find(
-                        (el) =>
-                          el?.value === phoneNumber?.currentCode ||
-                          el?.value === '+968',
-                      )?.flag
+                        (el) => el?.value === phoneNumber?.currentCode,
+                      )?.flag ||
+                      countriesCodes?.find((el) => el?.value === '+968')?.flag
                     }
                   />
                 }
