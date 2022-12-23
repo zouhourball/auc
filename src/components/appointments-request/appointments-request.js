@@ -177,6 +177,7 @@ const AppointmentsRequests = () => {
         withSearch
         commonActions
         hideTotal
+        labels={{ searchFieldPlaceholder: t('search_for_an_appointment') }}
       />
       {notesVisible && (
         <DialogContainer

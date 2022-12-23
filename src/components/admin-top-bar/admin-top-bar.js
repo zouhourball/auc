@@ -110,7 +110,11 @@ const AdminTopBar = ({
             // location.reload()
             changeLang(v)
           }}
-          position={SelectField.Positions.BELOW}
+          position={SelectField.Positions.TOP_RIGHT}
+          anchor={{
+            x: SelectField.HorizontalAnchors.INNER_RIGHT,
+            y: SelectField.VerticalAnchors.BOTTOM,
+          }}
           value={currentLang.key || 'en-US'}
           className="langSelector"
           dropdownIcon={<FontIcon>expand_more</FontIcon>}

@@ -12,8 +12,42 @@
     background: red;
   }
 
+  &-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 0 0;
+
+    .md-btn {
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+
+      &.md-background--primary {
+        background: #2b3;
+      }
+
+      &.md-background--secondary {
+        background: #bb2124;
+      }
+    }
+  }
+
   .avatar-container {
     position: relative;
+
+    .avatar-loading-wrapper {
+      display: grid;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: rgba($color: #fff, $alpha: 0.1);
+      backdrop-filter: blur(10px);
+      place-content: center;
+    }
 
     > .edit-btn {
       display: flex;
@@ -117,6 +151,7 @@
   .md-dialog-content--padded {
     padding: 24px 24px;
     // height: 300px;
+    overflow: visible;
 
     &::-webkit-scrollbar {
       visibility: visible;

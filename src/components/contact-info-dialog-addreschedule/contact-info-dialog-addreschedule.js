@@ -231,6 +231,7 @@ const ContactInfoDialogaddreschedule = ({
       onHide={onHide}
       focusOnMount={false}
       className="add-appointment-dialog"
+      stackedActions={false}
       title={
         <div className="add-appointment-dialog-title">Add Appointment</div>
       }

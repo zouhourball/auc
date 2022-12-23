@@ -45,6 +45,7 @@ import { DueDate } from 'components/due-date'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
 import selectImg from 'images/select-img.png'
+import deleteIcon from 'images/delete-icon.png'
 
 import './style.scss'
 
@@ -1303,7 +1304,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                   ]?.join('-')}
                   fullWidth
                   position={SelectField.Positions.BELOW}
-                  dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
                   className="selectField-lined"
                   disabled={!editMode}
                 />
@@ -1408,18 +1408,28 @@ const MyAuctionDetails = ({ auctionId }) => {
         id="confirm-dialog"
         focusOnMount={false}
         actions={[
-          <Button key={'cancel-btn'} onClick={() => setConfirmDialog(false)}>
+          <Button
+            key={'cancel-btn'}
+            flat
+            onClick={() => setConfirmDialog(false)}
+          >
             {t('cancel')}
           </Button>,
           <Button
             key={'delete-btn'}
             onClick={() => deleteMutate({ auctionId })}
+            secondary
+            flat
+            swapTheming
           >
             {t('delete')}
           </Button>,
         ]}
       >
-        <div>{t('are_you_sure_you_want_to_delete_this_auction')}</div>
+        <img src={deleteIcon} width="30px" className="delete-img" />
+        <div className="delete-msg">
+          {t('are_you_sure_you_want_to_delete_this_auction')}
+        </div>
       </DialogContainer>
     </div>
   )

@@ -76,6 +76,7 @@ const ContactInfoDialogreschedule = ({
       visible={visible}
       onHide={onHide}
       focusOnMount={false}
+      stackedActions={false}
       className="contact-info-dialog"
       title={
         <div className="contact-info-dialog-title">
