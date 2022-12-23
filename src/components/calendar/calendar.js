@@ -2,7 +2,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import { useClickOutside } from 'libs/utils/useclickoutside'
 import { Avatar, Button, FontIcon, TextField } from 'react-md'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import CompanyInfoById from 'components/company-info-by-id'
 import { getPublicUrl } from 'libs/utils/custom-function'
 import { useTranslation, useCurrentLang, useSupportedLangs } from 'libs/langs'
@@ -39,6 +39,9 @@ const CalendarCustom = ({
   const { t } = useTranslation()
   const langs = useSupportedLangs()
   const currentLang = langs.find(({ key }) => key === useCurrentLang()) || {}
+
+  const [position, setPosition] = useState('left')
+
   // console.log(localizer.format(date, 'dddd', 'ar'), 'weekdayFormat')
 
   // const lang = () => {
@@ -171,6 +174,13 @@ const CalendarCustom = ({
 
       const elementHeight = myRef.current ? myRef.current.offsetHeight : 240
       const elementWidth = myRef.current ? myRef.current.offsetWidth : 300
+
+      if (positionX + elementWidth > window.innerWidth - left) {
+        setPosition('right')
+      } else {
+        setPosition('left')
+      }
+
       const posY =
         positionY < 0
           ? 0
@@ -181,7 +191,7 @@ const CalendarCustom = ({
         positionX < 0
           ? 0
           : positionX + elementWidth > window.innerWidth - left
-            ? window.innerWidth - left - elementWidth
+            ? window.innerWidth - left - elementWidth - 100 // - myRef.current.offsetWidth
             : positionX
 
       setSelectedEvent({ ...event, x: posX, y: posY })
@@ -240,7 +250,7 @@ const CalendarCustom = ({
 
       {!selectedEvent?.hide && (
         <div
-          className="popup"
+          className={`popup ${position}`}
           ref={popupRef}
           style={{
             position: 'absolute',
