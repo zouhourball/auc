@@ -787,11 +787,12 @@ export const getFeaturedAuctionRemainingTime = async ({ queryKey }) => {
   }
   return res
 }
+
 export const getApprovals = async ({ queryKey }) => {
   let res
   try {
     res = await fetchJSON(
-      `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals?limit=${queryKey[1]?.limit}&offset=${queryKey[1]?.offset}&sortBy=status&sortType=desc`,
+      `${PRODUCT_APP_URL_CONFIGURATOR}/v2/org/approvals?limit=${queryKey[1]?.limit}&offset=${queryKey[1]?.offset}&sortBy=id&sortType=desc`,
       {
         method: 'GET',
       },
