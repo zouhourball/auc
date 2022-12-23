@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslation } from 'libs/langs'
 import { useQuery, useMutation } from 'react-query'
 import moment from 'moment'
@@ -195,8 +195,13 @@ const AppointmentsCalendar = () => {
       ),
     ]
   }
-  let getAvailabilityDataFormatted = getAvailabilityData?.map((el) =>
-    new Date(el?.['appointment_date']).getDate(),
+  let getAvailabilityDataFormatted = useMemo(
+    () =>
+      (Array.isArray(getAvailabilityData)
+        ? getAvailabilityData
+        : [getAvailabilityData]
+      )?.map((el) => new Date(el?.['appointment_date']).getDate()),
+    [getAvailabilityData],
   )
   getAvailabilityDataFormatted = getAvailabilityDataFormatted?.filter(
     (item, index) => getAvailabilityDataFormatted?.indexOf(item) === index,

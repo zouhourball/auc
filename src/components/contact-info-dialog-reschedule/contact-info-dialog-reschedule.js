@@ -102,7 +102,7 @@ const ContactInfoDialogreschedule = ({
       ]}
     >
       <label className="auction-details-form-label md-cell md-cell--12">
-        {t('type_of_appointment')}
+        {t('type_of_appointment')}*
       </label>
       <SelectField
         id="select-field-3-1"

@@ -90,6 +90,7 @@ const CreateAuctionStepper = ({
           <PropertyDetailsForm
             propertyDetails={propertyDetails}
             setPropertyDetails={setPropertyDetails}
+            auctionDetails={auctionDetails}
           />
         )
       case 3:
