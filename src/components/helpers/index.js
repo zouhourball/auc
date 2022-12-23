@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const propertyTypeList =
   // type PropertyCategory uint
   // const (

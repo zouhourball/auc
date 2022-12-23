@@ -211,7 +211,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jCH+k2Vjlno4YWl6g535nHR09PwCEmTBKAG6VqF+rhkrSPRLfgpU2maagwbZPLjaHuU5Jd1DFQ2KJpQuI6uG8w==
-  /@apollo/client/3.7.2_2854535e62c5882a19e48f1dbe3d5aa9:
+  /@apollo/client/3.7.3_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
       '@graphql-typed-document-node/core': 3.1.1_graphql@15.8.0
       '@wry/context': 0.7.0
@@ -246,7 +246,7 @@ packages:
       subscriptions-transport-ws:
         optional: true
     resolution:
-      integrity: sha512-ohAIpXl3mTa1Fd3GT/K37VwQJfTIuuJRp4aOlJ4q/hlx0Wxh+RqDrbn0awtVCOdhGDQN+CQQmVzIqFKn6GziXQ==
+      integrity: sha512-nzZ6d6a4flLpm3pZOGpuAUxLlp9heob7QcCkyIqZlCLvciUibgufRfYTwfkWCc4NaGHGSZyodzvfr79H6oUwGQ==
   /@apollo/react-common/3.1.4_71ede056ece51cd2923555111518fef1:
     dependencies:
       '@types/react': 18.0.9
@@ -337,7 +337,7 @@ packages:
       integrity: sha512-y0CJ393DLxIIkksRup4nt+vSjxalbZBXnnXxYbviq/woj+zKa431zy0yT4LqyRKpFy9ahMIwxBnBwfwIoupqLQ==
   /@apollo/react-hooks/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.3_2854535e62c5882a19e48f1dbe3d5aa9
     dev: false
     peerDependencies:
       graphql: '*'
@@ -365,7 +365,7 @@ packages:
       integrity: sha512-wuLPkKlctNn3u8EU8rlECyktpOUCeekFfb0KhIKknpGY6Lza2Qu0bThx7D9MIbVEzhKadNNrzLcpk0Y8/5UuWg==
   /@apollo/react-testing/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.3_2854535e62c5882a19e48f1dbe3d5aa9
     dev: true
     peerDependencies:
       graphql: '*'

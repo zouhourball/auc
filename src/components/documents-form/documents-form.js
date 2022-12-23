@@ -70,7 +70,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
     )
   }
   return (
-    <div div className="auction-details-form md-grid">
+    <div className="auction-details-form md-grid">
       <div className="auction-details-form-title md-cell md-cell--12">
         {t('documents')}
       </div>

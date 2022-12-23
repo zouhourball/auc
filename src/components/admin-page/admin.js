@@ -45,6 +45,11 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
   const dispatch = useDispatch()
   let currentLang = useCurrentLang()
 
+  const lang = useCurrentLang()
+  const language = useMemo(
+    () => (!lang || lang === '' || lang === 'ar' ? 'ar' : null),
+    [lang],
+  )
   const [documentsDialog, setDocumentsDialog] = useState(false)
   const [activeHeaderTab, setActiveHeaderTab] = useState(0)
   const [filter, setFilter] = useState(0)
@@ -151,9 +156,27 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
         //   )}
         // </UserInfoBySubject>
       ),
-      bidOpenDate: moment(el?.['auction_start_date']).format('DD MMM YYYY'),
-      bidCloseDate: moment(el?.['auction_end_date']).format('DD MMM YYYY'),
-      submissionDate: moment(el?.['created_date']).format('DD MMM YYYY'),
+
+      bidOpenDate:
+        moment(el?.['auction_start_date']).format('DD ') +
+        moment(el?.['auction_start_date'])
+          .locale(lang === 'ar' ? 'ar' : 'en')
+          .format('MMM ') +
+        moment(el?.['auction_start_date']).format('YYYY '),
+
+      bidCloseDate:
+        moment(el?.['auction_end_date']).format('DD ') +
+        moment(el?.['auction_end_date'])
+          .locale(lang === 'ar' ? 'ar' : 'en')
+          .format('MMM ') +
+        moment(el?.['auction_end_date']).format('YYYY '),
+
+      submissionDate:
+        moment(el?.['created_date']).format('DD ') +
+        moment(el?.['created_date'])
+          .locale(lang === 'ar' ? 'ar' : 'en')
+          .format('MMM ') +
+        moment(el?.['created_date']).format('YYYY '),
       status: el?.status,
       documents: (
         <Button
@@ -319,6 +342,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           singleSelect
           withSearch
           commonActions
+          defaultLanguage={language}
           headerTemplate={
             selectedRow?.length === 1 && (
               <div className="admin-page-mht-header">
@@ -403,6 +427,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
+          // defaultLanguage={language}
           withSearch
           // withFooter
           commonActions

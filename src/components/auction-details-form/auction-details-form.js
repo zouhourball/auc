@@ -304,7 +304,7 @@ const AuctionDetailsForm = ({ auctionDetails, setAuctionDetails }) => {
           placeholder={t('property_select')}
           menuItems={propertyTypeList?.map((el) =>
             el?.props ? (
-              <div className="md-list-tile">
+              <div className="md-list-tile" key={el?.label}>
                 <b>{t(el?.props?.text)}</b>
               </div>
             ) : (
