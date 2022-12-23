@@ -348,6 +348,7 @@ const Admin = ({ logged, auctionId, currentTab = 0, setCurrentTab }) => {
           withSearch
           commonActions
           defaultLanguage={language}
+          customRowsPagination={{ currentPage: offset + 1 }}
           headerTemplate={
             selectedRow?.length === 1 && (
               <div className="admin-page-mht-header">
@@ -432,6 +433,7 @@ const Admin = ({ logged, auctionId, currentTab = 0, setCurrentTab }) => {
           tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
+          customRowsPagination={{ currentPage: offset + 1 }}
           // defaultLanguage={language}
           withSearch
           // withFooter
