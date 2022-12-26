@@ -143,19 +143,28 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     } else {
     }
   }, [paymentCallback])
-  const [, setCurrentImg] = useState('')
+  const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
   const [bidAmount, setBidAmount] = useState('')
   const [feesDialog, setFeesDialog] = useState()
+  const [images, setImages] = useState([])
 
   useEffect(() => {
+    // eslint-disable-next-line camelcase
     setCurrentImg(
-      auctionData?.listing?.images?.find((img) => img?.['cover_image'])
-        ? auctionData?.listing?.images?.find((img) => img?.['cover_image'])?.url
-        : auctionData?.listing?.images[0]?.url,
+      auctionData?.listing?.images?.find((img) => img?.['cover_image']) ||
+        auctionData?.listing?.images[0],
+    )
+    setImages(
+      auctionData?.listing?.images?.filter((img) => img?.id !== currentImg?.id),
     )
   }, [auctionData])
+  useEffect(() => {
+    setImages(
+      auctionData?.listing?.images?.filter((img) => img?.id !== currentImg?.id),
+    )
+  }, [currentImg, auctionData])
   const [placeNewBid] = useMutation(placeBid, {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
     onError: (res) => {
@@ -218,14 +227,6 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     }
   }, [auctionData])
 
-  // Remove this section after finishing
-  //* *************************
-  // useEffect(() => {
-  //   dispatch(
-  //     addToast(<ToastMsg text={'You have been outbid!'} type="outbid" />),
-  //   )
-  // }, [])
-  //* *************************
   useEffect(() => {
     refetchAuction()
     // console.log(timeExtension, 'timeExtension1')
@@ -236,12 +237,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     +moment.utc(auctionData?.['auction_end_date']) > +moment()
 
   const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
-  // console.log(
-  //   Date.parse(auctionData?.['created_date']),
-  //   Date.now(),
-  //   isActive,
-  //   'isActive',
-  // )
+
   const saveAuctionMutation = useMutationQuery(saveAsFav, {
     onSuccess: (res) => {
       if (res?.success) {
@@ -288,17 +284,6 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       uuid,
     })
   }
-  // const renderPropertyImages = () =>
-  //   auctionData?.listing?.images?.map((image) => (
-  //     <>
-  //       <img
-  //         key={image?.uuid}
-  //         className="gallery-image item"
-  //         onClick={() => setCurrentImg(image?.url)}
-  //         src={`${image?.url}?token=${downloadToken}&view=true`}
-  //       />
-  //     </>
-  //   ))
   const downloadToken = store?.getState()?.app?.dlToken
 
   const onDownloadCertificate = (uuid) => {
@@ -321,82 +306,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     () => auctionData?.['configurator_organization_id'],
     [auctionData],
   )
+
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
-      {/*
-        <div className="auction-details-header md-cell md-cell--9">
-          {admin && (
-            <FontIcon
-              iconClassName="mdi mdi-arrow-left"
-              onClick={() => {
-                navigate('/admin')
-              }}
-            />
-          )}
-          <div className="title">{t('auction_detail')}</div>
-          <Button
-            flat
-            primary
-            className="view-map-btn"
-            iconClassName="mdi mdi-map-marker-outline"
-            onClick={() => setAddressView(!addressView)}
-          >
-            {t('view_map')}
-          </Button>
-
-          {addressView && (
-            <DrawOnMap
-              id={'address'}
-              onClose={() => {
-                setAddressView(false)
-              }}
-              readOnly={true}
-              visible={addressView}
-              layers={[
-                {
-                  type: 'symbol',
-                  id: 'Symbol-Layer-Id',
-                  items: [],
-                },
-              ]}
-              longitude={auctionPropertyData?.['general_location_x']}
-              latitude={auctionPropertyData?.['general_location_y']}
-            />
-          )}
-        </div>
-        <div className="saving md-cell md-cell--9">
-          <img
-            className="gallery-image"
-            src={`${currentImg}?token=${downloadToken}&view=true`}
-          />
-          {auctionData?.['is_bookmarked'] ? (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              iconClassName="fa fa-bookmark"
-              onClick={(e) => {
-                e.stopPropagation()
-                unsaveAuction(auctionData?.uuid)
-              }}
-            />
-          ) : (
-            <Button
-              icon
-              primary
-              className="save-btn"
-              iconClassName="fa fa-bookmark-o"
-              onClick={(e) => {
-                e.stopPropagation()
-                saveAuction(auctionData?.uuid)
-              }}
-            />
-          )}
-        </div>
-        <div className="gallery-image-wrapper md-cell md-cell--3">
-          {renderPropertyImages()}
-        </div>
-      </div> */}
       <div className="auction-details-gallery md-cell md-cell--8 md-grid">
         {!admin && (
           <Button
@@ -462,7 +374,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
           saveAuction={() => saveAuction(auctionData?.uuid)}
           unsaveAuction={() => unsaveAuction(auctionData?.uuid)}
           isBookMarked={auctionData?.['is_bookmarked']}
-          images={auctionData?.listing?.images}
+          images={[currentImg, ...images]}
           startDate={auctionData?.['auction_start_date']}
           status={+moment.utc(auctionData?.['auction_start_date']) > +moment()}
         />
