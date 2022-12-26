@@ -28,6 +28,7 @@ const HomeSlider = ({ auctions, logged, defaultNode }) => {
     infinite: true,
     speed: 500,
     autoplay: true,
+    pauseOnHover: false,
     autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,

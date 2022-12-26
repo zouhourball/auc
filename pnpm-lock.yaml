@@ -9,11 +9,11 @@ dependencies:
   '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/gis-map': 2.9.105_250825046311308e722f6f77c6a4d405
   '@target-energysolutions/hoc-oauth': 1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e
-  '@target-energysolutions/messenger': 17.4.9_e5c342f2519c445e26288d16729dd51c
+  '@target-energysolutions/messenger': 17.2.3_98caf3aa5b7bda04ab62d3a034d181a2
   '@target-energysolutions/mht': 2.23.1_1add5b84298a2403864cf17d02a623a9
-  '@target-energysolutions/react-hoc-query': 1.0.4_a0b24c37ff31104fd24fadd0e407f494
-  '@target-energysolutions/task-manager': 6.0.2_8b34f8e439d3f58c578b9e9ccdf018b2
-  '@target-energysolutions/tiny-i18n': 2.2.1_f1e10e70da54bba41b21e1a0bd7e60b5
+  '@target-energysolutions/react-hoc-query': 1.0.4_7bda62a7d4688a636121e068167982a0
+  '@target-energysolutions/task-manager': 6.0.2_e172bace93b6da3ff6d0e3410bffbe70
+  '@target-energysolutions/tiny-i18n': 2.2.0_f1e10e70da54bba41b21e1a0bd7e60b5
   '@target-energysolutions/utils': 1.4.4_react-dom@18.0.0+react@18.0.0
   '@types/react': 18.0.9
   '@types/react-dom': 18.0.5
@@ -247,7 +247,7 @@ packages:
         optional: true
     resolution:
       integrity: sha512-nzZ6d6a4flLpm3pZOGpuAUxLlp9heob7QcCkyIqZlCLvciUibgufRfYTwfkWCc4NaGHGSZyodzvfr79H6oUwGQ==
-  /@apollo/react-common/3.1.4_373a26c9f3e792d37c13a942211ae940:
+  /@apollo/react-common/3.1.4_71ede056ece51cd2923555111518fef1:
     dependencies:
       '@types/react': 18.0.9
       apollo-client: 2.6.10_graphql@15.8.0
@@ -5185,7 +5185,7 @@ packages:
       '@rmwc/types': 5.6.0
       '@types/classnames': 2.3.1
       '@types/prop-types': 15.7.5
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       classnames: 2.3.1
       mdi-react: 5.6.0_react@18.0.0
       react: 18.0.0
@@ -5227,7 +5227,7 @@ packages:
       '@rmwc/types': 5.6.0
       '@types/classnames': 2.3.1
       '@types/prop-types': 15.7.5
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       classnames: 2.3.1
       mdi-react: 6.7.0_react@18.0.0
       react: 18.0.0
@@ -5268,7 +5268,7 @@ packages:
       '@rmwc/types': 5.6.0
       '@types/classnames': 2.3.1
       '@types/prop-types': 15.7.5
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       classnames: 2.3.1
       mdi-react: 5.6.0_react@18.0.0
       react: 18.0.0
@@ -5285,7 +5285,7 @@ packages:
   /@target-energysolutions/material-widgets/0.1.3_bdb4aea89f170aaa1ddb585ff4b9f19e:
     dependencies:
       '@target-energysolutions/material-design': 0.7.13_d82c26690085415f399c422f9109bc14
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.5
       fzy.js: 0.4.1
       lodash-es: 4.17.21
@@ -5335,7 +5335,7 @@ packages:
       '@mdi/react': 1.6.0
       '@target-energysolutions/material-design': 0.7.13_d82c26690085415f399c422f9109bc14
       '@types/classnames': 2.3.1
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       '@types/react-dom': 18.0.5
       classnames: 2.3.1
       fzy.js: 0.4.1
@@ -5403,7 +5403,7 @@ packages:
       react-window: 1.8.7_react-dom@18.0.0+react@18.0.0
       redux: 4.2.0
       redux-actions: 2.6.5
-      regenerator-runtime: 0.13.9
+      regenerator-runtime: 0.13.10
       swr: 1.3.0_react@18.0.0
       tiny-cookie: 2.3.2
       tus-js-client: 2.3.1
@@ -5478,12 +5478,12 @@ packages:
       '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
       html2canvas: 1.4.1
       lodash-es: 4.17.21
-      moment: 2.29.3
+      moment: 2.29.4
       react: 18.0.0
       react-beautiful-dnd: 12.2.0_react-dom@18.0.0+react@18.0.0
       react-dom: 18.0.0_react@18.0.0
       react-md: 1.18.1_react-dom@18.0.0+react@18.0.0
-      react-onclickoutside: 6.12.1_react-dom@18.0.0+react@18.0.0
+      react-onclickoutside: 6.12.2_react-dom@18.0.0+react@18.0.0
       react-select: 3.2.0_react-dom@18.0.0+react@18.0.0
       react-virtualized: 9.22.3_react-dom@18.0.0+react@18.0.0
       reactutils: 4.1.0_react@18.0.0
@@ -5617,12 +5617,12 @@ packages:
       integrity: sha512-u30NbKs3ZCV8A2XX6ua3UsJThI2XUJZCuXzdfKU1ghBPUL0ivmdgoeK5GjnKiOdZglPA77xZ5AV68DkXsx29Rw==
   /@target-energysolutions/tiny-i18n/2.2.0_f1e10e70da54bba41b21e1a0bd7e60b5:
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       axios: 0.21.4
       prop-types: 15.8.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      tslib: 2.4.0
+      tslib: 2.4.1
     dev: false
     peerDependencies:
       axios: ^0.19.0 || ^0.18.0
@@ -5793,14 +5793,14 @@ packages:
       integrity: sha512-3UAiw52g6LARDS9I5lpYwUzj/nBuMvor/0BWiza7ibuOIEaNIo+m3whnVBLLj/ue0DzlcX+96c24YdZCuDwOiQ==
   /@types/draft-js/0.10.45:
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
       immutable: 3.7.6
     dev: false
     resolution:
       integrity: sha512-ozmVQEI088kGQfY2XPB0b+YRNbkv1mxdxcLieBLCc2F4IkVWMs6mnIaEbBRExmM3H/Amm9CvhlmIYmDL4CjBvA==
   /@types/emoji-mart/2.11.3:
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.0.25
     dev: false
     resolution:
       integrity: sha512-pRlU6+CFIB+9+FwjGGCVtDQq78u7N0iUijrO0Qh1j9RJ6T23DSNNfe0X6kf81N4ubVhF9jVckCI1M3kHpkwjqA==
@@ -9812,7 +9812,7 @@ packages:
       integrity: sha512-IdHZR5hc3mipTY/r0ergtqBgQ96XxmRdQDSg7fsL+GiJQQ4akMws6+cjLSyIhGQxtvNuPVNaEQiAlU00NsyZUg==
   /emoji-mart/3.0.1_react@18.0.0:
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.20.1
       prop-types: 15.8.1
       react: 18.0.0
     dev: false
@@ -14142,7 +14142,7 @@ packages:
   /lodash.clonedeep/4.5.0:
     dev: false
     resolution:
-      integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==
+      integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
   /lodash.debounce/4.0.8:
     resolution:
       integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
@@ -14648,7 +14648,7 @@ packages:
       make-plural: 4.3.0
       messageformat-formatters: 2.0.1
       messageformat-parser: 4.1.3
-    deprecated: "Package renamed as '@messageformat/core', see messageformat.github.io for more details. 'messageformat' will eventually provide a polyfill for Intl.MessageFormat, once it's been defined by Unicode & ECMA."
+    deprecated: 'Package renamed as ''@messageformat/core'', see messageformat.github.io for more details. ''messageformat'' will eventually provide a polyfill for Intl.MessageFormat, once it''s been defined by Unicode & ECMA.'
     dev: true
     resolution:
       integrity: sha512-uTzvsv0lTeQxYI2y1NPa1lItL5VRI8Gb93Y2K2ue5gBPyrbJxfDi/EYWxh2PKv5yO42AJeeqblS9MJSh/IEk4w==
@@ -18085,7 +18085,7 @@ packages:
       integrity: sha512-HyUVv9g3t/BS7Yz9HgrtYSWyRNdR2F81nkj+C5iRY675AwlqCLB5JU9mnZWg0cdVz7IM4iquoyZx70vzZv3Z8Q==
   /react-grid-layout/1.3.4_react-dom@18.0.0+react@18.0.0:
     dependencies:
-      clsx: 1.1.1
+      clsx: 1.2.1
       lodash.isequal: 4.5.0
       prop-types: 15.8.1
       react: 18.0.0
@@ -18321,6 +18321,7 @@ packages:
       '@react-navigation/native': 3.6.5_216a7c942d0f18cb6212e912b6325bc8
       react: 18.0.0
       react-native-tab-view: 1.4.1_react@18.0.0
+    deprecated: 'This package is no longer supported. Please use @react-navigation/drawer instead. See https://reactnavigation.org/docs/drawer-navigator/ for usage guide'
     dev: false
     peerDependencies:
       '@react-navigation/core': '*'
@@ -18354,6 +18355,7 @@ packages:
       prop-types: 15.8.1
       react: 18.0.0
       react-native-tab-view: 1.4.1_react@18.0.0
+    deprecated: 'This package is no longer supported. Please use @react-navigation/bottom-tabs instead. See https://reactnavigation.org/docs/bottom-tab-navigator/ for usage guide'
     dev: false
     peerDependencies:
       react: '*'
@@ -18369,7 +18371,7 @@ packages:
       react-navigation-drawer: 1.4.0_20de13c46a068ec1f065396d96785018
       react-navigation-stack: 1.5.3_20de13c46a068ec1f065396d96785018
       react-navigation-tabs: 1.2.0_react@18.0.0
-    deprecated: 'This version of React Navigation is no longer supported. Please upgrade to 4.x. See https://reactnavigation.org/docs/en/4.x/upgrading-from-3.x.html for instructions.'
+    deprecated: 'This package is no longer supported. Please use @react-navigation/native instead. See https://reactnavigation.org/docs/getting-started/ for usage guide'
     dev: false
     peerDependencies:
       react: '*'
@@ -18441,7 +18443,7 @@ packages:
       integrity: sha512-GLLSOLWr21CqtJn8geSwQfoJufdt3mfdsnIiQswouuQ2MMPns+ihZklxvsTDKD3cR2tF8ELbi5xUsvqVhR6WvA==
   /react-pdf/5.2.0_75f279ef6cf212aa2d915693ede263f0:
     dependencies:
-      '@babel/runtime': 7.18.3
+      '@babel/runtime': 7.20.1
       make-cancellable-promise: 1.1.0
       make-event-props: 1.3.0
       merge-class-names: 1.4.2
@@ -18943,8 +18945,8 @@ packages:
       integrity: sha512-7tQ0BmZqfVF6YYEWcIGuoR3OdYe8I/ZFbNclFlGOC3pMqunkYF/oL30NCjSGl9sMEb17AnzixDz98Kqc3N76HQ==
   /react-virtualized/9.22.3_react-dom@18.0.0+react@18.0.0:
     dependencies:
-      '@babel/runtime': 7.18.3
-      clsx: 1.1.1
+      '@babel/runtime': 7.20.1
+      clsx: 1.2.1
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1

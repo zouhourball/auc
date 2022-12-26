@@ -269,7 +269,7 @@ const ContactInfoDialogaddreschedule = ({
         position={SelectField.Positions.BELOW}
         value={appointmentData?.title}
         className="selectField-withShadow  md-cell md-cell--12"
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={<FontIcon primary>expand_more</FontIcon>}
       />
       <div className="auction-details-form-label md-cell md-cell--12">
         {t('type_of_appointment')} *
@@ -284,7 +284,7 @@ const ContactInfoDialogaddreschedule = ({
         position={SelectField.Positions.BELOW}
         value={appointmentData?.type}
         className="selectField-withShadow  md-cell md-cell--12"
-        dropdownIcon={<FontIcon>expand_more</FontIcon>}
+        dropdownIcon={<FontIcon primary>expand_more</FontIcon>}
       />
       <div className="auction-details-form-label md-cell md-cell--12">
         {t('date')} *
@@ -313,6 +313,10 @@ const ContactInfoDialogaddreschedule = ({
           }}
           showNeighboringMonth={false}
           value={appointmentData?.date}
+          nextLabel={<FontIcon primary>navigate_next</FontIcon>}
+          prevLabel={<FontIcon primary>navigate_before</FontIcon>}
+          next2Label={null}
+          prev2Label={null}
         />
       </div>
       <div className="auction-details-form-label md-cell md-cell--12">
