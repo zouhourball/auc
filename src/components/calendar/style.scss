@@ -197,12 +197,23 @@
     display: block;
     position: absolute;
     top: 21px;
-    left: -7px;
     width: 15px;
     height: 15px;
     transform: rotate(45deg);
     background-color: #fff;
     box-shadow: -3px 3px 2px 0 rgba(0, 0, 0, 0.07);
+  }
+
+  &.left {
+    &::before {
+      left: -7px;
+    }
+  }
+
+  &.right {
+    &::before {
+      right: -7px;
+    }
   }
 
   &-top {
@@ -257,9 +268,20 @@
 }
 
 html[dir='rtl'] {
-  .popup::before {
-    right: -7px;
-    left: auto;
-    box-shadow: 2px -3px 2px 0 rgba(0, 0, 0, 0.07);
+  .popup {
+    &.left {
+      &::before {
+        right: -7px;
+        left: auto;
+        box-shadow: 2px -3px 2px 0 rgba(0, 0, 0, 0.07);
+      }
+    }
+
+    &.right {
+      &::before {
+        right: auto;
+        left: -7px;
+      }
+    }
   }
 }

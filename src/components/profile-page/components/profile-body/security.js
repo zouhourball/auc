@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Button,
   Checkbox,
@@ -32,7 +32,7 @@ import { addToast } from 'modules/app/actions'
 import { useDispatch } from 'react-redux'
 import CustomSelectWithSearch from 'components/custom-select-with-search'
 
-const Security = ({ userInfo }) => {
+const Security = ({ userInfo, refetch }) => {
   const { t } = useTranslation()
   const [dialogType, setDialogType] = useState('')
 
@@ -54,6 +54,27 @@ const Security = ({ userInfo }) => {
         userInfo?.phoneMobile?.length,
       ),
   })
+
+  useEffect(() => {
+    setInformations({
+      email: userInfo?.email
+        ? userInfo?.email?.substring(0, 2) +
+          '**********' +
+          userInfo?.email?.substring(
+            userInfo?.email?.indexOf('@'),
+            userInfo?.email?.length,
+          )
+        : '',
+      password: '********',
+      phoneMobile:
+        userInfo?.phoneMobile?.substring(0, 4) +
+        '****' +
+        userInfo?.phoneMobile?.substring(
+          userInfo?.phoneMobile?.length - 3,
+          userInfo?.phoneMobile?.length,
+        ),
+    })
+  }, [userInfo])
 
   return (
     <div className="personal-information md-cell md-cell--8 md-grid">
@@ -142,6 +163,7 @@ const Security = ({ userInfo }) => {
           visible={dialogType === 'phone'}
           onHide={() => setDialogType('')}
           userInfo={userInfo}
+          refetch={refetch}
         />
       )}
       {dialogType === 'password' && (
@@ -411,7 +433,7 @@ const ChangeEmailDialog = ({ visible, onHide, emailData }) => {
   )
 }
 
-const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
+const ChangeNumberDialog = ({ visible, onHide, userInfo, refetch }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const [step, setStep] = useState(0)
@@ -450,6 +472,7 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
     onSuccess: (res) => {
       if (res?.code === 'ok') {
         setStep((prev) => prev + 1)
+        refetch()
       } else {
         dispatch(
           addToast(
@@ -579,10 +602,9 @@ const ChangeNumberDialog = ({ visible, onHide, userInfo }) => {
                     width={25}
                     src={
                       countriesCodes?.find(
-                        (el) =>
-                          el?.value === phoneNumber?.currentCode ||
-                          el?.value === '+968',
-                      )?.flag
+                        (el) => el?.value === phoneNumber?.currentCode,
+                      )?.flag ||
+                      countriesCodes?.find((el) => el?.value === '+968')?.flag
                     }
                   />
                 }

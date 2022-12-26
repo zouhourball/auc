@@ -454,5 +454,12 @@
   "minimum_bid_amount": "What is the minimum bid amount?",
   "reserve_price_amount_owner_answer": "This is an amount that the broker places before the auction starts to be the limit the broker wants to target his/her final auction amount. If the final auction amount does not meet the minimum bid amount, the broker will be notified of the highest bid submitted during the auction. The broker will then have 24 hours from the time being notified to either accept or reject the final auction amount. In this same time the highest bidder will also be notified to wait for the broker to reply to the agreement. If the final auction was accepted by the broker, the bidder will be notified as awarded and download the certificate then will be notified to contact the broker.",
   "How_the_viewing_appointment_works": "How the viewing appointment works?",
-  "The_broker_will_have_an_option_to_add": "The broker will have an option to add this feature on his auction while he creates the auction (last step is optional). Once the broker fills the last of viewing request, the viewing request will appear on auction details page. When the bidder request viewing appointment, the broker will approve or reject the request. Also, if the bidder reschedules the appointment, the broker has an option to reject or approve. "
+  "The_broker_will_have_an_option_to_add": "The broker will have an option to add this feature on his auction while he creates the auction (last step is optional). Once the broker fills the last of viewing request, the viewing request will appear on auction details page. When the bidder request viewing appointment, the broker will approve or reject the request. Also, if the bidder reschedules the appointment, the broker has an option to reject or approve. ",
+  "reset": "Reset",
+  "start_timing": "Start time",
+  "End_time": "End time",
+  "Days": "Days",
+  "Select_Days_type": "Select days type",
+  "Select_Start_time": "Select start time",
+  "Select_End_time": "Select end time"
 }

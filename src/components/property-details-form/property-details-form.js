@@ -5,7 +5,11 @@ import { useTranslation } from 'libs/langs'
 import UploadImages from 'components/upload-images'
 import selectImg from 'images/select-img.png'
 
-const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
+const PropertyDetailsForm = ({
+  propertyDetails,
+  setPropertyDetails,
+  auctionDetails,
+}) => {
   const { t } = useTranslation()
 
   const {
@@ -109,7 +113,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           block
         />
       </div>
-      {![5, 9].includes(propertyDetails?.propertyType) && (
+      {![5, 9].includes(auctionDetails?.propertyType) && (
         <div className="md-cell md-cell--4">
           <label className="auction-details-form-label">
             {t('bedrooms_label')}
@@ -124,7 +128,7 @@ const PropertyDetailsForm = ({ propertyDetails, setPropertyDetails }) => {
           />
         </div>
       )}
-      {![5, 9].includes(propertyDetails?.propertyType) && (
+      {![5, 9].includes(auctionDetails?.propertyType) && (
         <div className="md-cell md-cell--4">
           <label className="auction-details-form-label">
             {t('bathrooms_label')}

@@ -10,7 +10,7 @@ dependencies:
   '@target-energysolutions/gis-map': 2.9.105_b4489031b4c9ef7fc006d0301baf1c8c
   '@target-energysolutions/hoc-oauth': 1.3.2_bdb4aea89f170aaa1ddb585ff4b9f19e
   '@target-energysolutions/messenger': 17.4.9_e5c342f2519c445e26288d16729dd51c
-  '@target-energysolutions/mht': 2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9
+  '@target-energysolutions/mht': 2.23.2_1add5b84298a2403864cf17d02a623a9
   '@target-energysolutions/react-hoc-query': 1.0.4_a0b24c37ff31104fd24fadd0e407f494
   '@target-energysolutions/task-manager': 6.0.2_8b34f8e439d3f58c578b9e9ccdf018b2
   '@target-energysolutions/tiny-i18n': 2.2.1_f1e10e70da54bba41b21e1a0bd7e60b5
@@ -211,7 +211,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jCH+k2Vjlno4YWl6g535nHR09PwCEmTBKAG6VqF+rhkrSPRLfgpU2maagwbZPLjaHuU5Jd1DFQ2KJpQuI6uG8w==
-  /@apollo/client/3.7.2_2854535e62c5882a19e48f1dbe3d5aa9:
+  /@apollo/client/3.7.3_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
       '@graphql-typed-document-node/core': 3.1.1_graphql@15.8.0
       '@wry/context': 0.7.0
@@ -246,7 +246,7 @@ packages:
       subscriptions-transport-ws:
         optional: true
     resolution:
-      integrity: sha512-ohAIpXl3mTa1Fd3GT/K37VwQJfTIuuJRp4aOlJ4q/hlx0Wxh+RqDrbn0awtVCOdhGDQN+CQQmVzIqFKn6GziXQ==
+      integrity: sha512-nzZ6d6a4flLpm3pZOGpuAUxLlp9heob7QcCkyIqZlCLvciUibgufRfYTwfkWCc4NaGHGSZyodzvfr79H6oUwGQ==
   /@apollo/react-common/3.1.4_373a26c9f3e792d37c13a942211ae940:
     dependencies:
       '@types/react': 18.0.26
@@ -337,7 +337,7 @@ packages:
       integrity: sha512-y0CJ393DLxIIkksRup4nt+vSjxalbZBXnnXxYbviq/woj+zKa431zy0yT4LqyRKpFy9ahMIwxBnBwfwIoupqLQ==
   /@apollo/react-hooks/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.3_2854535e62c5882a19e48f1dbe3d5aa9
     dev: false
     peerDependencies:
       graphql: '*'
@@ -365,7 +365,7 @@ packages:
       integrity: sha512-wuLPkKlctNn3u8EU8rlECyktpOUCeekFfb0KhIKknpGY6Lza2Qu0bThx7D9MIbVEzhKadNNrzLcpk0Y8/5UuWg==
   /@apollo/react-testing/4.0.0_2854535e62c5882a19e48f1dbe3d5aa9:
     dependencies:
-      '@apollo/client': 3.7.2_2854535e62c5882a19e48f1dbe3d5aa9
+      '@apollo/client': 3.7.3_2854535e62c5882a19e48f1dbe3d5aa9
     dev: true
     peerDependencies:
       graphql: '*'
@@ -5524,12 +5524,11 @@ packages:
       react-md: ^1.12.3
     resolution:
       integrity: sha512-abYaCB7G3qaCUhcth8xN+8QOXyX9Zvh1mCeNWU8vNHpXAImgFLn8H5P8wbDmlmKRVkmnCh5DmGexOc/wOS3+6w==
-  /@target-energysolutions/mht/2.22.3-beta.4_1add5b84298a2403864cf17d02a623a9:
+  /@target-energysolutions/mht/2.23.2_1add5b84298a2403864cf17d02a623a9:
     dependencies:
       '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
       '@target-energysolutions/tools': 1.3.0_1add5b84298a2403864cf17d02a623a9
       html2canvas: 1.4.1
-      immutability-helper: 3.1.1
       lodash-es: 4.17.21
       moment: 2.29.4
       react: 18.0.0
@@ -5540,9 +5539,6 @@ packages:
       react-onclickoutside: 6.12.2_react-dom@18.0.0+react@18.0.0
       react-select: 3.2.0_react-dom@18.0.0+react@18.0.0
       reactutils: 4.1.0_react@18.0.0
-      redux: 4.2.0
-      redux-actions: 2.6.5
-      redux-thunk: 2.4.2_redux@4.2.0
       uuid: 3.4.0
     dev: false
     peerDependencies:
@@ -5551,7 +5547,7 @@ packages:
       react-dom: ^16.8.4
       react-md: ^1.12.3
     resolution:
-      integrity: sha512-G0lOsP+FCqM8D7OsNzOhHILEbBjaJPz3rNInS7VAQ1SdSpKWp15kKna67GtPR/QUwN/72IHe7/h3a8roiOYTeg==
+      integrity: sha512-jppGBLdXCgZBgqrL1B04sruVBZMPeAdJgk/eKx0hIeKKAiJFq5QMJPZZ5cnESIisMrMPdBHLN+Bf1MldIiKkvw==
   /@target-energysolutions/mht/3.2.5_1add5b84298a2403864cf17d02a623a9:
     dependencies:
       '@target-energysolutions/date-picker': 3.1.5_1add5b84298a2403864cf17d02a623a9
@@ -24043,7 +24039,7 @@ specifiers:
   '@target-energysolutions/gis-map': ^2.9.105
   '@target-energysolutions/hoc-oauth': ^1.3.2
   '@target-energysolutions/messenger': ^17.1.11
-  '@target-energysolutions/mht': 2.22.3-beta.4
+  '@target-energysolutions/mht': 2.23.2
   '@target-energysolutions/react-hoc-query': ^1.0.4
   '@target-energysolutions/task-manager': ^6.0.1
   '@target-energysolutions/tiny-i18n': ^2.1.2

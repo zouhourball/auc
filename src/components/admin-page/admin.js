@@ -40,7 +40,7 @@ import DocumentsContainer from 'components/docs-dialog'
 
 import './style.scss'
 
-const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
+const Admin = ({ logged, auctionId, currentTab = 0, setCurrentTab }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   let currentLang = useCurrentLang()
@@ -60,7 +60,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
   )
   const setSelectedRow = (data) => dispatch(setSelectedRowAction(data))
 
-  let limit = 10
+  let limit = currentTab === 0 ? 10 : 20
 
   const { data: downloadToken } = useQuery(
     ['genUploadToken', 'download'],
@@ -103,10 +103,14 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
     currentTab === 1 && refetchApprovalList()
     currentTab === 0 && refetch()
   }, [currentTab])
+  useEffect(() => {
+    setCurrentTab(0)
+  }, [])
   const approveBrokerMutation = useMutation(approveRejectBroker, {
     onSuccess: (res) => {
       if (!res.error) {
         refetchApprovalList()
+        setSelectedRow([])
       }
     },
   })
@@ -220,6 +224,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
     onSuccess: (res) => {
       if (!res.error) {
         refetch()
+        setSelectedRow([])
       }
     },
   })
@@ -343,6 +348,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           withSearch
           commonActions
           defaultLanguage={language}
+          customRowsPagination={{ currentPage: offset + 1 }}
           headerTemplate={
             selectedRow?.length === 1 && (
               <div className="admin-page-mht-header">
@@ -427,6 +433,7 @@ const Admin = ({ logged, auctionId, currentTab, setCurrentTab }) => {
           tableData={renderApprovalsData() || []}
           withChecked
           singleSelect
+          customRowsPagination={{ currentPage: offset + 1 }}
           // defaultLanguage={language}
           withSearch
           // withFooter

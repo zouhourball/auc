@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable indent */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Avatar, Button, FontIcon } from 'react-md'
 import { useQuery, useMutation as useMutationQuery } from 'react-query'
 // import store from 'libs/store'
@@ -316,6 +316,11 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const ableToRequestViewing =
     auctionData?.['viewing_appointements_config']?.length > 0 &&
     auctionData?.['allow_viewing_request']
+
+  const orgId = useMemo(
+    () => auctionData?.['configurator_organization_id'],
+    [auctionData],
+  )
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
       {/*
@@ -612,9 +617,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
                 )
           }
         >
-          <CompanyInfoById
-            orgId={auctionData?.['configurator_organization_id']}
-          >
+          <CompanyInfoById orgId={orgId}>
             {(res) => {
               return (
                 <>

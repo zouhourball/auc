@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useQuery as useQueryApollo, useSubscription } from 'react-apollo'
 import {
   TextField,
@@ -61,6 +61,8 @@ const MyAuctionDetails = ({ auctionId }) => {
   const [images, setImages] = useState([])
   const [visibleStartTimePicker, setVisibleStartTimePicker] = useState(false)
   const [timing, setTiming] = useState(false)
+  const [startTime] = useState(moment())
+  const [endTime] = useState(moment())
   const [addressView, setAddressView] = useState(false)
   const [confirmDialog, setConfirmDialog] = useState(false)
   const [appointmentType, setAppointmentType] = useState([])
@@ -180,6 +182,13 @@ const MyAuctionDetails = ({ auctionId }) => {
         : []
     setAppointmentType(type)
   }, [auctionDetails])
+  const isActive = useMemo(
+    () =>
+      +moment.utc(auctionDetails?.['auction_start_date']) < +moment() &&
+      +moment.utc(auctionDetails?.['auction_end_date']) > +moment(),
+    [auctionDetails],
+  )
+
   const { data: getCityList } = useQuery(
     ['getCity', auctionEditData?.country?.id],
     getCity,
@@ -812,24 +821,36 @@ const MyAuctionDetails = ({ auctionId }) => {
                 onClick={() => {
                   editMode && setShowDatePicker(true)
                 }}
-                disabled={!editMode}
+                disabled
                 className="auction-details-form-textField"
                 block
               />
               {showDatePicker && (
-                // <DatePicker
-                //   singlePick
-                //   translation={{ update: 'select' }}
-                //   onUpdate={(date) => onHandleDate(date, 'startDate')}
-                //   onCancel={() =>
-                //     setShowDatePicker({ ...showDatePicker, startDate: false })
-                //   }
-                //   minValidDate={{ timestamp: new Date().getTime() }}
-                //   startView="year"
-                //   endView="day"
-                // />
                 <div className="date-picker">
                   <DueDate
+                    duedate={new Date(auctionEditData?.endDate)}
+                    startDate={new Date(auctionEditData?.startDate)}
+                    //  applicationStartDate={new Date(auctionEditData?.startDate)}
+                    onDateChange={(start, end) => {
+                      let startD = isActive
+                        ? new Date(auctionEditData?.startDate)
+                        : new Date(
+                          moment(start)
+                            .hour(moment(startTime).hour())
+                            .minute(moment(startTime).minute())
+                            .valueOf(),
+                        )
+                      let endD = new Date(
+                        moment(end)
+                          .hour(moment(endTime).hour())
+                          .minute(moment(endTime).minute())
+                          .valueOf(),
+                      )
+                      onSetDate(startD, endD)
+                      setShowDatePicker(!showDatePicker)
+                    }}
+                  />
+                  {/* <DueDate
                     duedate={showDatePicker?.endDate}
                     startDate={showDatePicker?.startDate}
                     applicationStartDate={showDatePicker?.startDate}
@@ -849,7 +870,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                       onSetDate(startD, endD)
                       setShowDatePicker(!showDatePicker)
                     }}
-                  />
+                  /> */}
                 </div>
               )}
             </div>

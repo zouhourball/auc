@@ -46,8 +46,7 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       },
     },
   )
-
-  useEffect(() => {
+  const onSetData = () => {
     const basicData = company
       ? {
         aboutUs: userInfo?.aboutUs,
@@ -82,6 +81,9 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       //   '',
       // ),
     })
+  }
+  useEffect(() => {
+    onSetData()
   }, [userInfo])
   const {
     data: getCountryList,
@@ -355,7 +357,14 @@ const PersonalInformation = ({ company, userInfo, refetch }) => {
       )}
       {!edit && (
         <div className="personal-information-footer md-cell md-cell--12">
-          <Button className="cancel-btn" flat onClick={() => setEdit(true)}>
+          <Button
+            className="cancel-btn"
+            flat
+            onClick={() => {
+              setEdit(true)
+              onSetData()
+            }}
+          >
             {t('cancel')}
           </Button>
           <Button
