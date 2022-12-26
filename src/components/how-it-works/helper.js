@@ -13,7 +13,7 @@ export const questions1 = [
   },
   {
     id: '2',
-    title: 'Who_are_admins_to_you?',
+    title: 'Who_are_admins_to_you',
     answer: 'reserve_price_amount_answer',
   },
   {
@@ -24,7 +24,7 @@ export const questions1 = [
   {
     id: '4',
     title: 'What_is_the_MyWallet',
-    answer: 'Unlike_other_online_auction_sites,',
+    answer: 'Unlike_other_online_auction_sites',
   },
   {
     id: '5',
@@ -119,7 +119,7 @@ export const questions2 = [
   },
   {
     id: '5',
-    title: 'How_the_viewing_appointment_works?',
+    title: 'How_the_viewing_appointment_works',
     answer: 'The_broker_will_have_an_option_to_add',
   },
 ]
