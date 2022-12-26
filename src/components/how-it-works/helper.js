@@ -13,8 +13,23 @@ export const questions1 = [
   },
   {
     id: '2',
-    title: 'certifiers_to_you',
-    answer: 'certifiers_to_you_answer',
+    title: 'Who_are_admins_to_you',
+    answer: 'reserve_price_amount_answer',
+  },
+  {
+    id: '3',
+    title: 'Can_the_bidder_inspect_the_assets',
+    answer: 'Bidders_can_place_appointments_for_the_listed',
+  },
+  {
+    id: '4',
+    title: 'What_is_the_MyWallet',
+    answer: 'Unlike_other_online_auction_sites',
+  },
+  {
+    id: '5',
+    title: 'who_are_admins_to_you',
+    answer: '',
     subtitles: [
       {
         id: 1,
@@ -29,7 +44,7 @@ export const questions1 = [
       {
         id: 3,
         label: 'once_you_bid',
-        value: 'certifiers_to_you_Once you bid',
+        value: 'certifiers_to_you_Once_you_bid',
       },
       {
         id: 4,
@@ -39,12 +54,20 @@ export const questions1 = [
     ],
   },
   {
-    id: '3',
+    id: '6',
     title: 'bidder_lose_an_auction',
     answer: 'bidder_lose_an_auction_answer',
+    subtitles: [
+      {
+        id: 1,
+        label: '',
+        value: 'Note_in_both',
+      },
+    ],
   },
+
   {
-    id: '4',
+    id: '7',
     title: 'reserve_price_amount',
     answer: 'reserve_price_amount_answer',
   },
@@ -74,8 +97,8 @@ export const questions2 = [
       },
       {
         id: 2,
-        label: 'fees_and_commission',
-        value: 'certifiers_to_you_fees-owner',
+        label: 'fees_and_commission2',
+        value: 'certifiers_to_you_fees2',
       },
       {
         id: 3,
@@ -85,15 +108,18 @@ export const questions2 = [
     ],
   },
   {
+    id: '3',
+    title: 'after_auction_awarded',
+    answer: 'reserve_price_amount_after_auction_awarded',
+  },
+  {
     id: '4',
-    title: 'reserve_price_amount',
+    title: 'minimum_bid_amount',
     answer: 'reserve_price_amount_owner_answer',
-    subtitles: [
-      {
-        id: '1',
-        label: 'after_auction_awarded',
-        value: 'reserve_price_amount_after_auction_awarded',
-      },
-    ],
+  },
+  {
+    id: '5',
+    title: 'How_the_viewing_appointment_works',
+    answer: 'The_broker_will_have_an_option_to_add',
   },
 ]
