@@ -217,6 +217,14 @@
         .notif-icon {
           color: #5078e1;
 
+          .md-btn--icon {
+            padding: 8px;
+          }
+
+          .material-icons {
+            font-size: 24px;
+          }
+
           .md-badge--circular {
             top: 0;
             right: 4px;
@@ -506,8 +514,11 @@
       }
 
       &-sign-out {
+        .md-tile-text--primary {
+          color: #78deb3;
+        }
+
         margin: 0;
-        color: #78deb3;
         font-size: 16px;
         font-weight: 500;
         line-height: 1.5;
@@ -564,3 +575,25 @@
 //     }
 //   }
 // }
+
+.sign-out-dialog {
+  &.md-background--card {
+    width: 400px;
+    border-radius: 30px;
+  }
+
+  .md-dialog-content--padded {
+    padding: 16px 16px 0;
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 0;
+    font-size: 18px;
+  }
+
+  .md-dialog-footer--inline {
+    justify-content: center;
+    border-top: none;
+  }
+}

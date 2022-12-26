@@ -39,12 +39,14 @@ import {
 } from 'libs/api/appointment-api'
 // import { dummyData } from './helpers'
 
+import CustomDatePicker from './date-picker'
+
 import DrawOnMap from 'components/draw-on-map'
 import UploadImages from 'components/upload-images'
-import { DueDate } from 'components/due-date'
 import ToastMsg from 'components/toast-msg'
 import UserInfoBySubject from 'components/user-info-by-subject'
 import selectImg from 'images/select-img.png'
+import deleteIcon from 'images/delete-icon.png'
 
 import './style.scss'
 
@@ -826,52 +828,14 @@ const MyAuctionDetails = ({ auctionId }) => {
                 block
               />
               {showDatePicker && (
-                <div className="date-picker">
-                  <DueDate
-                    duedate={new Date(auctionEditData?.endDate)}
-                    startDate={new Date(auctionEditData?.startDate)}
-                    //  applicationStartDate={new Date(auctionEditData?.startDate)}
-                    onDateChange={(start, end) => {
-                      let startD = isActive
-                        ? new Date(auctionEditData?.startDate)
-                        : new Date(
-                          moment(start)
-                            .hour(moment(startTime).hour())
-                            .minute(moment(startTime).minute())
-                            .valueOf(),
-                        )
-                      let endD = new Date(
-                        moment(end)
-                          .hour(moment(endTime).hour())
-                          .minute(moment(endTime).minute())
-                          .valueOf(),
-                      )
-                      onSetDate(startD, endD)
-                      setShowDatePicker(!showDatePicker)
-                    }}
-                  />
-                  {/* <DueDate
-                    duedate={showDatePicker?.endDate}
-                    startDate={showDatePicker?.startDate}
-                    applicationStartDate={showDatePicker?.startDate}
-                    onDateChange={(start, end) => {
-                      let startD = new Date(
-                        moment(start)
-                          .hour(moment(showDatePicker?.startTime).hour())
-                          .minute(moment(showDatePicker?.startTime).minute())
-                          .valueOf(),
-                      )
-                      let endD = new Date(
-                        moment(end)
-                          .hour(moment(showDatePicker?.endTime).hour())
-                          .minute(moment(showDatePicker?.endTime).minute())
-                          .valueOf(),
-                      )
-                      onSetDate(startD, endD)
-                      setShowDatePicker(!showDatePicker)
-                    }}
-                  /> */}
-                </div>
+                <CustomDatePicker
+                  auctionEditData={auctionEditData}
+                  onSetDate={onSetDate}
+                  setShowDatePicker={setShowDatePicker}
+                  isActive={isActive}
+                  startTime={startTime}
+                  endTime={endTime}
+                />
               )}
             </div>
           </div>
@@ -1324,7 +1288,6 @@ const MyAuctionDetails = ({ auctionId }) => {
                   ]?.join('-')}
                   fullWidth
                   position={SelectField.Positions.BELOW}
-                  dropdownIcon={<FontIcon>keyboard_arrow_down</FontIcon>}
                   className="selectField-lined"
                   disabled={!editMode}
                 />
@@ -1429,18 +1392,28 @@ const MyAuctionDetails = ({ auctionId }) => {
         id="confirm-dialog"
         focusOnMount={false}
         actions={[
-          <Button key={'cancel-btn'} onClick={() => setConfirmDialog(false)}>
+          <Button
+            key={'cancel-btn'}
+            flat
+            onClick={() => setConfirmDialog(false)}
+          >
             {t('cancel')}
           </Button>,
           <Button
             key={'delete-btn'}
             onClick={() => deleteMutate({ auctionId })}
+            secondary
+            flat
+            swapTheming
           >
             {t('delete')}
           </Button>,
         ]}
       >
-        <div>{t('are_you_sure_you_want_to_delete_this_auction')}</div>
+        <img src={deleteIcon} width="30px" className="delete-img" />
+        <div className="delete-msg">
+          {t('are_you_sure_you_want_to_delete_this_auction')}
+        </div>
       </DialogContainer>
     </div>
   )

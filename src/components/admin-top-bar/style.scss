@@ -44,3 +44,19 @@
     background-color: #5078e1;
   }
 }
+
+.admin-page-options {
+  .langSelector {
+    .md-text-field--margin {
+      margin-top: 0;
+    }
+
+    .md-divider {
+      display: none;
+    }
+
+    .md-list {
+      border-radius: 8px;
+    }
+  }
+}
