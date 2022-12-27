@@ -422,8 +422,6 @@
 
   "certifiers_to_you_answer": "Bidders should keep in mind that admins are the managing group in the platform. They have all the detailed information this platform has. Bidders should keep in mind that all the listed auctions cannot and will not be in way spams. This is because auctions are reviewed and approved by these same admins. Admins have the right to terminate any bidder account if any illegal or irrelevant action was taken by a bidder.",
 
-  "selling": "Saller",
-
   "bidder_lose_an_auction_answer": "The bidder can lose an auction if he/she has been out bided or if the total auction amount did not meet the minimum bid amount or another bidder participate with higher amount and the auction closed. ",
   "Note_in_both": "Note: In both conditions, the deposit will be refunded.",
   "certifiers_to_you_awarded_an_auction": "After the auction is awarded to the first bidder, the bidder will get few days that mentioned in award certificate. If the awarded bidder fails to contact the broker. The property will be able to be listed in the auctions again.",
@@ -461,5 +459,8 @@
   "Days": "Days",
   "Select_Days_type": "Select days type",
   "Select_Start_time": "Select start time",
-  "Select_End_time": "Select end time"
+  "Select_End_time": "Select end time",
+  "Select_from": "Select from",
+  "Select_to": "Select to",
+  "selling": "Seller"
 }

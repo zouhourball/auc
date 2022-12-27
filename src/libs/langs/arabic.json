@@ -308,5 +308,7 @@
   "Select_Days_type": "حدد الايام",
   "Select_Start_time": "إختر وقت البدء",
   "Select_End_time": "اختر وقت النهاية",
-  "Online": "عبر الانترنت"
+  "Online": "عبر الانترنت",
+  "Select_from": "من",
+  "Select_to": "ل"
 }
