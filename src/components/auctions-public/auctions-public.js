@@ -24,10 +24,7 @@ const AuctionsPublic = ({ logged }) => {
         auctions={featAuctions?.results}
         defaultNode={
           <>
-            <div className="upcoming-auctions-title">
-              {/* {logged ? t('accelerate_asset') : t('auction_market')} */}
-              {t('auction_market')}
-            </div>
+            <div className="upcoming-auctions-title">{t('auction_market')}</div>
             <div className="upcoming-auctions-separateur" />
             <div
               className="upcoming-auctions-description"

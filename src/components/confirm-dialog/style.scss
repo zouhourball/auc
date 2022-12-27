@@ -2,7 +2,7 @@
   justify-content: center;
 
   .md-dialog {
-    width: 350px;
+    width: 380px;
     border-radius: 30px;
     text-align: center;
   }
@@ -13,11 +13,15 @@
     padding: 4px;
   }
 
+  .md-dialog-content--padded {
+    padding: 8px 16px 16px;
+  }
+
   &-information {
     text-align: center;
 
     .illustration {
-      margin-bottom: 16px;
+      margin-bottom: 8px;
     }
 
     .avatar {
@@ -29,7 +33,7 @@
     .title {
       margin-bottom: 8px;
       color: #000;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
     }
   }
@@ -41,6 +45,15 @@
     &.md-btn {
       margin-top: 16px;
       text-transform: none;
+    }
+  }
+
+  .md-dialog-footer {
+    justify-content: center;
+    border-top: 0;
+
+    .md-background--secondary {
+      background-color: #d82731;
     }
   }
 }

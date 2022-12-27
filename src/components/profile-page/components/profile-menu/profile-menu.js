@@ -140,34 +140,21 @@ const ProfileMenu = ({
   return (
     <div className="profile-menu">
       <div className="avatar-container">
-        <div className="">{loading && <CircularProgress />}</div>
+        {loading && (
+          <div className="avatar-loading-wrapper">
+            {' '}
+            <CircularProgress />
+          </div>
+        )}
         <FileInput
           id="basic-info"
           className="edit-btn"
           labelClassName="hidden-label"
           accept="image/jpeg, image/png"
-          icon={
-            <FontIcon>edit_square</FontIcon>
-            // image ? (
-            //   <img src={getPublicUrl(image)} width="120px" />
-            // ) : information?.image ? (
-            //   <img src={getPublicUrl(information?.image)} width="120px" />
-            // ) : (
-            //   <img src={img} width="120px" />
-            // )
-          }
+          icon={<FontIcon>edit_square</FontIcon>}
           onChange={onNewImage}
         />
-        {/* <Button icon primary floating className="edit-btn">
-          edit
-        </Button> */}
         {!company && (
-          // <UserInfoBySubject
-          //   key={userInfo?.subject}
-          //   subject={userInfo?.subject}
-          // >
-          //   {(res) => {
-          //     return (
           <Avatar
             className="profile-menu-avatar"
             src={
@@ -182,9 +169,6 @@ const ProfileMenu = ({
               ? null
               : get(userInfo, 'fullName.0', '')}
           </Avatar>
-          //     )
-          //   }}
-          // </UserInfoBySubject>
         )}
         {company && (
           <Avatar
@@ -198,12 +182,19 @@ const ProfileMenu = ({
         )}
       </div>
       {currentFile?.id && (
-        <>
-          <Button onClick={() => updateCompanyInfo(currentFile?.id)}>
-            Update photo
+        <div className="profile-menu-actions">
+          <Button
+            icon
+            primary
+            swapTheming
+            onClick={() => updateCompanyInfo(currentFile?.id)}
+          >
+            check
           </Button>
-          <Button onClick={() => setFile({})}>Discard</Button>
-        </>
+          <Button icon secondary swapTheming onClick={() => setFile({})}>
+            clear
+          </Button>
+        </div>
       )}
       <div className="profile-menu-fullName">
         {company ? userInfo?.name : userInfo?.fullName}

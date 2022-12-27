@@ -467,52 +467,27 @@ const TopBar = ({
                 id="menu-button-2"
                 className="top-bar-menu"
                 icon
-                menuItems={
-                  <div className="top-bar-menu-items">
-                    {/* <div className="d-flex top-bar-profile-avatar-infos">
-                      <span className="top-bar-profile-avatar">
-                        {avatarLetter}
-                      </span>
-                      <span className="top-bar-profile-avatar-name">
-                        {user?.profile?.fullName}
-                      </span>
-                    </div> */}
-                    <Button
-                      onClick={() =>
-                        broker
-                          ? navigate('/auctions/company-profile/' + broker)
-                          : navigate('/auctions/profile')
-                      }
-                    >
-                      {t('my_profile')}
-                    </Button>
-                    <div className="top-bar-profile-avatar-actions">
-                      {/* <p
-                        className="top-bar-profile-avatar-actions-link"
-                        onClick={() => {
-                          navigate('/iskan/individual')
-                        }}
-                      >
-                        {t('tatwir_platform')}
-                      </p> */}
-                      <p
-                        className="top-bar-profile-avatar-actions-sign-out"
-                        onClick={() => {
-                          setSignOutdialog(true)
-                        }}
-                      >
-                        {t('sign_out')}
-                      </p>
-                    </div>
-                  </div>
-                }
-                listInline
-                centered
+                menuItems={[
+                  {
+                    primaryText: t('my_profile'),
+                    onClick: () =>
+                      broker
+                        ? navigate('/auctions/company-profile/' + broker)
+                        : navigate('/auctions/profile'),
+                  },
+                  {
+                    primaryText: t('sign_out'),
+                    className: 'top-bar-profile-avatar-actions-sign-out',
+                    onClick: () => {
+                      setSignOutdialog(true)
+                    },
+                  },
+                ]}
+                position={SelectField.Positions.TOP_RIGHT}
                 anchor={{
-                  x: MenuButton.HorizontalAnchors.CENTER,
-                  y: MenuButton.VerticalAnchors.CENTER,
+                  x: SelectField.HorizontalAnchors.INNER_RIGHT,
+                  y: SelectField.VerticalAnchors.BOTTOM,
                 }}
-                position={MenuButton.Positions.BOTTOM}
               >
                 {broker ? (
                   <Avatar
@@ -607,7 +582,7 @@ const TopBar = ({
       {signOutDialog && (
         <DialogContainer
           visible={signOutDialog}
-          dialogClassName="change-email-dialog"
+          dialogClassName="sign-out-dialog"
           focusOnMount={false}
           onHide={() => setSignOutdialog(false)}
           portal={true}
@@ -632,7 +607,7 @@ const TopBar = ({
             </Button>,
           ]}
         >
-          <div style={{ margin: '20px auto', textAlign: 'center' }}>
+          <div style={{ margin: '8px auto', textAlign: 'center' }}>
             <img
               src={signOutEnabled}
               width={50}
@@ -640,7 +615,7 @@ const TopBar = ({
               className="success-image"
             />
           </div>
-          <h2 style={{ textAlign: 'center' }}>{t('are_you_sure')}</h2>
+          <h2>{t('are_you_sure')}</h2>
         </DialogContainer>
       )}
     </div>
