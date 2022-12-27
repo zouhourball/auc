@@ -1190,7 +1190,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 )}
                 <TextField
                   id="time-start"
-                  placeholder={'Select from'}
+                  placeholder={'Select to'}
                   block
                   disabled={!editMode}
                   value={
@@ -1288,7 +1288,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                       ? auctionEditData?.appointmentDetails?.[
                           'selected_days'
                         ]?.join('-')
-                      : 'Select Days type'
+                      : 'Select Days'
                   }`}
                   listClassName="country-list"
                   menuItems={weekDays?.map((day) => (

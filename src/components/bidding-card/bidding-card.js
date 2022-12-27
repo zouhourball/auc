@@ -31,6 +31,8 @@ const BiddingCard = ({
   logged,
   meOrgs,
   detailsUrl,
+  tabPending = false,
+  goBackLabel,
 }) => {
   const { t } = useTranslation()
   const isClosed = +moment.utc(auctionData?.['auction_end_date']) < +moment()
@@ -98,6 +100,9 @@ const BiddingCard = ({
         (detailsUrl && detailsUrl()) ||
         navigate(
           `/${logged ? 'auctions' : 'public'}/detail/${auctionData?.uuid}`,
+          {
+            state: { goBackLabel },
+          },
         )
       }
     >
@@ -115,11 +120,15 @@ const BiddingCard = ({
           user?.subject === auctionData.last_bid?.['member_subject'] && (
             <div className="highest-bidder">{t('highest_bidder')}</div>
           )}
-        {auctionData?.status === 'Pending' &&
+        {!tabPending ? (
+          auctionData?.status === 'Pending' &&
           !isClosed &&
           status !== 'Active' && (
             <div className="highest-bidder pending">{t('pending')}</div>
-          )}
+          )
+        ) : (
+          <div className="highest-bidder pending">{t('pending')}</div>
+        )}
         {saveAuctionTag &&
           (auctionData?.['is_bookmarked'] ? (
             <Button
@@ -146,7 +155,7 @@ const BiddingCard = ({
           ))}
       </div>
       <div className="bidding-card-footer">
-        {status !== 'Active' && (
+        {(status !== 'Active' || tabPending) && (
           <div className="bidding-card-info">
             <div className="data-section-title">
               {t(
@@ -170,7 +179,7 @@ const BiddingCard = ({
             </div>
           </div>
         )}
-        {status === 'Active' && (
+        {status === 'Active' && !tabPending && (
           <div className="bidding-card-info">
             <div className="data-section-title">
               {t(
@@ -214,6 +223,9 @@ const BiddingCard = ({
                 `/${logged ? 'auctions' : 'public'}/detail/${
                   auctionData?.uuid
                 }`,
+                {
+                  state: { goBackLabel },
+                },
               )
             }
           >

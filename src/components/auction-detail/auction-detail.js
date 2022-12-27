@@ -412,7 +412,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
             }
             onClick={() => window.history.go(-1)}
           >
-            {isActive
+            {location.state.goBackLabel
+              ? location.state.goBackLabel
+              : isActive
               ? t('back_to_live_auctions')
               : t('back_to_upcoming_auctions')}
           </Button>

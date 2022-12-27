@@ -258,6 +258,7 @@ const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
         // }
         meOrgs={meOrgs}
         logged={logged}
+        goBackLabel={`Back to the Broker's Profile Page`}
       />
     ))
 

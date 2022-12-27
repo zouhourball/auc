@@ -157,7 +157,7 @@ const AppointmentsForm = ({
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
             appointmentDetails?.['start_at'] &&
-            moment(appointmentDetails?.['start_at']).format('HH:mm')
+            moment(appointmentDetails?.['start_at']).utc().format('HH:mm')
           }
           onClick={() => setVisibleStartTimePicker(true)}
           className="textField-withShadow"
@@ -170,7 +170,9 @@ const AppointmentsForm = ({
             minuteInterval={5}
             timeFormat={null}
             onUpdate={({ timestamp }) => {
-              onSetFormDetails('start_at', moment(timestamp).toISOString())
+              let d = new Date(timestamp)
+              d.setUTCHours(+moment(timestamp).hour(), 0, 0, 0)
+              onSetFormDetails('start_at', d.toISOString())
               setVisibleStartTimePicker(false)
             }}
             onCancel={() => setVisibleStartTimePicker(false)}
@@ -192,7 +194,7 @@ const AppointmentsForm = ({
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
             appointmentDetails?.['end_at'] &&
-            moment(appointmentDetails?.['end_at']).format('HH:mm')
+            moment(appointmentDetails?.['end_at']).utc().format('HH:mm')
           }
           onClick={() => setVisibleEndTimePicker(true)}
           className="textField-withShadow"
@@ -205,10 +207,12 @@ const AppointmentsForm = ({
             minuteInterval={5}
             timeFormat={null}
             onUpdate={({ timestamp }) => {
+              let d = new Date(timestamp)
+              d.setUTCHours(+moment(timestamp).hour(), 0, 0, 0)
               onSetFormDetails(
                 'end_at',
                 moment(auctionEndDate)
-                  .hour(moment(timestamp).hour())
+                  .hour(moment(d).hour())
                   .minute(moment(timestamp).minute())
                   .toISOString(),
               )
