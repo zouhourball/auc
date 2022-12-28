@@ -116,9 +116,9 @@ const CalendarCustom = ({
               onClick={() => onNavigatee(navigate.PREVIOUS)}
             >
               <FontIcon>
-                {currentLang === 'ar-SA' || currentLang === 'ar'
-                  ? 'chevron_left'
-                  : 'chevron_right'}
+                {currentLang.key === 'ar-SA' || currentLang.key === 'ar'
+                  ? 'chevron_right'
+                  : 'chevron_left'}
               </FontIcon>
             </Button>
             <span
@@ -133,9 +133,9 @@ const CalendarCustom = ({
               onClick={() => onNavigatee(navigate.NEXT)}
             >
               <FontIcon>
-                {currentLang === 'ar-SA' || currentLang === 'ar'
-                  ? 'chevron_right'
-                  : 'chevron_left'}
+                {currentLang.key === 'ar-SA' || currentLang.key === 'ar'
+                  ? 'chevron_left'
+                  : 'chevron_right'}
               </FontIcon>
             </Button>
           </div>
