@@ -95,13 +95,13 @@ const AppointmentsForm = ({
   ]
   return (
     <div className="appointments-form md-grid">
-      <div className="appointments-form-title md-cell md-cell--12">
+      <h3 className="appointments-form-title md-cell md-cell--12">
         {t('appointments')} ({t('optional')})
+      </h3>
+      <div className="appointments-form-label md-cell md-cell--12">
+        {t('type_of_appointment')}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="appointments-form-label">
-          {t('type_of_appointment')}
-        </label>
         <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={`${
@@ -149,7 +149,7 @@ const AppointmentsForm = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--3">
-        <label className="auction-details-form-label">{t('Start_time')}</label>
+        <label className="auction-details-form-label">{t('start_time')}</label>
         <TextField
           id="time-start"
           placeholder={t('Select_Start_time')}

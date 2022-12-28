@@ -38,7 +38,6 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
   const fileInputCustom = (key) => {
     return (
       <UploadImages
-        // cover
         title={
           <>
             <span className="drop-zone-placeholder">
@@ -56,15 +55,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
         listFiles={images?.filter((img) => img?.id === key)}
         iconDelete={true}
         titleContent={' '}
-        // addTitle={
-        //   <div className="">
-        //     <FontIcon className="">add</FontIcon>
-        //     {'add_images'}
-        //   </div>
-        // }
-        // titleUpload={images?.length > 0 ? 'add_images' : ''}
         icon={<img src={selectImg} width="20px" />}
-        // accept="image/jpeg, image/png, image/jpg"
         className="custom"
       />
     )

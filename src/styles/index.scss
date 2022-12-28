@@ -148,6 +148,10 @@ body {
     background-color: #fff;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
 
+    .md-text-field-icon + .md-text-field-divider-container {
+      margin-left: 0;
+    }
+
     .md-select-field--btn.md-select-field--btn {
       height: auto;
       padding: 15px 16px;
