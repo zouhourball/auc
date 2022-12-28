@@ -53,7 +53,7 @@ const DocumentsForm = ({ documentsDetails, setDocumentDetails }) => {
           setListImages(files, keyAction, fileId, key)
         }
         listFiles={images?.filter((img) => img?.id === key)}
-        iconDelete={true}
+        canDelete={true}
         titleContent={' '}
         icon={<img src={selectImg} width="20px" />}
         className="custom"

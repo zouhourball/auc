@@ -29,7 +29,8 @@ const UploadImages = ({
   addTitle,
   onAddAction,
   iconPreview,
-  iconDelete,
+  customDeleteIcon,
+  canDelete,
   iconDownload,
   onDrop,
   setListFiles,
@@ -271,17 +272,29 @@ const UploadImages = ({
                 remove_red_eye
               </FontIcon>
             )}
-            {iconDelete && (
-              <img
-                height={20}
-                src={deleteIcon}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onRemove(index, file)
-                }}
-                className="close-btn"
-              />
-            )}
+            {canDelete &&
+              (customDeleteIcon ? (
+                <FontIcon
+                  primary
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onRemove(index, file)
+                  }}
+                  className="close-btn"
+                >
+                  {customDeleteIcon}
+                </FontIcon>
+              ) : (
+                <img
+                  height={20}
+                  src={deleteIcon}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onRemove(index, file)
+                  }}
+                  className="close-btn"
+                />
+              ))}
             {cover && file?.cover && <div className="cover-tag">Cover</div>}
             {onSelectDefault && (
               <Button
@@ -323,17 +336,29 @@ const UploadImages = ({
                   download
                 </FontIcon>
               )}
-              {iconDelete && (
-                <img
-                  height={20}
-                  src={deleteIcon}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onRemove(index, file)
-                  }}
-                  className="close-btn"
-                />
-              )}
+              {canDelete &&
+                (customDeleteIcon ? (
+                  <FontIcon
+                    primary
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onRemove(index, file)
+                    }}
+                    className="close-btn"
+                  >
+                    {customDeleteIcon}
+                  </FontIcon>
+                ) : (
+                  <img
+                    height={20}
+                    src={deleteIcon}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onRemove(index, file)
+                    }}
+                    className="close-btn"
+                  />
+                ))}
             </div>
           </div>
         )}
@@ -364,7 +389,7 @@ const UploadImages = ({
               remove_red_eye
             </FontIcon>
           )}
-          {iconDelete && (
+          {canDelete && (
             <FontIcon
               icon
               onClick={(e) => {

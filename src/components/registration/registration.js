@@ -401,11 +401,12 @@ const RegistrationPage = () => {
               }}
               onRemoveFile={() => setValues('logo', [])}
               listFiles={logo}
-              iconDelete={true}
+              canDelete={true}
               titleContent={' '}
               icon={<img src={dragIcon} />}
               accept="image/jpeg, image/png, image/jpg, img/svg"
               className="custom"
+              customDeleteIcon="cancel"
             />
           </>
         )

@@ -1043,7 +1043,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   setListImages(files, keyAction, fileId)
                 }
                 listFiles={images}
-                iconDelete={true}
+                canDelete={true}
                 titleContent={t('property_images')}
                 addTitle={
                   <>

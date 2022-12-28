@@ -211,7 +211,7 @@ const PropertyDetailsForm = ({
             setListImages(files, keyAction, fileId)
           }
           listFiles={images}
-          iconDelete={true}
+          canDelete={true}
           titleContent={' '}
           addTitle={
             <div className="add-images">
