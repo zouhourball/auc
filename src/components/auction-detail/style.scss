@@ -36,8 +36,11 @@
 
   &-gallery {
     .details-slider {
-      width: 100%;
       height: 640px;
+
+      &-wrapper {
+        position: relative;
+      }
     }
 
     .back-btn {
