@@ -117,8 +117,8 @@ const CalendarCustom = ({
             >
               <FontIcon>
                 {currentLang === 'ar-SA' || currentLang === 'ar'
-                  ? 'chevron_right'
-                  : 'chevron_left'}
+                  ? 'chevron_left'
+                  : 'chevron_right'}
               </FontIcon>
             </Button>
             <span
@@ -134,8 +134,8 @@ const CalendarCustom = ({
             >
               <FontIcon>
                 {currentLang === 'ar-SA' || currentLang === 'ar'
-                  ? 'chevron_left'
-                  : 'chevron_right'}
+                  ? 'chevron_right'
+                  : 'chevron_left'}
               </FontIcon>
             </Button>
           </div>
