@@ -47,6 +47,15 @@ const UploadImages = ({
   // const downloadToken = useSelector(({ bayen }) => bayen.downloadToken)
   const [loading, setLoading] = useState(false)
   const downloadToken = publicDownloadToken || store?.getState()?.app?.dlToken
+  const imageTypes = [
+    'image/apng',
+    'image/avif',
+    'image/gif',
+    'image/jpeg',
+    'image/png',
+    'image/svg+xml',
+    'image/webp',
+  ]
   const onDropFiles = (fls) => {
     let newFiles = []
 
@@ -231,135 +240,104 @@ const UploadImages = ({
     }
   }
 
-  // const renderFilesWithIcon = () => {
-  //   return files.map((file, index) => (
-  //     <div key={index} className={'images'}>
-  //       {renderDocumentIcon(file)}
-  //       <div title={file && file.file_name} className="images-filename">
-  //         {(file && file.file_name) || 'N/A'}
-  //       </div>
-  //     </div>
-  //   ))
-  // }
-
   const renderFiles = () => {
     return files?.map((file, index) => (
-      <div
-        key={index}
-        className={`upload-images  ${!file?.cover && cover ? 'opacity' : ''}`}
-        onClick={() => {
-          !file?.cover && !selected && chooseCover(file)
-        }}
-      >
-        {!file?.cover && cover && (
-          <div className="cover">
-            <div className="button-cover">{t('set_cover')}</div>
+      <>
+        {imageTypes.includes(file.type) ? (
+          <div
+            key={index}
+            className={`upload-images  ${
+              !file?.cover && cover ? 'opacity' : ''
+            }`}
+            onClick={() => {
+              !file?.cover && !selected && chooseCover(file)
+            }}
+          >
+            {!file?.cover && cover && (
+              <div className="cover">
+                <div className="button-cover">{t('set_cover')}</div>
+              </div>
+            )}
+            {iconDownload && (
+              <FontIcon
+                onClick={() => fileDownloadTus(file?.url, file?.fileName)}
+                className="download-btn"
+              >
+                download
+              </FontIcon>
+            )}
+            {iconPreview && (
+              <FontIcon onClick={() => preview(file)} className="preview-btn">
+                remove_red_eye
+              </FontIcon>
+            )}
+            {iconDelete && (
+              <img
+                height={20}
+                src={deleteIcon}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onRemove(index, file)
+                }}
+                className="close-btn"
+              />
+            )}
+            {cover && file?.cover && <div className="cover-tag">Cover</div>}
+            {onSelectDefault && (
+              <Button
+                icon
+                primary={file.selected}
+                className="setDefaultBtn"
+                tooltipLabel={t('Main picture')}
+                tooltipPosition="right"
+                onClick={(e) => {
+                  e.preventDefault()
+                  onSelectDefault(file.url)
+                }}
+              >
+                {file.selected
+                  ? 'radio_button_checked'
+                  : 'radio_button_unchecked'}
+              </Button>
+            )}
+            <img
+              src={`${file?.url}?token=${downloadToken}&view=true`}
+              className="image"
+            />
+          </div>
+        ) : (
+          <div className="box">
+            {renderDocumentIcon(file)}
+            <div className="file">
+              <div className="file-name">
+                {file?.options?.metadata?.filename}
+              </div>
+              <div className="file-size">{file?.size}</div>
+            </div>
+            <div className="actions">
+              {iconDownload && (
+                <FontIcon
+                  onClick={() => fileDownloadTus(file?.url, file?.fileName)}
+                  className="download-btn"
+                >
+                  download
+                </FontIcon>
+              )}
+              {iconDelete && (
+                <img
+                  height={20}
+                  src={deleteIcon}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onRemove(index, file)
+                  }}
+                  className="close-btn"
+                />
+              )}
+            </div>
           </div>
         )}
-        {iconDownload && (
-          <FontIcon
-            onClick={() => fileDownloadTus(file?.url, file?.fileName)}
-            className="download-btn"
-          >
-            download
-          </FontIcon>
-        )}
-        {file?.type !==
-          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' &&
-          file?.type !==
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
-          iconPreview && (
-            <FontIcon onClick={() => preview(file)} className="preview-btn">
-              remove_red_eye
-            </FontIcon>
-          )}
-        {iconDelete && (
-          // <FontIcon
-          //   icon
-          //   onClick={(e) => {
-          //     e.stopPropagation()
-          //     onRemove(index, file)
-          //   }}
-          //   className="close-btn"
-          // >
-          //   cancel
-          // </FontIcon>
-          <img
-            height={20}
-            src={deleteIcon}
-            onClick={(e) => {
-              e.stopPropagation()
-              onRemove(index, file)
-            }}
-            className="close-btn"
-          />
-        )}
-        {cover && file?.cover && <div className="cover-tag">Cover</div>}
-        {onSelectDefault && (
-          <Button
-            icon
-            primary={file.selected}
-            className="setDefaultBtn"
-            tooltipLabel={t('Main picture')}
-            tooltipPosition="right"
-            onClick={(e) => {
-              e.preventDefault()
-              onSelectDefault(file.url)
-            }}
-          >
-            {file.selected ? 'radio_button_checked' : 'radio_button_unchecked'}
-          </Button>
-        )}
-        {file?.type === 'application/pdf' ? (
-          // .pdf
-
-          <>
-            {' '}
-            <div className="box">
-              <FontIcon
-                icon
-                iconClassName={`mdi mdi-file-pdf`}
-                title={file?.options?.metadata?.filename}
-              />
-              <div className="file">
-                <div className="file-name">
-                  {file?.options?.metadata?.filename}
-                </div>{' '}
-                <div className="file-size">{file?.size}</div>
-              </div>
-            </div>
-          </>
-        ) : (
-          // <Document
-          //   className="imgPdfWrapper"
-          //   file={`${file.url}?token=${downloadToken}&view=true`}
-          //   onLoadSuccess={() => {}}
-          //   options={{
-          //     withCredentials: true,
-          //   }}
-          // >
-          //   <Page pageNumber={1} />
-          // </Document>
-          <>
-            {file?.type ===
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ? ( // .doc, .docs
-                <FontIcon className="word-doc">description</FontIcon>
-              ) : (
-              <>
-                {file?.type ===
-                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ? ( // .xlsx
-                    <FontIcon className="xlsx-doc">file_present</FontIcon>
-                  ) : (
-                    <img
-                      src={`${file?.url}?token=${downloadToken}&view=true`}
-                      className="image"
-                    />
-                  )}
-              </>
-              )}
-          </>
-        )}
-      </div>
+      </>
     ))
   }
   // -------------------
@@ -472,9 +450,7 @@ const UploadImages = ({
             </div>
           ) : (
             <div className="upload-images-content ">
-              {withIconDoc
-                ? /* renderFilesWithIcon() */ renderFilesWithIcon()
-                : renderFiles()}{' '}
+              {withIconDoc ? renderFilesWithIcon() : renderFiles()}
             </div>
           )}
         </>
