@@ -13,7 +13,8 @@ import ToastMsg from 'components/toast-msg'
 import {
   // listAuction,
   // featuredAuctions,
-  filterAuctions,
+  // filterAuctions,
+  myAuctions,
 } from 'libs/api/auctions-api'
 import {
   getAvailabilitiesConfig,
@@ -41,28 +42,42 @@ const ContactInfoDialogaddreschedule = ({
   const [month, setMonth] = useState(moment().toISOString())
 
   const [appointmentData, setAppointmentData] = useState({})
+  // const { data: auctionsData } = useQuery(
+  //   [
+  //     'getAuctions',
+  //     {
+  //       search_key: '',
+  //       // city_id: filterData?.location,
+  //       price_gte: '',
+  //       price_lte: '',
+  //       auction_status: '',
+  //     },
+
+  //     {
+  //       filter: {},
+  //     },
+  //     {
+  //       cities: '',
+  //       property_type_ids: '',
+  //       organization_ids: '',
+  //     },
+  //   ],
+  //   filterAuctions,
+  // )
   const { data: auctionsData } = useQuery(
     [
-      'getAuctions',
-      {
-        search_key: '',
-        // city_id: filterData?.location,
-        price_gte: '',
-        price_lte: '',
-        auction_status: '',
-      },
-
+      'myAuctions',
       {
         filter: {},
+        sort: [],
+        limit: 10,
+        offset: 0,
       },
-      {
-        cities: '',
-        property_type_ids: '',
-        organization_ids: '',
-      },
+      'Active',
     ],
-    filterAuctions,
+    myAuctions,
   )
+
   const validrescheule = () => {
     return (
       appointmentData?.title &&
@@ -80,18 +95,21 @@ const ContactInfoDialogaddreschedule = ({
     ['getAvailabilitiesConfig', appointmentData?.title],
     getAvailabilitiesConfig,
   )
-  const renderType =
-    availabilitiesConfig?.type === 'Both'
-      ? [
-        { label: t('In-person'), value: 'In-person' },
-        { label: t('Online'), value: 'Online' },
-      ]
-      : [
-        {
-          label: availabilitiesConfig?.type,
-          value: availabilitiesConfig?.type,
-        },
-      ]
+  const renderType = [
+    { label: t('In-person'), value: 'In-person' },
+    { label: t('Online'), value: 'Online' },
+  ]
+  // availabilitiesConfig?.type === 'Both'
+  //   ? [
+  //     { label: t('In-person'), value: 'In-person' },
+  //     { label: t('Online'), value: 'Online' },
+  //   ]
+  //   : [
+  //     {
+  //       label: availabilitiesConfig?.type,
+  //       value: availabilitiesConfig?.type,
+  //     },
+  //   ]
   const { data: getAvailabilityData } = useQuery(
     [
       'getAvailability',

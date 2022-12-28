@@ -336,7 +336,7 @@ const MyAuctionDetails = ({ auctionId }) => {
       <div key={index} className="chipWrapper-item">
         <span className="label">{updatedKey?.name}</span>
         <FontIcon primary onClick={() => handleRemoveKey(updatedKey)}>
-          {t('close')}
+          close
         </FontIcon>
       </div>
     ))
@@ -1095,7 +1095,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                   placeholder={`${
                     appointmentType?.length
                       ? appointmentType?.join(', ')
-                      : 'Select appointment type'
+                      : t('select_type_of_appointment')
                   }`}
                   listClassName="country-list"
                   menuItems={appointmentsTypeList}
@@ -1113,7 +1113,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 </label>
                 <TextField
                   id="time-start"
-                  placeholder={'Select from'}
+                  placeholder={t('Select_to')}
                   block
                   value={
                     auctionEditData?.appointmentDetails?.['start_at'] &&
@@ -1154,7 +1154,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                 )}
                 <TextField
                   id="time-start"
-                  placeholder={'Select from'}
+                  placeholder={'Select to'}
                   block
                   disabled={!editMode}
                   value={
@@ -1252,7 +1252,7 @@ const MyAuctionDetails = ({ auctionId }) => {
                       ? auctionEditData?.appointmentDetails?.[
                           'selected_days'
                         ]?.join('-')
-                      : 'Select Days type'
+                      : 'Select Days'
                   }`}
                   listClassName="country-list"
                   menuItems={weekDays?.map((day) => (

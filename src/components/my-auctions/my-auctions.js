@@ -77,6 +77,7 @@ const MyAuctions = ({ meOrgs }) => {
         className="md-cell md-cell--4"
         key={el?.uuid}
         auctionData={el}
+        tabPending={statusTab === 1}
         status={renderStatus(el)}
         {...(modules.includes('my-auctions')
           ? {

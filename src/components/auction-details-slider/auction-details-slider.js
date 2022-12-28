@@ -59,7 +59,7 @@ const AuctionDetailsSlider = ({
 
   const renderImages = () =>
     images?.map((auction) => (
-      <div key={auction.uuid} className="slide-elements">
+      <div key={auction?.uuid} className="slide-elements">
         <img src={`${auction?.url}?token=${downloadToken}&view=true`} />
       </div>
     ))

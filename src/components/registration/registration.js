@@ -388,7 +388,7 @@ const RegistrationPage = () => {
                   <span className="drop-zone-placeholder grey-text font-size-bg">
                     {t('drop')}
                     <span className="blue-text font-size-bg">
-                      <b>{'select_file'}</b>
+                      <b>{t('select_file')}</b>
                     </span>
                   </span>
                 </>

@@ -95,13 +95,13 @@ const AppointmentsForm = ({
   ]
   return (
     <div className="appointments-form md-grid">
-      <div className="appointments-form-title md-cell md-cell--12">
+      <h3 className="appointments-form-title md-cell md-cell--12">
         {t('appointments')} ({t('optional')})
+      </h3>
+      <div className="appointments-form-label md-cell md-cell--12">
+        {t('type_of_appointment')}
       </div>
       <div className="md-cell md-cell--6">
-        <label className="appointments-form-label">
-          {t('type_of_appointment')}
-        </label>
         <SelectField
           id="select-field-with-elements-country-spinner"
           placeholder={`${
@@ -149,7 +149,7 @@ const AppointmentsForm = ({
       </div>
 
       <div className="dateWrapper md-cell md-cell--3">
-        <label className="auction-details-form-label">{t('Start_time')}</label>
+        <label className="auction-details-form-label">{t('start_time')}</label>
         <TextField
           id="time-start"
           placeholder={t('Select_Start_time')}
@@ -157,7 +157,7 @@ const AppointmentsForm = ({
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
             appointmentDetails?.['start_at'] &&
-            moment(appointmentDetails?.['start_at']).format('HH:mm')
+            moment(appointmentDetails?.['start_at']).utc().format('HH:mm')
           }
           onClick={() => setVisibleStartTimePicker(true)}
           className="textField-withShadow"
@@ -170,7 +170,9 @@ const AppointmentsForm = ({
             minuteInterval={5}
             timeFormat={null}
             onUpdate={({ timestamp }) => {
-              onSetFormDetails('start_at', moment(timestamp).toISOString())
+              let d = new Date(timestamp)
+              d.setUTCHours(+moment(timestamp).hour(), 0, 0, 0)
+              onSetFormDetails('start_at', d.toISOString())
               setVisibleStartTimePicker(false)
             }}
             onCancel={() => setVisibleStartTimePicker(false)}
@@ -192,7 +194,7 @@ const AppointmentsForm = ({
           inlineIndicator={<FontIcon primary>schedule</FontIcon>}
           value={
             appointmentDetails?.['end_at'] &&
-            moment(appointmentDetails?.['end_at']).format('HH:mm')
+            moment(appointmentDetails?.['end_at']).utc().format('HH:mm')
           }
           onClick={() => setVisibleEndTimePicker(true)}
           className="textField-withShadow"
@@ -205,10 +207,12 @@ const AppointmentsForm = ({
             minuteInterval={5}
             timeFormat={null}
             onUpdate={({ timestamp }) => {
+              let d = new Date(timestamp)
+              d.setUTCHours(+moment(timestamp).hour(), 0, 0, 0)
               onSetFormDetails(
                 'end_at',
                 moment(auctionEndDate)
-                  .hour(moment(timestamp).hour())
+                  .hour(moment(d).hour())
                   .minute(moment(timestamp).minute())
                   .toISOString(),
               )
