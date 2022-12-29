@@ -18,7 +18,7 @@ import {
 // import { getFSToken, getFSDlToken } from 'libs/api'
 import { NotificationProvider } from 'libs/hooks/notification-provider'
 import Home from 'components/home'
-import { IntlContext, ContentContext } from 'components/app/context'
+import { IntlContext, ContentContext, ActiveTabStringProvider } from 'components/app/context'
 
 // import { useSupportedLangs } from 'libs/langs'
 import { getAuthToken } from 'libs/utils/oauth-token'
@@ -91,12 +91,14 @@ const Shell = ({ lang }) => {
       >
         <div className="app-wrapper-container">
           <div className="app-wrapper-content">
-            <NotificationProvider>
-              <Router>
-                <Redirect from="/" to="/auctions" />
-                <Home path={'/auctions/*'} />
-              </Router>
-            </NotificationProvider>
+            <ActiveTabStringProvider>
+              <NotificationProvider>
+                <Router>
+                  <Redirect from="/" to="/auctions" />
+                  <Home path={'/auctions/*'} />
+                </Router>
+              </NotificationProvider>
+            </ActiveTabStringProvider>
           </div>
         </div>
         {/* <AppShellSide
