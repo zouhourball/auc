@@ -9,7 +9,7 @@ import {
 } from 'react-md'
 import { getPublicUrl } from 'libs/utils/custom-function'
 // import { navigate } from '@reach/router'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useContext } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { useQuery as useQueryReact } from 'react-query'
 import { get } from 'lodash-es'
@@ -32,15 +32,19 @@ import { propertyTypeList } from 'components/helpers/index'
 // import listInactive from 'images/List View Grey.svg'
 
 import './style.scss'
+import { ActiveTab } from 'components/app/context'
 
 const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
   const { t } = useTranslation()
   const user = useSelector(({ app }) => app?.userInfos)
   let currentLang = useCurrentLang()
   const [filterData, setFilterData] = useState({})
-  const [filter, setFilter] = useState(0)
+  // const [filter, setFilter] = useState(0)
   const [showMore, setShowMore] = useState(false)
   // const [broker, setBroker] = useState(false)
+
+  const [state, setState] = useContext(ActiveTab)
+
   const [offset, setOffset] = useState(0)
   const { data: allCountryStateCities } = useQuery(allCountryStateCitiesGql, {
     context: {
@@ -61,7 +65,7 @@ const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
   // }
   // console.log(location.state.cameFrom)
   const renderAuctionData = () => {
-    switch (filter) {
+    switch (state) {
       case 0:
         return auctionsData0
       case 1:
@@ -71,7 +75,7 @@ const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
     }
   }
   const refetch = () => {
-    switch (filter) {
+    switch (state) {
       case 0:
         return refetch0
       case 1:
@@ -168,26 +172,35 @@ const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
   //   ['genUploadToken', 'download'],
   //   genUploadToken,
   // )
-
   const headerFilters = [
     {
       key: 'live',
-      className: `switch-toggle ${filter === 0 ? 'active' : ''}`,
-      onClick: () => setFilter(0),
+      className: `switch-toggle ${state === 0 ? 'active' : ''}`,
+      onClick: () => {
+        // setFilter(0)
+        setState(0)
+      },
       title: t('live'),
       num: auctionsData0?.results?.length,
     },
     {
       key: 'upcoming',
-      className: `switch-toggle ${filter === 1 ? 'active' : ''}`,
-      onClick: () => setFilter(1),
+      className: `switch-toggle ${state === 1 ? 'active' : ''}`,
+      onClick: () => {
+        // setFilter(1)
+
+        setState(1)
+      },
       title: t('upcoming'),
       num: auctionsData1?.results?.length,
     },
     {
       key: 'closed',
-      className: `switch-toggle ${filter === 2 ? 'active' : ''}`,
-      onClick: () => setFilter(2),
+      className: `switch-toggle ${state === 2 ? 'active' : ''}`,
+      onClick: () => {
+        // setFilter(2)
+        setState(2)
+      },
       title: t('closed'),
       num: auctionsData2?.results?.length,
     },
@@ -247,8 +260,8 @@ const BrokerProfile = ({ brokerId, logged, meOrgs, location }) => {
         user={user}
         key={el?.uuid}
         auctionData={el}
-        status={filter === 0 && 'Active'}
-        live={filter === 0}
+        status={state === 0 && 'Active'}
+        live={state === 0}
         saveAuctionTag
         refetch={() => refetch()}
         // detailsUrl={() =>

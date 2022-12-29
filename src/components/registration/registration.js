@@ -176,6 +176,7 @@ const RegistrationPage = () => {
                     )?.flag
                   }
                 />
+                {'   '}
                 {lang === 'ar' ? ac.name_ar : ac.name_en}
               </div>
             ),
