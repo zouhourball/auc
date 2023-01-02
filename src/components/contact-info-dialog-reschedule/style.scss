@@ -1,26 +1,23 @@
 .contact-info-dialog {
   .md-dialog {
     width: 450px;
-    border-radius: 12px;
+    border-radius: 35px;
   }
 
   .md-title--dialog {
-    padding: 12px 24px;
+    padding: 22px 24px 0;
     padding-bottom: 20px;
+    color: #3d3d3e;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
   }
 
-  &-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #3d3d3e;
-    font-size: 22px;
-    font-weight: bold;
-
-    .md-icon {
-      color: #3d3d3e;
-      font-size: 22px;
-    }
+  .label {
+    display: block;
+    color: #7c7c7c;
+    font-size: 16px;
+    font-weight: 500;
   }
 
   &-content {
@@ -61,6 +58,30 @@
       padding: 8px;
       overflow: auto;
       gap: 10px;
+    }
+  }
+
+  .md-select-field--btn {
+    .md-icon {
+      color: #527bde;
+      font-size: 28px;
+    }
+  }
+
+  .md-dialog-footer {
+    justify-content: center;
+
+    .md-btn--dialog {
+      flex: 0 1 45%;
+      height: 60px;
+      border-radius: 18px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+      font-size: 16px;
+      font-weight: bold;
+
+      &.cancel-btn {
+        color: #7c7c7c;
+      }
     }
   }
 }
