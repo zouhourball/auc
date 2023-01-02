@@ -78,13 +78,9 @@ const ContactInfoDialogreschedule = ({
       focusOnMount={false}
       stackedActions={false}
       className="contact-info-dialog"
-      title={
-        <div className="contact-info-dialog-title">
-          {t('reschedule_appointment')}
-        </div>
-      }
+      title={t('reschedule_appointment')}
       actions={[
-        <Button key={1} flat onClick={onHide}>
+        <Button key={1} flat onClick={onHide} className="cancel-btn">
           {t('cancel')}
         </Button>,
         <Button
@@ -97,11 +93,11 @@ const ContactInfoDialogreschedule = ({
             // onHide && onHide()
           }}
         >
-          {t('reschedule_appointment')}
+          {t('add_appointment')}
         </Button>,
       ]}
     >
-      <label className="auction-details-form-label md-cell md-cell--12">
+      <label className="label md-cell md-cell--12">
         {t('type_of_appointment')}*
       </label>
       <SelectField
@@ -122,9 +118,7 @@ const ContactInfoDialogreschedule = ({
         className="selectField-withShadow md-cell md-cell--12"
         dropdownIcon={<FontIcon>expand_more</FontIcon>}
       />
-      <label className="auction-details-form-label md-cell md-cell--12">
-        {t('date')}*{' '}
-      </label>
+      <label className="label md-cell md-cell--12">{t('date')}* </label>
 
       <div className="dateWrapper md-cell md-cell--12">
         <TextField
@@ -169,9 +163,7 @@ const ContactInfoDialogreschedule = ({
         )}
       </div>
 
-      <label className="auction-details-form-label  md-cell md-cell--12">
-        {t('time')}*
-      </label>
+      <label className="label  md-cell md-cell--12">{t('time')}*</label>
 
       {date && <div className="time-chip-wrapper">{renderChips()}</div>}
     </DialogContainer>
