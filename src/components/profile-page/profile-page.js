@@ -84,6 +84,7 @@ const ProfilePage = ({ company, companyId }) => {
               : {
                 subject: currentUser?.mev2?.user?.subject,
                 ...organization?.companyByOrganisationID,
+                ...data?.me?.userProfile,
               }
           }
           currentView={currentView}

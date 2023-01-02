@@ -672,15 +672,17 @@ const RegistrationPage = () => {
             >
               {isLoading || loading ? <CircularProgress /> : t('sign_up')}
             </Button>
-            <div className="grey-text font-size-bg">
-              {t('continue_as_a')}{' '}
-              <span
-                className="blue-text  font-size-bg"
-                onClick={() => navigate('/public/home')}
-              >
-                {t('guest')}
-              </span>
-            </div>
+            {currentTab === 0 && (
+              <div className="grey-text font-size-bg">
+                {t('continue_as_a')}{' '}
+                <span
+                  className="blue-text  font-size-bg"
+                  onClick={() => navigate('/public/home')}
+                >
+                  {t('guest')}
+                </span>
+              </div>
+            )}
             {/* <div className="social-container">
               <img
                 className="social-container-icon"
