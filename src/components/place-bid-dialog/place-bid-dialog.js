@@ -34,7 +34,7 @@ const PlaceBidDialog = ({
       onHide={onHide}
       focusOnMount={false}
       actions={[
-        <Button key={1} flat onClick={onClickCancel} className="cancel-btn">
+        <Button key={1} flat onClick={onClickCancel} className="cancel-button">
           {t('cancel')}
         </Button>,
         <Button
@@ -48,7 +48,7 @@ const PlaceBidDialog = ({
               ? onShowError()
               : onclickPlace()
           }
-          className="bid-btn"
+          className="continue-button"
         >
           {t('place_bid_button')}
         </Button>,
