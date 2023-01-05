@@ -1,45 +1,74 @@
 .top-up-dialog {
-  justify-content: center;
-
   .md-dialog {
-    width: 350px;
-    border-radius: 30px;
-    text-align: center;
+    width: 450px;
+    border-radius: 35px;
   }
 
   .md-title {
     display: flex;
-    justify-content: flex-end;
-    padding: 4px;
+    justify-content: center;
+    color: #3d3d3e;
+    font-size: 18px;
+    font-weight: bold;
   }
 
   &-information {
-    text-align: center;
-
-    .illustration {
-      margin-bottom: 16px;
+    .label {
+      margin-bottom: 10px;
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
     }
 
-    .avatar {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 16px;
+    .textField-withShadow {
+      margin-bottom: 10px;
+      border: 1px solid #fff;
+      border-radius: 18px;
+      color: #7c7c7c;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+
+      &.active {
+        border: 1px solid #5078e1;
+      }
+
+      .md-text-field {
+        text-align: center;
+
+        &[placeholder] {
+          color: #5078e1;
+        }
+      }
     }
 
-    .title {
-      margin-bottom: 8px;
-      color: #000;
-      font-size: 20px;
-      font-weight: bold;
+    .danger-text {
+      margin-bottom: 10px;
+      color: #fc0d1b;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .blue-text {
+      color: #5078e1;
+      font-size: 16px;
+      font-weight: 500;
     }
   }
 
-  &-button {
-    border-radius: 10px;
+  .md-dialog-footer {
+    justify-content: center;
+    padding: 0 16px 16px;
+    border-top: none;
 
-    &.md-btn {
-      margin-top: 16px;
-      text-transform: none;
+    .md-btn {
+      flex: 0 1 30%;
+      border-radius: 18px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+      &.cancel-button {
+        color: #7c7c7c;
+      }
     }
   }
 }
