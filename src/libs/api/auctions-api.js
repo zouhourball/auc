@@ -929,3 +929,20 @@ export const walletHistory = async ({ queryKey }) => {
   }
   return res
 }
+
+// Pay Auction Participation
+export const payAuctionParticipation = async ({ auctionId }) => {
+  let res
+
+  try {
+    res = await fetchJSON(
+      `${appUrl}/api/v1/auctions/${auctionId}/pay-pariticipation`,
+      {
+        method: 'POST',
+      },
+    )
+  } catch (e) {
+    res = { error: e }
+  }
+  return res
+}
