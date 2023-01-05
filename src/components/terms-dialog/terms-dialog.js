@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, DialogContainer, Checkbox } from 'react-md'
-import { navigate } from '@reach/router'
+// import { navigate } from '@reach/router'
 
 // import { payAuction } from 'libs/api/auctions-api'
 
@@ -9,7 +9,13 @@ import { useTranslation } from 'libs/langs'
 
 import './style.scss'
 
-const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
+const TermsDialogContainer = ({
+  visible,
+  onHide,
+  auctionId,
+  isPublic,
+  onPayAuctionParticipation,
+}) => {
   const [agree, setAgree] = useState(false)
   // const payAuctionMutation = useMutation(payAuction)
   // const redirectToPay = () =>
@@ -36,11 +42,12 @@ const TermsDialogContainer = ({ visible, onHide, auctionId, isPublic }) => {
       primary={agree}
       swapTheming={agree}
       disabled={!agree}
-      onClick={() => {
-        isPublic
-          ? navigate(`auctions/detail/${auctionId}`)
-          : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionId}`)
-      }}
+      onClick={
+        () => onPayAuctionParticipation()
+        // isPublic
+        //   ? navigate(`auctions/detail/${auctionId}`)
+        //   : (window.location.href = `${PRODUCT_APP_URL_API}/auction/api/v1/auctions/${auctionId}/pay?host=${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionId}`)
+      }
       // redirectToPay()
     >
       {t('proceed')}

@@ -16,6 +16,8 @@ const PlaceBidDialog = ({
   bidAmount,
   setBidAmount,
   label,
+  currentAmount,
+  depositAmount,
 }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -58,6 +60,16 @@ const PlaceBidDialog = ({
       </div>
 
       <div className="placeBid">
+        <div className="placeBid-amount">
+          <div className="placeBid-amount-item">
+            <div className="label">Current Amount:</div>
+            <div className="value">{currentAmount}</div>
+          </div>
+          <div className="placeBid-amount-item">
+            <div className="label">Deposit Amount:</div>
+            <div className="value">{depositAmount}</div>
+          </div>
+        </div>
         <TextField
           className={`placeBid-TextField  ${
             +bidAmount > 0 && bidAmount < lastBidAmount + incrementPrice

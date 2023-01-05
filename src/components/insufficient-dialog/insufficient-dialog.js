@@ -9,7 +9,7 @@ const InsufficientDialog = ({
   btnTitle,
   imgCard,
   visible,
-  onHide,
+  onClick,
   currentAmount,
   depositAmount,
 }) => {
@@ -17,7 +17,7 @@ const InsufficientDialog = ({
     <DialogContainer
       className="insufficient-dialog"
       visible={visible}
-      onHide={() => onHide()}
+      // onHide={() => onHide()}
       id="confirm-dialog"
     >
       <div className="insufficient-dialog-information">
@@ -26,7 +26,7 @@ const InsufficientDialog = ({
           <div className="title">{title}</div>
           <div className="description">{description}</div>
           <div>
-            Current Amount :<span>{currentAmount}</span>{' '}
+            Current Amount : <span>{currentAmount}</span>{' '}
           </div>
           <div>
             Deposit Amount : <span>{depositAmount}</span>
@@ -40,7 +40,7 @@ const InsufficientDialog = ({
         className="insufficient-dialog-button"
         onClick={(e) => {
           e.stopPropagation()
-          onHide && onHide()
+          onClick && onClick()
         }}
       >
         {btnTitle}

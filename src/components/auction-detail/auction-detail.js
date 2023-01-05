@@ -27,6 +27,8 @@ import {
   saveAsFav,
   unsaveAsFav,
   downloadCertificate,
+  payAuctionParticipation,
+  myWalletBalance,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -63,6 +65,8 @@ import AuctionDetailsSlider from 'components/auction-details-slider'
 import DrawOnMap from 'components/draw-on-map'
 
 import './style.scss'
+import InsufficientDialog from 'components/insufficient-dialog'
+import TopUpDialog from 'components/top-up-dialog.js'
 
 const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   let currentLang = useCurrentLang()
@@ -72,6 +76,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const dispatch = useDispatch()
   const [addressView, setAddressView] = useState(false)
   const [showContactInfo, setShowContactInfo] = useState(null)
+  const [showInsufficientDialog, setShowInsufficientDialog] = useState(false)
+  const [showTopUpDialog, setShowTopUpDialog] = useState(false)
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
   const { admin } = !!location?.state
   // const [successDialog, setSuccessDialog] = useState(false)
@@ -90,10 +96,32 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     context: { uri: `${PRODUCT_APP_URL_API}/auction/graphql/query` },
     variables: { auctionUUID: auctionId },
   })
-  const { data: isParticipant } = useQuery(
+  const { data: isParticipant, refetch: refetchParticipation } = useQuery(
     ['checkParticipant', auctionId],
     logged && checkParticipant,
   )
+
+  const { data: myWalletData } = useQuery(['GetBalance'], myWalletBalance)
+
+  const payAuctionParticipationMutation = useMutationQuery(
+    payAuctionParticipation,
+    {
+      onSuccess: (res) => {
+        if (res.success) {
+          refetchParticipation()
+          setBidDialog(true)
+          setTermsDialog(false)
+        }
+      },
+    },
+  )
+
+  const onPayAuctionParticipation = () => {
+    payAuctionParticipationMutation.mutate({
+      auctionId: auctionId,
+    })
+  }
+
   const approveMutation = useMutationQuery(approveAuction, {
     onSuccess: (res) => {
       if (!res.error) {
@@ -306,6 +334,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     () => auctionData?.['configurator_organization_id'],
     [auctionData],
   )
+  const depositAmount =
+    auctionData?.['guarentee_fee'] + auctionData?.['participation_fee'] || 0
+  const isInsufficientFunds = depositAmount > myWalletData?.balance
 
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
@@ -657,12 +688,24 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
                       swapTheming
                       className="auction-details-btn"
                       onClick={
-                        () =>
-                          logged
-                            ? isParticipant
-                              ? setBidDialog(true)
-                              : setTermsDialog(true)
-                            : navigate(`/auctions/detail/${auctionData?.uuid}`)
+                        () => {
+                          if (logged) {
+                            if (isParticipant) {
+                              setBidDialog(true)
+                            } else {
+                              isInsufficientFunds
+                                ? setShowInsufficientDialog(true)
+                                : setTermsDialog(true) // setBidDialog(true)
+                            }
+                          } else {
+                            navigate(`/auctions/detail/${auctionData?.uuid}`)
+                          }
+                        }
+                        // logged
+                        //   ? isParticipant
+                        //     ? setBidDialog(true)
+                        //     : setTermsDialog(true)
+                        //   : navigate(`/auctions/detail/${auctionData?.uuid}`)
                         // setBidDialog(true)
                       }
                     >
@@ -765,6 +808,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
           visible={termsDialog}
           onHide={() => setTermsDialog(false)}
           auctionId={auctionData?.uuid}
+          onPayAuctionParticipation={onPayAuctionParticipation}
         />
       )}
       {/* {successDialog && (
@@ -791,6 +835,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
           onclickPlace={onConfirmBid}
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}
+          currentAmount={myWalletData?.balance}
+          depositAmount={depositAmount}
         />
       )}
       {showContactInfo && (
@@ -810,6 +856,25 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       {feesDialog && (
         <FeesDialog type={feesDialog} onHide={() => setFeesDialog('')} />
       )}
+
+      {showInsufficientDialog && (
+        <InsufficientDialog
+          visible={showInsufficientDialog}
+          // title="Insufficient Funds"
+          // description="you don't have enough funds to pay this deposit"
+          // btnTitle="Done"
+          // imgCard={}
+          // onHide={}
+          onClick={() => {
+            setShowInsufficientDialog(false)
+            setShowTopUpDialog(true)
+          }}
+          currentAmount={myWalletData?.balance}
+          depositAmount={depositAmount}
+        />
+      )}
+
+      {showTopUpDialog && <TopUpDialog visible={showTopUpDialog} />}
     </div>
   )
 }
