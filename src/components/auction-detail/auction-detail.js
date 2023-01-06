@@ -29,6 +29,7 @@ import {
   downloadCertificate,
   payAuctionParticipation,
   myWalletBalance,
+  depositAmount,
 } from 'libs/api/auctions-api'
 
 import subscribeNewBid from 'libs/queries/auction/subscription-new-bid.gql'
@@ -67,6 +68,7 @@ import DrawOnMap from 'components/draw-on-map'
 import './style.scss'
 import InsufficientDialog from 'components/insufficient-dialog'
 import TopUpDialog from 'components/top-up-dialog.js'
+import DepositSuccessfullyDialog from 'components/deposit-successfully-dialog'
 
 const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   let currentLang = useCurrentLang()
@@ -78,6 +80,10 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const [showContactInfo, setShowContactInfo] = useState(null)
   const [showInsufficientDialog, setShowInsufficientDialog] = useState(false)
   const [showTopUpDialog, setShowTopUpDialog] = useState(false)
+  const [showDepositSuccessfullyDialog, setShowDepositSuccessfullyDialog] =
+    useState(false)
+  const [amount, setAmount] = useState(null)
+
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
   const { admin } = !!location?.state
   // const [successDialog, setSuccessDialog] = useState(false)
@@ -146,12 +152,13 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     .filter((v) => v === 'success' || v === 'error')[0]
   useEffect(() => {
     if (paymentCallback === 'success') {
+      setShowDepositSuccessfullyDialog(true)
       // setSuccessDialog(true)
-      dispatch(
-        addToast(
-          <ToastMsg text={'Payment done successfully '} type="success" />,
-        ),
-      )
+      // dispatch(
+      //   addToast(
+      //     <ToastMsg text={'Payment done successfully '} type="success" />,
+      //   ),
+      // )
       // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
       // window.addEventListener('unload', (event) => {
       //   window.history.forward()
@@ -199,6 +206,33 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       dispatch(addToast(<ToastMsg text={'Unacceptable Amount'} type="error" />))
     },
   })
+
+  // --------------
+  const depositAmountMutation = useMutationQuery(depositAmount, {
+    onSuccess: (res) => {
+      if (!res.error) {
+        window.location.href = res?.['payment_url']
+
+        // window.open(res?.['payment_url'])
+      }
+    },
+  })
+
+  const onDepositAmount = (depositAmountValue) => {
+    depositAmountMutation.mutate({
+      body: {
+        return_url: `${PRODUCT_APP_URL_AUCTION}/auctions/detail/${auctionData?.uuid}`,
+        wallet_id: myWalletData?.uuid,
+        amount: {
+          currency: myWalletData?.currency?.name,
+          value: depositAmountValue,
+        },
+        http_redirect: false,
+      },
+    })
+  }
+
+  // ---------------
 
   const onConfirmBid = () => {
     placeNewBid({
@@ -334,9 +368,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     () => auctionData?.['configurator_organization_id'],
     [auctionData],
   )
-  const depositAmount =
+  const auctionDepositAmount =
     auctionData?.['guarentee_fee'] + auctionData?.['participation_fee'] || 0
-  const isInsufficientFunds = depositAmount > myWalletData?.balance
+  const isInsufficientFunds = auctionDepositAmount > myWalletData?.balance
 
   return (
     <div className="auction-details md-grid md-grid--no-spacing">
@@ -836,7 +870,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
           bidAmount={bidAmount}
           setBidAmount={setBidAmount}
           currentAmount={myWalletData?.balance}
-          depositAmount={depositAmount}
+          depositAmount={auctionDepositAmount}
         />
       )}
       {showContactInfo && (
@@ -860,21 +894,29 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       {showInsufficientDialog && (
         <InsufficientDialog
           visible={showInsufficientDialog}
-          // title="Insufficient Funds"
-          // description="you don't have enough funds to pay this deposit"
-          // btnTitle="Done"
-          // imgCard={}
-          // onHide={}
           onClick={() => {
             setShowInsufficientDialog(false)
             setShowTopUpDialog(true)
           }}
           currentAmount={myWalletData?.balance}
-          depositAmount={depositAmount}
+          depositAmount={auctionDepositAmount}
         />
       )}
 
-      {showTopUpDialog && <TopUpDialog visible={showTopUpDialog} />}
+      {showTopUpDialog && (
+        <TopUpDialog
+          visible={showTopUpDialog}
+          minimumAmount={auctionDepositAmount - myWalletData?.balance}
+          currency={myWalletData?.currency?.name}
+          onContinue={onDepositAmount}
+          onHide={() => setShowTopUpDialog(false)}
+          amount={amount}
+          setAmount={setAmount}
+        />
+      )}
+      {showDepositSuccessfullyDialog && (
+        <DepositSuccessfullyDialog visible={showDepositSuccessfullyDialog} />
+      )}
     </div>
   )
 }

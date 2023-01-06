@@ -1,13 +1,21 @@
 import { useState } from 'react'
-
 import { DialogContainer, Button, TextField } from 'react-md'
 
 import successImage from 'images/successfully-register.png'
 
 import './style.scss'
-const TopUpDialog = ({ title, visible, onHide, onContinue }) => {
-  const [amount, setAmount] = useState('')
+const TopUpDialog = ({
+  title,
+  visible,
+  onHide,
+  onContinue,
+  minimumAmount,
+  currency,
+  amount,
+  setAmount,
+}) => {
   const [type, setType] = useState('card')
+  let isDisabled = amount < minimumAmount || !amount || type !== 'card'
   return (
     <DialogContainer
       className="top-up-dialog"
@@ -29,12 +37,13 @@ const TopUpDialog = ({ title, visible, onHide, onContinue }) => {
           </Button>
           <Button
             flat
-            swapTheming
+            swapTheming={!isDisabled}
             primary
             className="continue-button"
+            disabled={isDisabled}
             onClick={(e) => {
               e.stopPropagation()
-              onContinue && onContinue({ type, amount })
+              onContinue && onContinue(amount)
             }}
           >
             Continue
@@ -51,9 +60,11 @@ const TopUpDialog = ({ title, visible, onHide, onContinue }) => {
           onChange={(v) => setAmount(v)}
           className="textField-withShadow active"
           block
+          type="number"
         />
         <div className="danger-text">
-          To participate in this auction deposit a minimum amount of 10,000 AED
+          To participate in this auction deposit a minimum amount of{' '}
+          {minimumAmount} {currency}
         </div>
         <div className="label">
           <span className="blue-text">Note: </span>

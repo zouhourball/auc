@@ -105,7 +105,7 @@ const ParticipatedAuctions = ({ meOrgs }) => {
       amount: {
         currency: myWalletData?.currency?.name,
       },
-      http_redirect: true,
+      http_redirect: false,
     })
   }, [myWalletData])
   // Payment callback goes here
