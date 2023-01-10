@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 // import moment from 'moment'
+import Mht from '@target-energysolutions/mht'
 
 import { useTranslation } from 'libs/langs'
 import { addToast } from 'modules/app/actions'
@@ -10,14 +11,17 @@ import {
   getMyAuctions,
   myWalletBalance,
   depositAmount,
+  walletHistory,
 } from 'libs/api/auctions-api'
 import BiddingCard from 'components/bidding-card'
 import MyWallet from 'components/my-wallet'
 import PaymentDetailsDialog from 'components/payment-details-dialog'
 import { useDispatch, useSelector } from 'react-redux'
 import ToastMsg from 'components/toast-msg'
+import { configs } from './helpers'
 
 import './style.scss'
+import moment from 'moment'
 
 const ParticipatedAuctions = ({ meOrgs }) => {
   const { t } = useTranslation()
@@ -32,6 +36,7 @@ const ParticipatedAuctions = ({ meOrgs }) => {
     { id: 1, label: t('won') },
     { id: 2, label: t('lost') },
     { id: 3, label: t('my_deposit') },
+    { id: 4, label: 'History' },
   ]
 
   const renderTabName = () => {
@@ -63,6 +68,24 @@ const ParticipatedAuctions = ({ meOrgs }) => {
     ['myWalletBalance'],
     myWalletBalance,
   )
+  const { data: walletHistoryData } = useQuery(
+    [
+      'walletHistory',
+      {
+        page: 0,
+        limit: 200,
+      },
+    ],
+    walletHistory,
+  )
+  const renderData = () =>
+    walletHistoryData?.results?.map((el) => ({
+      id: el?.uuid,
+      status: el?.status,
+      createdDate: moment(el?.['created_date']).format('DD/MM/YYYY h:mm'), // el?.['created_date'],
+      amount: el.amount,
+      trackId: el?.['track_id'],
+    }))
   const depositAmountMutation = useMutation(depositAmount, {
     onSuccess: (res) => {
       if (!res.error) {
@@ -141,6 +164,28 @@ const ParticipatedAuctions = ({ meOrgs }) => {
       body: depositData,
     })
   }
+  const renderCurrentTabContent = () => {
+    switch (tab) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+        return renderCards()
+
+      case 4:
+        return (
+          <Mht
+            id={'admin-dashboard'}
+            configs={configs(t)}
+            tableData={renderData() || []}
+            withFooter
+            hideTotal
+          />
+        )
+      default:
+        break
+    }
+  }
   // const renderStatus = (auction) => {
   //   if (
   //     +moment.utc(auction?.['auction_end_date']).add(2, 'seconds') <
@@ -176,7 +221,7 @@ const ParticipatedAuctions = ({ meOrgs }) => {
         </div>
 
         <div className="md-grid auction-participation-list-cards">
-          {renderCards()}
+          {renderCurrentTabContent()}
         </div>
         {paymentDetails && (
           <PaymentDetailsDialog

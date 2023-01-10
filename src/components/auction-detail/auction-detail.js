@@ -68,7 +68,7 @@ import DrawOnMap from 'components/draw-on-map'
 import './style.scss'
 import InsufficientDialog from 'components/insufficient-dialog'
 import TopUpDialog from 'components/top-up-dialog.js'
-import DepositSuccessfullyDialog from 'components/deposit-successfully-dialog'
+// import DepositSuccessfullyDialog from 'components/deposit-successfully-dialog'
 
 const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   let currentLang = useCurrentLang()
@@ -80,8 +80,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
   const [showContactInfo, setShowContactInfo] = useState(null)
   const [showInsufficientDialog, setShowInsufficientDialog] = useState(false)
   const [showTopUpDialog, setShowTopUpDialog] = useState(false)
-  const [showDepositSuccessfullyDialog, setShowDepositSuccessfullyDialog] =
-    useState(false)
+  // const [showDepositSuccessfullyDialog, setShowDepositSuccessfullyDialog] =
+  //   useState(false)
   const [amount, setAmount] = useState(null)
 
   // const [showContactInfodays, setShowContactInfodays] = useState(null)
@@ -147,28 +147,22 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
     .locale(currentLang === 'ar' ? 'ar' : 'en')
     .fromNow()
 
-  const paymentCallback = location.pathname
-    .split('/')
-    .filter((v) => v === 'success' || v === 'error')[0]
+  const paymentCallback = new URLSearchParams(location.search)
   useEffect(() => {
-    if (paymentCallback === 'success') {
-      setShowDepositSuccessfullyDialog(true)
+    if (paymentCallback.has('success') && paymentCallback.get('success')) {
       // setSuccessDialog(true)
-      // dispatch(
-      //   addToast(
-      //     <ToastMsg text={'Payment done successfully '} type="success" />,
-      //   ),
-      // )
-      // window.history.pushState(null, null, `/auctions/detail/${auctionId}`)
-      // window.addEventListener('unload', (event) => {
-      //   window.history.forward()
-      //   console.log('I am the 3rd one.')
-      // })
+      dispatch(
+        addToast(
+          <ToastMsg text={'Payment done successfully '} type="success" />,
+        ),
+      )
+
       history.replaceState(null, null, `/auctions/detail/${auctionId}`)
-      // window.addEventListener('popstate', function (event) {
-      //   history.pushState(null, null, `/auctions/detail/${auctionId}`)
-      // })
-    } else if (paymentCallback === 'error') {
+    } else if (
+      paymentCallback.has('error')
+      // &&
+      // !paymentCallback.get('success')
+    ) {
       dispatch(
         addToast(
           <ToastMsg text={'Payment procedure has failed'} type="error" />,
@@ -177,7 +171,7 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
       history.replaceState(null, null, `/auctions/detail/${auctionId}`)
     } else {
     }
-  }, [paymentCallback])
+  }, [location])
   const [currentImg, setCurrentImg] = useState('')
   const [termsDialog, setTermsDialog] = useState(false)
   const [bidDialog, setBidDialog] = useState(false)
@@ -389,8 +383,8 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
             }
             onClick={() => window.history.go(-1)}
           >
-            {location.state.goBackLabel
-              ? location.state.goBackLabel
+            {location?.state?.goBackLabel
+              ? location?.state?.goBackLabel
               : isActive
               ? t('back_to_live_auctions')
               : t('back_to_upcoming_auctions')}
@@ -914,9 +908,9 @@ const AuctionDetail = ({ auctionId, location, logged, meOrgs }) => {
           setAmount={setAmount}
         />
       )}
-      {showDepositSuccessfullyDialog && (
+      {/* {showDepositSuccessfullyDialog && (
         <DepositSuccessfullyDialog visible={showDepositSuccessfullyDialog} />
-      )}
+      )} */}
     </div>
   )
 }
