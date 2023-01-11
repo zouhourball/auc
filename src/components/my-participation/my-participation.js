@@ -174,13 +174,14 @@ const ParticipatedAuctions = ({ meOrgs }) => {
 
       case 4:
         return (
-          <Mht
-            id={'admin-dashboard'}
-            configs={configs(t)}
-            tableData={renderData() || []}
-            withFooter
-            hideTotal
-          />
+          <div className="my-participation-mht">
+            <Mht
+              id={'admin-dashboard'}
+              configs={configs(t)}
+              tableData={renderData() || []}
+              hideTotal
+            />
+          </div>
         )
       default:
         break
