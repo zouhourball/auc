@@ -57,12 +57,177 @@
     }
 
     &-cards {
-      margin: 20px 0;
+      margin: 20px 5px;
       padding: 0;
       gap: 16px;
 
       .bidding-card {
         margin: 0;
+      }
+    }
+  }
+
+  .my-participation-mht {
+    width: 100%;
+    padding: 5px;
+
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      order: 2;
+      width: 100%;
+      margin: 16px 0 8px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+      .admin-page-actionBtn {
+        height: auto;
+        margin-left: 8px;
+        border-radius: 10px;
+        background: rgba($color: #7c7c7c, $alpha: 0.5);
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+        color: #fff;
+
+        &.md-text--theme-primary {
+          background: #78deb3;
+        }
+
+        &.md-text--theme-secondary {
+          background: #fc0d1b;
+        }
+      }
+    }
+
+    .xeena-data-table {
+      .actions-bar {
+        flex-wrap: wrap;
+        background: none;
+
+        .search-bar {
+          padding: 11px 8px;
+          border-radius: 12px;
+          background: #fff;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+
+          .md-text {
+            text-transform: capitalize;
+          }
+        }
+      }
+
+      .common-actions-button {
+        &.md-btn--flat {
+          height: 40px;
+          padding: 8px 13px;
+          border-radius: 12px;
+          background: #fff;
+          box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+          text-transform: none;
+        }
+
+        &.md-btn--icon {
+          display: none;
+        }
+      }
+    }
+
+    .xeena-table-container {
+      margin-top: 16px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .xeena-table-header {
+      border-right: none;
+      border-left: none;
+
+      .xeena-cell {
+        font-weight: bold;
+
+        &:nth-child(1) {
+          border-right: 1px solid #e6e6e6;
+        }
+      }
+    }
+
+    .xeena-table-body {
+      border: none;
+
+      ul {
+        margin-bottom: 0;
+      }
+
+      .order-check-column {
+        border-right: 1px solid #e6e6e6;
+      }
+
+      .xeena-row {
+        border-bottom-width: 1px;
+
+        .order-check-column .order-check-buttonWrapper .md-text--theme-secondary {
+          color: #5078e1;
+        }
+
+        &.selected {
+          background: rgba($color: #5078e1, $alpha: 0.05);
+
+          .order-check-column .order-check-buttonWrapper {
+            background: #f7f8fe;
+          }
+        }
+      }
+    }
+
+    .pagination-numbers {
+      display: flex;
+    }
+
+    .wrapper.white {
+      border-bottom: none;
+    }
+
+    .subject {
+      display: flex;
+      align-items: center;
+    }
+
+    .md-avatar--default {
+      margin-right: 8px;
+      background: transparent;
+      color: #f5f5f5;
+    }
+
+    .status {
+      margin: 0 8px;
+      padding: 5px 16px;
+      border-radius: 16px;
+      background: #f1f1f1;
+      color: #6f6f6f;
+      font-weight: bold;
+      text-align: center;
+      text-transform: capitalize;
+
+      &.Pending {
+        background: #f1f1f1;
+        color: #6f6f6f;
+      }
+
+      &.Success {
+        background: #e6f9ef;
+        color: #78deb3;
+      }
+
+      &.Rejected {
+        background: #ffd5d4;
+        color: #fc0d1b;
+      }
+
+      &.Request {
+        background-color: #dce4f9;
+        color: #5078e1;
       }
     }
   }
